@@ -13,9 +13,11 @@ Dependențe: pip install requests beautifulsoup4 openpyxl
 
 import json
 import os
+import re
 import smtplib
 import sys
 import time
+import unicodedata
 import urllib.parse
 from datetime import datetime, timedelta
 from email.mime.multipart import MIMEMultipart
@@ -36,6 +38,10 @@ from config import (
     TTL_ONRC_DAYS,
     TTL_NOMINATIM_DAYS,
     TTL_ANAF_V9_DAYS,
+    PRAG_ACHIZITIE_DIRECTA_PRODUSE_SERVICII_RON,
+    PRAG_ACHIZITIE_DIRECTA_LUCRARI_RON,
+    PRAGURI_LEGALE_VERIFICATE_LA,
+    PRAGURI_LEGALE_SURSA,
 )
 
 # Optional: risc_firma.py — indicatori financiari firme furnizoare (SQLite cache, TTL 30 zile)
@@ -58,8 +64,8 @@ CONFIG = {
     "judet": "Ilfov",
 
     # Praguri legale achiziție publică (RON, conform Legii 98/2016 actualizate)
-    "prag_servicii_furnizare": 130_000,   # sub acest prag → cumpărare directă
-    "prag_lucrari": 500_000,              # sub acest prag → procedură simplificată
+    "prag_servicii_furnizare": PRAG_ACHIZITIE_DIRECTA_PRODUSE_SERVICII_RON,
+    "prag_lucrari": PRAG_ACHIZITIE_DIRECTA_LUCRARI_RON,
     "marja_fragmentare_pct": 0.97,        # dacă valoarea e >97% din prag → suspect
 
     # Câte luni în urmă căutăm contracte
@@ -75,6 +81,7 @@ CONFIG = {
     "email_smtp": "smtp.gmail.com",
     "email_port": 587,
     "email_parola": "",        # recomandăm App Password Google, nu parola reală
+    "contact_url": "https://github.com/transparenta-locala/transparenta-pantelimon/issues",
 
     # openapi.ro — date acționariat/administrator firme (opțional, gratuit 100 cereri/lună)
     # Înregistrare gratuită: https://openapi.ro/ro → Fă-ți un cont → generează cheie API
@@ -86,6 +93,37 @@ CONFIG = {
     # §3.1 / §3.2 — cuvânt de căutat pe Curtea de Conturi + ANI integritate.eu
     "uat_search": "Pantelimon",
 }
+
+
+_LUCR_KEYWORDS = (
+    "lucrari", "reparatii", "reabilitare", "modernizare", "constructi",
+    "construire", "executie", "reamenajare", "amenajare", "deviere",
+    "demolare", "restaurare", "consolidare", "extindere", "infrastructura",
+)
+
+
+def _text_fara_diacritice(value: str) -> str:
+    """Normalizează textul pentru clasificări robuste, fără a altera afișarea."""
+    return "".join(
+        char for char in unicodedata.normalize("NFKD", str(value or "").lower())
+        if not unicodedata.combining(char)
+    )
+
+
+def _este_contract_lucrari(contract: dict) -> bool:
+    """Clasificare conservatoare pe titlu/CPV pentru alegerea pragului legal."""
+    text = _text_fara_diacritice(" ".join(str(contract.get(key, "") or "") for key in (
+        "titlu", "denumire_cpv", "cpv_descriere", "categorie",
+    )))
+    return any(keyword in text for keyword in _LUCR_KEYWORDS)
+
+
+def _prag_pentru_contract(contract: dict, config: dict = None) -> tuple:
+    """Returnează (prag RON, etichetă categorie) pentru un contract."""
+    cfg = config or CONFIG
+    if _este_contract_lucrari(contract):
+        return cfg["prag_lucrari"], "lucrări"
+    return cfg["prag_servicii_furnizare"], "produse/servicii"
 
 # ==============================================================================
 # SURSE DE DATE
@@ -1051,7 +1089,7 @@ def fetch_declaratii_avere(
 
 
 # ==============================================================================
-# §3.4  TED EUROPA — cross-referențiere contracte mari (>500k EUR) cu SEAP
+# §3.4  TED EUROPA — anunțuri europene asociate cumpărătorului
 # ==============================================================================
 
 def search_ted_for_buyer(
@@ -1063,8 +1101,10 @@ def search_ted_for_buyer(
 ) -> list:
     """§3.4 Caută anunțuri TED Europa pentru un cumpărător identificat prin CIF.
 
-    Contractele > 500.000 EUR trebuie publicate și în TED (Tenders Electronic Daily)
-    conform Directivei UE 2014/24. Dacă apar în SEAP dar NU în TED → flag potențial.
+    Pentru 2026–2027, pragurile Directivei 2014/24/UE sunt 216.000 EUR fără TVA
+    pentru produse/servicii atribuite de autorități locale și 5.404.000 EUR fără
+    TVA pentru lucrări. Funcția inventariază anunțurile TED; absența unui rezultat
+    nu este tratată singură drept dovadă a încălcării obligațiilor de publicare.
 
     Args:
         cif_buyer: CIF-ul cumpărătorului (ex: "4420759")
@@ -1515,7 +1555,7 @@ def fetch_pnrr_projects(
 
 
 def calculeaza_scor_transparenta(toate_flags: list, contracte: list, statistici_hcl: dict) -> dict:
-    """Calculeaza scorul de transparenta al UAT (0-100, mai mare = mai transparent)."""
+    """Calculează un indice euristic 0–100; nu este un rating oficial al UAT."""
     ponderi = {
         "achizitii_directe": 0.30,
         "ofertant_unic": 0.20,
@@ -1557,8 +1597,27 @@ def calculeaza_scor_transparenta(toate_flags: list, contracte: list, statistici_
         "scor": round(scor_final),
         "componente": componente,
         "ponderi": {k: round(v * 100) for k, v in ponderi.items()},
+        "componente_estimate": ["documente_publicate", "raspuns_544"],
+        "metodologie": (
+            "Indice euristic, neoficial. Fiecare componentă este un punctaj 0–100, "
+            "apoi se aplică ponderea publicată. Componentele documente_publicate și "
+            "raspuns_544 sunt estimări manuale și nu sunt măsurate automat."
+        ),
         "data": datetime.now().strftime("%Y-%m-%d"),
     }
+
+
+def numara_contracte_cu_semnale(flags: list, contracte: list) -> int:
+    """Numără contracte unice referite de flaguri, ignorând indicatorii globali."""
+    ids_valide = {str(c.get("id", "")) for c in contracte if c.get("id") not in (None, "")}
+    gasite = set()
+    for flag in flags:
+        raw = str(flag.get("contract_id") or "")
+        for contract_id in raw.split(","):
+            contract_id = contract_id.strip()
+            if contract_id in ids_valide:
+                gasite.add(contract_id)
+    return len(gasite)
 
 
 
@@ -1581,8 +1640,6 @@ def detect_fragmentare_temporara(contracte: list, config: dict) -> list:
     import re as _re2
     from collections import defaultdict as _ddict2
     _rev_re = _re2.compile(r'\s*\(Rev\.\d+\)\s*', _re2.IGNORECASE)
-    prag = config.get("prag_servicii_furnizare", 130_000)
-
     def _val(c):
         return float(c.get("valoare_ron") or c.get("valoare") or 0)
 
@@ -1602,10 +1659,11 @@ def detect_fragmentare_temporara(contracte: list, config: dict) -> list:
             data_c = datetime.strptime(_data_str(c)[:10], "%Y-%m-%d")
         except ValueError:
             continue
-        grupe[(cui, prefix)].append((data_c, c))
+        prag, categorie = _prag_pentru_contract(c, config)
+        grupe[(cui, prefix, categorie, prag)].append((data_c, c))
 
     flags = []
-    for (cui, prefix), items in grupe.items():
+    for (cui, prefix, categorie, prag), items in grupe.items():
         if len(items) < 2:
             continue
         items_sorted = sorted(items, key=lambda x: x[0])
@@ -1636,17 +1694,16 @@ def detect_fragmentare_temporara(contracte: list, config: dict) -> list:
         flags.append({
             "tip": "FRAGMENTARE_TEMPORARA",
             "severitate": "CRITIC",
-            "titlu": (f"Fragmentare temporară: {len(best_fereastra)} contracte sub-prag, "
-                      f"sumă combinată {_fmt_ron(best_suma)}"),
+            "titlu": (f"Semnal de fragmentare temporară: {len(best_fereastra)} contracte sub-prag, "
+                       f"sumă combinată {_fmt_ron(best_suma)}"),
             "descriere": (
                 f'Furnizor "{furnizor}" (CUI {cui}) a primit {len(best_fereastra)} contracte '
                 f'individuale sub pragul de {_fmt_ron(prag)}, cu titluri similare '
                 f'("{prefix[:50]}"), în fereastră de 90 de zile ({d0} – {d1}). '
                 f'Sumă combinată: {_fmt_ron(best_suma)}, care depășește pragul legal. '
-                f'Fiecare contract individual evită licitația, dar suma combinată ar fi impus '
-                f'o procedură competitivă. Art. 11 alin. (1) Legea 98/2016 interzice '
-                f'fragmentarea artificială pentru eludarea pragurilor. '
-                f'Sancțiuni: contravenție art. 224 L98/2016, amendă 2.000–15.000 RON.'
+                f'Acesta este un semnal automat pentru categoria {categorie}, care necesită '
+                f'verificarea obiectului și a valorii estimate totale. Art. 11 alin. (1) din '
+                f'Legea 98/2016 interzice divizarea cu scopul evitării procedurilor aplicabile.'
             ),
             "contract_id": ids,
             "contract_numar": f"{numar0} + {len(best_fereastra) - 1} altele",
@@ -1657,6 +1714,8 @@ def detect_fragmentare_temporara(contracte: list, config: dict) -> list:
             "tip_procedura": (best_fereastra[0].get("tip_procedura") or
                                best_fereastra[0].get("tip") or ""),
             "nr_contracte": len(best_fereastra),
+            "categorie_contract": categorie,
+            "prag_aplicat": prag,
         })
     return sorted(flags, key=lambda f: f["valoare"], reverse=True)
 
@@ -1749,10 +1808,9 @@ def detect_sedinte_extraordinare(statistici_hcl: dict) -> list:
         "titlu": f"Rată ridicată de ședințe extraordinare: {pct_extra}%",
         "descriere": (
             f"Din {total} ședințe de Consiliu Local analizate, {n_extra} ({pct_extra}%) "
-            f"sunt 'extraordinare cu convocare de îndată'. O rată peste 25% sugerează că "
-            f"procedura de urgență este folosită sistematic pentru a ocoli consultarea "
-            f"publică obligatorie (Legea 52/2003, art. 7 — transparența decizională). "
-            f"Norma tipică: sub 15% ședințe extraordinare per an."
+            f"sunt 'extraordinare cu convocare de îndată'. Ponderea este un indicator "
+            f"statistic pentru verificarea motivării urgenței și a respectării etapelor de "
+            f"transparență din Legea 52/2003, art. 7; nu dovedește evitarea consultării."
         ),
         "contract_id": "HCL-META",
         "contract_numar": "–",
@@ -2075,6 +2133,91 @@ _KEYWORDS_LOCAL = [
 ]
 
 
+def detect_crestere_brusca_valoare(contracte: list) -> list:
+    """Algoritm 7 — valoarea unui contract a crescut mult între revizii.
+
+    Compararea se face CRONOLOGIC. Varianta anterioară sorta versiunile după
+    `valoare_ron` și raporta întotdeauna min→max ca pe o creștere, inclusiv când
+    valoarea SCĂZUSE în timp: pe „DAV  GARDEN & SERVICE" afirma public „+300%,
+    de la 1.15 mil. la 4.62 mil.", când în realitate contractul mersese invers —
+    4.62 mil. (11.12.2025) → 1.15 mil. (27.02.2026). O afirmație publică
+    inversată e exact genul de eroare care discreditează întreg raportul.
+
+    Funcție pură, fără apeluri externe.
+    """
+    from collections import defaultdict as _dd
+
+    grupuri = _dd(list)
+    for contract in contracte or []:
+        # gruparea include furnizorul: două firme diferite cu obiect identic
+        # („Amenajare spații verzi") nu sunt versiuni ale aceluiași contract
+        cheie = (normalizeaza_nume_firma(contract.get("castigator", "")),
+                 _titlu_fara_revizie(contract.get("titlu", "")))
+        grupuri[cheie].append(contract)
+
+    flags = []
+    for (_furnizor_nz, titlu_base), versiuni in grupuri.items():
+        # Exporturile trimestriale republică același contract cu id-uri diferite.
+        # Fără dedup, o „versiune" se compara cu propria ei copie.
+        vazute, unice = set(), []
+        for contract in versiuni:
+            amprenta = (contract.get("data_publicare", ""),
+                        round(contract.get("valoare_ron", 0) or 0, 2))
+            if amprenta in vazute:
+                continue
+            vazute.add(amprenta)
+            unice.append(contract)
+        if len(unice) < 2:
+            continue
+
+        # ordine cronologică; la dată egală, valoarea mai mică e considerată prima
+        cronologic = sorted(unice, key=lambda c: (c.get("data_publicare", ""),
+                                                  c.get("valoare_ron", 0) or 0))
+        prima, ultima = cronologic[0], cronologic[-1]
+        v_initial = prima.get("valoare_ron", 0) or 0
+        v_final = ultima.get("valoare_ron", 0) or 0
+
+        # semnalăm doar creșteri reale în timp; o scădere nu e „creștere bruscă"
+        if not (v_initial > 0 and v_final > v_initial * 1.5 and v_final > 50_000):
+            continue
+
+        crestere_pct = (v_final / v_initial - 1) * 100
+        data_initiala = prima.get("data_publicare", "?")
+        data_finala = ultima.get("data_publicare", "?")
+
+        # Când ambele versiuni au aceeași dată de publicare nu putem stabili care
+        # a fost prima, deci nu avem dreptul să afirmăm că valoarea „a crescut".
+        # Diferența rămâne un semnal legitim, dar formulat fără direcție.
+        if data_initiala == data_finala:
+            titlu_flag = "Valori diferite pentru același contract, la aceeași dată"
+            descriere = (f'Contractul „{titlu_base[:55]}" apare la aceeași dată ({data_finala}) '
+                         f'cu două valori diferite: {_fmt_ron(v_initial)} și {_fmt_ron(v_final)} '
+                         f'(diferență de {crestere_pct:.0f}%). Ordinea versiunilor nu poate fi '
+                         f'stabilită din datele publicate. Merită verificat dacă este vorba de un '
+                         f'act adițional, de loturi distincte sau de o eroare de raportare.')
+        else:
+            titlu_flag = "Creștere bruscă de valoare în revizie contract"
+            descriere = (f'Contractul „{titlu_base[:55]}" a crescut cu {crestere_pct:.0f}% între versiuni: '
+                         f'de la {_fmt_ron(v_initial)} ({data_initiala}) '
+                         f'la {_fmt_ron(v_final)} ({data_finala}). '
+                         f'Diferența este un semnal pentru verificarea actelor adiționale și a '
+                         f'condițiilor de modificare prevăzute de Legea 98/2016; nu dovedește o abatere.')
+
+        flags.append({
+            "tip": "CRESTERE_BRUSCA_VALOARE",
+            "severitate": "MAJOR" if crestere_pct < 200 else "CRITIC",
+            "titlu": titlu_flag,
+            "descriere": descriere,
+            "contract_id": ultima.get("id", ""),
+            "contract_numar": ultima.get("numar", ""),
+            "valoare": v_final,
+            "furnizor": ultima.get("castigator", ""),
+            "data": ultima.get("data_publicare", ""),
+            "tip_procedura": ultima.get("tip_procedura", ""),
+        })
+    return flags
+
+
 def detect_geographic_anomaly(contracte: list, firme_openapi: dict) -> list:
     """
     §2.5 AUDIT.md — Servicii locale atribuite firmelor cu sediu departe de Ilfov.
@@ -2126,8 +2269,8 @@ def detect_geographic_anomaly(contracte: list, firme_openapi: dict) -> list:
 
 def analizeaza_red_flags(contracte: list, config: dict) -> list:
     """
-    Rulează toți algoritmii de detecție pe lista de contracte.
-    Returnează o listă de red flags găsite.
+    Rulează detectorii automați pe lista de contracte.
+    Returnează semnale de risc care necesită verificare, nu constatări juridice.
     """
     print("  [Analiză] Rulând algoritmi de detecție red flags...")
     flags = []
@@ -2143,11 +2286,11 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
             flags.append({
                 "tip": "OFERTANT_UNIC",
                 "severitate": severitate,
-                "titlu": "Un singur ofertant",
+                "titlu": "Un singur ofertant raportat în date",
                 "descriere": f'{c["castigator"]} a primit {_fmt_ron(c["valoare_ron"])} pentru '
-                             f'„{c["titlu"][:55]}", dar în SEAP apare un singur ofertant. '
-                             f'Fără oferte concurente, nu putem ști dacă prețul e corect. '
-                             f'Primăria ar fi trebuit să ceară cel puțin 3 oferte.',
+                             f'„{c["titlu"][:55]}”, iar setul de date indică un singur ofertant. '
+                             f'Indicatorul nu dovedește lipsa concurenței sau un preț incorect; '
+                             f'documentația procedurii trebuie verificată.',
                 "contract_id": c["id"],
                 "contract_numar": c["numar"],
                 "valoare": c["valoare_ron"],
@@ -2159,28 +2302,26 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
     # ── Algoritm 1b: Achiziție directă individuală PESTE prag ───────────────
     for c in contracte:
         v = c["valoare_ron"]
-        # Dacă o SINGURĂ achiziție directă depășește pragul → ilegal fără licitație
-        if v > prag_s and ("direct" in c["tip_procedura"].lower() or c["tip_procedura"] == ""):
+        prag, categorie = _prag_pentru_contract(c, config)
+        # Încadrarea categoriei este automată; semnalul trebuie verificat în documentația SEAP.
+        if v > prag and ("direct" in c["tip_procedura"].lower() or c["tip_procedura"] == ""):
             nr_of = c.get("nr_ofertanti", 0)
-            # Clarificare: chiar dacă sunt 2+ ofertanți (cerere de preț informală),
-            # asta NU echivalează cu o procedură competitivă legală.
             if nr_of >= 2:
                 nota_ofertanti = (
-                    f' Notă: deși au fost solicitate {nr_of} oferte de preț, '
-                    f'o cerere informală de ofertă NU constituie o procedură competitivă '
-                    f'(licitație simplificată/deschisă) — Legea 98/2016, art. 68 impune '
-                    f'proceduri formale cu publicare în SEAP peste acest prag.'
+                    f' Setul de date indică {nr_of} ofertanți; tipul exact al procedurii '
+                    f'și documentele publicate în SEAP trebuie verificate.'
                 )
             else:
                 nota_ofertanti = ""
             flags.append({
                 "tip": "ACHIZITIE_DIRECTA_PESTE_PRAG",
                 "severitate": "CRITIC",
-                "titlu": "Achiziție directă peste pragul legal",
+                "titlu": "Semnal: achiziție directă peste pragul aplicabil",
                 "descriere": (f'{c["castigator"]} a primit {_fmt_ron(v)} pentru '
-                              f'„{c["titlu"][:55]}" fără licitație publică — deși legea o impune '
-                              f'de la {_fmt_ron(prag_s)} în sus. Primăria a ales achiziție directă '
-                              f'cu {_fmt_ron(v - prag_s)} peste pragul legal.'
+                              f'„{c["titlu"][:55]}”. Clasificarea automată: {categorie}; '
+                              f'valoarea este cu {_fmt_ron(v - prag)} peste pragul de achiziție '
+                              f'directă de {_fmt_ron(prag)} fără TVA. Încadrarea CPV, valoarea '
+                              f'estimată și procedura efectivă trebuie verificate în SEAP.'
                               + nota_ofertanti),
                 "contract_id": c["id"],
                 "contract_numar": c["numar"],
@@ -2188,29 +2329,33 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
                 "furnizor": c["castigator"],
                 "data": c["data_publicare"],
                 "tip_procedura": c["tip_procedura"],
+                "categorie_contract": categorie,
+                "prag_aplicat": prag,
             })
 
     # ── Algoritm 2: Valoare aproape de prag (fragmentare suspectă) ───────────
     for c in contracte:
         v = c["valoare_ron"]
+        prag, tip_prag = _prag_pentru_contract(c, config)
         if v > 0:
-            for prag, tip_prag in [(prag_s, "servicii/furnizare"), (prag_l, "lucrări")]:
-                if prag * marja < v <= prag:
-                    flags.append({
-                        "tip": "APROAPE_DE_PRAG",
-                        "severitate": "MAJOR",
-                        "titlu": "Valoare suspectă aproape de prag",
-                        "descriere": (f'{c["castigator"]} a primit {_fmt_ron(v)} pentru {tip_prag} — '
-                                     f'cu exact {_fmt_ron(prag - v)} sub pragul de licitație obligatorie ({_fmt_ron(prag)}). '
-                                     f'Contractele plasate intenționat sub prag ca să evite licitația sunt interzise. '
-                                     f'Există suspiciunea că valoarea reală ar fi putut fi mai mare.'),
-                        "contract_id": c["id"],
-                        "contract_numar": c["numar"],
-                        "valoare": v,
-                        "furnizor": c["castigator"],
-                        "data": c["data_publicare"],
-                        "tip_procedura": c["tip_procedura"],
-                    })
+            if prag * marja < v <= prag:
+                flags.append({
+                    "tip": "APROAPE_DE_PRAG",
+                    "severitate": "MAJOR",
+                    "titlu": "Semnal: valoare aproape de prag",
+                    "descriere": (f'{c["castigator"]} a primit {_fmt_ron(v)} pentru {tip_prag} — '
+                                 f'cu {_fmt_ron(prag - v)} sub pragul de achiziție directă '
+                                 f'({_fmt_ron(prag)}, fără TVA). Apropierea de prag este doar un '
+                                 f'indicator statistic; nu dovedește divizarea sau estimarea incorectă.'),
+                    "contract_id": c["id"],
+                    "contract_numar": c["numar"],
+                    "valoare": v,
+                    "furnizor": c["castigator"],
+                    "data": c["data_publicare"],
+                    "tip_procedura": c["tip_procedura"],
+                    "categorie_contract": tip_prag,
+                    "prag_aplicat": prag,
+                })
 
     # ── Algoritm 3: Fragmentare (același furnizor, titluri similare, interval scurt) ─
     from collections import defaultdict
@@ -2239,29 +2384,30 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
                 or "lot" in a["titlu"].lower() and "lot" in b["titlu"].lower()
             )
             valoare_combinata = a["valoare_ron"] + b["valoare_ron"]
+            prag_a, categorie_a = _prag_pentru_contract(a, config)
+            prag_b, categorie_b = _prag_pentru_contract(b, config)
 
-            if zile_diferenta < 60 and titlu_similar and valoare_combinata > prag_s:
-                # Detectăm dacă unul dintre contracte depășește pragul individual
-                peste_individual = []
-                if a["valoare_ron"] > prag_s:
-                    peste_individual.append(f'{_fmt_ron(a["valoare_ron"])} (primul contract depășește singur pragul)')
-                if b["valoare_ron"] > prag_s:
-                    peste_individual.append(f'{_fmt_ron(b["valoare_ron"])} (al doilea contract depășește singur pragul)')
-                nota_individuala = f' Notă: {"; ".join(peste_individual)}.' if peste_individual else ''
+            aceeasi_categorie = categorie_a == categorie_b and prag_a == prag_b
+            ambele_sub_prag = a["valoare_ron"] < prag_a and b["valoare_ron"] < prag_a
+            if (zile_diferenta < 60 and titlu_similar and aceeasi_categorie
+                    and ambele_sub_prag and valoare_combinata > prag_a):
                 flags.append({
                     "tip": "FRAGMENTARE",
                     "severitate": "CRITIC",
-                    "titlu": "Posibilă fragmentare artificială a contractelor",
+                    "titlu": "Semnal de posibilă fragmentare a contractelor",
                     "descriere": (f'{a["castigator"]} a primit 2 contracte similare în {zile_diferenta} zile, '
-                                 f'cu o valoare combinată de {_fmt_ron(valoare_combinata)}. '
-                                 f'Separat, fiecare pare sub pragul de licitație ({_fmt_ron(prag_s)}) — dar împreună îl depășesc. '
-                                 f'Aceasta se numește fragmentare artificială și este interzisă.{nota_individuala}'),
+                                  f'cu o valoare combinată de {_fmt_ron(valoare_combinata)}. '
+                                 f'Fiecare este sub pragul pentru {categorie_a} ({_fmt_ron(prag_a)}), '
+                                 f'iar suma îl depășește. Similaritatea temporală și textuală este '
+                                 f'un semnal automat; unitatea achizitoare și documentele trebuie verificate.'),
                     "contract_id": f"{a['id']},{b['id']}",
                     "contract_numar": f"{a['numar']} + {b['numar']}",
                     "valoare": valoare_combinata,
                     "furnizor": a["castigator"],
                     "data": a["data_publicare"],
                     "tip_procedura": a["tip_procedura"],
+                    "categorie_contract": categorie_a,
+                    "prag_aplicat": prag_a,
                 })
 
     # ── Algoritm 4: Utilizare excesivă proceduri non-competitive ─────────────
@@ -2287,7 +2433,7 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
                 "tip_procedura": "Multiple",
             })
 
-    # ── Algoritm 5: Furnizori dominanți (monopol de facto) ───────────────────
+    # ── Algoritm 5: Concentrare ridicată la furnizori ────────────────────────
     valori_pe_furnizor = defaultdict(float)
     for c in contracte:
         valori_pe_furnizor[c["castigator"]] += c["valoare_ron"]
@@ -2359,52 +2505,24 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
     # ── Algoritm 7: Creștere bruscă de valoare Rev.2 / Rev.3 (>50%) ─────────────
     # Contractele revizuite (Rev.2, Rev.3) cu valoare mult mai mare decât originalul
     # sunt un indicator de supraestimare deliberată sau modificare abuzivă a contractului
-    titluri_rev = defaultdict(list)
-    for c in contracte:
-        titlu_clean = c["titlu"].replace("(Rev.2)", "").replace("(Rev.3)", "").replace("(Rev.4)", "").strip()
-        titluri_rev[titlu_clean].append(c)
+    flags.extend(detect_crestere_brusca_valoare(contracte))
 
-    for titlu_base, versiuni in titluri_rev.items():
-        if len(versiuni) < 2:
-            continue
-        versiuni_sorted = sorted(versiuni, key=lambda x: x["valoare_ron"])
-        v_min = versiuni_sorted[0]["valoare_ron"]
-        v_max = versiuni_sorted[-1]["valoare_ron"]
-        if v_min > 0 and v_max > v_min * 1.5 and v_max > 50_000:
-            crestere_pct = (v_max / v_min - 1) * 100
-            flags.append({
-                "tip": "CRESTERE_BRUSCA_VALOARE",
-                "severitate": "MAJOR" if crestere_pct < 200 else "CRITIC",
-                "titlu": "Creștere bruscă de valoare în revizie contract",
-                "descriere": (f'Contractul „{titlu_base[:55]}" a crescut cu {crestere_pct:.0f}% între versiuni: '
-                             f'de la {_fmt_ron(v_min)} la {_fmt_ron(v_max)}. '
-                             f'O creștere atât de mare după semnare ridică întrebarea: de ce nu s-a organizat '
-                             f'o nouă licitație la valoarea reală?'),
-                "contract_id": versiuni_sorted[-1]["id"],
-                "contract_numar": versiuni_sorted[-1]["numar"],
-                "valoare": v_max,
-                "furnizor": versiuni_sorted[-1]["castigator"],
-                "data": versiuni_sorted[-1]["data_publicare"],
-                "tip_procedura": versiuni_sorted[-1]["tip_procedura"],
-            })
-
-    # ── Algoritm 8: Valori rotunde suspecte (posibilă pre-setare a bugetului) ────
+    # ── Algoritm 8: Valori rotunde — indicator statistic ────────────────────────
     # Contracte cu valori perfect rotunde (multiplu exact de 10.000) > 50K
     # indică posibilă alocare forfetară fără studiu de piață real
     for c in contracte:
         v = c["valoare_ron"]
         if v >= 50_000 and v % 10_000 == 0:
-            # Verificăm că NU e vorba de un prag cunoscut (130K, 300K, 500K, 1M)
-            praguri_standard = {130_000, 300_000, 500_000, 1_000_000, 2_000_000}
+            # Excludem pragurile legale și alte valori-standard uzuale.
+            praguri_standard = {prag_s, prag_l, 300_000, 500_000, 1_000_000, 2_000_000}
             if v not in praguri_standard:
                 flags.append({
                     "tip": "VALOARE_ROTUNDA_SUSPECTA",
                     "severitate": "MEDIU",
-                    "titlu": "Valoare contract rotundă suspectă",
+                    "titlu": "Semnal statistic: valoare contractuală rotundă",
                     "descriere": (f'{c["castigator"]} a primit exact {_fmt_ron(v)} pentru '
-                                 f'„{c["titlu"][:55]}". O sumă perfect rotundă poate însemna că prețul '
-                                 f'a fost stabilit forfetar, fără un studiu de piață real. '
-                                 f'Contractele normale au valori calculate precis, nu sume rotunde.'),
+                                 f'„{c["titlu"][:55]}”. Valoarea rotundă este un indicator euristic '
+                                 f'pentru verificarea documentației de estimare; singură nu indică o abatere.'),
                     "contract_id": c["id"],
                     "contract_numar": c["numar"],
                     "valoare": v,
@@ -2420,7 +2538,7 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
     firme_openapi = {}   # inițializat cu {} — suprascris mai jos dacă cui_furnizori e populat
     firme_anaf = {}
     firme_onrc = {}
-    if cui_furnizori:
+    if cui_furnizori and not config.get("_offline_mode"):
         fisier_cache = config.get("fisier_cache_firme", "cache_firme.json")
         # Date ANAF (status, dată înregistrare)
         firme_anaf = _get_firme_anaf_batch(cui_furnizori, fisier_cache)
@@ -2456,12 +2574,12 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
                     "titlu": f"Contract cu firmă {stare.lower()} la ANAF",
                     "descriere": (
                         f'<strong>{furnizor}</strong> (CUI {cui_display}) are statut '
-                        f'<strong>{stare}</strong> la ANAF — o firmă {stare.lower()} nu ar trebui '
-                        f'să primească bani publici. Contractul „{c["titlu"][:50]}" a valorat {_fmt_ron(valoare)}. '
-                        f'Plata unei firme {stare.lower()} poate fi nulă de drept — verifică dacă banii au fost recuperați. '
+                        f'<strong>{stare}</strong> în răspunsul ANAF consultat. Contractul '
+                        f'„{c["titlu"][:50]}” a valorat {_fmt_ron(valoare)}. Statutul trebuie '
+                        f'verificat la data atribuirii și a plății înaintea oricărei concluzii. '
                         + (f'<br><small style="color:#555">{_fmt_actionariat(firme_openapi.get(cui_f))}</small><br>' if firme_openapi.get(cui_f) else '')
                         + f'Verifică administrator și istoricul complet: '
-                        f'<a href="{termene_link}" target="_blank">termene.ro →</a>'
+                        f'<a href="{termene_link}" target="_blank" rel="noopener noreferrer">termene.ro →</a>'
                     ),
                     "contract_id": c["id"],
                     "contract_numar": c["numar"],
@@ -2492,9 +2610,9 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
                                 f'{data_inf_str[:10]} — cu doar <strong>{varsta_luni} luni</strong> '
                                 f'înainte de a primi un contract de {_fmt_ron(valoare)} pentru '
                                 f'„{c["titlu"][:50]}". '
-                                f'O firmă atât de nouă nu poate demonstra experiență reală. '
-                                f'Merită verificat cine o deține și dacă are relații cu primăria. '
-                                f'<a href="{termene_link}" target="_blank">Verifică pe termene.ro →</a>'
+                                f'Vechimea redusă este un indicator pentru verificarea criteriilor '
+                                f'de experiență și a capacității tehnice; nu dovedește o problemă. '
+                                f'<a href="{termene_link}" target="_blank" rel="noopener noreferrer">Verifică pe termene.ro →</a>'
                             ),
                             "contract_id": c["id"],
                             "contract_numar": c["numar"],
@@ -2531,9 +2649,8 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
                     f'Firma "{furnizor}" (CUI {cui_display}) este marcată ca <strong>RADIATĂ</strong> '
                     f'conform openapi.ro (sursă: ONRC). A primit contractul '
                     f'"{c["titlu"][:60]}" în valoare de {_fmt_ron(valoare)}. '
-                    f'Firmele radiate nu mai au personalitate juridică. '
-                    f'Contractele cu firme radiate pot fi nule de drept (art. 220 alin. (1) L98/2016 '
-                    f'+ art. 248 Cod Civil). '
+                    f'Data radierii și starea firmei la momentul atribuirii trebuie confirmate '
+                    f'din sursa oficială; această potrivire automată nu stabilește validitatea contractului. '
                     + (_fmt_actionariat(info) + " " if _fmt_actionariat(info) else "")
                 ),
                 "contract_id": c["id"],
@@ -2576,11 +2693,11 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
                             f'fiscală la ANAF din <strong>{ultima[:10]}</strong> '
                             f'({ani_vechime:.0f} ani în urmă), dar a primit contractul '
                             f'"{c["titlu"][:60]}" în valoare de {_fmt_ron(valoare)}. '
-                            f'Firmele fără activitate fiscală recentă reprezintă un risc de neexecutare. '
-                            f'Legea 98/2016, art. 167 lit. b) permite excluderea ofertanților cu '
-                            f'obligații fiscale nerespectate. '
+                            f'Vechimea informației fiscale justifică verificarea situației curente '
+                            f'și a documentelor de calificare; nu dovedește neexecutarea sau existența '
+                            f'unor obligații fiscale restante. '
                             + (_fmt_actionariat(info) + " " if _fmt_actionariat(info) else "")
-                            + f'<a href="{recom_link}" target="_blank">Verifică la ONRC →</a>'
+                            + f'<a href="{recom_link}" target="_blank" rel="noopener noreferrer">Verifică la ONRC →</a>'
                         ),
                         "contract_id": c["id"],
                         "contract_numar": c["numar"],
@@ -2621,12 +2738,11 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
                             f'<strong>{data_inf_str[:10]}</strong> și a primit contractul '
                             f'"{c["titlu"][:60]}" ({_fmt_ron(valoare)}) '
                             f'la doar <strong>{zile_varsta} zile</strong> după înregistrare. '
-                            f'Aceasta este un indicator clar de firmă creată special pentru '
-                            f'această achiziție (practică sancționată de DNA în multiple dosare). '
-                            f'Legea 98/2016, art. 163-171 (criterii de excludere) + '
-                            f'art. 179-187 (capacitate tehnică). '
-                            f'<a href="{_termene_url(cui_f)}" target="_blank">termene.ro →</a> '
-                            f'<a href="https://www.recom.ro/companies_ro_company_detail.aspx?id={cui_display}" target="_blank">ONRC →</a>'
+                            f'Vechimea redusă este un semnal care necesită verificarea capacității '
+                            f'tehnice și a documentației; nu dovedește scopul înființării firmei. '
+                            f'Legea 98/2016, art. 163-171 și art. 179-187. '
+                            f'<a href="{_termene_url(cui_f)}" target="_blank" rel="noopener noreferrer">termene.ro →</a> '
+                            f'<a href="https://www.recom.ro/companies_ro_company_detail.aspx?id={cui_display}" target="_blank" rel="noopener noreferrer">ONRC →</a>'
                         ),
                         "contract_id": c["id"],
                         "contract_numar": c["numar"],
@@ -2641,7 +2757,7 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
                 pass
 
     # ── Algoritm 12: Scor risc acumulat (firmă flagată de ≥3 algoritmi diferiți) ─
-    # O firmă care apare în mai mulți algoritmi = pattern sistematic, nu accident
+    # Cumulul de indicatori prioritizează verificarea, fără a stabili vinovăția.
     from collections import Counter, defaultdict
     flags_per_firma: dict = defaultdict(set)
     valoare_per_firma: dict = defaultdict(float)
@@ -2661,14 +2777,14 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
             flags.append({
                 "tip": "RISC_SISTEMIC_FIRMA",
                 "severitate": "CRITIC",
-                "titlu": f"Firmă cu risc sistemic — {len(tipuri)} tipuri de nereguli",
+                "titlu": f"Furnizor cu indicatori cumulați — {len(tipuri)} categorii",
                 "descriere": (
                     f'<strong>{furnizor}</strong> (CUI {cui_display}) apare în '
-                    f'<strong>{len(tipuri)} tipuri diferite</strong> de nereguli: {tipuri_str}. '
-                    f'Valoare totală implicată: <strong>{_fmt_ron(valoare)}</strong>. '
-                    f'Când o firmă acumulează probleme în atât de multe categorii, nu e coincidență — '
-                    f'e un pattern sistematic care merită o investigație serioasă. '
-                    f'<a href="{_termene_url(cui_f)}" target="_blank">Verifică pe termene.ro →</a>'
+                    f'<strong>{len(tipuri)} categorii de indicatori</strong>: {tipuri_str}. '
+                    f'Suma asociată flagurilor (poate include același contract de mai multe ori): '
+                    f'<strong>{_fmt_ron(valoare)}</strong>. Cumulul prioritizează verificarea manuală '
+                    f'și nu reprezintă o constatare juridică. '
+                    f'<a href="{_termene_url(cui_f)}" target="_blank" rel="noopener noreferrer">Verifică pe termene.ro →</a>'
                 ),
                 "contract_id": "global",
                 "contract_numar": "",
@@ -2719,6 +2835,104 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
           f"{sum(1 for f in flags_unice if f['severitate']=='MEDIU')} MEDIU)")
 
     return flags_unice
+
+
+def normalizeaza_nume_firma(nume: str) -> str:
+    """Normalizează un nume de firmă pentru comparare/căutare.
+
+    Exportul SEAP livrează nume „murdare": spații duble, diacritice
+    inconsistente, „&" vs „and", sufixe juridice prezente sau nu.
+    Fără normalizare, „DAV GARDEN&SERVICE SRL" nu se potrivea cu
+    „DAV  GARDEN & SERVICE" (două spații, fără sufix) — firma exista în
+    date, dar căutarea din raport returna zero rezultate.
+
+    >>> normalizeaza_nume_firma("DAV  GARDEN & SERVICE")
+    'dav garden and service'
+    >>> normalizeaza_nume_firma("DAV GARDEN&SERVICE")
+    'dav garden and service'
+    """
+    t = unicodedata.normalize("NFD", str(nume or "").lower())
+    t = "".join(c for c in t if not unicodedata.combining(c))
+    # abrevieri punctate: „s.r.l." → „srl", „i.i." → „ii"
+    t = re.sub(r"\b(?:[a-z]\.){2,}", lambda m: m.group(0).replace(".", ""), t)
+    t = t.replace("&", " and ")
+    t = re.sub(r"[^a-z0-9]+", " ", t)
+    return re.sub(r"\s+", " ", t).strip()
+
+
+# Sufixe juridice ignorate la potrivirea numelor de firme
+SUFIXE_JURIDICE = {
+    "srl", "srlu", "srld", "sarl", "sa", "sca", "snc", "scs",
+    "pfa", "ii", "sc", "societate", "societatea", "comerciala",
+    "asociatia", "asociatie", "ong",
+}
+
+
+def nume_firma_esential(nume: str) -> str:
+    """Ca `normalizeaza_nume_firma`, dar fără sufixele juridice.
+
+    >>> nume_firma_esential("SC OLTENIA GARDEN SRL")
+    'oltenia garden'
+    """
+    return " ".join(
+        t for t in normalizeaza_nume_firma(nume).split(" ")
+        if t and t not in SUFIXE_JURIDICE
+    )
+
+
+def _titlu_fara_revizie(titlu: str) -> str:
+    """Elimină sufixul „(Rev.N)" ca să obținem titlul canonic al contractului.
+
+    Varianta veche trata doar Rev.2/Rev.3/Rev.4 prin `.replace()`, deci Rev.5+
+    rămâneau grupuri separate și nu mai erau comparate între ele.
+
+    >>> _titlu_fara_revizie("Amenajare spatii verzi (Rev.12)")
+    'Amenajare spatii verzi'
+    """
+    return re.sub(r"\s*\(\s*rev\.?\s*\d+\s*\)", "", str(titlu or ""), flags=re.I).strip()
+
+
+def construieste_index_cui(contracte: list, cale_geocoded: str = "firme_geocoded.json") -> dict:
+    """Index furnizor-normalizat → CUI.
+
+    Exportul SEAP nu pune CUI-ul pe anunțuri (0 din 304 flaguri îl aveau), deci
+    căutarea după CUI în raport nu returna nimic. Îl recuperăm din contracte și
+    din geocodare, ca să-l putem propaga în raport.json și în profilul de firmă.
+    """
+    index: dict = {}
+
+    def _adauga(nume_brut: str, cui: str) -> None:
+        cui = str(cui or "").strip()
+        if not cui:
+            return
+        # indexăm sub ambele forme: cu sufix juridic și fără, ca „X SRL" și „X"
+        # să găsească aceeași firmă (doar 28 din 94 de furnizori au sufixul în nume)
+        for cheie in (normalizeaza_nume_firma(nume_brut), nume_firma_esential(nume_brut)):
+            if cheie:
+                index.setdefault(cheie, cui)
+
+    for contract in contracte or []:
+        _adauga(contract.get("castigator") or contract.get("firma") or "",
+                contract.get("castigator_cui") or contract.get("cui") or "")
+    try:
+        if cale_geocoded and os.path.exists(cale_geocoded):
+            with open(cale_geocoded, encoding="utf-8") as handle:
+                for firma in json.load(handle):
+                    _adauga(firma.get("name", ""), firma.get("cif") or "")
+    except Exception as err:
+        print(f"  [cui-index] {cale_geocoded} indisponibil: {err}")
+    return index
+
+
+def _cui_pentru_furnizor(furnizor: str, fallback: str, index: dict) -> str:
+    """CUI-ul propriu al flagului dacă există, altfel din index."""
+    direct = (fallback or "").strip()
+    if direct:
+        return direct
+    index = index or {}
+    return (index.get(normalizeaza_nume_firma(furnizor))
+            or index.get(nume_firma_esential(furnizor))
+            or "")
 
 
 def _seap_url(contract_id: str, tip_procedura: str = '') -> str:
@@ -3035,7 +3249,7 @@ def _fmt_actionariat(info: dict) -> str:
     recom = info.get("recom_url", "")
     if recom:
         parts.append(
-            f'<a href="{recom}" target="_blank" ' +
+            f'<a href="{recom}" target="_blank" rel="noopener noreferrer" ' +
             'style="color:#0070C0;font-weight:600">🔍 Verifică acționari și administrator la ONRC →</a>'
         )
 
@@ -3230,7 +3444,7 @@ def _fmt_reprezentanti(onrc_info: dict) -> str:
     if cod:
         recom_link = (
             f' <a href="https://www.recom.ro/companies_ro_company_detail.aspx?id={cod}" '
-            'target="_blank" style="color:#0070C0;font-size:10px">recom.ro →</a>'
+            'target="_blank" rel="noopener noreferrer" style="color:#0070C0;font-size:10px">recom.ro →</a>'
         )
     return (
         '<div style="margin-top:4px;font-size:11px;color:#555">'
@@ -3476,11 +3690,14 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
     n_total = len(flags)
     n_critic = sum(1 for f in flags if f.get("severitate") == "CRITIC")
     n_major = sum(1 for f in flags if f.get("severitate") == "MAJOR")
-    seo_title = f"Raport Transparență — {n_total} Nereguli Detectate"
+    n_contracte_semnale = numara_contracte_cu_semnale(flags, contracte)
+    prag_servicii_fmt = f"{config.get('prag_servicii_furnizare', PRAG_ACHIZITIE_DIRECTA_PRODUSE_SERVICII_RON):,.0f}".replace(",", ".")
+    prag_lucrari_fmt = f"{config.get('prag_lucrari', PRAG_ACHIZITIE_DIRECTA_LUCRARI_RON):,.0f}".replace(",", ".")
+    seo_title = f"Raport Transparență — {n_total} Semnale de Risc"
     seo_description = (
-        f"{n_critic} critice, {n_major} majore din {n_total} nereguli detectate la "
-        f"{config['nume_entitate']}. Achiziții directe peste prag, fragmentare contracte, "
-        f"ofertanți unici, firme suspecte. Date din SEAP și ANAF. 9 algoritmi de detecție."
+        f"{n_total} semnale automate pe {n_contracte_semnale} contracte unice la "
+        f"{config['nume_entitate']}. Indicatorii necesită verificare și nu sunt concluzii "
+        f"juridice. Date din SEAP și ANAF, analizate prin 19 detectori."
     )
 
     # Serializăm contractele ca JSON pentru embed în HTML (folosit de JS pentru "toate contractele firmei")
@@ -3494,15 +3711,29 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
         "cui": c.get("castigator_cui", ""),
         "ofertanti": c.get("nr_ofertanti", 0),
     } for c in contracte], ensure_ascii=False)
+    # ── Index CUI per furnizor ──────────────────────────────────────────────
+    # Exportul SEAP nu pune CUI-ul pe flag-uri (0/304 aveau `cif_furnizor`),
+    # deci căutarea după CUI în raport nu returna nimic. Îl recuperăm din
+    # contracte + firme_geocoded.json și îl propagăm în raport.json.
+    _cui_by_supplier = construieste_index_cui(contracte)
+
+    def _cui_pentru(_furnizor: str, _fallback: str = "") -> str:
+        return _cui_pentru_furnizor(_furnizor, _fallback, _cui_by_supplier)
+
+    print(f"  [cui-index] CUI mapat pentru {len(_cui_by_supplier)} furnizori")
+
     # Construim raport_json pentru embed <script id="tp-data"> si raport.json
     _n_contracte = len(contracte)
     _val_totala = sum(c.get("valoare_ron", 0) for c in contracte)
     raport_json_obj = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "generated_at": datetime.now().isoformat(),
         "entity": {"name": config["nume_entitate"], "cif": config["cui"], "judet": config.get("judet", "Ilfov")},
         "totals": {
-            "flags": len(flags), "contracts_analyzed": _n_contracte, "total_value_ron": _val_totala,
+            "flags": len(flags), "signals": len(flags),
+            "contracts_analyzed": _n_contracte,
+            "contracts_with_signals": n_contracte_semnale,
+            "total_value_ron": _val_totala,
             "by_severity": {
                 "CRITIC": sum(1 for f in flags if f.get("severitate") == "CRITIC"),
                 "MAJOR":  sum(1 for f in flags if f.get("severitate") == "MAJOR"),
@@ -3512,13 +3743,26 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
         "flags": [
             {"id": i, "severity": fl.get("severitate",""), "title": fl.get("titlu",""),
              "explanation": fl.get("descriere",""), "supplier": fl.get("furnizor",""),
-             "supplier_cif": fl.get("cif_furnizor",""), "sum_ron": fl.get("valoare",0) or 0,
+             "supplier_cif": _cui_pentru(fl.get("furnizor",""), fl.get("cif_furnizor","")),
+             "sum_ron": fl.get("valoare",0) or 0,
              "date": fl.get("data",""), "contract_id": (fl.get("contract_id") or fl.get("contract_numar") or ""),
              "procedure": fl.get("tip_procedura",""), "type": fl.get("tip",""),
              "anchor": f"nereguli-{i}"}
             for i, fl in enumerate(flags_sortate, 1)
         ],
-        "scor_transparenta": config.get("_scor", {}).get("scor"),
+        "scor_transparenta": config.get("_scor", {}),
+        "legal_thresholds": {
+            "products_services_ron_excl_vat": config.get(
+                "prag_servicii_furnizare",
+                PRAG_ACHIZITIE_DIRECTA_PRODUSE_SERVICII_RON,
+            ),
+            "works_ron_excl_vat": config.get(
+                "prag_lucrari",
+                PRAG_ACHIZITIE_DIRECTA_LUCRARI_RON,
+            ),
+            "verified_at": PRAGURI_LEGALE_VERIFICATE_LA,
+            "source": PRAGURI_LEGALE_SURSA,
+        },
     }
     raport_json_embedded = json.dumps(raport_json_obj, ensure_ascii=False)
 
@@ -3528,14 +3772,19 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
         nr_contracte_firma_map[c["castigator"]] = nr_contracte_firma_map.get(c["castigator"], 0) + 1
 
     # ── Index risc per firmă (calculat ÎNAINTE de loop-ul flags_html) ────────
+    # IMPORTANT: enumerarea începe de la 1 și respectă ordinea din `flags_sortate`,
+    # exact ca la generarea `raport.json` de mai sus. Astfel `anchor` din profilul
+    # de firmă indică ACEEAȘI neregulă ca ancora din lista principală
+    # (înainte profilul avea o sursă de date paralelă, fără explicații și ancore,
+    # ceea ce producea liste de acuzații fără nicio justificare).
     risc_firma: dict = {}
-    for _f in flags_sortate:
+    for _i, _f in enumerate(flags_sortate, 1):
         _furn = _f.get("furnizor", "")
         if not _furn:
             continue
         if _furn not in risc_firma:
             risc_firma[_furn] = {
-                "cui": _f.get("cif_furnizor", ""),
+                "cui": _cui_pentru(_furn, _f.get("cif_furnizor", "")),
                 "flags": [],
                 "valoare_totala": 0,
                 "n_critic": 0, "n_major": 0, "n_mediu": 0,
@@ -3546,13 +3795,22 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
             "severitate": _f.get("severitate", ""),
             "valoare": _f.get("valoare", 0) or 0,
             "data": _f.get("data", ""),
+            # câmpuri noi — aceleași ca în raport.json, ca profilul să poată
+            # afișa explicația și să poată trimite la neregula detaliată
+            "descriere": _f.get("descriere", ""),
+            "anchor": f"nereguli-{_i}",
+            "contract_id": (_f.get("contract_id") or _f.get("contract_numar") or ""),
         })
         risc_firma[_furn]["valoare_totala"] += _f.get("valoare", 0) or 0
-        _sev = _f.get("severitate", "")
-        if _sev == "CRITIC": risc_firma[_furn]["n_critic"] += 1
-        elif _sev == "MAJOR": risc_firma[_furn]["n_major"] += 1
-        else: risc_firma[_furn]["n_mediu"] += 1
+
+    # Contoarele se calculează DIN lista efectivă de flags, nu în paralel cu ea.
+    # Altfel badge-ul putea afișa „9 MEDIU" când în listă exista un singur flag MEDIU.
     for _fk, _rd in risc_firma.items():
+        _sevs = [(_x.get("severitate") or "MEDIU").upper() for _x in _rd["flags"]]
+        _rd["n_critic"] = sum(1 for _s in _sevs if _s == "CRITIC")
+        _rd["n_major"]  = sum(1 for _s in _sevs if _s == "MAJOR")
+        _rd["n_mediu"]  = len(_sevs) - _rd["n_critic"] - _rd["n_major"]
+        _rd["n_total"]  = len(_sevs)
         _rd["scor"] = min(100, _rd["n_critic"]*10 + _rd["n_major"]*5 + _rd["n_mediu"]*2)
 
     # ── Cross-reference CUI lipsă din firme_geocoded.json ──────────────────
@@ -3580,7 +3838,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
 
     # ── Pre-fetch date financiare firme furnizoare (opțional, cu cache SQLite) ──
     _firma_profile: dict[str, dict] = {}
-    if _RISC_FIRMA_OK:
+    if _RISC_FIRMA_OK and not config.get("_offline_mode"):
         _cui_unici = {f.get('cif_furnizor', '') for f in flags_sortate if f.get('cif_furnizor')}
         for _cui in sorted(_cui_unici):   # sorted → ordine deterministă în logs
             try:
@@ -3749,7 +4007,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
                 _seap_txt = _seap_nr(_cid) or (f"Nr. SEAP: {_c.get('nr_seap')}" if _c.get('nr_seap') else '')
                 _seap_cell = (
                     f'<a href="{_seap_url(_cid, _c.get("procedura",""))}" target="_blank" '
-                    f'onclick="event.stopPropagation()" style="color:#0070C0;text-decoration:none">'
+                    f'rel="noopener noreferrer" onclick="event.stopPropagation()" style="color:#0070C0;text-decoration:none">'
                     f'🔍 {_seap_txt or "deschide"} ↗</a>'
                 ) if (_cid or _c.get('nr_seap')) else '–'
                 _rows += (
@@ -3800,8 +4058,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
             <strong style="color:{culoare}">[{f.get('severitate','MEDIU')}]</strong>
                      <span style="font-weight:700;font-size:14px">{furnizor or "—"}</span>
                      <span style="font-size:11px;color:#888;font-weight:400"> — {f.get('titlu','')}</span>
-            {nou_badge}{risc_badge}
-            <span class="flag-arrow" style="margin-left:auto;font-size:11px;color:#aaa">▼ detalii</span>
+            {nou_badge}{risc_badge}<span class="flag-arrow" style="margin-left:auto;font-size:11px;color:#aaa">▼ detalii</span>
           </div>
           <p style="font-size:13px;color:#444;margin:0 0 8px">{f.get('descriere','')}</p>
           <div style="font-size:12px;color:#777;display:flex;gap:16px;flex-wrap:wrap">
@@ -3820,26 +4077,25 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
               <a href="{_seap_url(contract_id, f.get('tip_procedura',''))}"
-                 target="_blank" onclick="event.stopPropagation()"
+                 target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
                  style="background:#0070C0;color:#fff;padding:6px 14px;border-radius:6px;
                         text-decoration:none;font-size:12px;font-weight:600">
                 🔍 Deschide în SEAP →
               </a>
               <a href="https://transparenta.eu/entities/{config['cui']}#achizitii"
-                 target="_blank" onclick="event.stopPropagation()"
+                 target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
                  style="background:#1E8449;color:#fff;padding:6px 14px;border-radius:6px;
                         text-decoration:none;font-size:12px;font-weight:600">
                 🌐 transparenta.eu →
               </a>
-              {btn_firma}
-            </div>
+              {btn_firma}</div>
             {_contracte_lista_html}
             {_firma_panel_html}
             <div style="margin-top:10px;padding:8px 12px;background:#F4F6F8;border-radius:6px;
                         font-size:11px;color:#666;line-height:1.6">
               ℹ️ <strong>Cum verifici în SEAP:</strong> apasă „Deschide în SEAP" de mai sus.
               Dacă pagina apare goală, caută manual pe
-              <a href="https://e-licitatie.ro/pub/" target="_blank" onclick="event.stopPropagation()"
+              <a href="https://e-licitatie.ro/pub/" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
                  style="color:#0070C0">e-licitatie.ro</a>
               după <strong>{_seap_nr(contract_id) or contract_id}</strong>
               (data: <strong>{f.get('data','')}</strong>, autoritate: <strong>Pantelimon</strong>).
@@ -3915,11 +4171,11 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
                 <div style="background:#f8f9fa;border-radius:8px;padding:12px">
                   <div style="font-size:22px;font-weight:800;color:{d["culoare"]}">{d["total"]}</div>
-                  <div style="font-size:11px;color:#777;text-transform:uppercase">Flags detectate</div>
+                  <div style="font-size:11px;color:#777;text-transform:uppercase">Semnale detectate</div>
                 </div>
                 <div style="background:#f8f9fa;border-radius:8px;padding:12px">
                   <div style="font-size:22px;font-weight:800;color:{d["culoare"]}">{_fmt_ron(d["valoare_totala"])}</div>
-                  <div style="font-size:11px;color:#777;text-transform:uppercase">Valoare totală expusă</div>
+                  <div style="font-size:11px;color:#777;text-transform:uppercase">Sumă asociată flagurilor*</div>
                 </div>
               </div>
               {"<h4 style='margin:12px 0 8px;font-size:13px;color:#555'>🏆 Top furnizori implicați</h4><div style='overflow-x:auto'><table style='width:100%;border-collapse:collapse;font-size:12px'><thead><tr style='background:" + d["culoare"] + ";color:#fff'><th style='padding:6px 10px'>#</th><th style='padding:6px 10px'>Firmă</th><th style='padding:6px 10px'>Valoare</th><th style='padding:6px 10px'>Pondere</th></tr></thead><tbody>" + furnizori_rows + "</tbody></table></div>" if furnizori_rows else ""}
@@ -3962,7 +4218,11 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
             "n_major": rd["n_major"],
             "n_mediu": rd["n_mediu"],
             "valoare_totala": rd["valoare_totala"],
-            "flags": rd["flags"][:20],
+            # Plafon 50 (max. real: 29 semnale/firmă). `n_total` e expus explicit
+            # ca panoul să poată spune când lista e trunchiată — înainte badge-urile
+            # numărau tot, iar lista era tăiată la 20, fără niciun indiciu.
+            "flags": rd["flags"][:50],
+            "n_total": len(rd["flags"]),
             "onrc": {
                 "reprezentanti": firme_onrc.get(rd["cui"], {}).get("reprezentanti", [])[:8],
                 "cod_inmatriculare": firme_onrc.get(rd["cui"], {}).get("cod_inmatriculare", ""),
@@ -4031,7 +4291,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
                     border-radius:6px;font-size:13px;color:#7D6608;margin-bottom:16px">
           <strong>⚠️ Date demonstrative:</strong> API-ul SEAP nu a putut fi accesat în această rulare.
           Contractele afișate sunt demonstrative. Verificați manual la
-          <a href="https://www.e-licitatie.ro/pub" target="_blank">e-licitatie.ro</a>.
+          <a href="https://www.e-licitatie.ro/pub" target="_blank" rel="noopener noreferrer">e-licitatie.ro</a>.
         </div>"""
 
     # ── §4.1 — Widget reconciliere ANAF ↔ SEAP ──────────────────────────────
@@ -4127,7 +4387,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
 
 <!-- SEO -->
 <meta name="description" content="{seo_description}">
-<meta name="keywords" content="transparență, Pantelimon, primărie, achiziții publice, SEAP, ANAF, monitorizare cetățenească, Ilfov, nereguli, raport">
+<meta name="keywords" content="transparență, Pantelimon, primărie, achiziții publice, SEAP, ANAF, monitorizare cetățenească, Ilfov, semnale de risc, raport">
 <meta name="author" content="Inițiativă cetățenească independentă">
 <link rel="canonical" href="https://transparenta-pantelimon.eu/raport_transparenta.html">
 
@@ -4155,6 +4415,16 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
          overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08)}}
   thead{{background:#00427A;color:#fff}}
   th{{padding:10px 12px;font-size:12px;text-align:left;text-transform:uppercase;letter-spacing:.5px}}
+  @media (max-width:640px) {{
+    html,body {{ max-width:100%; overflow-x:hidden; }}
+    .wrap {{ padding:16px 10px 48px; }}
+    table {{ display:block; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }}
+    .tp-reco-grid {{ grid-template-columns:1fr; }}
+    .tp-flag {{ overflow:hidden; padding:12px !important; }}
+    .tp-flag > div:first-child {{ flex-wrap:wrap; min-width:0; }}
+    .tp-flag > div:first-child > span {{ overflow-wrap:anywhere; max-width:100%; }}
+    .tp-flag .flag-arrow {{ margin-left:0 !important; }}
+  }}
 
   /* ---- PRINT / PDF ---- */
   @media print {{
@@ -4239,8 +4509,8 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
   [data-tp-theme="dark"] .tp-reco-gap span {{ color: #fca5a5; }}
   [data-tp-theme="dark"] .tp-reco-note   {{ background: #422006; border-left-color: #ca8a04; color: #fef3c7; }}
 </style>
-<link rel="alternate" type="application/atom+xml" title="Nereguli noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
-<script src="enhance.min.js" defer></script>
+<link rel="alternate" type="application/atom+xml" title="Semnale noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
+<script src="enhance.js" defer></script>
 </head>
 <body>
 <div style="background:linear-gradient(135deg,#00427A,#0070C0);color:#fff;padding:24px 32px">
@@ -4273,11 +4543,15 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
     <div style="display:flex;gap:24px;margin-top:16px;flex-wrap:wrap">
       <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
         <div style="font-size:22px;font-weight:800;color:#{"C0392B" if flags else "27AE60"}">{len(flags)}</div>
-        <div style="font-size:11px;opacity:.8">Nereguli detectate</div>
+        <div style="font-size:11px;opacity:.8">Semnale automate</div>
       </div>
       <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
         <div style="font-size:22px;font-weight:800;color:{"#FF6B35" if flags_noi else "#27AE60"}">{len(flags_noi)}</div>
-        <div style="font-size:11px;opacity:.8">Flags Noi (față de ultima rulare)</div>
+        <div style="font-size:11px;opacity:.8">Semnale noi (față de ultima rulare)</div>
+      </div>
+      <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
+        <div style="font-size:22px;font-weight:800">{n_contracte_semnale}</div>
+        <div style="font-size:11px;opacity:.8">Contracte unice cu semnale</div>
       </div>
       <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
         <div style="font-size:22px;font-weight:800">{len(contracte)}</div>
@@ -4293,12 +4567,26 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
 
 <div class="wrap">
 
+  <div role="note" style="margin:24px 0 18px;background:#EBF5FB;border-left:4px solid #0070C0;
+       border-radius:0 8px 8px 0;padding:14px 18px;color:#1F3B53;font-size:13px;line-height:1.6">
+    <strong>Indicatori, nu verdicte.</strong> Semnalele sunt euristice și trebuie verificate în
+    documentele-sursă. Același contract poate genera mai multe semnale, deci sumele asociate
+    se pot suprapune și nu reprezintă prejudicii. Pragurile pentru achiziția directă sunt
+    <strong>{prag_servicii_fmt} RON</strong>
+    fără TVA pentru produse/servicii și
+    <strong>{prag_lucrari_fmt} RON</strong>
+    fără TVA pentru lucrări.
+    <a href="despre.html#metodologie" style="color:#005A9C;font-weight:700">Metodologie</a> ·
+    <a href="{PRAGURI_LEGALE_SURSA}" target="_blank" rel="noopener noreferrer"
+       style="color:#005A9C;font-weight:700">Legea 98/2016</a>
+  </div>
+
   <!-- BUGET -->
   <h2 style="color:#00427A;margin:28px 0 16px">📊 Date Bugetare (ANAF/MF)</h2>
   {budget_html if budget_html else '<p style="color:#777;font-size:13px">Date buget indisponibile.</p>'}
 
   <!-- RED FLAGS -->
-  <h2 style="color:#00427A;margin:28px 0 8px">🚩 Nereguli Detectate ({len(flags)})</h2>
+  <h2 style="color:#00427A;margin:28px 0 8px">🚩 Semnale de risc automate ({len(flags)})</h2>
   <p style="font-size:13px;color:#777;margin:0 0 16px">
     {sum(1 for f in flags if f['severitate']=='CRITIC')} CRITIC · {sum(1 for f in flags if f['severitate']=='MAJOR')} MAJOR · {sum(1 for f in flags if f['severitate']=='MEDIU')} MEDIU</p>
   {nota_demo_msg}
@@ -4307,16 +4595,17 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
   <details style="margin-bottom:20px;background:#F4F6F8;border-radius:10px;padding:14px 18px;border:1px solid #DDE1E7">
     <summary style="cursor:pointer;font-size:14px;font-weight:700;color:#00427A;list-style:none;display:flex;align-items:center;gap:8px">
       <span style="font-size:18px">📊</span>
-      Analiză complexă pe categorie de nereguli
+      Analiză pe categorii de semnale
       <span style="margin-left:auto;font-size:12px;color:#999;font-weight:400">▼ extinde</span>
     </summary>
     <p style="font-size:12px;color:#777;margin:10px 0 14px">
-      Apasă pe o categorie pentru a vedea statistici detaliate: top furnizori implicați, valori totale expuse și evoluție lunară.
+      Apasă pe o categorie pentru statistici descriptive. Sumele asociate flagurilor pot
+      include același contract de mai multe ori și nu reprezintă prejudicii sau cheltuieli nelegale.
     </p>
     {analiza_per_tip_html}
   </details>
 
-  {flags_html if flags_html else '<div style="background:#E8F5E9;border-left:4px solid #27AE60;padding:14px 18px;border-radius:0 8px 8px 0"><span style="color:#27AE60;font-weight:700">✅ Nicio neregulă detectată în această perioadă.</span></div>'}
+  {flags_html if flags_html else '<div style="background:#E8F5E9;border-left:4px solid #27AE60;padding:14px 18px;border-radius:0 8px 8px 0"><span style="color:#27AE60;font-weight:700">✅ Niciun semnal automat detectat în această perioadă.</span></div>'}
 
   <!-- HCL STATISTICI -->
   <h2 style="color:#00427A;margin:28px 0 8px">📋 Hotărâri Consiliu Local</h2>
@@ -4466,10 +4755,19 @@ function showFirmaContracts(firma, evt) {{
   }}
 
   var contracte = _getContracte();
-  var firmaLow = firma.toLowerCase();
+  var _nfc = _nzFirma(firma);
+  // Exporturile trimestriale data.gov.ro republica acelasi contract cu id-uri
+  // diferite. Fara dedup, DAV GARDEN aparea cu „3 contracte · 10.39 mil. RON",
+  // desi doua randuri erau acelasi contract de 4.62 mil. (real: 2 / 5.77 mil.).
+  var _vazuteC = {{}};
   var matches = contracte.filter(function(c) {{
-    var cl = (c.firma || '').toLowerCase();
-    return cl.indexOf(firmaLow) !== -1 || firmaLow.indexOf(cl.substring(0, 12)) !== -1;
+    var cl = _nzFirma(c.firma || '');
+    if (!cl || !_nfc) return false;
+    if (!(cl === _nfc || cl.indexOf(_nfc) !== -1 || _nfc.indexOf(cl) !== -1)) return false;
+    var k = cl + '|' + (c.data || '') + '|' + Math.round(c.valoare || 0) + '|' + String(c.titlu || '').slice(0, 60);
+    if (_vazuteC[k]) return false;
+    _vazuteC[k] = 1;
+    return true;
   }});
   matches.sort(function(a, b) {{ return b.data.localeCompare(a.data); }});
 
@@ -4508,13 +4806,13 @@ function showFirmaContracts(firma, evt) {{
     var nr = seapNr(c.id);
     var url = seapUrl(c.id);
     var seapCell = nr
-      ? '<a href="' + url + '" target="_blank" onclick="event.stopPropagation()" '
+      ? '<a href="' + url + '" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" '
         + 'style="color:#0070C0;font-weight:700;text-decoration:none;white-space:nowrap" '
         + 'title="Deschide în SEAP">' + nr + ' ↗</a>'
       : '–';
     var ofCell = '<span style="color:' + ofColor + ';font-weight:700">' + (c.ofertanti || '?') + '</span>';
     if (c.ofertanti === 2) {{
-      ofCell += ' <a href="' + url + '" target="_blank" onclick="event.stopPropagation()" '
+      ofCell += ' <a href="' + url + '" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" '
         + 'style="font-size:10px;color:#0070C0;text-decoration:none" '
         + 'title="Cel de-al doilea ofertant — vizualizează în SEAP">→ SEAP</a>';
     }}
@@ -4557,6 +4855,18 @@ function showFirmaContracts(firma, evt) {{
 }}
 
 // ── Profil complet firmă ─────────────────────────────────────────────────────
+function _esc(s) {{
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {{
+    return {{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[c];
+  }});
+}}
+// Normalizare pentru potrivirea numelor de firme (SEAP livrează nume „murdare":
+// spații duble, diacritice, „&" vs „and", sufixe SRL/S.A. inconsistente).
+function _nzFirma(s) {{
+  var t = String(s == null ? '' : s).toLowerCase();
+  if (t.normalize) t = t.normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
+  return t.replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, ' ').replace(/\\s+/g, ' ').trim();
+}}
 var _riscData = null;
 function _getRisc() {{
   if (!_riscData) {{
@@ -4566,11 +4876,39 @@ function _getRisc() {{
   return _riscData;
 }}
 
+// Trimite utilizatorul in lista principala, filtrata pe firma respectiva.
+function _filtreazaFurnizor(firma) {{
+  var sel = document.getElementById('tp-supplier');
+  if (sel) {{
+    var optiune = Array.from(sel.options).find(function(o) {{ return o.value === firma; }});
+    if (optiune) {{
+      sel.value = firma;
+      sel.dispatchEvent(new Event('change', {{bubbles: true}}));
+      var toolbar = document.querySelector('.tp-toolbar');
+      if (toolbar) toolbar.scrollIntoView({{behavior: 'smooth', block: 'start'}});
+      return;
+    }}
+  }}
+  // fallback fara enhance.js: cautare prin hash
+  location.hash = 'supplier=' + encodeURIComponent(firma);
+  location.reload();
+}}
+
 function openFirmaPanel(firma, evt) {{
   if (evt) evt.stopPropagation();
   var rd   = _getRisc()[firma] || {{}};
+  var _nf  = _nzFirma(firma);
+  // Exporturile trimestriale data.gov.ro repetă același contract în mai multe
+  // trimestre cu id-uri diferite. Fără deduplicare, valoarea firmei se dubla.
+  var _vazute = {{}};
   var contracte = _getContracte().filter(function(c) {{
-    return (c.firma||'').toLowerCase().indexOf(firma.toLowerCase().substring(0,12)) !== -1;
+    var cn = _nzFirma(c.firma||'');
+    if (!cn || !_nf) return false;
+    if (!(cn === _nf || cn.indexOf(_nf) !== -1 || _nf.indexOf(cn) !== -1)) return false;
+    var k = cn + '|' + (c.data||'') + '|' + Math.round(c.valoare||0) + '|' + String(c.titlu||'').slice(0,60);
+    if (_vazute[k]) return false;
+    _vazute[k] = 1;
+    return true;
   }});
   var cui  = rd.cui || '';
   var scor = rd.scor || 0;
@@ -4583,14 +4921,36 @@ function openFirmaPanel(firma, evt) {{
   var totalVal = contracte.reduce(function(s,c){{return s+(c.valoare||0);}},0);
   function fmtV(v) {{ return v>=1000000?(v/1000000).toFixed(2)+' mil. RON':Math.round(v/1000)+'K RON'; }}
 
+  // Lista din panou e plafonata server-side; badge-urile numara toate semnalele.
+  // Expunem diferenta explicit, altfel „29 CRITIC/MAJOR/MEDIU" langa o lista de 20
+  // arata ca o contradictie (vezi AUDIT 01.07.2026).
+  var _nTotal   = rd.n_total || (rd.flags||[]).length;
+  var _nAscunse = Math.max(0, _nTotal - (rd.flags||[]).length);
+
   var flagsHtml = '';
   (rd.flags||[]).forEach(function(f) {{
     var fColor = f.severitate==='CRITIC'?'#C0392B':f.severitate==='MAJOR'?'#E67E22':'#F39C12';
-    flagsHtml += '<div style="border-left:3px solid '+fColor+';padding:6px 10px;margin-bottom:6px;background:#fafafa;border-radius:0 6px 6px 0">'
+    var anchor = f.anchor || '';
+    // Rândurile sunt acum <a> reale spre neregula detaliată din lista principală.
+    // Înainte erau <div>-uri fără handler: arătau ca butoane, dar nu făceau nimic.
+    var openTag = anchor
+      ? '<a href="#'+anchor+'" onclick="closeFirmaPanel()" '
+        + 'style="display:block;text-decoration:none;color:inherit;cursor:pointer;'
+      : '<div style="';
+    var closeTag = anchor ? '</a>' : '</div>';
+    flagsHtml += openTag
+      + 'border-left:3px solid '+fColor+';padding:8px 10px;margin-bottom:6px;background:#fafafa;border-radius:0 6px 6px 0">'
       + '<span style="font-size:10px;font-weight:700;color:'+fColor+'">'+f.severitate+'</span>'
-      + ' <span style="font-size:12px;font-weight:600">'+f.titlu+'</span>'
-      + '<div style="font-size:11px;color:#777;margin-top:2px">'+fmtV(f.valoare||0)+' · '+f.data+'</div>'
-      + '</div>';
+      + ' <span style="font-size:12px;font-weight:600">'+_esc(f.titlu)+'</span>'
+      + (f.descriere
+          ? '<div style="font-size:11.5px;color:#444;margin-top:4px;line-height:1.45">'+_esc(f.descriere)+'</div>'
+          : '')
+      + '<div style="font-size:11px;color:#777;margin-top:4px">'
+        + fmtV(f.valoare||0) + ' · ' + (f.data||'—')
+        + (f.contract_id ? ' · <span style="font-family:monospace">'+_esc(f.contract_id)+'</span>' : '')
+        + (anchor ? ' · <span style="color:#0070C0;font-weight:600">vezi neregula →</span>' : '')
+      + '</div>'
+      + closeTag;
   }});
 
   var contracteHtml = '';
@@ -4605,7 +4965,19 @@ function openFirmaPanel(firma, evt) {{
 
   var termeneUrl = cui ? 'https://termene.ro/firma/'+cui.replace(/^RO/i,'') : '#';
   var onrcUrl    = cui ? 'https://www.recom.ro/companies_ro_company_detail.aspx?id='+cui.replace(/^RO/i,'') : '#';
-  var seapUrl    = 'https://e-licitatie.ro/pub/notices/da-direct-acquisition/list/0/0';
+  // SEAP: linkul generic /list/0/0 deschidea o pagină goală — pentru utilizator
+  // arăta ca un buton stricat. Mergem direct la anunțul contractului dacă avem
+  // un contract_id numeric; altfel la căutarea SEAP după numele firmei.
+  var seapId = '';
+  (rd.flags||[]).some(function(f) {{
+    var m = String(f.contract_id||'').match(/(\\d{{4,}})\\s*$/);
+    if (m) {{ seapId = m[1]; return true; }}
+    return false;
+  }});
+  var seapUrl = seapId
+    ? 'https://e-licitatie.ro/pub/notices/da-direct-acquisition/view/' + seapId
+    : 'https://e-licitatie.ro/pub/notices/contract-notices/list/0/0?text=' + encodeURIComponent(firma);
+  var seapLabel = seapId ? '📋 Anunț SEAP →' : '📋 Caută în SEAP →';
 
   document.getElementById('tp-fp-body').innerHTML =
     '<div style="background:#FFF3E0;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">'
@@ -4617,13 +4989,23 @@ function openFirmaPanel(firma, evt) {{
     + '<span class="tp-risc-badge" style="background:#C0392B">'+( rd.n_critic||0)+' CRITIC</span> '
     + '<span class="tp-risc-badge" style="background:#E67E22">'+( rd.n_major||0)+' MAJOR</span> '
     + '<span class="tp-risc-badge" style="background:#F39C12">'+( rd.n_mediu||0)+' MEDIU</span>'
-    + '<div style="font-size:11px;color:#555;margin-top:6px">Valoare totală expusă: <strong>'+fmtV(rd.valoare_totala||0)+'</strong></div>'
+    // Valoarea afișată este suma contractelor DISTINCTE ale firmei cu Primăria.
+    // Înainte se afișa rd.valoare_totala = suma valorilor tuturor flag-urilor,
+    // în care același contract era numărat de 3-4 ori (o dată per semnal) —
+    // rezulta o cifră de câteva ori mai mare decât realitatea.
+    + '<div style="font-size:11px;color:#555;margin-top:6px">Valoare contracte cu Primăria: <strong>'
+      + (contracte.length ? fmtV(totalVal) : '—')
+      + '</strong>' + (contracte.length ? ' <span style="color:#888">('+contracte.length+' contracte)</span>' : '')
+    + '</div>'
+    + '<div style="font-size:10.5px;color:#888;margin-top:2px" '
+      + 'title="Suma valorilor tuturor semnalelor. Un contract poate genera mai multe semnale, deci aceeași sumă poate fi numărată de mai multe ori.">'
+      + 'Sumă cumulată a semnalelor: '+fmtV(rd.valoare_totala||0)+' <span style="cursor:help">ⓘ</span></div>'
     + '</div></div>'
 
     + '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">'
-    + '<a href="'+termeneUrl+'" target="_blank" style="background:#0070C0;color:#fff;padding:6px 12px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">🔍 termene.ro →</a>'
-    + '<a href="'+onrcUrl+'" target="_blank" style="background:#1E8449;color:#fff;padding:6px 12px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">🏛 ONRC →</a>'
-    + '<a href="'+seapUrl+'" target="_blank" style="background:#8E44AD;color:#fff;padding:6px 12px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">📋 SEAP →</a>'
+    + '<a href="'+termeneUrl+'" target="_blank" rel="noopener noreferrer" style="background:#0070C0;color:#fff;padding:6px 12px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">🔍 termene.ro →</a>'
+    + '<a href="'+onrcUrl+'" target="_blank" rel="noopener noreferrer" style="background:#1E8449;color:#fff;padding:6px 12px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">🏛 ONRC →</a>'
+    + '<a href="'+seapUrl+'" target="_blank" rel="noopener noreferrer" style="background:#8E44AD;color:#fff;padding:6px 12px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">'+seapLabel+'</a>'
     + '</div>'
 
     + (rd.onrc && rd.onrc.reprezentanti && rd.onrc.reprezentanti.length > 0
@@ -4636,7 +5018,7 @@ function openFirmaPanel(firma, evt) {{
           }}).join('');
           var cod = rd.onrc.cod_inmatriculare || '';
           var onrcLink = cod
-            ? '<a href="https://www.recom.ro/companies_ro_company_detail.aspx?id='+encodeURIComponent(cod)+'" target="_blank" style="color:#0070C0;font-size:11px">recom.ro →</a>'
+            ? '<a href="https://www.recom.ro/companies_ro_company_detail.aspx?id='+encodeURIComponent(cod)+'" target="_blank" rel="noopener noreferrer" style="color:#0070C0;font-size:11px">recom.ro →</a>'
             : '';
           return '<h4 style="margin:16px 0 8px;font-size:13px;color:#1E8449">🏛 Reprezentanți legali (ONRC)</h4>'
             + '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse">'
@@ -4655,21 +5037,31 @@ function openFirmaPanel(firma, evt) {{
               + (op.numar_reg_com ? '<div style="margin-bottom:4px">Nr. reg. com.: <strong>' + op.numar_reg_com + '</strong></div>' : '')
               + (op.ultima_declaratie ? '<div style="margin-bottom:8px;color:#777">Ultima declarație fiscală: ' + op.ultima_declaratie + '</div>' : '')
               + '<div style="margin-top:6px">'
-              + '<a href="https://termene.ro/firma/' + cuiClean + '" target="_blank" style="color:#0070C0;font-weight:600;font-size:12px">📋 Administratori pe termene.ro →</a>'
+              + '<a href="https://termene.ro/firma/' + cuiClean + '" target="_blank" rel="noopener noreferrer" style="color:#0070C0;font-weight:600;font-size:12px">📋 Administratori pe termene.ro →</a>'
               + ' &nbsp;·&nbsp; '
-              + '<a href="https://www.recom.ro/companies_ro_company_detail.aspx?id=' + cuiClean + '" target="_blank" style="color:#1E8449;font-size:12px">🏛 recom.ro →</a>'
+              + '<a href="https://www.recom.ro/companies_ro_company_detail.aspx?id=' + cuiClean + '" target="_blank" rel="noopener noreferrer" style="color:#1E8449;font-size:12px">🏛 recom.ro →</a>'
               + '</div>'
               + '<div style="font-size:10px;color:#aaa;margin-top:6px">Date ONRC complete: disponibile după procesare locală</div>'
               + '</div>';
           }} else {{
             return '<div style="margin:12px 0;padding:8px 12px;background:#F4F6F8;border-radius:6px;font-size:11px;color:#777">'
-              + '🏛 Reprezentanți legali: <a href="' + onrcUrl + '" target="_blank" style="color:#0070C0">verifică pe recom.ro →</a>'
-              + ' sau <a href="https://termene.ro/firma/' + cui.replace(/^RO/i,'') + '" target="_blank" style="color:#0070C0">termene.ro →</a>'
+              + '🏛 Reprezentanți legali: <a href="' + onrcUrl + '" target="_blank" rel="noopener noreferrer" style="color:#0070C0">verifică pe recom.ro →</a>'
+              + ' sau <a href="https://termene.ro/firma/' + cui.replace(/^RO/i,'') + '" target="_blank" rel="noopener noreferrer" style="color:#0070C0">termene.ro →</a>'
               + '</div>';
           }}
         }})())
 
-    + (flagsHtml ? '<h4 style="margin:0 0 8px;font-size:13px;color:#C0392B">🚩 Nereguli detectate</h4>' + flagsHtml : '')
+    + (flagsHtml
+      ? '<h4 style="margin:16px 0 8px;font-size:13px;color:#C0392B">🚩 Semnale de risc ('+_nTotal+')</h4>'
+        + '<div style="font-size:11px;color:#777;margin:-4px 0 8px">Apasă pe un semnal pentru a vedea analiza completă în raport.</div>'
+        + flagsHtml
+        + (_nAscunse > 0
+            ? '<div style="font-size:11.5px;color:#555;padding:8px 10px;background:#F4F6F8;border-radius:6px">'
+              + 'Încă <strong>'+_nAscunse+'</strong> semnale pentru această firmă nu încap în panou. '
+              + '<a href="#" onclick="closeFirmaPanel();_filtreazaFurnizor('+JSON.stringify(firma).replace(/"/g,'&quot;')+');return false;" style="color:#0070C0;font-weight:600">Vezi toate în raport →</a>'
+              + '</div>'
+            : '')
+      : '')
 
     + (contracteHtml
       ? '<h4 style="margin:16px 0 8px;font-size:13px;color:#00427A">📄 Contracte cu Primăria</h4>'
@@ -4696,9 +5088,9 @@ function closeFirmaPanel() {{
 document.addEventListener('keydown', function(e) {{ if (e.key==='Escape') closeFirmaPanel(); }});
 </script>
 <footer style="background:#00427A;color:rgba(255,255,255,.7);text-align:center;padding:16px;font-size:12px;margin-top:40px">
-  <p>Surse date: <a href="https://transparenta.eu/entities/{config['cui']}#achizitii" target="_blank" style="color:#FF6B35">transparenta.eu</a> (ANAF/MF) &nbsp;·&nbsp;
-     <a href="https://www.e-licitatie.ro/pub" target="_blank" style="color:#FF6B35">e-licitatie.ro (SEAP)</a> &nbsp;·&nbsp;
-     <a href="https://www.primariapantelimon.ro" target="_blank" style="color:#FF6B35">primariapantelimon.ro</a></p>
+  <p>Surse date: <a href="https://transparenta.eu/entities/{config['cui']}#achizitii" target="_blank" rel="noopener noreferrer" style="color:#FF6B35">transparenta.eu</a> (ANAF/MF) &nbsp;·&nbsp;
+     <a href="https://www.e-licitatie.ro/pub" target="_blank" rel="noopener noreferrer" style="color:#FF6B35">e-licitatie.ro (SEAP)</a> &nbsp;·&nbsp;
+     <a href="https://www.primariapantelimon.ro" target="_blank" rel="noopener noreferrer" style="color:#FF6B35">primariapantelimon.ro</a></p>
   <p style="margin-top:6px;font-size:11px;opacity:.7">
     Raport generat automat de <strong>monitor_pantelimon.py</strong> &nbsp;·&nbsp;
     Inițiativă cetățenească independentă &nbsp;·&nbsp;
@@ -4706,6 +5098,7 @@ document.addEventListener('keydown', function(e) {{ if (e.key==='Escape') closeF
   </p>
 <script type="application/json" id="tp-data">{raport_json_embedded}</script>
 </footer>
+<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>"""
     return html
@@ -4738,7 +5131,7 @@ def genereaza_contracte_csv(contracte_export: list) -> str:
 
 
 def genereaza_feed_atom(nereguli: list, data_generare: datetime) -> str:
-    """Generează feed Atom cu cele mai noi N=20 nereguli (CRITIC > MAJOR > MEDIU, apoi valoare descendentă)."""
+    """Generează feed Atom cu cele mai noi N=20 semnale automate."""
     import html as html_mod
     from datetime import timezone
 
@@ -4757,7 +5150,7 @@ def genereaza_feed_atom(nereguli: list, data_generare: datetime) -> str:
 
     entries = []
     for i, n in enumerate(sorted_nereguli, 1):
-        titlu = html_mod.escape(str(n.get("titlu", "Nereguă")))
+        titlu = html_mod.escape(str(n.get("titlu", "Semnal")))
         sev = html_mod.escape(str(n.get("severitate", "MEDIU")))
         furnizor = html_mod.escape(str(n.get("furnizor", "") or ""))
         try:
@@ -4790,7 +5183,7 @@ def genereaza_feed_atom(nereguli: list, data_generare: datetime) -> str:
     feed = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<feed xmlns="http://www.w3.org/2005/Atom">\n'
-        '  <title>Transparența Pantelimon — Nereguli detectate</title>\n'
+        '  <title>Transparența Pantelimon — Semnale de risc automate</title>\n'
         '  <subtitle>Monitorizare cetățenească automată a achizițiilor publice</subtitle>\n'
         f'  <link href="{BASE}/feed.xml" rel="self"/>\n'
         f'  <link href="{BASE}/raport_transparenta.html"/>\n'
@@ -4813,7 +5206,7 @@ def trimite_email_alerta(flags_noi: list, raport_html: str, config: dict):
         print("  [Email] Emailul nu e configurat — se sare.")
         return
 
-    subiect = f"🚩 {len(flags_noi)} nereguli noi — Transparență Pantelimon {datetime.now().strftime('%d.%m.%Y')}"
+    subiect = f"🚩 {len(flags_noi)} semnale noi — Transparență Pantelimon {datetime.now().strftime('%d.%m.%Y')}"
 
     flags_text = "\n".join([
         f"[{f['severitate']}] {f['titlu']}\n  → {f['descriere'][:200]}"
@@ -4824,7 +5217,7 @@ def trimite_email_alerta(flags_noi: list, raport_html: str, config: dict):
 Monitor Transparență Bugetară — Pantelimon
 ==========================================
 
-{len(flags_noi)} nereguli noi detectate față de ultima rulare:
+{len(flags_noi)} semnale automate noi față de ultima rulare:
 
 {flags_text}
 
@@ -4877,14 +5270,14 @@ def _detect_flag_simple(c: dict, firma_sums: dict) -> str:
     Replică logica _detectFlag() din transparenta_pantelimon.html.
     Folosit pentru generarea statică a rândurilor tabelului (§1.1).
     """
-    _PRAG = 130_000
     v = float(c.get('valoare', 0) or 0)
-    if v > _PRAG:
+    prag, categorie = _prag_pentru_contract(c)
+    if v > prag:
         return 'CRITIC'
-    if v > _PRAG * 0.97:
+    if v > prag * 0.97:
         return 'MAJOR'
     firma = c.get('firma', '')
-    if firma_sums.get(firma, 0) > _PRAG and v > _PRAG * 0.5:
+    if firma_sums.get((firma, categorie), 0) > prag and v > prag * 0.5:
         return 'MAJOR'
     if (c.get('ofertanti', 0) or 0) == 1 and v > 50_000:
         return 'MEDIU'
@@ -4907,7 +5300,9 @@ def render_contracte_tbody_rows(contracts: list, top_n: int = 20) -> str:
     firma_sums: dict = {}
     for c in contracts:
         firma = c.get('firma', '')
-        firma_sums[firma] = firma_sums.get(firma, 0) + float(c.get('valoare', 0) or 0)
+        _, categorie = _prag_pentru_contract(c)
+        key = (firma, categorie)
+        firma_sums[key] = firma_sums.get(key, 0) + float(c.get('valoare', 0) or 0)
 
     # Top N după valoare descrescătoare
     top = sorted(contracts, key=lambda c: float(c.get('valoare', 0) or 0), reverse=True)[:top_n]
@@ -4918,6 +5313,7 @@ def render_contracte_tbody_rows(contracts: list, top_n: int = 20) -> str:
     for c in top:
         v = float(c.get('valoare', 0) or 0)
         titlu = _html_mod.escape(str(c.get('titlu', '-'))[:80])
+        tip_procedura = _html_mod.escape(str(c.get('tip') or 'Procedură nespecificată'))
         ofertanti = c.get('ofertanti') or '—'
         flag = _detect_flag_simple(c, firma_sums)
 
@@ -4930,7 +5326,7 @@ def render_contracte_tbody_rows(contracts: list, top_n: int = 20) -> str:
             f'<tr class="contract-row" data-flag="{data_flag}">'
             f'<td>{prefix}{titlu}</td>'
             f'<td><strong>{v_fmt}</strong></td>'
-            f'<td><span class="badge red">Cumpărare directă</span></td>'
+            f'<td><span class="badge red">{tip_procedura}</span></td>'
             f'<td{ofertanti_attr}>{ofertanti}</td>'
             f'<td><span class="sev {SEV_CLS[flag]}">{flag}</span></td>'
             f'<td><span class="badge green">Atribuit</span></td>'
@@ -4981,12 +5377,6 @@ def actualizeaza_tabel_contracte(contracte_export: list) -> None:
           f'(top {min(20, len(contracte_export))} dupa valoare)')
 
 
-_LUCR_KEYWORDS = [
-    'lucrari', 'reparatii', 'reabilitare', 'modernizare',
-    'constructi', 'construire', 'executie', 'reamenajare', 'amenajare', 'deviere',
-]
-
-
 def _categorizeaza_contracte_breakdown(contracte: list, an: int) -> dict:
     """Calculează breakdownul deduplicat al contractelor pentru un an.
 
@@ -5014,7 +5404,7 @@ def _categorizeaza_contracte_breakdown(contracte: list, an: int) -> dict:
             continue
         key = (titlu_can, firma)
         val = float(c.get('valoare_ron') or c.get('valoare') or 0)
-        if any(kw in titlu_can for kw in _LUCR_KEYWORDS):
+        if _este_contract_lucrari(c):
             if key not in lucr or val > lucr[key]:
                 lucr[key] = val
         else:
@@ -5135,6 +5525,33 @@ def actualizeaza_kpi_seap(contracte_export: list) -> None:
           f' Srv: {_ro_int(bkd["srv_total"])} RON)')
 
 
+def actualizeaza_kpi_buget_index(budget: dict) -> None:
+    """Sincronizează KPI-ul de cheltuieli din index.html cu sursa ANAF/MF."""
+    import re as _re_index
+    valoare = budget.get("cheltuieli_mil_ron")
+    an = budget.get("an")
+    if valoare in (None, "") or not an:
+        return
+    index_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
+    if not os.path.exists(index_path):
+        return
+    with open(index_path, encoding="utf-8") as handle:
+        content = handle.read()
+    valoare_text = f"{float(valoare):.2f}".replace(".", ",").rstrip("0").rstrip(",")
+    content_nou = _re_index.sub(
+        r'(<span class="v" id="idx-cheltuieli">)[^<]*(</span>)',
+        rf'\g<1>{valoare_text}M RON\2', content, count=1,
+    )
+    content_nou = _re_index.sub(
+        r'(<span class="l" id="idx-cheltuieli-label">)Cheltuieli \d{4}(</span>)',
+        rf'\g<1>Cheltuieli {an}\2', content_nou, count=1,
+    )
+    if content_nou != content:
+        with open(index_path, "w", encoding="utf-8") as handle:
+            handle.write(content_nou)
+        print(f"  [OK] index.html: cheltuieli {an} sincronizate ({valoare_text}M RON)")
+
+
 def actualizeaza_contoare_analiza(contracte_export: list) -> None:
     """
     BUG-10: Actualizează contoarele „N contracte · YYYY" din secțiunile de analiză
@@ -5232,9 +5649,9 @@ def genereaza_og_image(n_flags: int, n_critic: int, valoare_mil: float,
     d.text((40, 40), 'Transparența Pantelimon', fill='#94a3b8', font=_font_reg(30))
     d.text((40, 90), 'transparenta-pantelimon.eu', fill='#64748b', font=_font_reg(22))
 
-    # Numărul mare de nereguli
+    # Numărul de semnale automate
     d.text((40, 150), f'{n_flags}', fill='#dc2626', font=_font(130))
-    d.text((40, 290), 'nereguli detectate', fill='#ffffff', font=_font(44))
+    d.text((40, 290), 'semnale automate', fill='#ffffff', font=_font(44))
 
     # Statistici secundare
     d.text((40, 370), f'{n_critic} CRITICE', fill='#f59e0b', font=_font(36))
@@ -5246,11 +5663,11 @@ def genereaza_og_image(n_flags: int, n_critic: int, valoare_mil: float,
         d.text((55, 490), f'Scor transparență: {scor}/100', fill='#ffffff', font=_font_reg(30))
 
     # Siglă
-    d.text((900, 560), '🏛️ USR Pantelimon', fill='#475569', font=_font_reg(22))
+    d.text((750, 560), 'Inițiativă civică independentă', fill='#475569', font=_font_reg(22))
 
     try:
         img.save(output, 'PNG', optimize=True)
-        print(f"  [OK] og-image.png generat ({n_flags} nereguli, {n_critic} critice)")
+        print(f"  [OK] og-image.png generat ({n_flags} semnale, {n_critic} critice)")
         return True
     except Exception as e:
         print(f"  [WARN] og-image.png: eroare la salvare: {e}")
@@ -5298,6 +5715,7 @@ def genereaza_press_kit(
     val_total = sum(c.get("valoare_ron", 0) for c in contracte)
     val_mil = round(val_total / 1_000_000, 2)
     n_contracte = len(contracte)
+    n_contracte_semnale = numara_contracte_cu_semnale(nereguli, contracte)
     scor_val = scor.get("scor") if scor else None
 
     # ── Top 10 nereguli (sortate: CRITIC > MAJOR > MEDIU, apoi valoare) ──
@@ -5338,7 +5756,7 @@ def genereaza_press_kit(
 
     # ── Structura JSON ────────────────────────────────────────────
     press_kit = {
-        "schema_version":  "1.0",
+        "schema_version":  "1.1",
         "generated_at":    azi_iso,
         "uat": {
             "name":   config.get("nume_entitate", ""),
@@ -5347,6 +5765,8 @@ def genereaza_press_kit(
         },
         "statistici": {
             "total_nereguli":  n_total,
+            "total_semnale":    n_total,
+            "contracte_cu_semnale": n_contracte_semnale,
             "critice":         n_critic,
             "majore":          n_major,
             "medii":           n_mediu,
@@ -5356,6 +5776,7 @@ def genereaza_press_kit(
             "scor_transparenta": scor_val,
         },
         "top_nereguli":  top_nereguli_export,
+        "top_semnale":   top_nereguli_export,
         "top_firme":     top_firme_export,
         "date_deschise": {
             "api_json":    f"{BASE_URL}/raport.json",
@@ -5363,13 +5784,12 @@ def genereaza_press_kit(
             "rss_feed":    f"{BASE_URL}/feed.xml",
             "harta":       f"{BASE_URL}/harta.html",
         },
-        "contact":       config.get("email_to", ""),
+        "contact":       config.get("contact_url", ""),
         "site":          BASE_URL,
         "disclaimer":    (
             "Toate datele sunt fapte publice (SEAP, ANAF, ONRC). "
-            "Site-ul nu face afirmații despre intenții sau vinovăție — "
-            "doar afișează statistici și legi posibil încălcate. "
-            "Concluziile sunt la latitudinea cititorului."
+            "Semnalele sunt indicatori euristici, pot avea suprapuneri și nu reprezintă "
+            "constatări juridice, prejudicii sau afirmații despre intenții ori vinovăție."
         ),
     }
 
@@ -5397,13 +5817,14 @@ Monitorizare cetățenească automată a achizițiilor publice — {config.get('
 
 | Indicator | Valoare |
 |---|---|
-| Nereguli detectate total | {n_total} |
+| Semnale automate totale | {n_total} |
+| Contracte unice cu semnale | {n_contracte_semnale} |
 | Critice / Majore / Medii | {n_critic} / {n_major} / {n_mediu} |
 | Contracte analizate | {n_contracte} |
 | Valoare totală contracte | {val_mil} M RON |
 | Scor transparență | {scor_val if scor_val is not None else 'N/A'}/100 |
 
-## Top 5 nereguli (severitate + valoare)
+## Top 5 semnale (severitate + valoare)
 
 {top5_md}
 
@@ -5420,7 +5841,7 @@ Monitorizare cetățenească automată a achizițiilor publice — {config.get('
 
 ## Contact
 
-{config.get('email_to', '[contact]')}
+{config.get('contact_url', '[contact]')}
 
 ## Metodologie completă
 
@@ -5428,7 +5849,7 @@ Monitorizare cetățenească automată a achizițiilor publice — {config.get('
 
 ## Disclaimer
 
-Toate datele sunt fapte publice. Concluziile sunt la latitudinea cititorului.
+Semnalele sunt indicatori euristici și nu reprezintă constatări juridice sau prejudicii.
 
 ---
 *Generat automat de monitor_pantelimon.py la {azi_iso}*
@@ -5438,7 +5859,7 @@ Toate datele sunt fapte publice. Concluziile sunt la latitudinea cititorului.
         fout.write(md)
 
     print(f"  ✓ Press kit generat: press_kit.json + press_kit.md "
-          f"(top {len(top_nereguli_export)} nereguli, top {len(top_firme_export)} firme)")
+          f"(top {len(top_nereguli_export)} semnale, top {len(top_firme_export)} firme)")
     return press_kit
 
 
@@ -5697,12 +6118,14 @@ def genereaza_pagina_furnizor(
     for idx, f in enumerate(flags_firma, 1):
         culoare = culori.get(f.get("severitate", ""), "#999")
         emoji = emoji_sev.get(f.get("severitate", ""), "⚪")
+        descriere_text = re.sub(r"<[^>]+>", "", str(f.get("descriere", "")))
+        descriere_safe = html_mod.escape(descriere_text[:400])
         flags_html += f"""
       <div style="border-left:4px solid {culoare};background:#fff;padding:12px 16px;
                   border-radius:0 6px 6px 0;margin-bottom:8px;
                   box-shadow:0 1px 3px rgba(0,0,0,0.08)">
         <div style="font-weight:700;color:{culoare}">{emoji} [{html_mod.escape(str(f.get("severitate","")))}] {html_mod.escape(str(f.get("titlu",""))[:120])}</div>
-        <div style="font-size:13px;color:#555;margin-top:4px">{html_mod.escape(str(f.get("descriere",""))[:400])}</div>
+        <div style="font-size:13px;color:#555;margin-top:4px">{descriere_safe}</div>
         <div style="font-size:12px;color:#888;margin-top:4px">
           📋 {html_mod.escape(str(f.get("contract_id","") or "–"))} &nbsp;|&nbsp;
           💰 {_fmt_ron(float(f.get("valoare",0) or 0))} &nbsp;|&nbsp;
@@ -5774,11 +6197,11 @@ def genereaza_pagina_furnizor(
         </div>
       </div>"""
         mentiuni_auto_html = f"""
-  <h2>🔍 Mențiuni de risc detectate automat în presă ({len(mentiuni_auto)})</h2>
+  <h2>🔍 Mențiuni detectate automat în presă ({len(mentiuni_auto)})</h2>
   <div style="background:#FDF4FF;border:1px solid #E9D5FF;border-radius:8px;
               padding:10px 14px;font-size:12px;color:#6B21A8;margin-bottom:12px">
-    ⚠️ <strong>Detecție automată</strong> — articolele de mai jos conțin cuvinte-cheie de risc
-    asociate cu numele firmei. Pot exista fals-pozitive. Verificare manuală recomandată.
+    ⚠️ <strong>Detecție automată</strong> — articolele de mai jos conțin cuvinte-cheie
+    asociate cu numele firmei. Pot exista rezultate nerelevante. Verificare manuală recomandată.
   </div>
   {rands_auto}"""
 
@@ -5814,9 +6237,9 @@ def genereaza_pagina_furnizor(
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{safe_name} — Transparența Pantelimon</title>
-  <meta name="description" content="Dosarul de transparență al {safe_name}: {len(contracte_firma)} contracte cu Primăria Pantelimon, valoare {_fmt_ron(valoare_totala)}, {len(flags_firma)} nereguli detectate.">
+<meta name="description" content="Dosarul de transparență al {safe_name}: {len(contracte_firma)} contracte cu Primăria Pantelimon, valoare {_fmt_ron(valoare_totala)}, {len(flags_firma)} semnale automate.">
   <meta property="og:title" content="{safe_name} — Transparența Pantelimon">
-  <meta property="og:description" content="{len(contracte_firma)} contracte, {_fmt_ron(valoare_totala)}, {len(flags_firma)} nereguli detectate automat.">
+<meta property="og:description" content="{len(contracte_firma)} contracte, {_fmt_ron(valoare_totala)}, {len(flags_firma)} semnale detectate automat.">
   <meta property="og:url" content="{base_url}/furnizori/{slug}.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="{base_url}/og-image.png">
@@ -5825,7 +6248,7 @@ def genereaza_pagina_furnizor(
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="{base_url}/og-image.png">
   <link rel="canonical" href="{base_url}/furnizori/{slug}.html">
-  <script src="../enhance.min.js" defer></script>
+  <script src="../enhance.js" defer></script>
   <style>
     body{{font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;margin:0;background:#f5f7fa;color:#1a1a1a}}
     .container{{max-width:900px;margin:0 auto;padding:24px 16px}}
@@ -5858,25 +6281,27 @@ def genereaza_pagina_furnizor(
   <div class="stats">
     <div class="stat"><div class="stat-val">{len(contracte_firma)}</div><div class="stat-lbl">Contracte</div></div>
     <div class="stat"><div class="stat-val">{_fmt_ron(valoare_totala)}</div><div class="stat-lbl">Valoare totală</div></div>
-    <div class="stat"><div class="stat-val" style="color:#C0392B">{n_critic}</div><div class="stat-lbl">Nereguli CRITIC</div></div>
-    <div class="stat"><div class="stat-val" style="color:#E67E22">{n_major}</div><div class="stat-lbl">Nereguli MAJOR</div></div>
-    <div class="stat"><div class="stat-val" style="color:#F39C12">{n_mediu}</div><div class="stat-lbl">Nereguli MEDIU</div></div>
+    <div class="stat"><div class="stat-val" style="color:#C0392B">{n_critic}</div><div class="stat-lbl">Semnale CRITIC</div></div>
+    <div class="stat"><div class="stat-val" style="color:#E67E22">{n_major}</div><div class="stat-lbl">Semnale MAJOR</div></div>
+    <div class="stat"><div class="stat-val" style="color:#F39C12">{n_mediu}</div><div class="stat-lbl">Semnale MEDIU</div></div>
   </div>
 
   <div style="margin-bottom:16px">
     <a href="{onrc_link}" target="_blank" rel="noopener" class="ext-btn">🔍 Dosar ONRC (termene.ro)</a>
-    <a href="https://listafirme.ro/search/?q={html_mod.escape(cui_f or nome)}" target="_blank" rel="noopener" class="ext-btn">📋 Listafirme.ro</a>
+    <a href="https://listafirme.ro/search/?q={html_mod.escape(cui_f or nume)}" target="_blank" rel="noopener" class="ext-btn">📋 Listafirme.ro</a>
     <a href="../raport_transparenta.html" class="ext-btn" style="background:#1E8449">📊 Raport complet</a>
   </div>
 
-  <h2>⚠️ Nereguli detectate ({len(flags_firma)})</h2>
-  {flags_html if flags_firma else '<p style="color:#888;font-size:14px">Nicio nereguă detectată pentru acest furnizor.</p>'}
+  <h2>⚠️ Semnale automate ({len(flags_firma)})</h2>
+  {flags_html if flags_firma else '<p style="color:#888;font-size:14px">Niciun semnal automat pentru acest furnizor.</p>'}
 
   <h2>📄 Contracte ({len(contracte_firma)})</h2>
+  <div style="overflow-x:auto">
   <table>
     <thead><tr><th>Titlu</th><th>Valoare</th><th>Procedură</th><th>Dată</th></tr></thead>
     <tbody>{contracte_rows}</tbody>
   </table>
+  </div>
 
   {mentiuni_html}
   {mentiuni_auto_html}
@@ -5885,18 +6310,22 @@ def genereaza_pagina_furnizor(
     Date extrase din surse publice oficiale (SEAP / data.gov.ro) · Inițiativă cetățenească independentă
   </footer>
 </div>
+<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>"""
 
 
 def genereaza_index_furnizori(index: list) -> str:
     """Generează furnizori/index.html cu lista A-Z a furnizorilor."""
+    import html as html_mod
     rânduri = ""
     for f in sorted(index, key=lambda x: x["nume"]):
+        safe_nume = html_mod.escape(str(f["nume"]))
+        safe_slug = html_mod.escape(str(f["slug"]), quote=True)
         rânduri += f"""
       <tr>
         <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5">
-          <a href="{f['slug']}.html" style="color:#0070C0;font-weight:600">{f['nume']}</a>
+          <a href="{safe_slug}.html" style="color:#0070C0;font-weight:600">{safe_nume}</a>
         </td>
         <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5;font-weight:700">{_fmt_ron(f['valoare'])}</td>
         <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5">{f['count']}</td>
@@ -5909,9 +6338,9 @@ def genereaza_index_furnizori(index: list) -> str:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Furnizori Primăria Pantelimon — Transparența</title>
-  <meta name="description" content="Index A-Z al furnizorilor Primăriei Pantelimon cu nereguli detectate automat.">
+<meta name="description" content="Index A-Z al furnizorilor Primăriei Pantelimon cu semnale de risc detectate automat.">
   <link rel="canonical" href="https://transparenta-pantelimon.eu/furnizori/">
-  <script src="../enhance.min.js" defer></script>
+  <script src="../enhance.js" defer></script>
   <style>
     body{{font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;margin:0;background:#f5f7fa;color:#1a1a1a}}
     .container{{max-width:900px;margin:0 auto;padding:24px 16px}}
@@ -5928,12 +6357,15 @@ def genereaza_index_furnizori(index: list) -> str:
   <a href="../raport_transparenta.html" class="back-link">← înapoi la raport</a>
   <h1>🏢 Furnizori monitorizați</h1>
   <div class="sub">Furnizori cu ≥3 contracte cu Primăria Pantelimon (sortare A-Z)</div>
+  <div style="overflow-x:auto">
   <table>
-    <thead><tr><th>Firmă</th><th>Valoare totală</th><th>Contracte</th><th>Nereguli (C/M/m)</th></tr></thead>
+    <thead><tr><th>Firmă</th><th>Valoare totală</th><th>Contracte</th><th>Semnale (C/M/m)</th></tr></thead>
     <tbody>{rânduri}</tbody>
   </table>
+  </div>
   <footer>Date extrase din surse publice oficiale · Inițiativă cetățenească independentă</footer>
 </div>
+<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>"""
 
@@ -5941,6 +6373,249 @@ def genereaza_index_furnizori(index: list) -> str:
 # ==============================================================================
 # MAIN
 # ==============================================================================
+
+def genereaza_pagini_furnizori_locale(contracte: list, flags: list) -> list:
+    """Regenerează fișele furnizorilor fără acces la servicii externe."""
+    from collections import defaultdict
+
+    contracte_per_firma = defaultdict(list)
+    for contract in contracte:
+        if contract.get("castigator"):
+            contracte_per_firma[contract["castigator"]].append(contract)
+
+    flags_per_firma = defaultdict(list)
+    for flag in flags:
+        furnizor = flag.get("furnizor")
+        if furnizor and furnizor != "Multiple":
+            flags_per_firma[furnizor].append(flag)
+
+    mentiuni_media = {}
+    try:
+        with open("mentiuni_media.json", encoding="utf-8") as handle:
+            raw = json.load(handle)
+        mentiuni_media = {key: value for key, value in raw.items() if not key.startswith("_")}
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+
+    mentiuni_auto = {}
+    try:
+        with open("mentiuni_presa_auto.json", encoding="utf-8") as handle:
+            mentiuni_auto = json.load(handle)
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+
+    os.makedirs("furnizori", exist_ok=True)
+    index_furnizori = []
+    for firma, contracte_firma in contracte_per_firma.items():
+        if len(contracte_firma) < 3:
+            continue
+        slug = _slugify(firma)
+        if not slug:
+            continue
+        flags_firma = flags_per_firma.get(firma, [])
+        cui_firma = str(contracte_firma[0].get("castigator_cui", "") or "")
+        auto_firma = mentiuni_auto.get(cui_firma, {}).get("mentiuni", [])
+        pagina_html = genereaza_pagina_furnizor(
+            firma,
+            slug,
+            flags_firma,
+            contracte_firma,
+            CONFIG,
+            mentiuni=mentiuni_media.get(firma, []),
+            mentiuni_auto=auto_firma or None,
+        )
+        with open(f"furnizori/{slug}.html", "w", encoding="utf-8") as handle:
+            handle.write(pagina_html)
+        index_furnizori.append({
+            "nume": firma,
+            "slug": slug,
+            "count": len(contracte_firma),
+            "valoare": sum(c.get("valoare_ron", 0) for c in contracte_firma),
+            "flags_critic": sum(1 for f in flags_firma if f.get("severitate") == "CRITIC"),
+            "flags_major": sum(1 for f in flags_firma if f.get("severitate") == "MAJOR"),
+            "flags_mediu": sum(1 for f in flags_firma if f.get("severitate") == "MEDIU"),
+        })
+
+    with open("furnizori/index.html", "w", encoding="utf-8") as handle:
+        handle.write(genereaza_index_furnizori(index_furnizori))
+    with open("sitemap.xml", "w", encoding="utf-8") as handle:
+        handle.write(genereaza_sitemap(index_furnizori))
+    print(f"  [OK] {len(index_furnizori)} fișe de furnizor și sitemap regenerate local")
+    return index_furnizori
+
+
+def regenereaza_din_exporturile_existente() -> None:
+    """Regenerează determinist raportul fără apeluri externe.
+
+    Folosește `contracte.json` deja versionat și păstrează explicit în metadate faptul
+    că sursele ANAF/ONRC nu au fost reîmprospătate. Este util când un serviciu extern
+    este lent sau indisponibil și evită publicarea unui raport parțial.
+    """
+    with open("contracte.json", encoding="utf-8") as handle:
+        contracte_export = json.load(handle)
+    # Fără asta, raport.json regenerat ieșea cu supplier_cif gol pe toate flagurile
+    _index_cui = construieste_index_cui(contracte_export)
+    contracte = [{
+        "id": c.get("id", ""),
+        "numar": c.get("numar", "–"),
+        "titlu": c.get("titlu", ""),
+        "valoare_ron": float(c.get("valoare_ron", c.get("valoare", 0)) or 0),
+        "data_publicare": c.get("data_publicare", c.get("data", "")),
+        "tip_procedura": c.get("tip_procedura", c.get("tip", "")),
+        "castigator": c.get("castigator", c.get("firma", "")),
+        "castigator_cui": c.get("castigator_cui", c.get("cui", "")),
+        "nr_ofertanti": int(c.get("nr_ofertanti", c.get("ofertanti", 0)) or 0),
+        "data_start": c.get("data_start", ""),
+        "data_sfarsit": c.get("data_sfarsit", ""),
+        "autoritate": c.get("autoritate", ""),
+        "cpv": c.get("cpv", ""),
+    } for c in contracte_export]
+
+    raport_vechi = {}
+    try:
+        with open("raport.json", encoding="utf-8") as handle:
+            raport_vechi = json.load(handle)
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+    source_contracte_generated_at = (
+        raport_vechi.get("data_freshness", {}).get("contracts_source_generated_at")
+        or raport_vechi.get("generated_at")
+    )
+
+    statistici_hcl = {"total_hcl": 0, "ordinare": 0, "extraordinare": 0, "pct_extraordinare": 0}
+    for flag in raport_vechi.get("flags", []):
+        if flag.get("type") != "SEDINTE_EXTRAORDINARE_EXCESIVE":
+            continue
+        import re as _re_offline
+        match = _re_offline.search(
+            r"Din\s+(\d+)\s+ședințe.*?,\s*(\d+)\s*\(([\d.,]+)%\)",
+            flag.get("explanation", ""), _re_offline.DOTALL,
+        )
+        if match:
+            total, extraordinare = int(match.group(1)), int(match.group(2))
+            statistici_hcl = {
+                "total_hcl": total,
+                "ordinare": max(0, total - extraordinare),
+                "extraordinare": extraordinare,
+                "pct_extraordinare": float(match.group(3).replace(",", ".")),
+            }
+        break
+
+    CONFIG["_offline_mode"] = True
+    CONFIG["_firme_openapi"] = {}
+    CONFIG["_firme_onrc"] = {}
+    CONFIG["_hcl_total"] = statistici_hcl["total_hcl"]
+    CONFIG["_hcl_ordinare"] = statistici_hcl["ordinare"]
+    CONFIG["_hcl_extraordinare"] = statistici_hcl["extraordinare"]
+    CONFIG["_hcl_pct"] = statistici_hcl["pct_extraordinare"]
+    CONFIG["_hcl_ocr"] = "Date păstrate din ultima analiză completă"
+
+    flags_contracte = analizeaza_red_flags(contracte, CONFIG)
+    toate_flags = flags_contracte + detect_sedinte_extraordinare(statistici_hcl)
+    scor = calculeaza_scor_transparenta(toate_flags, contracte, statistici_hcl)
+    CONFIG["_scor"] = scor
+
+    # Ultima execuție bugetară validată în paginile proiectului. Rularea offline
+    # nu pretinde că a reîmprospătat această sursă.
+    budget = {
+        "an": 2025,
+        "venituri_mil_ron": 147.97,
+        "cheltuieli_mil_ron": 146.43,
+        "yoy_venituri": "N/A",
+        "yoy_cheltuieli": "N/A",
+        "sursa": "ultima execuție bugetară validată (rulare offline)",
+    }
+    flags_noi = []
+    raport_html = genereaza_raport_html(budget, contracte, toate_flags, flags_noi, CONFIG)
+    with open(CONFIG["fisier_raport"], "w", encoding="utf-8") as handle:
+        handle.write(raport_html)
+
+    total_valoare = sum(c["valoare_ron"] for c in contracte)
+    raport_json = {
+        "schema_version": "1.1",
+        "generated_at": datetime.now().isoformat(),
+        "entity": {"name": CONFIG["nume_entitate"], "cif": CONFIG["cui"], "judet": CONFIG["judet"]},
+        "totals": {
+            "flags": len(toate_flags),
+            "signals": len(toate_flags),
+            "contracts_analyzed": len(contracte),
+            "contracts_with_signals": numara_contracte_cu_semnale(toate_flags, contracte),
+            "total_value_ron": total_valoare,
+            "by_severity": {
+                sev: sum(1 for flag in toate_flags if flag.get("severitate") == sev)
+                for sev in ("CRITIC", "MAJOR", "MEDIU")
+            },
+        },
+        "flags": [{
+            "id": index,
+            "severity": flag.get("severitate", ""),
+            "title": flag.get("titlu", ""),
+            "explanation": flag.get("descriere", ""),
+            "supplier": flag.get("furnizor", ""),
+            "supplier_cif": _cui_pentru_furnizor(flag.get("furnizor", ""), flag.get("cif_furnizor", ""), _index_cui),
+            "sum_ron": flag.get("valoare", 0) or 0,
+            "date": flag.get("data", ""),
+            "contract_id": flag.get("contract_id") or flag.get("contract_numar") or "",
+            "procedure": flag.get("tip_procedura", ""),
+            "type": flag.get("tip", ""),
+            "anchor": f"nereguli-{index}",
+        } for index, flag in enumerate(toate_flags, 1)],
+        "scor_transparenta": scor,
+        "legal_thresholds": {
+            "products_services_ron_excl_vat": CONFIG["prag_servicii_furnizare"],
+            "works_ron_excl_vat": CONFIG["prag_lucrari"],
+            "verified_at": PRAGURI_LEGALE_VERIFICATE_LA,
+            "source": PRAGURI_LEGALE_SURSA,
+        },
+        "data_freshness": {
+            "mode": "regenerated_from_versioned_contract_export",
+            "contracts_source_generated_at": source_contracte_generated_at,
+            "external_enrichment_refreshed": False,
+        },
+    }
+    with open("raport.json", "w", encoding="utf-8") as handle:
+        json.dump(raport_json, handle, ensure_ascii=False, indent=2)
+
+    with open("feed.xml", "w", encoding="utf-8") as handle:
+        handle.write(genereaza_feed_atom(toate_flags, datetime.now()))
+    genereaza_press_kit(toate_flags, contracte, scor, CONFIG)
+    genereaza_pagini_furnizori_locale(contracte, toate_flags)
+    try:
+        with open("istoric_scor.json", encoding="utf-8") as handle:
+            istoric = json.load(handle)
+    except (FileNotFoundError, json.JSONDecodeError):
+        istoric = {"puncte": []}
+    luna_scor = scor["data"][:7]
+    puncte = [p for p in istoric.get("puncte", []) if not p.get("data", "").startswith(luna_scor)]
+    puncte.append({"data": scor["data"], "scor": scor["scor"]})
+    istoric["puncte"] = sorted(puncte, key=lambda p: p["data"])[-24:]
+    with open("istoric_scor.json", "w", encoding="utf-8") as handle:
+        json.dump(istoric, handle, ensure_ascii=False, indent=2)
+    genereaza_og_image(
+        len(toate_flags),
+        sum(1 for flag in toate_flags if flag.get("severitate") == "CRITIC"),
+        round(total_valoare / 1_000_000, 1),
+        scor.get("scor"),
+    )
+    actualizeaza_tabel_contracte(contracte_export)
+    actualizeaza_kpi_seap(contracte_export)
+    actualizeaza_kpi_buget_index(budget)
+    actualizeaza_contoare_analiza(contracte_export)
+    with open("delta.json", "w", encoding="utf-8") as handle:
+        json.dump({
+            "data_curenta": datetime.now().isoformat(),
+            "data_anterioara": raport_vechi.get("generated_at"),
+            "nereguli_noi": 0,
+            "nereguli_rezolvate": max(0, (raport_vechi.get("totals", {}).get("flags", 0) - len(toate_flags))),
+            "scor_transparenta": scor.get("scor"),
+            "top_noi": [],
+        }, handle, ensure_ascii=False, indent=2)
+    salveaza_stare(CONFIG["fisier_stare"], toate_flags, contracte, [])
+    print(
+        f"  [OK] Regenerare offline completă: {len(toate_flags)} semnale, "
+        f"{numara_contracte_cu_semnale(toate_flags, contracte)} contracte unice cu semnale."
+    )
+
 
 def main():
     # --- CLI: parametrizare UAT ---
@@ -5950,6 +6625,7 @@ def main():
     _parser.add_argument("--nume", default=None)
     _parser.add_argument("--judet", default=None)
     _parser.add_argument("--output-dir", default=None)
+    _parser.add_argument("--offline-existing", action="store_true")
     _args, _ = _parser.parse_known_args()
     if _args.cif: CONFIG["cui"] = _args.cif
     if _args.nume: CONFIG["nume_entitate"] = _args.nume
@@ -5957,6 +6633,9 @@ def main():
     if _args.output_dir:
         os.makedirs(_args.output_dir, exist_ok=True)
         os.chdir(_args.output_dir)
+    if _args.offline_existing:
+        regenereaza_din_exporturile_existente()
+        return
     # --- end CLI ---
 
     # Încarcă mențiuni automate de presă (opțional — fișier mentiuni_presa_auto.json)
@@ -6325,22 +7004,37 @@ def main():
     # Export raport.json (endpoint public pentru jurnalisti / integari externe)
     _n_main = len(contracte)
     _val_main = sum(c.get("valoare_ron", 0) for c in contracte)
+    _index_cui_main = construieste_index_cui(contracte)
     raport_json_main = {
         "schema_version": "1.0",
         "generated_at": datetime.now().isoformat(),
         "entity": {"name": CONFIG["nume_entitate"], "cif": CONFIG["cui"], "judet": CONFIG.get("judet", "Ilfov")},
-        "totals": {"flags": len(toate_flags), "contracts_analyzed": _n_main, "total_value_ron": _val_main,
+        "totals": {"flags": len(toate_flags), "signals": len(toate_flags),
+                   "contracts_analyzed": _n_main,
+                   "contracts_with_signals": numara_contracte_cu_semnale(toate_flags, contracte),
+                   "total_value_ron": _val_main,
                    "by_severity": {"CRITIC": sum(1 for f in toate_flags if f.get("severitate") == "CRITIC"),
                                    "MAJOR": sum(1 for f in toate_flags if f.get("severitate") == "MAJOR"),
                                    "MEDIU": sum(1 for f in toate_flags if f.get("severitate") == "MEDIU")}},
         "flags": [{"id": i, "severity": fl.get("severitate",""), "title": fl.get("titlu",""),
                    "explanation": fl.get("descriere",""), "supplier": fl.get("furnizor",""),
+                   # a treia cale care scrie raport.json — lipsea CUI-ul aici,
+                   # deci fișierul public ieșea cu supplier_cif gol pe toate flagurile
+                   "supplier_cif": _cui_pentru_furnizor(fl.get("furnizor",""),
+                                                        fl.get("cif_furnizor",""),
+                                                        _index_cui_main),
                    "sum_ron": fl.get("valoare",0) or 0, "date": fl.get("data",""),
                    "contract_id": (fl.get("contract_id") or fl.get("contract_numar") or ""),
                    "procedure": fl.get("tip_procedura",""), "type": fl.get("tip",""),
                    "anchor": f"nereguli-{i}"}
                   for i, fl in enumerate(toate_flags, 1)],
         "scor_transparenta": CONFIG.get("_scor", {}),
+        "legal_thresholds": {
+            "products_services_ron_excl_vat": CONFIG["prag_servicii_furnizare"],
+            "works_ron_excl_vat": CONFIG["prag_lucrari"],
+            "verified_at": PRAGURI_LEGALE_VERIFICATE_LA,
+            "source": PRAGURI_LEGALE_SURSA,
+        },
         "seap_debug": seap_debug if 'seap_debug' in dir() else [],
     }
     with open("raport.json", "w", encoding="utf-8") as fout:
@@ -6371,6 +7065,7 @@ def main():
     actualizeaza_tabel_contracte(contracte_export)
     # §2.5: Actualizează KPI valoare contracte (fix BUG-1/2/3/8/9)
     actualizeaza_kpi_seap(contracte_export)
+    actualizeaza_kpi_buget_index(budget)
     # BUG-10: Actualizează contoare „N contracte · YYYY" din secțiunile de analiză
     actualizeaza_contoare_analiza(contracte_export)
 

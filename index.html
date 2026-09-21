@@ -6,7 +6,7 @@
 <title>Transparența Banului Public — Primăria Pantelimon</title>
 
 <!-- SEO -->
-<meta name="description" content="Monitorizare cetățenească a Primăriei Pantelimon: nereguli detectate automat în achiziții publice. Date din SEAP și ANAF.">
+<meta name="description" content="Monitorizare cetățenească a Primăriei Pantelimon: semnale de risc detectate automat în achiziții publice. Date din SEAP și ANAF.">
 <meta name="keywords" content="transparență, Pantelimon, primărie, achiziții publice, SEAP, ANAF, monitorizare cetățenească, Ilfov">
 <meta name="author" content="Inițiativă cetățenească independentă">
 <link rel="canonical" href="https://transparenta-pantelimon.eu/">
@@ -15,7 +15,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://transparenta-pantelimon.eu/">
 <meta property="og:title" content="Transparența Banului Public — Primăria Pantelimon">
-<meta property="og:description" content="Monitorizăm cheltuielile administrației locale. Nereguli detectate automat, contracte analizate, buget vs realizat.">
+<meta property="og:description" content="Monitorizăm cheltuielile administrației locale. Semnale de risc automate, contracte analizate, buget vs realizat.">
 <meta property="og:image" content="https://transparenta-pantelimon.eu/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -25,7 +25,7 @@
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Transparența Banului Public — Primăria Pantelimon">
-<meta name="twitter:description" content="Monitorizăm cheltuielile administrației locale. Nereguli detectate automat, contracte analizate, buget vs realizat.">
+<meta name="twitter:description" content="Monitorizăm cheltuielile administrației locale. Semnale de risc automate, contracte analizate, buget vs realizat.">
 <meta name="twitter:image" content="https://transparenta-pantelimon.eu/og-image.png">
 
 <!-- Favicon -->
@@ -52,7 +52,7 @@
   "potentialAction": {
     "@type": "SearchAction",
     "target": "https://transparenta-pantelimon.eu/raport_transparenta.html",
-    "name": "Vezi raportul de nereguli"
+      "name": "Vezi raportul de semnale de risc"
   }
 }
 </script>
@@ -295,9 +295,9 @@
     padding: 8px 0;
   }
 </style>
-<link rel="alternate" type="application/atom+xml" title="Nereguli noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
+<link rel="alternate" type="application/atom+xml" title="Semnale noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<script src="enhance.min.js" defer></script>
+<script src="enhance.js" defer></script>
 </head>
 <body>
 
@@ -305,7 +305,7 @@
 
 <nav class="static-nav" id="static-nav-fallback" aria-label="Navigare principală">
   <a href="index.html" class="nav-brand"><span aria-hidden="true">🏛️</span> Transparența Pantelimon</a>
-  <a href="raport_transparenta.html"><span aria-hidden="true">🚩</span> Nereguli</a>
+  <a href="raport_transparenta.html"><span aria-hidden="true">🚩</span> Semnale de risc</a>
   <a href="transparenta_pantelimon.html"><span aria-hidden="true">📊</span> Buget</a>
   <a href="harta.html"><span aria-hidden="true">🗺️</span> Hartă</a>
   <a href="petitie.html"><span aria-hidden="true">✍️</span> Petiție</a>
@@ -314,7 +314,7 @@
 
 <!-- ALERT BANNER -->
 <div class="alert-banner">
-  🔴 <strong><span id="idx-banner-nereguli">304</span> nereguli detectate</strong> în ultima analiză automată<span id="idx-data-analiza"></span>, din care <strong><span id="idx-banner-critic">111</span> CRITICE</strong> —
+  🔴 <strong><span id="idx-banner-nereguli">251</span> semnale automate</strong> în ultima analiză<span id="idx-data-analiza"></span>, din care <strong><span id="idx-banner-critic">40</span> cu prioritate CRITICĂ</strong> —
   <a href="raport_transparenta.html">Vezi raportul complet →</a>
 </div>
 
@@ -322,20 +322,20 @@
 <header>
   <div class="badge">Monitorizare Cetățenească</div>
   <h1>Transparența Banului Public<br><span>Primăria Pantelimon</span></h1>
-  <p>Monitorizăm cheltuielile administrației locale și identificăm nereguli în achizițiile publice — bazat exclusiv pe date publice oficiale.</p>
+  <p>Monitorizăm cheltuielile administrației locale și identificăm indicatori care necesită verificare — exclusiv pe baza datelor publice oficiale.</p>
 
   <div class="hero-stats">
     <div class="hero-stat">
-      <span class="v" id="idx-nereguli">304</span>
-      <span class="l">Nereguli detectate</span>
+      <span class="v" id="idx-nereguli">251</span>
+      <span class="l">Semnale automate</span>
     </div>
     <div class="hero-stat">
       <span class="v" id="idx-contracte">506</span>
       <span class="l">Contracte analizate</span>
     </div>
     <div class="hero-stat">
-      <span class="v" id="idx-cheltuieli">147M RON</span>
-      <span class="l" id="idx-cheltuieli-label">Cheltuieli 2025</span>
+      <span class="v" id="idx-cheltuieli">146,43M RON</span>
+      <span class="l" id="idx-cheltuieli-label">Cheltuieli 2026</span>
     </div>
     <div class="hero-stat">
       <span class="v" id="idx-ultima-actualizare">săpt.</span>
@@ -344,7 +344,7 @@
   </div>
 
   <div class="hero-ctas">
-    <a class="btn-primary" href="raport_transparenta.html">🚩 Deschide Raportul de Nereguli detectate</a>
+    <a class="btn-primary" href="raport_transparenta.html">🚩 Deschide raportul de semnale</a>
     <a class="btn-secondary" href="transparenta_pantelimon.html">📊 Analiză Buget & Grafice</a>
   </div>
 </header>
@@ -353,19 +353,23 @@
   <section id="scor-transparenta" style="background:#fff;border-bottom:1px solid #e2e8f0;padding:24px 40px;">
     <div style="max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;gap:24px;align-items:center;">
       <div id="scor-gauge" style="text-align:center;min-width:140px;">
-        <div id="scor-val" style="font-size:3rem;font-weight:700;color:#e53e3e;">32</div>
-        <div style="font-size:.85rem;color:#718096;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;">Scor transparență</div>
+        <div id="scor-val" style="font-size:2.3rem;font-weight:700;color:#e53e3e;">23/100</div>
+        <div style="font-size:.85rem;color:#718096;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;">Indice euristic de transparență</div>
         <div style="height:10px;border-radius:5px;background:#e2e8f0;margin-top:8px;overflow:hidden;">
-          <div id="scor-fill" style="height:100%;width:32%;transition:width .6s ease;background:#e53e3e;"></div>
+          <div id="scor-fill" style="height:100%;width:23%;transition:width .6s ease;background:#e53e3e;"></div>
         </div>
         <div id="scor-data" style="font-size:.75rem;color:#a0aec0;margin-top:4px;"></div>
       </div>
       <div style="flex:1;min-width:200px;">
-        <canvas id="scor-chart" height="60"></canvas>
+        <canvas id="scor-chart" height="60" role="img" aria-label="Evoluția indicelui euristic de transparență pe o scară de la 0 la 100"></canvas>
         <div id="scor-no-history" style="display:none;font-size:.8rem;color:#a0aec0;text-align:center;padding:12px 0;">Istoricul va fi disponibil după prima rulare automată.</div>
       </div>
       <div id="scor-componente" style="font-size:.8rem;color:#4a5568;min-width:210px;"></div>
     </div>
+    <p style="max-width:900px;margin:12px auto 0;font-size:.78rem;color:#64748b;line-height:1.5">
+      Indice neoficial. Fiecare componentă este un punctaj /100, ponderat conform
+      <a href="despre.html#scor-transparenta">metodologiei</a>. Componentele marcate cu * sunt estimări manuale.
+    </p>
   </section>
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" integrity="sha384-9nhczxUqK87bcKHh20fSQcTGD4qq5GhayNYSYWqwBkINBhOfQLg/P5HG5lF1urn4" crossorigin="anonymous"></script>
   <script>
@@ -386,7 +390,7 @@
       if (val == null) return;
       var color = val >= 75 ? '#38a169' : val >= 60 ? '#d69e2e' : val >= 40 ? '#dd6b20' : '#e53e3e';
       var el = document.getElementById('scor-val');
-      if (el) { el.textContent = val; el.style.color = color; }
+      if (el) { el.textContent = val + '/100'; el.style.color = color; }
       var fill = document.getElementById('scor-fill');
       if (fill) { fill.style.width = val + '%'; fill.style.background = color; }
       var dataEl = document.getElementById('scor-data');
@@ -395,7 +399,8 @@
       var comp = scorObj.componente;
       if (comp) {
         var html = Object.keys(comp).map(function(k){
-          return '<div style="display:flex;justify-content:space-between;gap:8px;margin:3px 0"><span>' + (labels[k] || k) + '</span><strong style="color:' + (comp[k]>=75?'#38a169':comp[k]>=50?'#d69e2e':'#e53e3e') + '">' + comp[k] + '</strong></div>';
+          var estimated = Array.isArray(scorObj.componente_estimate) && scorObj.componente_estimate.indexOf(k) !== -1;
+          return '<div style="display:flex;justify-content:space-between;gap:8px;margin:3px 0"><span>' + (labels[k] || k) + (estimated ? ' *' : '') + '</span><strong style="color:' + (comp[k]>=75?'#38a169':comp[k]>=50?'#d69e2e':'#e53e3e') + '">' + comp[k] + '/100</strong></div>';
         }).join('');
         var compEl = document.getElementById('scor-componente');
         if (compEl) compEl.innerHTML = html;
@@ -466,42 +471,42 @@
   <!-- FLAGS PREVIEW -->
   <div class="flags-preview">
     <div class="flags-header">
-      <h2 style="font-size:1.1rem">🚩 Cele mai recente nereguli detectate</h2>
-      <a href="raport_transparenta.html" id="idx-see-all">Vezi toate 304 →</a>
+      <h2 style="font-size:1.1rem">🚩 Exemple de semnale automate</h2>
+      <a href="raport_transparenta.html" id="idx-see-all">Vezi toate 251 →</a>
     </div>
     <div class="flag-item">
       <span class="flag-sev sev-critic">CRITIC</span>
       <div class="flag-text">
-        <strong>Achiziție directă peste pragul legal</strong>
-        <span>Contract individual care depășește 130.000 RON — ar fi impus licitație publică (Legea 98/2016)</span>
+        <strong>Achiziție directă peste pragul aplicabil</strong>
+        <span>Praguri fără TVA: 270.120 RON pentru produse/servicii și 900.400 RON pentru lucrări; încadrarea trebuie verificată în SEAP.</span>
       </div>
     </div>
     <div class="flag-item">
       <span class="flag-sev sev-critic">CRITIC</span>
       <div class="flag-text">
-        <strong>Ședințe extraordinare excesive — 43% din total</strong>
-        <span>Procedura de urgență folosită sistematic pentru a ocoli consultarea publică (Legea 52/2003)</span>
+        <strong>Pondere ridicată a ședințelor extraordinare</strong>
+        <span>Indicator statistic raportat la Legea 52/2003; nu dovedește evitarea consultării publice.</span>
       </div>
     </div>
     <div class="flag-item">
       <span class="flag-sev sev-major">MAJOR</span>
       <div class="flag-text">
-        <strong>Ofertant unic repetat — fără competiție reală</strong>
-        <span>Contracte atribuite sistematic unui singur furnizor fără procedură competitivă</span>
+        <strong>Un singur ofertant raportat în date</strong>
+        <span>Semnal pentru verificarea documentației procedurii și a nivelului real de concurență.</span>
       </div>
     </div>
     <div class="flag-item">
       <span class="flag-sev sev-major">MAJOR</span>
       <div class="flag-text">
-        <strong>Fragmentare artificială suspectă de contracte</strong>
-        <span>Același furnizor, contracte similare la interval scurt, valori combinate peste pragul legal</span>
+        <strong>Posibilă fragmentare a contractelor</strong>
+        <span>Contracte similare, apropiate în timp, a căror sumă depășește pragul categoriei.</span>
       </div>
     </div>
     <div class="flag-item">
       <span class="flag-sev sev-mediu">MEDIU</span>
       <div class="flag-text">
         <strong>Valori contracte aproape de pragul de licitație</strong>
-        <span>Contracte cu valori la 97–99% din pragul legal — posibilă evitare deliberată a procedurii competitive</span>
+        <span>Indicator statistic; apropierea de prag nu dovedește evitarea deliberată a unei proceduri.</span>
       </div>
     </div>
   </div>
@@ -513,8 +518,8 @@
     <a class="card red" href="raport_transparenta.html">
       <span class="card-badge">NOU</span>
       <span class="card-icon">🚩</span>
-      <h2>Raport Lunar<br>Nereguli detectate</h2>
-      <p>Analiză automată a achizițiilor publice din SEAP: ofertanți unici, fragmentare contracte, achiziții directe peste prag și proceduri de urgență abuzive.</p>
+      <h2>Raport lunar<br>Semnale de risc</h2>
+      <p>Analiză automată a achizițiilor publice din SEAP. Indicatorii prioritizează verificarea și nu reprezintă constatări juridice.</p>
       <span class="arrow">Deschide raportul →</span>
     </a>
 
@@ -525,7 +530,7 @@
       <span class="arrow">Deschide analiza →</span>
     </a>
 
-    <a class="card green" href="https://transparenta.eu/entities/4420759" target="_blank">
+    <a class="card green" href="https://transparenta.eu/entities/4420759" target="_blank" rel="noopener noreferrer">
       <span class="card-icon">🏛️</span>
       <h2>Date ANAF<br>pe Transparenta.eu</h2>
       <p>Execuțiile bugetare oficiale raportate de primărie la Ministerul Finanțelor — date agregate actualizate periodic.</p>
@@ -538,15 +543,15 @@
   <div class="metodologie">
     <strong>📐 Cum funcționează monitorizarea</strong>
     Un script Python rulează automat lunar pe serverele GitHub. Trage datele bugetare din
-    transparenta.eu (sursă: ANAF/MF) și contractele din SEAP (e-licitatie.ro), aplică 5 algoritmi de detecție
-    a neregulilor, compară cu raportul anterior și publică automat rezultatele pe acest site.
+    transparenta.eu (sursă: ANAF/MF) și contractele din SEAP (e-licitatie.ro), aplică 19 detectori
+    de semnale, compară cu raportul anterior și publică automat rezultatele pe acest site.
     Tot codul sursă este public și verificabil.
   </div>
 
 
   <!-- CE POȚI FACE CA CETĂȚEAN -->
   <div class="section-title" id="drepturile-tale">⚖️ Ce poți face ca cetățean</div>
-  <p style="font-size:14px;color:#555;margin:0 0 20px;max-width:720px">Dacă ai identificat o neregulă în raportul de mai sus — ai instrumente legale la dispoziție. Iată acțiunile concrete, pas cu pas.</p>
+  <p style="font-size:14px;color:#555;margin:0 0 20px;max-width:720px">Dacă un semnal din raport merită verificat, ai instrumente legale la dispoziție. Consultă documentele originale înainte de a formula o sesizare.</p>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:32px">
 
     <div class="action-card" style="border-top:4px solid #0070C0">
@@ -598,7 +603,7 @@
   <div class="section-title">🔗 Surse de date</div>
   <div class="surse-box">
 
-    <a class="sursa-item" href="https://transparenta.eu/entities/4420759" target="_blank">
+      <a class="sursa-item" href="https://transparenta.eu/entities/4420759" target="_blank" rel="noopener noreferrer">
       <span style="font-size:22px">📈</span>
       <div>
         <strong>transparenta.eu / ANAF</strong><br>
@@ -607,7 +612,7 @@
       <div class="dot dot-green"></div>
     </a>
 
-    <a class="sursa-item" href="https://www.e-licitatie.ro/pub" target="_blank">
+      <a class="sursa-item" href="https://www.e-licitatie.ro/pub" target="_blank" rel="noopener noreferrer">
       <span style="font-size:22px">🛒</span>
       <div>
         <strong>SEAP / e-licitatie.ro</strong><br>
@@ -616,7 +621,7 @@
       <div class="dot dot-green"></div>
     </a>
 
-    <a class="sursa-item" href="https://www.primariapantelimon.ro/hotarari-2025/" target="_blank">
+      <a class="sursa-item" href="https://www.primariapantelimon.ro/hotarari-2025/" target="_blank" rel="noopener noreferrer">
       <span style="font-size:22px">📋</span>
       <div>
         <strong>Hotărâri Consiliu Local — primariapantelimon.ro</strong><br>
@@ -625,7 +630,7 @@
       <div class="dot dot-green"></div>
     </a>
 
-    <a class="sursa-item" href="https://www.primariapantelimon.ro/documente-si-informatii-financiare/" target="_blank">
+      <a class="sursa-item" href="https://www.primariapantelimon.ro/documente-si-informatii-financiare/" target="_blank" rel="noopener noreferrer">
       <span style="font-size:22px">💰</span>
       <div>
         <strong>Documente financiare — primariapantelimon.ro</strong><br>
@@ -643,7 +648,7 @@
       Tot codul acestui site și al scriptului de monitorizare este public pe GitHub.<br>
       Oricine poate verifica metodologia, propune îmbunătățiri sau adapta proiectul pentru altă localitate.
     </p>
-    <a href="https://github.com/transparenta-locala/transparenta-pantelimon" target="_blank"
+    <a href="https://github.com/transparenta-locala/transparenta-pantelimon" target="_blank" rel="noopener noreferrer"
        style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;
               background:#00427A;color:#fff;padding:10px 20px;border-radius:8px;
               text-decoration:none;font-size:13px;font-weight:600">
@@ -655,7 +660,7 @@
 
 <footer>
   <p>
-    <a href="raport_transparenta.html">Raport Nereguli</a> &nbsp;·&nbsp;
+    <a href="raport_transparenta.html">Raport semnale</a> &nbsp;·&nbsp;
     <a href="transparenta_pantelimon.html">Buget</a> &nbsp;·&nbsp;
     <a href="harta.html">Hartă</a> &nbsp;·&nbsp;
     <a href="petitie.html"><span aria-hidden="true">✍️</span> Petiție</a> &nbsp;·&nbsp;
@@ -668,9 +673,10 @@
     <a href="https://transparenta.eu" target="_blank" rel="noopener">transparenta.eu</a>
   </p>
   <p style="margin-top:8px;font-size:11px;opacity:.6">
-    Inițiativă cetățenească independentă. Acest site nu este afiliat cu Primăria Pantelimon. Monitorizare bazată pe date publice.
+    Inițiativă civică independentă de autorități. Inițiatorul este membru USR Pantelimon; proiectul nu este un proiect oficial al partidului. Monitorizare bazată pe date publice.
   </p>
 </footer>
 
+<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

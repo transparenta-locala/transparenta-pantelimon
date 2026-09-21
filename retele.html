@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔗 Încrengătură firme — Transparența Pantelimon</title>
+<title>🔗 Relații între furnizori — Transparența Pantelimon</title>
 <meta name="description" content="Rețea de relații între firmele monitorizate: adrese comune detectate automat. Transparența Pantelimon.">
 <link rel="canonical" href="https://transparenta-pantelimon.eu/retele.html">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://transparenta-pantelimon.eu/retele.html">
-<meta property="og:title" content="Încrengătură firme — Transparența Pantelimon">
+<meta property="og:title" content="Relații între furnizori — Transparența Pantelimon">
 <meta property="og:description" content="Rețea de relații între firmele monitorizate: adrese comune detectate automat. Transparența Pantelimon.">
 <meta property="og:image" content="https://transparenta-pantelimon.eu/og-image.png">
 <meta property="og:locale" content="ro_RO">
 <meta property="og:site_name" content="Transparența Pantelimon">
 <link rel="alternate" type="application/atom+xml" href="https://transparenta-pantelimon.eu/feed.xml">
-<script src="enhance.min.js" defer></script>
+<script src="enhance.js" defer></script>
 
 <!-- Cytoscape.js — graf interactiv -->
 <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.30.2/dist/cytoscape.min.js" integrity="sha384-IWROdLKRsN1UuJywMlWl7/blXQ8GEooN2n7dzTxfEPd7ybYIKCUJ2Ol/1Gpf3YV4" crossorigin="anonymous"></script>
@@ -79,8 +79,9 @@ h1 { font-size: 1.7rem; font-weight: 800; margin-bottom: .3rem; }
 #retea-info .info-placeholder { color: #9ca3af; }
 
 /* Tabel relații */
-.retea-table-wrap { margin-top: 1.5rem; }
+.retea-table-wrap { margin-top: 1.5rem; max-width: 100%; }
 .retea-table-wrap h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: .75rem; }
+.retea-table-scroll { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table { width: 100%; border-collapse: collapse; background: #fff;
         border-radius: 8px; overflow: hidden;
         box-shadow: 0 1px 4px rgba(0,0,0,.06); font-size: .88rem; }
@@ -95,6 +96,7 @@ tr:hover td { background: #f9fafb; }
   background: #ede9fe; color: #5b21b6;
 }
 .tag-adresa { background: #fef3c7; color: #92400e; }
+.sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
 
 @media (max-width: 640px) {
   #cy { height: min(380px, calc(100svh - 260px)); }
@@ -108,7 +110,7 @@ tr:hover td { background: #f9fafb; }
 <body>
 
 <main class="page-wrap" id="main-content">
-  <h1>🔗 Încrengătură firme</h1>
+  <h1>🔗 Relații între furnizori</h1>
   <p class="subtitle">
     Relații detectate automat între firmele cu contracte la Primăria Pantelimon
     (adresă fiscală comună). Date din ANAF v9 via <code>firme_geocoded.json</code>.
@@ -126,7 +128,8 @@ tr:hover td { background: #f9fafb; }
   </div>
 
   <div id="cy-container">
-    <div id="cy"></div>
+    <div id="cy" role="img" aria-label="Graf interactiv al furnizorilor care au adrese fiscale comune" aria-describedby="cy-access-note"></div>
+    <p id="cy-access-note" class="sr-only">Alternativa text este tabelul „Toate relațiile detectate” de sub graf.</p>
     <div class="cy-controls">
       <button class="cy-btn" id="cy-fit" title="Ajustează zoom la toți nodurile">🔍 Fit all</button>
       <button class="cy-btn" id="cy-reset" title="Resetează selecția">✖ Resetează</button>
@@ -148,17 +151,19 @@ tr:hover td { background: #f9fafb; }
 
   <div class="retea-table-wrap" id="retea-table-wrap" style="display:none">
     <h2>📋 Toate relațiile detectate</h2>
-    <table id="retea-table">
-      <thead>
-        <tr>
-          <th>Firmă 1</th>
-          <th>Firmă 2</th>
-          <th>Tip relație</th>
-          <th>Adresă</th>
-        </tr>
-      </thead>
-      <tbody id="retea-tbody"></tbody>
-    </table>
+    <div class="retea-table-scroll" tabindex="0" role="region" aria-label="Tabel cu relațiile detectate; derulați orizontal pentru toate coloanele">
+      <table id="retea-table">
+        <thead>
+          <tr>
+            <th>Firmă 1</th>
+            <th>Firmă 2</th>
+            <th>Tip relație</th>
+            <th>Adresă</th>
+          </tr>
+        </thead>
+        <tbody id="retea-tbody"></tbody>
+      </table>
+    </div>
   </div>
 </main>
 
@@ -367,5 +372,6 @@ tr:hover td { background: #f9fafb; }
     });
 })();
 </script>
+<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

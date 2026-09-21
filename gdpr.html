@@ -17,8 +17,8 @@
 <meta property="og:site_name" content="Transparența Pantelimon">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://transparenta-pantelimon.eu/og-image.png">
-<link rel="alternate" type="application/atom+xml" title="Nereguli noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
-<script src="enhance.min.js" defer></script>
+<link rel="alternate" type="application/atom+xml" title="Semnale noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
+<script src="enhance.js" defer></script>
 <style>
   body { font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 0; background: #f9fafb; color: #1a1a1a; }
   .page-wrap { max-width: 860px; margin: 0 auto; padding: 2rem 1rem 5rem; }
@@ -44,24 +44,25 @@
   <a href="index.html" class="back-link">← Acasă</a>
 
   <h1>🔒 Confidențialitate &amp; GDPR</h1>
-  <p style="color:#666;font-size:.9rem">Ultima actualizare: mai 2026</p>
+  <p style="color:#666;font-size:.9rem">Ultima actualizare: 13 iulie 2026</p>
 
   <div class="callout">
     <strong>Rezumat:</strong> Acest site afișează exclusiv <em>date publice</em> din surse oficiale
-    (SEAP, ANAF, ONRC). Nu colectăm date personale despre vizitatori. Nu folosim cookie-uri
-    de tracking terță parte. Datele despre funcționari publici sunt prelucrate în interes public,
-    conform Art. 6(1)(e) GDPR.
+    (SEAP, ANAF, ONRC). Formularul petiției este dezactivat și nu transmite date. Proiectul nu
+    folosește analytics sau cookie-uri de marketing. Furnizorul de hosting și CDN-urile pot primi
+    date tehnice (de exemplu adresa IP) când browserul solicită pagina sau resursele externe.
   </div>
 
   <h2>1. Cine suntem</h2>
   <p>
     <strong>Transparența Pantelimon</strong> (<a href="https://transparenta-pantelimon.eu">transparenta-pantelimon.eu</a>)
-    este o inițiativă cetățenească independentă de monitorizare a achizițiilor publice ale
-    Primăriei Pantelimon (CUI 4420759). Proiectul nu este afiliat cu nicio organizație politică
-    sau autoritate publică.
+    este o inițiativă cetățenească independentă de autoritățile publice, care monitorizează
+    achizițiile Primăriei Pantelimon (CUI 4420759). Inițiatorul este membru USR Pantelimon;
+    proiectul nu este un proiect oficial al partidului.
   </p>
-  <p><strong>Contact:</strong> Pentru orice întrebare legată de date, scrieți la adresa
-    indicată pe pagina <a href="presa.html">Kit presă</a>.</p>
+  <p><strong>Contact:</strong> Pentru corecții privind datele publicate, folosiți
+    <a href="https://github.com/transparenta-locala/transparenta-pantelimon/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>.
+    Nu includeți CNP, adrese private sau alte date sensibile într-un issue public.</p>
 
   <h2>2. Ce date prelucrăm și de unde</h2>
   <p>Toate datele afișate provin din surse publice oficiale:</p>
@@ -104,31 +105,38 @@
     din ultima situație financiară depusă la ANAF. Interpretați informațiile în consecință.
   </div>
 
-  <h2>3. Baza legală GDPR pentru datele despre persoane</h2>
+  <h2>3. Temeiul și principiile aplicate datelor despre persoane</h2>
   <p>
     Unele informații afișate pot include numele persoanelor fizice în calitate de
     <strong>reprezentanți legali sau administratori ai persoanelor juridice</strong>
-    (funcție publică sau rol de afaceri). Baza noastră legală pentru prelucrarea acestor date este:
+    (funcție publică sau rol profesional). Pentru publicarea lor, proiectul are în vedere:
   </p>
   <ul>
-    <li><span class="badge">Art. 6(1)(e) GDPR</span> — prelucrare necesară pentru îndeplinirea
-      unei sarcini de interes public (monitorizare cetățenească a cheltuirii banului public)</li>
-    <li><span class="badge">Legea 363/2018</span> (implementarea GDPR în România) — interes public
-      în transparența utilizării fondurilor publice</li>
-    <li><span class="badge">Legea 544/2001</span> — liberul acces la informații de interes public</li>
+    <li><span class="badge">Art. 6(1)(f) GDPR</span> — interesul legitim privind informarea civică,
+      supus unei evaluări între acest interes și drepturile persoanei vizate</li>
+    <li><span class="badge">Art. 85 GDPR</span> — concilierea protecției datelor cu libertatea de
+      exprimare și de informare, în condițiile dreptului aplicabil</li>
+    <li><span class="badge">Legea 190/2018</span> — cadrul național general de punere în aplicare a GDPR</li>
+    <li><span class="badge">Legea 544/2001</span> — accesul la informații de interes public</li>
   </ul>
   <p>
     Afișăm <strong>exclusiv datele din registre publice</strong> — nu colectăm și nu publicăm
     date personale suplimentare (CNP, adresă personală, date de contact private).
   </p>
 
-  <h2>4. Ce nu colectăm</h2>
+  <h2>4. Date despre vizitatori și petiție</h2>
   <ul>
-    <li>Nu colectăm date despre vizitatorii site-ului (nu există Google Analytics sau alt tracker)</li>
+    <li>Nu folosim Google Analytics sau alt instrument propriu de analytics</li>
     <li>Nu folosim cookie-uri de marketing sau advertising</li>
-    <li>Nu stocăm adrese IP ale vizitatorilor</li>
+    <li>Proiectul nu operează un server propriu și nu consultă loguri cu adrese IP; GitHub Pages și furnizorii CDN pot prelucra date tehnice conform politicilor proprii</li>
     <li>Nu vindem și nu cedăm date către terți</li>
   </ul>
+  <p>
+    Formularul de pe pagina Petiție este <strong>dezactivat</strong>: nu are un endpoint de procesare,
+    câmpurile nu sunt disponibile și nicio semnătură nu este transmisă sau stocată. Înainte de o
+    eventuală activare, această politică va preciza operatorul, persoana împuternicită, scopul,
+    temeiul, durata păstrării și destinatarii datelor.
+  </p>
   <p>
     Site-ul folosește <code>localStorage</code> în browser exclusiv pentru preferințe locale
     (temă dark/light, stare banner „ce e nou"). Aceste date rămân în browserul tău și nu
@@ -138,10 +146,11 @@
   <h2>5. Hosting și securitate</h2>
   <p>
     Site-ul este găzduit pe <strong>GitHub Pages</strong> (Microsoft/GitHub) și accesat prin
-    domeniul <strong>transparenta-pantelimon.eu</strong>. GitHub poate colecta date tehnice conform
+    domeniul <strong>transparenta-pantelimon.eu</strong>. GitHub poate prelucra date tehnice conform
     propriei <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
     target="_blank" rel="noopener">politici de confidențialitate</a>.
-    Comunicarea este criptată (HTTPS/TLS).
+    Comunicarea este criptată (HTTPS/TLS). Unele biblioteci vizuale sunt încărcate de pe CDN-uri
+    publice (jsDelivr/unpkg), care pot primi datele tehnice necesare livrării resursei.
   </p>
 
   <h2>6. Drepturile tale</h2>
@@ -155,8 +164,10 @@
     <li><strong>Opoziție</strong> — față de prelucrarea în interes public, în circumstanțe particulare</li>
   </ul>
   <p>
-    Pentru exercitarea acestor drepturi, contactați-ne prin adresa indicată pe pagina
-    <a href="presa.html">Kit presă</a>. Vom răspunde în maximum <strong>30 de zile</strong>.
+    Pentru corectarea datelor publicate pe site, deschideți un
+    <a href="https://github.com/transparenta-locala/transparenta-pantelimon/issues" target="_blank" rel="noopener noreferrer">GitHub Issue</a>
+    fără a include date sensibile. Solicitările sunt tratate fără întârzieri nejustificate, în
+    termenele prevăzute de GDPR.
   </p>
   <p>
     Dacă considerați că prelucrăm datele dvs. ilegal, aveți dreptul de a depune plângere la
@@ -172,11 +183,12 @@
   </p>
 
   <footer>
-    Transparența Pantelimon &middot; Inițiativă cetățenească independentă &middot;
+    Transparența Pantelimon &middot; Inițiativă civică independentă de autorități &middot;
     <a href="index.html">Acasă</a> &middot;
     <a href="despre.html">Metodologie</a> &middot;
     <a href="presa.html">Kit presă</a>
   </footer>
 </div>
+<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kit presă — Transparența Pantelimon</title>
-<meta name="description" content="Date actualizate lunar pentru jurnaliști: statistici, top nereguli, metodologie, contact și date deschise despre achizițiile Primăriei Pantelimon.">
+<meta name="description" content="Date actualizate lunar pentru jurnaliști: statistici, semnale automate, metodologie, contact și date deschise despre achizițiile Primăriei Pantelimon.">
 <link rel="canonical" href="https://transparenta-pantelimon.eu/presa.html">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://transparenta-pantelimon.eu/presa.html">
 <meta property="og:title" content="Kit presă — Transparența Pantelimon">
-<meta property="og:description" content="Statistici, top nereguli, metodologie și date deschise pentru jurnaliști. Actualizate lunar din SEAP și ANAF.">
+<meta property="og:description" content="Statistici, principalele semnale automate, metodologie și date deschise pentru jurnaliști. Actualizate lunar din SEAP și ANAF.">
 <meta property="og:image" content="https://transparenta-pantelimon.eu/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -17,8 +17,8 @@
 <meta property="og:site_name" content="Transparența Pantelimon">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://transparenta-pantelimon.eu/og-image.png">
-<link rel="alternate" type="application/atom+xml" title="Nereguli noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
-<script src="enhance.min.js" defer></script>
+<link rel="alternate" type="application/atom+xml" title="Semnale noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
+<script src="enhance.js" defer></script>
 <style>
   body { font-family: system-ui, sans-serif; margin: 0; padding: 0; background: #f9fafb; color: #1a1a1a; }
   .page-wrap { max-width: 960px; margin: 0 auto; padding: 2rem 1rem 4rem; }
@@ -87,20 +87,21 @@
   <!-- ── STATISTICI LA ZI ── -->
   <h2>📊 Statistici la zi</h2>
   <div class="kpi-grid">
-    <div class="kpi-card critic"><span class="num" id="pk-critic">–</span><span class="label">🔴 Nereguli CRITICE</span></div>
-    <div class="kpi-card major"> <span class="num" id="pk-major">–</span> <span class="label">🟠 Nereguli MAJORE</span></div>
-    <div class="kpi-card mediu"> <span class="num" id="pk-mediu">–</span> <span class="label">🟡 Nereguli MEDIU</span></div>
+    <div class="kpi-card critic"><span class="num" id="pk-critic">–</span><span class="label">🔴 Semnale CRITICE</span></div>
+    <div class="kpi-card major"> <span class="num" id="pk-major">–</span> <span class="label">🟠 Semnale MAJORE</span></div>
+    <div class="kpi-card mediu"> <span class="num" id="pk-mediu">–</span> <span class="label">🟡 Semnale MEDII</span></div>
     <div class="kpi-card neutral"><span class="num" id="pk-contracts">–</span><span class="label">📋 Contracte analizate</span></div>
+    <div class="kpi-card neutral"><span class="num" id="pk-contracts-signals">–</span><span class="label">🚩 Contracte unice cu semnale</span></div>
     <div class="kpi-card neutral"><span class="num" id="pk-value">–</span><span class="label">💰 Valoare totală (mil. RON)</span></div>
     <div class="kpi-card neutral"><span class="num" id="pk-scor">–</span><span class="label">⭐ Scor transparență (/100)</span></div>
   </div>
 
-  <!-- ── TOP 10 NEREGULI ── -->
-  <h2>🚩 Top 10 cele mai mari nereguli</h2>
+  <!-- ── TOP 10 SEMNALE ── -->
+  <h2>🚩 Top 10 semnale după prioritate și valoare asociată</h2>
   <div id="pk-top10-wrap">
     <table class="tp-table" id="pk-top10">
       <thead><tr>
-        <th>#</th><th>Severitate</th><th>Neregulă</th><th>Furnizor</th><th class="num">Valoare (RON)</th><th>Data</th>
+        <th>#</th><th>Prioritate</th><th>Semnal</th><th>Furnizor</th><th class="num">Sumă asociată (RON)</th><th>Data</th>
       </tr></thead>
       <tbody id="pk-top10-body">
         <tr><td colspan="6" style="text-align:center;padding:2rem;color:#9ca3af">⏳ Se încarcă…</td></tr>
@@ -109,10 +110,10 @@
   </div>
 
   <!-- ── TOP 10 FURNIZORI ── -->
-  <h2>🏢 Top 10 furnizori după valoare contracte cu nereguli</h2>
+  <h2>🏢 Top 10 furnizori după valoarea contractelor analizate</h2>
   <table class="tp-table" id="pk-top-firms">
     <thead><tr>
-      <th>#</th><th>Firmă</th><th class="num">Nereguli</th><th class="num">Valoare totală (RON)</th>
+      <th>#</th><th>Firmă</th><th class="num">Contracte</th><th class="num">Valoare totală (RON)</th>
     </tr></thead>
     <tbody id="pk-firms-body">
       <tr><td colspan="4" style="text-align:center;padding:2rem;color:#9ca3af">⏳ Se încarcă…</td></tr>
@@ -138,7 +139,7 @@
   <div class="sources-grid">
     <div class="source-card">
       <strong>📊 raport.json</strong>
-      <span>Toate neregulile + totaluri + scor de transparență.</span>
+      <span>Toate semnalele + totaluri + indicele euristic de transparență.</span>
       <a href="raport.json" target="_blank" rel="noopener">transparenta-pantelimon.eu/raport.json ↗</a>
     </div>
     <div class="source-card">
@@ -153,7 +154,7 @@
     </div>
     <div class="source-card">
       <strong>📡 feed.xml (Atom/RSS)</strong>
-      <span>Top 20 nereguli noi. Compatible cu Feedly, Inoreader.</span>
+      <span>Top 20 semnale noi. Compatibil cu Feedly și Inoreader.</span>
       <a href="feed.xml" target="_blank" rel="noopener">transparenta-pantelimon.eu/feed.xml ↗</a>
     </div>
     <div class="source-card">
@@ -166,17 +167,17 @@
 
   <!-- ── METODOLOGIE ── -->
   <h2>🔬 Metodologie</h2>
-  <p>Datele sunt extrase automat săptămânal din surse publice oficiale. Se aplică 19 algoritmi de detecție a pattern-urilor de risc:</p>
+  <p>Datele sunt extrase automat lunar din surse publice oficiale. Se aplică 19 detectori de pattern-uri de risc:</p>
   <table class="tp-table" style="font-size:.82rem">
     <thead><tr><th>Algoritm</th><th>Ce detectează</th><th>Bază legală</th></tr></thead>
     <tbody>
-      <tr><td>Achiziție directă peste prag</td><td>Contract individual >130.000 RON fără licitație</td><td>L98/2016 art.7</td></tr>
-      <tr><td>Achiziție directă aproape de prag</td><td>Valoare >97% din pragul legal (>126.100 RON)</td><td>L98/2016 art.7</td></tr>
-      <tr><td>Ofertant unic</td><td>Un singur ofertant — lipsă concurență</td><td>L98/2016 art.2, art.209</td></tr>
-      <tr><td>Fragmentare temporară</td><td>Contracte similare sub prag, sumă combinată >130.000 RON</td><td>L98/2016 art.11 alin.(1)</td></tr>
+      <tr><td>Achiziție directă peste prag</td><td>Peste 270.120 RON produse/servicii sau 900.400 RON lucrări, fără TVA</td><td>L98/2016 art.7 alin.(5)</td></tr>
+      <tr><td>Achiziție directă aproape de prag</td><td>Valoare &gt;97% din pragul categoriei; indicator euristic</td><td>L98/2016 art.7</td></tr>
+      <tr><td>Ofertant unic</td><td>Setul de date indică un singur ofertant; necesită verificare</td><td>L98/2016 art.2</td></tr>
+      <tr><td>Fragmentare temporară</td><td>Contracte similare sub prag, cu sumă combinată peste pragul categoriei</td><td>L98/2016 art.11 alin.(1)</td></tr>
       <tr><td>Concentrare furnizor</td><td>Top 3 furnizori >60% din valoarea totală</td><td>L98/2016 art.2 (concurență)</td></tr>
       <tr><td>Contracte consecutive</td><td>Același furnizor, ≥4 contracte în 30 de zile</td><td>L98/2016 art.11</td></tr>
-      <tr><td>Ședințe extraordinare excesive</td><td>Rata ședințelor extraordinare CL >25%</td><td>L215/2001 art.39</td></tr>
+      <tr><td>Ședințe extraordinare excesive</td><td>Rata ședințelor extraordinare CL &gt;25%</td><td>Legea 52/2003 art.7</td></tr>
       <tr><td>Publicare întârziată</td><td>Publicare SEAP >11 zile lucrătoare de la atribuire</td><td>L98/2016 art.122</td></tr>
       <tr><td>Valori identice aceeași zi</td><td>Aceeași valoare exactă la firme diferite în aceeași zi</td><td>L98/2016 art.11</td></tr>
       <tr><td>Burst contracte</td><td>Volum anormal de contracte într-o singură zi</td><td>–</td></tr>
@@ -188,7 +189,7 @@
   <!-- ── CONTACT ── -->
   <h2>📬 Contact</h2>
   <div class="pk-box">
-    <p><strong>Inițiativă cetățenească independentă</strong>, membrii USR Pantelimon</p>
+    <p><strong>Inițiativă civică independentă de autorități.</strong> Inițiatorul este membru USR Pantelimon; proiectul nu este un proiect oficial al partidului.</p>
     <ul class="contact-list">
       <li>💬 <strong>GitHub Issues</strong> (recomandat): <a href="https://github.com/transparenta-locala/transparenta-pantelimon/issues" target="_blank" rel="noopener">github.com/transparenta-locala/transparenta-pantelimon/issues</a></li>
       <li>📰 Nu suntem o redacție — pentru verificarea faptelor, contactați direct instituțiile de mai jos</li>
@@ -206,12 +207,12 @@
   <!-- ── DISCLAIMER ── -->
   <h2>⚖️ Disclaimer</h2>
   <div class="pk-box" style="background:#fef2f2;border-color:#fca5a5">
-    <p style="margin:0;font-size:.88rem">Datele afișate sunt fapte publice extrase automat din surse oficiale (SEAP, ANAF). <strong>Neregulile detectate sunt indicatori de risc factuali</strong>, nu concluzii juridice definitive. Concluziile privind intenția sau vinovăția rămân la latitudinea autorităților competente și a cititorului. Datele SEAP au un decalaj de 1–3 luni față de realitate. Inițiativa operează exclusiv în baza dreptului la informare publică (Legea 544/2001) și transparenței bugetare (Legea 273/2006).</p>
+    <p style="margin:0;font-size:.88rem">Datele sunt extrase automat din surse oficiale (SEAP, ANAF). <strong>Semnalele sunt indicatori euristici</strong>, pot avea suprapuneri și nu reprezintă concluzii juridice sau prejudicii. Verificarea trebuie făcută în documentele originale. Datele SEAP pot avea decalaje față de realitate.</p>
   </div>
 
   <p style="text-align:center;font-size:.82rem;color:#9ca3af;margin-top:3rem">
     <a href="index.html">🏠 Acasă</a> &nbsp;·&nbsp;
-    <a href="raport_transparenta.html">🚩 Raport nereguli</a> &nbsp;·&nbsp;
+    <a href="raport_transparenta.html">🚩 Raport semnale</a> &nbsp;·&nbsp;
     <a href="despre.html">ℹ️ Despre proiect</a> &nbsp;·&nbsp;
     <a href="https://github.com/transparenta-locala/transparenta-pantelimon" target="_blank" rel="noopener">GitHub ↗</a>
   </p>
@@ -238,11 +239,15 @@
   }
 
   async function loadData() {
-    let data;
+    let data, pressKit;
     try {
-      const r = await fetch('raport.json', { cache: 'no-store' });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      data = await r.json();
+      const responses = await Promise.all([
+        fetch('raport.json', { cache: 'no-store' }),
+        fetch('press_kit.json', { cache: 'no-store' })
+      ]);
+      if (!responses[0].ok) throw new Error('HTTP ' + responses[0].status);
+      data = await responses[0].json();
+      pressKit = responses[1].ok ? await responses[1].json() : {};
     } catch (e) {
       console.warn('[presa] Nu am putut încărca raport.json:', e);
       document.getElementById('pk-date').textContent = '(date indisponibile)';
@@ -261,12 +266,15 @@
     document.getElementById('pk-major').textContent     = t.by_severity?.MAJOR  ?? '–';
     document.getElementById('pk-mediu').textContent     = t.by_severity?.MEDIU  ?? '–';
     document.getElementById('pk-contracts').textContent = t.contracts_analyzed  ?? '–';
+    document.getElementById('pk-contracts-signals').textContent = t.contracts_with_signals ?? pressKit?.statistici?.contracte_cu_semnale ?? '–';
     document.getElementById('pk-value').textContent     = t.total_value_ron ? fmtMil(t.total_value_ron) : '–';
     const scor = data.scor_transparenta?.scor ?? data.scor_transparenta;
     document.getElementById('pk-scor').textContent = (scor != null && scor !== '') ? scor : '–';
 
-    // ── Top 10 nereguli (după sum_ron desc) ──
-    const flags = (data.flags || []).slice().sort((a, b) => (b.sum_ron || 0) - (a.sum_ron || 0));
+    // ── Top 10 semnale (prioritate, apoi valoare asociată) ──
+    const sevOrder = { CRITIC: 0, MAJOR: 1, MEDIU: 2 };
+    const flags = (data.flags || []).slice().sort((a, b) =>
+      (sevOrder[a.severity] ?? 3) - (sevOrder[b.severity] ?? 3) || (b.sum_ron || 0) - (a.sum_ron || 0));
     const top10 = flags.slice(0, 10);
     const tbody10 = document.getElementById('pk-top10-body');
     if (top10.length) {
@@ -280,29 +288,19 @@
           <td style="font-size:.8rem;color:#9ca3af">${esc(f.date || '–')}</td>
         </tr>`).join('');
     } else {
-      tbody10.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#9ca3af;padding:1.5rem">Nicio nereguă găsită</td></tr>';
+      tbody10.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#9ca3af;padding:1.5rem">Niciun semnal găsit</td></tr>';
     }
 
     // ── Top 10 furnizori ──
-    const firmMap = new Map();
-    (data.flags || []).forEach(f => {
-      if (!f.supplier) return;
-      const cur = firmMap.get(f.supplier) || { count: 0, total: 0 };
-      cur.count++;
-      cur.total += f.sum_ron || 0;
-      firmMap.set(f.supplier, cur);
-    });
-    const topFirms = Array.from(firmMap.entries())
-      .sort((a, b) => b[1].total - a[1].total)
-      .slice(0, 10);
+    const topFirms = (pressKit?.top_firme || []).slice(0, 10);
     const tbodyF = document.getElementById('pk-firms-body');
     if (topFirms.length) {
-      tbodyF.innerHTML = topFirms.map(([name, v], i) => `
+      tbodyF.innerHTML = topFirms.map((v, i) => `
         <tr>
           <td style="color:#9ca3af;font-size:.8rem">${i + 1}</td>
-          <td style="font-weight:600">${esc(name)}</td>
-          <td class="num">${v.count}</td>
-          <td class="num">${fmtRON(v.total)}</td>
+          <td style="font-weight:600">${esc(v.nume)}</td>
+          <td class="num">${v.nr_contracte}</td>
+          <td class="num">${fmtRON(v.valoare_ron)}</td>
         </tr>`).join('');
     } else {
       tbodyF.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#9ca3af;padding:1.5rem">–</td></tr>';
@@ -320,15 +318,16 @@ Data: ${dataStr}
 URL: https://transparenta-pantelimon.eu/presa.html
 
 == STATISTICI ==
-Total nereguli detectate: ${t.flags ?? '–'}
+Total semnale automate: ${t.signals ?? t.flags ?? '–'}
   - CRITICE: ${t.by_severity?.CRITIC ?? '–'}
   - MAJORE:  ${t.by_severity?.MAJOR  ?? '–'}
   - MEDIU:   ${t.by_severity?.MEDIU  ?? '–'}
 Contracte analizate: ${t.contracts_analyzed ?? '–'}
+Contracte unice cu semnale: ${t.contracts_with_signals ?? pressKit?.statistici?.contracte_cu_semnale ?? '–'}
 Valoare totală contracte: ${valMil} milioane RON
 Scor transparență: ${(scor != null && scor !== '') ? scor + '/100' : '–'}
 
-== TOP 5 CELE MAI MARI NEREGULI ==
+== TOP 5 SEMNALE DUPĂ PRIORITATE ȘI VALOARE ASOCIATĂ ==
 ${top5txt}
 
 == DATE DESCHISE ==
@@ -353,7 +352,7 @@ Cod sursă: https://github.com/transparenta-locala/transparenta-pantelimon
 
 == DISCLAIMER ==
 Datele afișate sunt fapte publice extrase automat din surse oficiale (SEAP, ANAF).
-Neregulile detectate sunt indicatori de risc factuali, nu concluzii juridice definitive.
+Semnalele sunt indicatori euristici, pot avea suprapuneri și nu sunt concluzii juridice sau prejudicii.
 Licență date: Creative Commons CC-BY 4.0 — atribuire: "Transparența Pantelimon / transparenta-pantelimon.eu"
 `.trim();
 
@@ -408,7 +407,7 @@ Licență date: Creative Commons CC-BY 4.0 — atribuire: "Transparența Panteli
       const pk = await r.json();
       // Actualizează KPI din press_kit.json dacă sunt mai recente
       const st = pk.statistici || {};
-      if (st.total_nereguli != null && document.getElementById('pk-critic').textContent === '–') {
+      if ((st.total_semnale != null || st.total_nereguli != null) && document.getElementById('pk-critic').textContent === '–') {
         document.getElementById('pk-critic').textContent    = st.critice ?? '–';
         document.getElementById('pk-major').textContent     = st.majore  ?? '–';
         document.getElementById('pk-mediu').textContent     = st.medii   ?? '–';
@@ -428,5 +427,6 @@ Licență date: Creative Commons CC-BY 4.0 — atribuire: "Transparența Panteli
   loadPressKitJson();
 })();
 </script>
+<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

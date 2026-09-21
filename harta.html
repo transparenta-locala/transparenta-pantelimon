@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hartă furnizori – Transparența Pantelimon</title>
-  <meta name="description" content="Harta geografică a furnizorilor contractați de Primăria Pantelimon – distribuție teritorială, valori contracte, nereguli identificate.">
+  <meta name="description" content="Harta geografică a furnizorilor contractați de Primăria Pantelimon – distribuție teritorială, valori contractuale și legături către surse.">
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website">
@@ -115,16 +115,22 @@
       color: #64748b;
     }
     #empty-state .es-icon { font-size: 2rem; margin-bottom: 8px; }
+    .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
+    #firma-lista-accesibila { max-height:180px; overflow:auto; padding-left:1.2rem; font-size:.78rem; }
+    #firma-lista-accesibila li { margin:.35rem 0; }
   </style>
 </head>
 <body>
+<main id="main-content">
+<h1 class="sr-only">Harta furnizorilor Primăriei Pantelimon</h1>
 <div id="harta-wrap">
   <div id="loading">
     <div class="spinner" aria-hidden="true"></div>
     <span>Se încarcă harta furnizorilor…</span>
   </div>
 
-  <div id="map" role="application" aria-label="Hartă geografică furnizori Primăria Pantelimon"></div>
+  <p id="map-help" class="sr-only">Hartă interactivă. Pentru o alternativă accesibilă, folosește lista text a furnizorilor din panoul de informații.</p>
+  <div id="map" role="region" aria-label="Hartă geografică furnizori Primăria Pantelimon" aria-describedby="map-help"></div>
 
   <div id="panel" role="complementary" aria-label="Panou informații furnizori">
     <div id="panel-header">
@@ -143,6 +149,10 @@
              Harta va fi disponibilă în curând.</p>
         </div>
         <p style="font-size:.8rem;color:#94a3b8;margin-top:8px">Faceți click pe un marker pentru detalii.</p>
+        <details>
+          <summary style="font-size:.8rem;cursor:pointer">Lista text a furnizorilor</summary>
+          <ul id="firma-lista-accesibila"></ul>
+        </details>
       </div>
 
       <!-- Detail view (ascuns implicit) -->
@@ -163,6 +173,7 @@
     </div>
   </div>
 </div>
+</main>
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -275,6 +286,17 @@
         </div>
       `;
 
+      const listaAccesibila = document.getElementById('firma-lista-accesibila');
+      if (listaAccesibila) {
+        listaAccesibila.innerHTML = firme
+          .slice().sort((a, b) => String(a.name || a.cif).localeCompare(String(b.name || b.cif), 'ro'))
+          .map(firma => {
+            const nume = String(firma.name || firma.cif).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+            const text = `${nume} — ${fmtRON(firma.valoare || 0)}, ${firma.nr_contracte || 0} contracte`;
+            return firma.slug ? `<li><a href="furnizori/${encodeURIComponent(firma.slug)}.html">${text}</a></li>` : `<li>${text}</li>`;
+          }).join('');
+      }
+
       /* Markere ── */
       firme.forEach(function (firma) {
         if (!firma.lat || !firma.lng) return;
@@ -323,6 +345,7 @@
 </script>
 
 <!-- Progressive enhancement nav/toolbar -->
-<script src="enhance.min.js" defer></script>
+<script src="enhance.js" defer></script>
+<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

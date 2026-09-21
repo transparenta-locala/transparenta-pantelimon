@@ -28,8 +28,8 @@
 <meta name="twitter:description" content="Metodologie, surse de date și cum poți contribui la monitorizarea cetățenească.">
 <meta name="twitter:image" content="https://transparenta-pantelimon.eu/og-image.png">
 
-<link rel="alternate" type="application/atom+xml" title="Nereguli noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
-<script src="enhance.min.js" defer></script>
+<link rel="alternate" type="application/atom+xml" title="Semnale noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
+<script src="enhance.js" defer></script>
 
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -102,7 +102,7 @@ tr:hover td { background: #f9fafb; }
   </p>
   <p>
     <strong>Site:</strong> <a href="https://transparenta-pantelimon.eu">transparenta-pantelimon.eu</a><br>
-    <strong>Raport nereguli:</strong> <a href="raport_transparenta.html">raport_transparenta.html</a><br>
+    <strong>Raport semnale:</strong> <a href="raport_transparenta.html">raport_transparenta.html</a><br>
     <strong>Cod sursă:</strong> <a href="https://github.com/transparenta-locala/transparenta-pantelimon" target="_blank" rel="noopener">github.com/transparenta-locala/transparenta-pantelimon</a>
   </p>
 
@@ -110,7 +110,8 @@ tr:hover td { background: #f9fafb; }
   <h2 id="cine">Cine suntem</h2>
 
   <p>
-    Proiectul este inițiat de un cetățean din Pantelimon.
+    Proiectul este inițiat de un cetățean din Pantelimon, membru USR Pantelimon.
+    Este independent de autoritățile publice și nu este un proiect oficial al partidului.
   </p>
 
   <div class="note">
@@ -145,7 +146,7 @@ tr:hover td { background: #f9fafb; }
       <tr>
         <td><a href="https://www.anaf.ro" target="_blank" rel="noopener">ANAF (registru firme)</a></td>
         <td>Status firmă (activ/inactiv/radiat), dată înregistrare</td>
-        <td>La cerere, cache 30 zile</td>
+        <td>Lunar; cache tehnic până la 365 zile</td>
       </tr>
       <tr>
         <td><a href="https://primariapantelimon.ro" target="_blank" rel="noopener">Primăria Pantelimon (site oficial)</a></td>
@@ -167,10 +168,10 @@ tr:hover td { background: #f9fafb; }
       <tr><th>Flag</th><th>Ce detectează</th><th>Bază legală</th></tr>
     </thead>
     <tbody>
-      <tr><td><code>ACHIZITIE_DIRECTA_PESTE_PRAG</code></td><td>Contract individual &gt; 130.000 RON prin achiziție directă</td><td>L98/2016 art.7</td></tr>
+      <tr><td><code>ACHIZITIE_DIRECTA_PESTE_PRAG</code></td><td>Contract individual peste pragul categoriei: 270.120 RON produse/servicii sau 900.400 RON lucrări, fără TVA</td><td>L98/2016 art.7 alin.(5)</td></tr>
       <tr><td><code>FRAGMENTARE</code></td><td>Același furnizor, titluri similare, valoare combinată &gt; prag</td><td>L98/2016 art.11</td></tr>
       <tr><td><code>FRAGMENTARE_TEMPORARA</code></td><td>Fereastră 90 zile, suma sub-prag &gt; prag</td><td>L98/2016 art.11</td></tr>
-      <tr><td><code>OFERTANT_UNIC</code></td><td>Contract fără competiție reală (1 singur ofertant)</td><td>L98/2016 art.2</td></tr>
+      <tr><td><code>OFERTANT_UNIC</code></td><td>Setul de date indică un singur ofertant; documentația necesită verificare</td><td>L98/2016 art.2</td></tr>
       <tr><td><code>CONCENTRARE_FURNIZOR</code></td><td>Top-3 furnizori &gt; 60% / &gt; 80% din valoarea totală</td><td>L98/2016 art.2</td></tr>
       <tr><td><code>PROCEDURI_NON_COMPETITIVE</code></td><td>&gt; 40% din contracte prin proceduri directe</td><td>L98/2016 art.7</td></tr>
       <tr><td><code>FURNIZOR_DOMINANT</code></td><td>Un furnizor &gt; 35% din totalul contractelor</td><td>L98/2016 art.57-64</td></tr>
@@ -178,28 +179,38 @@ tr:hover td { background: #f9fafb; }
       <tr><td><code>BURST_CONTRACTE</code></td><td>≥ 5 contracte semnate într-o singură zi</td><td>—</td></tr>
       <tr><td><code>SEMNARE_ZI_NELUCRATOARE</code></td><td>Contract semnat în weekend sau sărbătoare legală</td><td>—</td></tr>
       <tr><td><code>CRESTERE_BRUSCA_VALOARE</code></td><td>Revizie contract cu creștere &gt; 50% de valoare</td><td>L98/2016 art.221</td></tr>
-      <tr><td><code>VALOARE_ROTUNDA_SUSPECTA</code></td><td>Valori rotunde (multiplu de 10k) — posibil fără studiu de piață</td><td>HG 395/2016 art.131</td></tr>
+      <tr><td><code>VALOARE_ROTUNDA_SUSPECTA</code></td><td>Valori rotunde (multiplu de 10k) — indicator euristic pentru verificare</td><td>HG 395/2016 art.131</td></tr>
       <tr><td><code>FIRMA_INACTIVA</code></td><td>Contract cu firmă inactivă/radiată la ANAF sau ORC</td><td>L98/2016 art.220</td></tr>
       <tr><td><code>FIRMA_NOU_CREATA</code></td><td>Firmă cu &lt; 24 luni vechime la data contractului</td><td>L98/2016 art.163</td></tr>
-      <tr><td><code>RISC_SISTEMIC_FIRMA</code></td><td>Firmă apărută în ≥ 3 categorii diferite de nereguli</td><td>—</td></tr>
-      <tr><td><code>SEDINTE_EXTRAORDINARE_EXCESIVE</code></td><td>Rată &gt; 25% ședințe extraordinare (HCL)</td><td>L215/2001 art.39</td></tr>
+      <tr><td><code>RISC_SISTEMIC_FIRMA</code></td><td>Furnizor apărut în ≥ 3 categorii diferite de indicatori</td><td>—</td></tr>
+      <tr><td><code>SEDINTE_EXTRAORDINARE_EXCESIVE</code></td><td>Rată &gt; 25% ședințe extraordinare (HCL)</td><td>Legea 52/2003 art.7</td></tr>
       <tr><td><code>PUBLICARE_INTARZIATA</code></td><td>Publicare contract &gt; 11 zile lucrătoare de la atribuire</td><td>L98/2016 art.55</td></tr>
     </tbody>
   </table>
 
   <div class="warn">
-    <strong>Limitări:</strong> Algoritmii detectează <em>pattern-uri statistice</em> care pot indica
-    nereguli, nu dovedesc intenție sau vinovăție. False-positive-urile sunt posibile.
+    <strong>Limitări:</strong> Algoritmii detectează <em>pattern-uri statistice</em> care necesită
+    verificare, nu dovedesc abaterea, intenția sau vinovăția. Rezultatele fals pozitive sunt posibile.
     Datele ANAF au un decalaj de 6-12 luni față de realitate.
-    Concluziile juridice și civice aparțin exclusiv cititorului.
+    Un contract poate genera mai multe flaguri; de aceea raportăm separat numărul de semnale și
+    numărul de contracte unice. Sumele asociate flagurilor pot avea suprapuneri și nu sunt prejudicii.
   </div>
 
   <h3>Praguri legale folosite</h3>
   <ul>
-    <li><strong>130.000 RON</strong> — prag achiziție directă servicii/furnizare (L98/2016 art.7)</li>
-    <li><strong>500.000 RON</strong> — prag procedură simplificată lucrări (L98/2016 art.7)</li>
-    <li><strong>97%</strong> din prag — marjă de suspiciune fragmentare</li>
+    <li><strong>270.120 RON fără TVA</strong> — prag achiziție directă produse/servicii</li>
+    <li><strong>900.400 RON fără TVA</strong> — prag achiziție directă lucrări</li>
+    <li><strong>97%</strong> din prag — marjă euristică pentru semnalul „aproape de prag”</li>
   </ul>
+  <p>Sursa: <a href="https://legislatie.just.ro/Public/DetaliiDocument/178667" target="_blank" rel="noopener noreferrer">Legea 98/2016, art. 7 alin. (5), forma consolidată</a>. Pragurile au fost verificate la 13.07.2026.</p>
+
+  <h3 id="scor-transparenta">Indicele euristic de transparență</h3>
+  <p>
+    Indicele 0–100 este neoficial. Fiecare componentă primește un punctaj 0–100, apoi se
+    aplică ponderile: achiziții directe 30%, ofertant unic 20%, ședințe extraordinare 15%,
+    fragmentare 15%, documente publicate 10% și răspunsuri la Legea 544/2001 10%.
+    Ultimele două componente sunt în prezent estimări manuale, nu măsurători automate.
+  </p>
 
   <!-- ──────────────────────────── DATE DESCHISE ─────────────────────────── -->
   <h2 id="date-deschise">Date deschise</h2>
@@ -208,7 +219,7 @@ tr:hover td { background: #f9fafb; }
   <ul>
     <li>
       <strong>JSON flags:</strong>
-      <a href="raport.json">raport.json</a> — toate neregulile detectate, structurat (schema v1.0)
+      <a href="raport.json">raport.json</a> — toate semnalele detectate, structurat (schema v1.0)
     </li>
     <li>
       <strong>Contracte:</strong>
@@ -216,7 +227,7 @@ tr:hover td { background: #f9fafb; }
     </li>
     <li>
       <strong>RSS/Atom feed:</strong>
-      <a href="feed.xml">feed.xml</a> — top 20 nereguli noi, compatibil Feedly/Inoreader
+      <a href="feed.xml">feed.xml</a> — top 20 semnale noi, compatibil Feedly/Inoreader
     </li>
     <li>
       <strong>Raport HTML:</strong>
@@ -234,7 +245,7 @@ tr:hover td { background: #f9fafb; }
 
   <h3>Dacă ești cetățean</h3>
   <ul>
-    <li>Trimite o sesizare la ANAP sau Curtea de Conturi dacă găsești o neregulă relevantă
+    <li>După verificarea documentelor originale, trimite o sesizare la ANAP sau Curtea de Conturi dacă semnalul este relevant
         (butonul <strong>📧 Sesizare ANAP</strong> de pe fiecare card pre-completează emailul)</li>
     <li>Distribuie raportul jurnaliștilor locali sau pe rețele sociale</li>
     <li>Solicită informații suplimentare de la primărie în baza
@@ -270,14 +281,14 @@ tr:hover td { background: #f9fafb; }
 
   <p>
     Toate datele afișate provin din surse publice oficiale (SEAP, ANAF, ONRC, site primărie).
-    Site-ul nu face afirmații despre intenții sau vinovăție — prezintă exclusiv fapte statistice
-    și posibile încălcări ale legii, lăsând concluziile la latitudinea cititorului.
+    Site-ul nu face afirmații despre intenții sau vinovăție. Prezintă date și indicatori
+    euristici care trebuie confruntați cu documentele originale.
   </p>
   <p>
-    <strong>Bază legală GDPR</strong> pentru afișarea numelor de firme și persoane publice:
-    Art. 6(1)(e) GDPR + Legea 363/2018 (interes public) + Legea 544/2001 (informații publice).
-    Datele personale afișate se limitează la calitatea de administrator/asociat al firmelor
-    cu contracte publice — calitate publică prin natura ei.
+    Pentru datele cu caracter personal din surse publice, proiectul are în vedere interesul
+    legitim privind informarea civică (art. 6 alin. (1) lit. f GDPR), libertatea de exprimare
+    și informare, cu minimizarea datelor și evaluarea drepturilor persoanei vizate. Cadrul
+    național general este <a href="https://legislatie.just.ro/Public/DetaliiDocument/203151" target="_blank" rel="noopener noreferrer">Legea 190/2018</a>.
     → <a href="gdpr.html">Politică de confidențialitate completă</a>
   </p>
   <p>
@@ -293,12 +304,13 @@ tr:hover td { background: #f9fafb; }
   <hr style="margin: 3rem 0; border: 0; border-top: 1px solid #e5e7eb;">
   <p style="color: #6b7280; font-size: .85rem; text-align: center;">
     <a href="index.html">Acasă</a> ·
-    <a href="raport_transparenta.html">Raport nereguli</a> ·
+    <a href="raport_transparenta.html">Raport semnale</a> ·
     <a href="transparenta_pantelimon.html">Buget</a> ·
     <a href="feed.xml">📡 RSS</a> ·
     <a href="https://github.com/transparenta-locala/transparenta-pantelimon" target="_blank" rel="noopener">GitHub</a>
   </p>
 
 </main>
+<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
