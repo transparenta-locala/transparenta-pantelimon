@@ -720,8 +720,8 @@
       "label": "TOP A-Z CONCEPT S.R.L.",
       "cui": "45058860",
       "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, STR. MĂRULUI, NR.19, CAMERA 2, SC.A, ET.2, AP.16",
-      "lat": 44.470278,
-      "lng": 26.176246,
+      "lat": 44.457952,
+      "lng": 26.162859,
       "valoare": 16728051.0,
       "nr_contracte": 3,
       "in_retea": false
@@ -885,8 +885,8 @@
       "label": "STANGER DESIGN S.R.L.",
       "cui": "40412167",
       "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, PRL. BUCUREŞTI, NR.24, BL.M19, SC.2, ET.3, AP.6",
-      "lat": 44.213586,
-      "lng": 27.302916,
+      "lat": 44.200888,
+      "lng": 27.316998,
       "valoare": 115500.0,
       "nr_contracte": 1,
       "in_retea": false
@@ -1710,8 +1710,8 @@
       "label": "SELGROS CASH & CARRY SRL",
       "cui": "11805367",
       "adresa": "JUD. BRAŞOV, MUN. BRAŞOV, CAL. BUCUREŞTI, NR.231",
-      "lat": 45.606983,
-      "lng": 25.65437,
+      "lat": 45.631239,
+      "lng": 25.637768,
       "valoare": 9031.31,
       "nr_contracte": 2,
       "in_retea": false
@@ -2060,5 +2060,5 @@
     "edges_adresa_comuna": 4,
     "total_edges": 4
   },
-  "generated_at": "2026-09-25T14:03:30.766902"
+  "generated_at": "2026-09-25T14:23:11.576445"
 }

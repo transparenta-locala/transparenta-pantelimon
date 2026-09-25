@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-25T13:59:26.610713",
+  "generated_at": "2026-09-25T14:18:58.847814",
   "entity": {
     "name": "Orașul Pantelimon",
     "cif": "4420759",
@@ -13,9 +13,9 @@
     "contracts_with_signals": 163,
     "total_value_ron": 313680510.12,
     "by_severity": {
-      "CRITIC": 18,
+      "CRITIC": 17,
       "MAJOR": 68,
-      "MEDIU": 141
+      "MEDIU": 142
     }
   },
   "flags": [
@@ -3087,12 +3087,12 @@
     },
     {
       "id": 220,
-      "severity": "CRITIC",
-      "title": "3 contracte de valoare identică (29,508,940 RON) în aceeași zi",
-      "explanation": "În data de 2025-07-29, 3 firme diferite au primit contracte cu valoare EXACT identică (29,508,940 RON fiecare). Total: 88,526,820 RON. Firme: ALA EXPERT CONSTRUCT, SANTIA PARTNER CONSTRUCT, YARDMAN. Pattern clasic de împărțire artificială a unui lot (art. 11 alin. (1) L98/2016).",
+      "severity": "MEDIU",
+      "title": "Aceeași valoare (29,508,940 RON) la 3 firme, în aceeași zi",
+      "explanation": "În data de 2025-07-29, 3 firme apar în datele SEAP cu aceeași valoare (29,508,940 RON): ALA EXPERT CONSTRUCT, SANTIA PARTNER CONSTRUCT, YARDMAN. De obicei este un singur contract atribuit unei asocieri sau un acord-cadru cu mai mulți operatori, iar SEAP listează fiecare firmă cu valoarea întreagă — valorile nu se adună. Merită verificat în SEAP cum a fost structurată atribuirea.",
       "supplier": "",
       "supplier_cif": "",
-      "sum_ron": 88526820.0,
+      "sum_ron": 29508940.0,
       "date": "2025-07-29",
       "contract_id": "",
       "procedure": "",
@@ -3103,10 +3103,10 @@
       "id": 221,
       "severity": "MEDIU",
       "title": "9 contracte semnate într-o singură zi (2025-12-03)",
-      "explanation": "În 2025-12-03 s-au semnat 9 contracte cu valoare totală 38,124,092 RON.",
+      "explanation": "În 2025-12-03 s-au semnat 9 contracte cu valoare totală 12,780,792 RON.",
       "supplier": "",
       "supplier_cif": "",
-      "sum_ron": 38124092.08,
+      "sum_ron": 12780792.08,
       "date": "2025-12-03",
       "contract_id": "",
       "procedure": "",
@@ -3199,9 +3199,9 @@
     }
   ],
   "scor_transparenta": {
-    "scor": 36,
+    "scor": 37,
     "componente": {
-      "achizitii_directe": 46,
+      "achizitii_directe": 49,
       "ofertant_unic": 0,
       "sedinte_extraordinare": 57,
       "fragmentare": 40,
@@ -3231,8 +3231,8 @@
   },
   "seap_debug": [
     "IS_CI=True MAX_FILE_MB=80MB cui=4420759",
-    "Pachet 2025 eroare: HTTPSConnectionPool(host='data.gov.ro', port=443): Max retries exceeded with url: /api/3/action/package_show?id=achizitii-publice-2025 (Caused by ConnectTimeoutError(<HTTPSConnection(host='data.gov.ro', port=443) at 0x7f83df80de50>, 'Connection to data.gov.ro timed out. (connect timeout=20)'))",
-    "Pachet 2026 eroare: HTTPSConnectionPool(host='data.gov.ro', port=443): Max retries exceeded with url: /api/3/action/package_show?id=achizitii-publice-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='data.gov.ro', port=443) at 0x7f83dec1b550>, 'Connection to data.gov.ro timed out. (connect timeout=20)'))",
+    "Pachet 2025 eroare: HTTPSConnectionPool(host='data.gov.ro', port=443): Max retries exceeded with url: /api/3/action/package_show?id=achizitii-publice-2025 (Caused by ConnectTimeoutError(<HTTPSConnection(host='data.gov.ro', port=443) at 0x7fcdba82d7d0>, 'Connection to data.gov.ro timed out. (connect timeout=20)'))",
+    "Pachet 2026 eroare: HTTPSConnectionPool(host='data.gov.ro', port=443): Max retries exceeded with url: /api/3/action/package_show?id=achizitii-publice-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='data.gov.ro', port=443) at 0x7fcdba82f6d0>, 'Connection to data.gov.ro timed out. (connect timeout=20)'))",
     "surse_ok=0 contracte=0",
     "FALLBACK: loaded 506 contracte din contracte.json"
   ]

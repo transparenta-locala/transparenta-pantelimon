@@ -10,26 +10,15 @@
     "total_nereguli": 227,
     "total_semnale": 227,
     "contracte_cu_semnale": 163,
-    "critice": 18,
+    "critice": 17,
     "majore": 68,
-    "medii": 141,
+    "medii": 142,
     "total_contracte": 506,
     "valoare_totala_ron": 313680510.12,
     "valoare_totala_mil": 313.68,
-    "scor_transparenta": 36
+    "scor_transparenta": 37
   },
   "top_nereguli": [
-    {
-      "titlu": "3 contracte de valoare identică (29,508,940 RON) în aceeași zi",
-      "severitate": "CRITIC",
-      "descriere": "În data de 2025-07-29, 3 firme diferite au primit contracte cu valoare EXACT identică (29,508,940 RON fiecare). Total: 88,526,820 RON. Firme: ALA EXPERT CONSTRUCT, SANTIA PARTNER CONSTRUCT, YARDMAN. Pattern clasic de împărțire artificială a unui lot (art. 11 alin. (1) L98/2016).",
-      "furnizor": "",
-      "valoare_ron": 88526820.0,
-      "data": "2025-07-29",
-      "contract_id": "",
-      "tip": "VALORI_IDENTICE_ACEEASI_ZI",
-      "anchor": "#nereguli-220"
-    },
     {
       "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
       "severitate": "CRITIC",
@@ -128,21 +117,21 @@
       "contract_id": "achizitie-directa-2026-337092,achizitie-directa-2026-355882",
       "tip": "FRAGMENTARE",
       "anchor": "#nereguli-167"
+    },
+    {
+      "titlu": "Semnal de posibilă fragmentare a contractelor",
+      "severitate": "CRITIC",
+      "descriere": "Constopograf Expert a primit 2 contracte similare în 5 zile, cu o valoare combinată de 540K RON. Fiecare este sub pragul pentru produse/servicii (270K RON), iar suma îl depășește. Similaritatea temporală și textuală este un semnal automat; unitatea achizitoare și documentele trebuie verificate.",
+      "furnizor": "Constopograf Expert",
+      "valoare_ron": 540000.0,
+      "data": "2026-03-12",
+      "contract_id": "achizitie-directa-2026-355882,achizitie-directa-2026-384386",
+      "tip": "FRAGMENTARE",
+      "anchor": "#nereguli-168"
     }
   ],
   "top_semnale": [
     {
-      "titlu": "3 contracte de valoare identică (29,508,940 RON) în aceeași zi",
-      "severitate": "CRITIC",
-      "descriere": "În data de 2025-07-29, 3 firme diferite au primit contracte cu valoare EXACT identică (29,508,940 RON fiecare). Total: 88,526,820 RON. Firme: ALA EXPERT CONSTRUCT, SANTIA PARTNER CONSTRUCT, YARDMAN. Pattern clasic de împărțire artificială a unui lot (art. 11 alin. (1) L98/2016).",
-      "furnizor": "",
-      "valoare_ron": 88526820.0,
-      "data": "2025-07-29",
-      "contract_id": "",
-      "tip": "VALORI_IDENTICE_ACEEASI_ZI",
-      "anchor": "#nereguli-220"
-    },
-    {
       "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
       "severitate": "CRITIC",
       "descriere": "<strong>Constopograf Expert</strong> (CUI 25145252) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>7</strong>, în valoare de <strong>1.89 mil. RON</strong> (fiecare contract numărat",
@@ -240,6 +229,17 @@
       "contract_id": "achizitie-directa-2026-337092,achizitie-directa-2026-355882",
       "tip": "FRAGMENTARE",
       "anchor": "#nereguli-167"
+    },
+    {
+      "titlu": "Semnal de posibilă fragmentare a contractelor",
+      "severitate": "CRITIC",
+      "descriere": "Constopograf Expert a primit 2 contracte similare în 5 zile, cu o valoare combinată de 540K RON. Fiecare este sub pragul pentru produse/servicii (270K RON), iar suma îl depășește. Similaritatea temporală și textuală este un semnal automat; unitatea achizitoare și documentele trebuie verificate.",
+      "furnizor": "Constopograf Expert",
+      "valoare_ron": 540000.0,
+      "data": "2026-03-12",
+      "contract_id": "achizitie-directa-2026-355882,achizitie-directa-2026-384386",
+      "tip": "FRAGMENTARE",
+      "anchor": "#nereguli-168"
     }
   ],
   "top_firme": [
