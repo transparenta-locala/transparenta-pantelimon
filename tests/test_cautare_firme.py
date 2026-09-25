@@ -299,8 +299,9 @@ class TestCrestereBruscaCronologica(unittest.TestCase):
     """
 
     @staticmethod
-    def _contract(cid, titlu, valoare, data, firma="TEST SRL"):
-        return {"id": cid, "numar": cid, "titlu": titlu, "valoare_ron": valoare,
+    def _contract(cid, titlu, valoare, data, firma="TEST SRL", numar=None):
+        # versiunile aceluiași contract au același număr de contract/anunț
+        return {"id": cid, "numar": numar or cid, "titlu": titlu, "valoare_ron": valoare,
                 "data_publicare": data, "tip_procedura": "Licitatie deschisa",
                 "castigator": firma, "castigator_cui": "RO 1", "nr_ofertanti": 2}
 
@@ -319,8 +320,8 @@ class TestCrestereBruscaCronologica(unittest.TestCase):
 
     def test_cresterea_in_timp_e_detectata(self):
         contracte = [
-            self._contract("c1", "Reparatii drum", 1_000_000, "2025-01-10"),
-            self._contract("c2", "Reparatii drum (Rev.2)", 4_000_000, "2025-06-10"),
+            self._contract("c1", "Reparatii drum", 1_000_000, "2025-01-10", numar="CTR-7"),
+            self._contract("c2", "Reparatii drum (Rev.2)", 4_000_000, "2025-06-10", numar="CTR-7"),
         ]
         flags = self._cresteri(contracte)
         self.assertEqual(len(flags), 1)
@@ -329,8 +330,8 @@ class TestCrestereBruscaCronologica(unittest.TestCase):
     def test_descrierea_contine_ambele_date(self):
         """Cititorul trebuie să poată verifica singur ordinea cronologică."""
         contracte = [
-            self._contract("c1", "Reparatii drum", 1_000_000, "2025-01-10"),
-            self._contract("c2", "Reparatii drum (Rev.2)", 4_000_000, "2025-06-10"),
+            self._contract("c1", "Reparatii drum", 1_000_000, "2025-01-10", numar="CTR-7"),
+            self._contract("c2", "Reparatii drum (Rev.2)", 4_000_000, "2025-06-10", numar="CTR-7"),
         ]
         descriere = self._cresteri(contracte)[0]["descriere"]
         self.assertIn("2025-01-10", descriere)
@@ -353,8 +354,8 @@ class TestCrestereBruscaCronologica(unittest.TestCase):
 
     def test_flagul_indica_versiunea_finala(self):
         contracte = [
-            self._contract("vechi", "Lucrari X", 200_000, "2025-01-01"),
-            self._contract("nou", "Lucrari X (Rev.12)", 800_000, "2025-09-01"),
+            self._contract("vechi", "Lucrari X", 200_000, "2025-01-01", numar="CTR-9"),
+            self._contract("nou", "Lucrari X (Rev.12)", 800_000, "2025-09-01", numar="CTR-9"),
         ]
         flag = self._cresteri(contracte)[0]
         self.assertEqual(flag["contract_id"], "nou")
@@ -384,7 +385,22 @@ class TestCrestereBruscaCronologica(unittest.TestCase):
         flag = self._cresteri(contracte)[0]
         self.assertNotIn("a crescut", flag["descriere"])
         self.assertIn("aceeași dată", flag["descriere"])
-        self.assertIn("Ordinea versiunilor nu poate fi", flag["descriere"])
+        self.assertIn("Nu se poate stabili", flag["descriere"])
+        self.assertEqual(flag["severitate"], "MEDIU")
+
+    def test_achizitii_separate_cu_acelasi_cpv_nu_sunt_versiuni(self):
+        """Regresia GEMCO TRADE: „(Rev.2)" e revizia CPV, nu a contractului.
+
+        Două achiziții directe distincte (piatră, 01.2025 și 03.2026) erau
+        raportate ca „creștere de 95% între versiuni".
+        """
+        contracte = [
+            self._contract("achizitie-directa-2025-80581", "Piatra de cariera si concasata (Rev.2)",
+                           137_750, "2025-01-22", firma="GEMCO TRADE"),
+            self._contract("achizitie-directa-2026-299822", "Piatra de cariera si concasata (Rev.2)",
+                           268_800, "2026-03-03", firma="GEMCO TRADE"),
+        ]
+        self.assertEqual(self._cresteri(contracte), [])
 
     def test_aceeasi_data_pastreaza_semnalul(self):
         """Diferenta ramane un semnal legitim, doar formularea se schimba."""
@@ -397,10 +413,10 @@ class TestCrestereBruscaCronologica(unittest.TestCase):
         self.assertEqual(flags[0]["tip"], "CRESTERE_BRUSCA_VALOARE")
 
     def test_severitatea_creste_cu_procentul(self):
-        mic = [self._contract("a", "X", 1_000_000, "2025-01-01"),
-               self._contract("b", "X (Rev.2)", 2_000_000, "2025-06-01")]      # +100%
-        mare = [self._contract("c", "Y", 1_000_000, "2025-01-01"),
-                self._contract("d", "Y (Rev.2)", 4_000_000, "2025-06-01")]     # +300%
+        mic = [self._contract("a", "X", 1_000_000, "2025-01-01", numar="N1"),
+               self._contract("b", "X (Rev.2)", 2_000_000, "2025-06-01", numar="N1")]      # +100%
+        mare = [self._contract("c", "Y", 1_000_000, "2025-01-01", numar="N2"),
+                self._contract("d", "Y (Rev.2)", 4_000_000, "2025-06-01", numar="N2")]     # +300%
         self.assertEqual(self._cresteri(mic)[0]["severitate"], "MAJOR")
         self.assertEqual(self._cresteri(mare)[0]["severitate"], "CRITIC")
 
