@@ -1,20 +1,22 @@
 {
-  "schema_version": "1.0",
-  "generated_at": "2026-09-01",
+  "schema_version": "1.1",
+  "generated_at": "2026-09-25",
   "uat": {
     "name": "Orașul Pantelimon",
     "cif": "4420759",
     "judet": "Ilfov"
   },
   "statistici": {
-    "total_nereguli": 303,
-    "critice": 111,
-    "majore": 54,
+    "total_nereguli": 231,
+    "total_semnale": 231,
+    "contracte_cu_semnale": 163,
+    "critice": 20,
+    "majore": 73,
     "medii": 138,
     "total_contracte": 506,
     "valoare_totala_ron": 313680510.12,
     "valoare_totala_mil": 313.68,
-    "scor_transparenta": 17
+    "scor_transparenta": 35
   },
   "top_nereguli": [
     {
@@ -26,106 +28,218 @@
       "data": "2025-07-29",
       "contract_id": "",
       "tip": "VALORI_IDENTICE_ACEEASI_ZI",
-      "anchor": "#nereguli-301"
+      "anchor": "#nereguli-224"
     },
     {
-      "titlu": "Posibilă fragmentare artificială a contractelor",
+      "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
       "severitate": "CRITIC",
-      "descriere": "BEPA CONSTRUCTII CIVILE a primit 2 contracte similare în 0 zile, cu o valoare combinată de 17.92 mil. RON. Separat, fiecare pare sub pragul de licitație (130K RON) — dar împreună îl depășesc. Aceasta se numește fragmentare artificială și este interzisă. Notă: 14.58 mil. RON (primul contract depășeșt",
-      "furnizor": "BEPA CONSTRUCTII CIVILE",
-      "valoare_ron": 17916190.0,
-      "data": "2024-12-03",
-      "contract_id": "contract-2026-181041,contract-2026-181042",
-      "tip": "FRAGMENTARE",
-      "anchor": "#nereguli-210"
-    },
-    {
-      "titlu": "Posibilă fragmentare artificială a contractelor",
-      "severitate": "CRITIC",
-      "descriere": "Sicuro Invest a primit 2 contracte similare în 0 zile, cu o valoare combinată de 15.07 mil. RON. Separat, fiecare pare sub pragul de licitație (130K RON) — dar împreună îl depășesc. Aceasta se numește fragmentare artificială și este interzisă. Notă: 10.05 mil. RON (primul contract depășește singur p",
-      "furnizor": "Sicuro Invest",
-      "valoare_ron": 15070720.0,
-      "data": "2025-05-26",
-      "contract_id": "contract-2025-135150,contract-2025-135151",
-      "tip": "FRAGMENTARE",
-      "anchor": "#nereguli-206"
-    },
-    {
-      "titlu": "Creștere bruscă de valoare în revizie contract",
-      "severitate": "CRITIC",
-      "descriere": "Contractul „Servicii de curatenie\" a crescut cu 423% între versiuni: de la 2.79 mil. RON la 14.58 mil. RON. O creștere atât de mare după semnare ridică întrebarea: de ce nu s-a organizat o nouă licitație la valoarea reală?",
-      "furnizor": "BEPA CONSTRUCTII CIVILE",
-      "valoare_ron": 14580025.0,
-      "data": "2024-12-03",
-      "contract_id": "contract-2026-181041",
-      "tip": "CRESTERE_BRUSCA_VALOARE",
-      "anchor": "#nereguli-229"
-    },
-    {
-      "titlu": "Posibilă fragmentare artificială a contractelor",
-      "severitate": "CRITIC",
-      "descriere": "TOP A-Z CONCEPT S.R.L. a primit 2 contracte similare în 0 zile, cu o valoare combinată de 13.94 mil. RON. Separat, fiecare pare sub pragul de licitație (130K RON) — dar împreună îl depășesc. Aceasta se numește fragmentare artificială și este interzisă. Notă: 11.15 mil. RON (primul contract depășește",
-      "furnizor": "TOP A-Z CONCEPT S.R.L.",
-      "valoare_ron": 13940043.0,
-      "data": "2023-09-11",
-      "contract_id": "contract-2025-114194,contract-2025-114195",
-      "tip": "FRAGMENTARE",
-      "anchor": "#nereguli-205"
-    },
-    {
-      "titlu": "Creștere bruscă de valoare în revizie contract",
-      "severitate": "CRITIC",
-      "descriere": "Contractul „Lucrari de reparatii generale si de renovare\" a crescut cu 5182% între versiuni: de la 240K RON la 12.67 mil. RON. O creștere atât de mare după semnare ridică întrebarea: de ce nu s-a organizat o nouă licitație la valoarea reală?",
-      "furnizor": "GRI CONSTRUCT ACM S.R.L.",
-      "valoare_ron": 12671650.0,
-      "data": "2025-12-03",
-      "contract_id": "contract-2026-3959",
-      "tip": "CRESTERE_BRUSCA_VALOARE",
-      "anchor": "#nereguli-235"
-    },
-    {
-      "titlu": "Posibilă fragmentare artificială a contractelor",
-      "severitate": "CRITIC",
-      "descriere": "DAV  GARDEN & SERVICE a primit 2 contracte similare în 0 zile, cu o valoare combinată de 9.23 mil. RON. Separat, fiecare pare sub pragul de licitație (130K RON) — dar împreună îl depășesc. Aceasta se numește fragmentare artificială și este interzisă. Notă: 4.62 mil. RON (primul contract depășește si",
-      "furnizor": "DAV  GARDEN & SERVICE",
-      "valoare_ron": 9231164.0,
-      "data": "2025-12-11",
-      "contract_id": "contract-2025-113859,contract-2026-168284",
-      "tip": "FRAGMENTARE",
-      "anchor": "#nereguli-209"
-    },
-    {
-      "titlu": "Firmă cu risc sistemic — 4 tipuri de nereguli",
-      "severitate": "CRITIC",
-      "descriere": "<strong>Constopograf Expert</strong> (CUI 25145252) apare în <strong>4 tipuri diferite</strong> de nereguli: ACHIZITIE_DIRECTA_PESTE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Valoare totală implicată: <strong>8.37 mil. RON</strong>. Când o firmă acumulează probleme în atât de multe",
+      "descriere": "<strong>Constopograf Expert</strong> (CUI 25145252) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>8.37 mil. RON</strong>. Cumulul prioriti",
       "furnizor": "Constopograf Expert",
       "valoare_ron": 8370000.0,
-      "data": "2026-09-01",
+      "data": "2026-09-25",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-278"
+      "anchor": "#nereguli-214"
     },
     {
-      "titlu": "Creștere bruscă de valoare în revizie contract",
+      "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
       "severitate": "CRITIC",
-      "descriere": "Contractul „Amenajare si intretinere de spatii verzi\" a crescut cu 300% între versiuni: de la 1.15 mil. RON la 4.62 mil. RON. O creștere atât de mare după semnare ridică întrebarea: de ce nu s-a organizat o nouă licitație la valoarea reală?",
-      "furnizor": "DAV  GARDEN & SERVICE",
-      "valoare_ron": 4615582.0,
-      "data": "2025-12-11",
-      "contract_id": "contract-2026-168284",
-      "tip": "CRESTERE_BRUSCA_VALOARE",
-      "anchor": "#nereguli-241"
+      "descriere": "<strong>GEMCO TRADE</strong> (CUI 31335227) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>2.29 mil. RON</strong>. Cumulul prio",
+      "furnizor": "GEMCO TRADE",
+      "valoare_ron": 2293990.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-215"
     },
     {
-      "titlu": "Posibilă fragmentare artificială a contractelor",
+      "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
       "severitate": "CRITIC",
-      "descriere": "AUTOVEST a primit 2 contracte similare în 0 zile, cu o valoare combinată de 4.37 mil. RON. Separat, fiecare pare sub pragul de licitație (130K RON) — dar împreună îl depășesc. Aceasta se numește fragmentare artificială și este interzisă. Notă: 2.91 mil. RON (primul contract depășește singur pragul);",
-      "furnizor": "AUTOVEST",
-      "valoare_ron": 4369065.0,
-      "data": "2025-02-24",
-      "contract_id": "contract-2025-79964,contract-2025-79965",
+      "descriere": "<strong>RALEX PROIECT CONSTRUCT</strong> (CUI 29101593) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>1.73 mil. RON</strong>. Cumulul prioritizează verificarea manu",
+      "furnizor": "RALEX PROIECT CONSTRUCT",
+      "valoare_ron": 1729700.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-219"
+    },
+    {
+      "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
+      "severitate": "CRITIC",
+      "descriere": "<strong>BETIRA CONSTRUCT</strong> (CUI 30520358) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>1.61 mil. RON</strong>. Cumulul prioritizează verificare",
+      "furnizor": "BETIRA CONSTRUCT",
+      "valoare_ron": 1611576.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-217"
+    },
+    {
+      "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
+      "severitate": "CRITIC",
+      "descriere": "<strong>PERCONS EU</strong> (CUI 25535239) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>1.45 mil. RON</strong>. Cumulul prioritizează verificarea manu",
+      "furnizor": "PERCONS EU",
+      "valoare_ron": 1451000.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-216"
+    },
+    {
+      "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
+      "severitate": "CRITIC",
+      "descriere": "<strong>PANORAMIC CONCEPT CONS</strong> (CUI 37655409) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>1.21 mil. RON</strong>. Cumulul prioritizează veri",
+      "furnizor": "PANORAMIC CONCEPT CONS",
+      "valoare_ron": 1210000.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-221"
+    },
+    {
+      "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
+      "severitate": "CRITIC",
+      "descriere": "<strong>GREEN DEVELOPMENT SOLUTIONS AND MANAGEMENT S.R.L.</strong> (CUI 28072147) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>810K RON</strong>. Cumu",
+      "furnizor": "GREEN DEVELOPMENT SOLUTIONS AND MANAGEMENT S.R.L.",
+      "valoare_ron": 810000.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-220"
+    },
+    {
+      "titlu": "Semnal de posibilă fragmentare a contractelor",
+      "severitate": "CRITIC",
+      "descriere": "Constopograf Expert a primit 2 contracte similare în 5 zile, cu o valoare combinată de 540K RON. Fiecare este sub pragul pentru produse/servicii (270K RON), iar suma îl depășește. Similaritatea temporală și textuală este un semnal automat; unitatea achizitoare și documentele trebuie verificate.",
+      "furnizor": "Constopograf Expert",
+      "valoare_ron": 540000.0,
+      "data": "2025-01-16",
+      "contract_id": "achizitie-directa-2025-51666,achizitie-directa-2025-69059",
       "tip": "FRAGMENTARE",
-      "anchor": "#nereguli-204"
+      "anchor": "#nereguli-164"
+    },
+    {
+      "titlu": "Semnal de posibilă fragmentare a contractelor",
+      "severitate": "CRITIC",
+      "descriere": "Constopograf Expert a primit 2 contracte similare în 1 zile, cu o valoare combinată de 540K RON. Fiecare este sub pragul pentru produse/servicii (270K RON), iar suma îl depășește. Similaritatea temporală și textuală este un semnal automat; unitatea achizitoare și documentele trebuie verificate.",
+      "furnizor": "Constopograf Expert",
+      "valoare_ron": 540000.0,
+      "data": "2025-01-21",
+      "contract_id": "achizitie-directa-2025-69059,achizitie-directa-2025-79099",
+      "tip": "FRAGMENTARE",
+      "anchor": "#nereguli-165"
+    }
+  ],
+  "top_semnale": [
+    {
+      "titlu": "3 contracte de valoare identică (29,508,940 RON) în aceeași zi",
+      "severitate": "CRITIC",
+      "descriere": "În data de 2025-07-29, 3 firme diferite au primit contracte cu valoare EXACT identică (29,508,940 RON fiecare). Total: 88,526,820 RON. Firme: ALA EXPERT CONSTRUCT, SANTIA PARTNER CONSTRUCT, YARDMAN. Pattern clasic de împărțire artificială a unui lot (art. 11 alin. (1) L98/2016).",
+      "furnizor": "",
+      "valoare_ron": 88526820.0,
+      "data": "2025-07-29",
+      "contract_id": "",
+      "tip": "VALORI_IDENTICE_ACEEASI_ZI",
+      "anchor": "#nereguli-224"
+    },
+    {
+      "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
+      "severitate": "CRITIC",
+      "descriere": "<strong>Constopograf Expert</strong> (CUI 25145252) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>8.37 mil. RON</strong>. Cumulul prioriti",
+      "furnizor": "Constopograf Expert",
+      "valoare_ron": 8370000.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-214"
+    },
+    {
+      "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
+      "severitate": "CRITIC",
+      "descriere": "<strong>GEMCO TRADE</strong> (CUI 31335227) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>2.29 mil. RON</strong>. Cumulul prio",
+      "furnizor": "GEMCO TRADE",
+      "valoare_ron": 2293990.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-215"
+    },
+    {
+      "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
+      "severitate": "CRITIC",
+      "descriere": "<strong>RALEX PROIECT CONSTRUCT</strong> (CUI 29101593) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>1.73 mil. RON</strong>. Cumulul prioritizează verificarea manu",
+      "furnizor": "RALEX PROIECT CONSTRUCT",
+      "valoare_ron": 1729700.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-219"
+    },
+    {
+      "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
+      "severitate": "CRITIC",
+      "descriere": "<strong>BETIRA CONSTRUCT</strong> (CUI 30520358) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>1.61 mil. RON</strong>. Cumulul prioritizează verificare",
+      "furnizor": "BETIRA CONSTRUCT",
+      "valoare_ron": 1611576.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-217"
+    },
+    {
+      "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
+      "severitate": "CRITIC",
+      "descriere": "<strong>PERCONS EU</strong> (CUI 25535239) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>1.45 mil. RON</strong>. Cumulul prioritizează verificarea manu",
+      "furnizor": "PERCONS EU",
+      "valoare_ron": 1451000.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-216"
+    },
+    {
+      "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
+      "severitate": "CRITIC",
+      "descriere": "<strong>PANORAMIC CONCEPT CONS</strong> (CUI 37655409) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>1.21 mil. RON</strong>. Cumulul prioritizează veri",
+      "furnizor": "PANORAMIC CONCEPT CONS",
+      "valoare_ron": 1210000.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-221"
+    },
+    {
+      "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
+      "severitate": "CRITIC",
+      "descriere": "<strong>GREEN DEVELOPMENT SOLUTIONS AND MANAGEMENT S.R.L.</strong> (CUI 28072147) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): <strong>810K RON</strong>. Cumu",
+      "furnizor": "GREEN DEVELOPMENT SOLUTIONS AND MANAGEMENT S.R.L.",
+      "valoare_ron": 810000.0,
+      "data": "2026-09-25",
+      "contract_id": "global",
+      "tip": "RISC_SISTEMIC_FIRMA",
+      "anchor": "#nereguli-220"
+    },
+    {
+      "titlu": "Semnal de posibilă fragmentare a contractelor",
+      "severitate": "CRITIC",
+      "descriere": "Constopograf Expert a primit 2 contracte similare în 5 zile, cu o valoare combinată de 540K RON. Fiecare este sub pragul pentru produse/servicii (270K RON), iar suma îl depășește. Similaritatea temporală și textuală este un semnal automat; unitatea achizitoare și documentele trebuie verificate.",
+      "furnizor": "Constopograf Expert",
+      "valoare_ron": 540000.0,
+      "data": "2025-01-16",
+      "contract_id": "achizitie-directa-2025-51666,achizitie-directa-2025-69059",
+      "tip": "FRAGMENTARE",
+      "anchor": "#nereguli-164"
+    },
+    {
+      "titlu": "Semnal de posibilă fragmentare a contractelor",
+      "severitate": "CRITIC",
+      "descriere": "Constopograf Expert a primit 2 contracte similare în 1 zile, cu o valoare combinată de 540K RON. Fiecare este sub pragul pentru produse/servicii (270K RON), iar suma îl depășește. Similaritatea temporală și textuală este un semnal automat; unitatea achizitoare și documentele trebuie verificate.",
+      "furnizor": "Constopograf Expert",
+      "valoare_ron": 540000.0,
+      "data": "2025-01-21",
+      "contract_id": "achizitie-directa-2025-69059,achizitie-directa-2025-79099",
+      "tip": "FRAGMENTARE",
+      "anchor": "#nereguli-165"
     }
   ],
   "top_firme": [
@@ -186,7 +300,7 @@
     "rss_feed": "https://transparenta-pantelimon.eu/feed.xml",
     "harta": "https://transparenta-pantelimon.eu/harta.html"
   },
-  "contact": "",
+  "contact": "https://github.com/transparenta-locala/transparenta-pantelimon/issues",
   "site": "https://transparenta-pantelimon.eu",
-  "disclaimer": "Toate datele sunt fapte publice (SEAP, ANAF, ONRC). Site-ul nu face afirmații despre intenții sau vinovăție — doar afișează statistici și legi posibil încălcate. Concluziile sunt la latitudinea cititorului."
+  "disclaimer": "Toate datele sunt fapte publice (SEAP, ANAF, ONRC). Semnalele sunt indicatori euristici, pot avea suprapuneri și nu reprezintă constatări juridice, prejudicii sau afirmații despre intenții ori vinovăție."
 }

@@ -1,150 +1,150 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Transparența Pantelimon — Nereguli detectate</title>
+  <title>Transparența Pantelimon — Semnale de risc automate</title>
   <subtitle>Monitorizare cetățenească automată a achizițiilor publice</subtitle>
   <link href="https://transparenta-pantelimon.eu/feed.xml" rel="self"/>
   <link href="https://transparenta-pantelimon.eu/raport_transparenta.html"/>
-  <updated>2026-09-01T11:22:39.348809+00:00</updated>
+  <updated>2026-09-25T12:16:22.999147+00:00</updated>
   <id>https://transparenta-pantelimon.eu/feed.xml</id>
   <author><name>Inițiativă cetățenească independentă</name></author>
   <entry>
     <title>[CRITIC] 3 contracte de valoare identică (29,508,940 RON) în aceeași zi</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-1"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-1-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-1-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
     <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; &lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 88,526,820 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-07-29&lt;/p&gt;&lt;p&gt;În data de 2025-07-29, 3 firme diferite au primit contracte cu valoare EXACT identică (29,508,940 RON fiecare). Total: 88,526,820 RON. Firme: ALA EXPERT CONSTRUCT, SANTIA PARTNER CONSTRUCT, YARDMAN. Pattern clasic de împărțire artificială a unui lot (art. 11 alin. (1) L98/2016).&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Posibilă fragmentare artificială a contractelor</title>
+    <title>[CRITIC] Furnizor cu indicatori cumulați — 4 categorii</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-2"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-2-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; BEPA CONSTRUCTII CIVILE&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 17,916,190 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2024-12-03&lt;/p&gt;&lt;p&gt;BEPA CONSTRUCTII CIVILE a primit 2 contracte similare în 0 zile, cu o valoare combinată de 17.92 mil. RON. Separat, fiecare pare sub pragul de licitație (130K RON) — dar împreună îl depășesc. Aceasta se numește fragmentare artificială și este interzisă. Notă: 14.58 mil. RON (primul contract depășește singur pragul); 3.34 mil. RON (al doilea contract depășește singur pragul).&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-2-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; Constopograf Expert&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 8,370,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-25&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Constopograf Expert&lt;/strong&gt; (CUI 25145252) apare în &lt;strong&gt;4 categorii de indicatori&lt;/strong&gt;: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): &lt;strong&gt;8.37 mil. RON&lt;/strong&gt;. Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. &lt;a href=&quot;https://termene.ro/firma/25145252&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Posibilă fragmentare artificială a contractelor</title>
+    <title>[CRITIC] Furnizor cu indicatori cumulați — 4 categorii</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-3"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-3-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; Sicuro Invest&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 15,070,720 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-05-26&lt;/p&gt;&lt;p&gt;Sicuro Invest a primit 2 contracte similare în 0 zile, cu o valoare combinată de 15.07 mil. RON. Separat, fiecare pare sub pragul de licitație (130K RON) — dar împreună îl depășesc. Aceasta se numește fragmentare artificială și este interzisă. Notă: 10.05 mil. RON (primul contract depășește singur pragul); 5.02 mil. RON (al doilea contract depășește singur pragul).&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-3-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; GEMCO TRADE&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 2,293,990 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-25&lt;/p&gt;&lt;p&gt;&lt;strong&gt;GEMCO TRADE&lt;/strong&gt; (CUI 31335227) apare în &lt;strong&gt;4 categorii de indicatori&lt;/strong&gt;: APROAPE_DE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): &lt;strong&gt;2.29 mil. RON&lt;/strong&gt;. Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. &lt;a href=&quot;https://termene.ro/firma/31335227&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Creștere bruscă de valoare în revizie contract</title>
+    <title>[CRITIC] Furnizor cu indicatori cumulați — 3 categorii</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-4"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-4-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; BEPA CONSTRUCTII CIVILE&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 14,580,025 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2024-12-03&lt;/p&gt;&lt;p&gt;Contractul „Servicii de curatenie&quot; a crescut cu 423% între versiuni: de la 2.79 mil. RON la 14.58 mil. RON. O creștere atât de mare după semnare ridică întrebarea: de ce nu s-a organizat o nouă licitație la valoarea reală?&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-4-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; RALEX PROIECT CONSTRUCT&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 1,729,700 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-25&lt;/p&gt;&lt;p&gt;&lt;strong&gt;RALEX PROIECT CONSTRUCT&lt;/strong&gt; (CUI 29101593) apare în &lt;strong&gt;3 categorii de indicatori&lt;/strong&gt;: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC. Suma asociată flagurilor (poate include același contract de mai multe ori): &lt;strong&gt;1.73 mil. RON&lt;/strong&gt;. Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. &lt;a href=&quot;https://termene.ro/firma/29101593&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Posibilă fragmentare artificială a contractelor</title>
+    <title>[CRITIC] Furnizor cu indicatori cumulați — 3 categorii</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-5"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-5-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; TOP A-Z CONCEPT S.R.L.&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 13,940,043 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2023-09-11&lt;/p&gt;&lt;p&gt;TOP A-Z CONCEPT S.R.L. a primit 2 contracte similare în 0 zile, cu o valoare combinată de 13.94 mil. RON. Separat, fiecare pare sub pragul de licitație (130K RON) — dar împreună îl depășesc. Aceasta se numește fragmentare artificială și este interzisă. Notă: 11.15 mil. RON (primul contract depășește singur pragul); 2.79 mil. RON (al doilea contract depășește singur pragul).&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-5-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; BETIRA CONSTRUCT&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 1,611,576 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-25&lt;/p&gt;&lt;p&gt;&lt;strong&gt;BETIRA CONSTRUCT&lt;/strong&gt; (CUI 30520358) apare în &lt;strong&gt;3 categorii de indicatori&lt;/strong&gt;: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): &lt;strong&gt;1.61 mil. RON&lt;/strong&gt;. Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. &lt;a href=&quot;https://termene.ro/firma/30520358&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Creștere bruscă de valoare în revizie contract</title>
+    <title>[CRITIC] Furnizor cu indicatori cumulați — 3 categorii</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-6"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-6-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; GRI CONSTRUCT ACM S.R.L.&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 12,671,650 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-12-03&lt;/p&gt;&lt;p&gt;Contractul „Lucrari de reparatii generale si de renovare&quot; a crescut cu 5182% între versiuni: de la 240K RON la 12.67 mil. RON. O creștere atât de mare după semnare ridică întrebarea: de ce nu s-a organizat o nouă licitație la valoarea reală?&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-6-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; PERCONS EU&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 1,451,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-25&lt;/p&gt;&lt;p&gt;&lt;strong&gt;PERCONS EU&lt;/strong&gt; (CUI 25535239) apare în &lt;strong&gt;3 categorii de indicatori&lt;/strong&gt;: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): &lt;strong&gt;1.45 mil. RON&lt;/strong&gt;. Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. &lt;a href=&quot;https://termene.ro/firma/25535239&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Posibilă fragmentare artificială a contractelor</title>
+    <title>[CRITIC] Furnizor cu indicatori cumulați — 3 categorii</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-7"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-7-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; DAV  GARDEN &amp; SERVICE&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 9,231,164 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-12-11&lt;/p&gt;&lt;p&gt;DAV  GARDEN &amp; SERVICE a primit 2 contracte similare în 0 zile, cu o valoare combinată de 9.23 mil. RON. Separat, fiecare pare sub pragul de licitație (130K RON) — dar împreună îl depășesc. Aceasta se numește fragmentare artificială și este interzisă. Notă: 4.62 mil. RON (primul contract depășește singur pragul); 4.62 mil. RON (al doilea contract depășește singur pragul).&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-7-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; PANORAMIC CONCEPT CONS&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 1,210,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-25&lt;/p&gt;&lt;p&gt;&lt;strong&gt;PANORAMIC CONCEPT CONS&lt;/strong&gt; (CUI 37655409) apare în &lt;strong&gt;3 categorii de indicatori&lt;/strong&gt;: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): &lt;strong&gt;1.21 mil. RON&lt;/strong&gt;. Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. &lt;a href=&quot;https://termene.ro/firma/37655409&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Firmă cu risc sistemic — 4 tipuri de nereguli</title>
+    <title>[CRITIC] Furnizor cu indicatori cumulați — 3 categorii</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-8"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-8-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; Constopograf Expert&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 8,370,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-01&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Constopograf Expert&lt;/strong&gt; (CUI 25145252) apare în &lt;strong&gt;4 tipuri diferite&lt;/strong&gt; de nereguli: ACHIZITIE_DIRECTA_PESTE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Valoare totală implicată: &lt;strong&gt;8.37 mil. RON&lt;/strong&gt;. Când o firmă acumulează probleme în atât de multe categorii, nu e coincidență — e un pattern sistematic care merită o investigație serioasă. &lt;a href=&quot;https://termene.ro/firma/25145252&quot; target=&quot;_blank&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-8-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; GREEN DEVELOPMENT SOLUTIONS AND MANAGEMENT S.R.L.&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 810,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-25&lt;/p&gt;&lt;p&gt;&lt;strong&gt;GREEN DEVELOPMENT SOLUTIONS AND MANAGEMENT S.R.L.&lt;/strong&gt; (CUI 28072147) apare în &lt;strong&gt;3 categorii de indicatori&lt;/strong&gt;: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): &lt;strong&gt;810K RON&lt;/strong&gt;. Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. &lt;a href=&quot;https://termene.ro/firma/28072147&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Creștere bruscă de valoare în revizie contract</title>
+    <title>[CRITIC] Semnal de posibilă fragmentare a contractelor</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-9"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-9-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; DAV  GARDEN &amp; SERVICE&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 4,615,582 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-12-11&lt;/p&gt;&lt;p&gt;Contractul „Amenajare si intretinere de spatii verzi&quot; a crescut cu 300% între versiuni: de la 1.15 mil. RON la 4.62 mil. RON. O creștere atât de mare după semnare ridică întrebarea: de ce nu s-a organizat o nouă licitație la valoarea reală?&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-9-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; Constopograf Expert&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 540,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-01-16&lt;/p&gt;&lt;p&gt;Constopograf Expert a primit 2 contracte similare în 5 zile, cu o valoare combinată de 540K RON. Fiecare este sub pragul pentru produse/servicii (270K RON), iar suma îl depășește. Similaritatea temporală și textuală este un semnal automat; unitatea achizitoare și documentele trebuie verificate.&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Posibilă fragmentare artificială a contractelor</title>
+    <title>[CRITIC] Semnal de posibilă fragmentare a contractelor</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-10"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-10-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; AUTOVEST&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 4,369,065 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-02-24&lt;/p&gt;&lt;p&gt;AUTOVEST a primit 2 contracte similare în 0 zile, cu o valoare combinată de 4.37 mil. RON. Separat, fiecare pare sub pragul de licitație (130K RON) — dar împreună îl depășesc. Aceasta se numește fragmentare artificială și este interzisă. Notă: 2.91 mil. RON (primul contract depășește singur pragul); 1.46 mil. RON (al doilea contract depășește singur pragul).&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-10-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; Constopograf Expert&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 540,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-01-21&lt;/p&gt;&lt;p&gt;Constopograf Expert a primit 2 contracte similare în 1 zile, cu o valoare combinată de 540K RON. Fiecare este sub pragul pentru produse/servicii (270K RON), iar suma îl depășește. Similaritatea temporală și textuală este un semnal automat; unitatea achizitoare și documentele trebuie verificate.&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Firmă cu risc sistemic — 4 tipuri de nereguli</title>
+    <title>[CRITIC] Semnal de posibilă fragmentare a contractelor</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-11"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-11-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; RALEX PROIECT CONSTRUCT&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 2,723,050 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-01&lt;/p&gt;&lt;p&gt;&lt;strong&gt;RALEX PROIECT CONSTRUCT&lt;/strong&gt; (CUI 29101593) apare în &lt;strong&gt;4 tipuri diferite&lt;/strong&gt; de nereguli: ACHIZITIE_DIRECTA_PESTE_PRAG, CRESTERE_BRUSCA_VALOARE, FRAGMENTARE, OFERTANT_UNIC. Valoare totală implicată: &lt;strong&gt;2.72 mil. RON&lt;/strong&gt;. Când o firmă acumulează probleme în atât de multe categorii, nu e coincidență — e un pattern sistematic care merită o investigație serioasă. &lt;a href=&quot;https://termene.ro/firma/29101593&quot; target=&quot;_blank&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-11-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; Constopograf Expert&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 540,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-01-22&lt;/p&gt;&lt;p&gt;Constopograf Expert a primit 2 contracte similare în 27 zile, cu o valoare combinată de 540K RON. Fiecare este sub pragul pentru produse/servicii (270K RON), iar suma îl depășește. Similaritatea temporală și textuală este un semnal automat; unitatea achizitoare și documentele trebuie verificate.&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Firmă cu risc sistemic — 3 tipuri de nereguli</title>
+    <title>[CRITIC] Semnal de posibilă fragmentare a contractelor</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-12"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-12-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; MIDAS ROAD S.R.L.&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 2,641,236 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-01&lt;/p&gt;&lt;p&gt;&lt;strong&gt;MIDAS ROAD S.R.L.&lt;/strong&gt; (CUI 47338351) apare în &lt;strong&gt;3 tipuri diferite&lt;/strong&gt; de nereguli: ACHIZITIE_DIRECTA_PESTE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC. Valoare totală implicată: &lt;strong&gt;2.64 mil. RON&lt;/strong&gt;. Când o firmă acumulează probleme în atât de multe categorii, nu e coincidență — e un pattern sistematic care merită o investigație serioasă. &lt;a href=&quot;https://termene.ro/firma/47338351&quot; target=&quot;_blank&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-12-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; Constopograf Expert&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 540,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-03-10&lt;/p&gt;&lt;p&gt;Constopograf Expert a primit 2 contracte similare în 2 zile, cu o valoare combinată de 540K RON. Fiecare este sub pragul pentru produse/servicii (270K RON), iar suma îl depășește. Similaritatea temporală și textuală este un semnal automat; unitatea achizitoare și documentele trebuie verificate.&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Firmă cu risc sistemic — 4 tipuri de nereguli</title>
+    <title>[CRITIC] Semnal de posibilă fragmentare a contractelor</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-13"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-13-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; GEMCO TRADE&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 2,431,740 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-01&lt;/p&gt;&lt;p&gt;&lt;strong&gt;GEMCO TRADE&lt;/strong&gt; (CUI 31335227) apare în &lt;strong&gt;4 tipuri diferite&lt;/strong&gt; de nereguli: ACHIZITIE_DIRECTA_PESTE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Valoare totală implicată: &lt;strong&gt;2.43 mil. RON&lt;/strong&gt;. Când o firmă acumulează probleme în atât de multe categorii, nu e coincidență — e un pattern sistematic care merită o investigație serioasă. &lt;a href=&quot;https://termene.ro/firma/31335227&quot; target=&quot;_blank&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-13-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; Constopograf Expert&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 540,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-03-12&lt;/p&gt;&lt;p&gt;Constopograf Expert a primit 2 contracte similare în 5 zile, cu o valoare combinată de 540K RON. Fiecare este sub pragul pentru produse/servicii (270K RON), iar suma îl depășește. Similaritatea temporală și textuală este un semnal automat; unitatea achizitoare și documentele trebuie verificate.&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Firmă cu risc sistemic — 5 tipuri de nereguli</title>
+    <title>[CRITIC] Semnal de posibilă fragmentare a contractelor</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-14"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-14-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; PERCONS EU&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 2,168,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-01&lt;/p&gt;&lt;p&gt;&lt;strong&gt;PERCONS EU&lt;/strong&gt; (CUI 25535239) apare în &lt;strong&gt;5 tipuri diferite&lt;/strong&gt; de nereguli: ACHIZITIE_DIRECTA_PESTE_PRAG, CRESTERE_BRUSCA_VALOARE, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Valoare totală implicată: &lt;strong&gt;2.17 mil. RON&lt;/strong&gt;. Când o firmă acumulează probleme în atât de multe categorii, nu e coincidență — e un pattern sistematic care merită o investigație serioasă. &lt;a href=&quot;https://termene.ro/firma/25535239&quot; target=&quot;_blank&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-14-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; RALEX PROIECT CONSTRUCT&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 463,350 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-08-18&lt;/p&gt;&lt;p&gt;RALEX PROIECT CONSTRUCT a primit 2 contracte similare în 57 zile, cu o valoare combinată de 463K RON. Fiecare este sub pragul pentru produse/servicii (270K RON), iar suma îl depășește. Similaritatea temporală și textuală este un semnal automat; unitatea achizitoare și documentele trebuie verificate.&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Firmă cu risc sistemic — 3 tipuri de nereguli</title>
+    <title>[CRITIC] Semnal de fragmentare temporară: 2 contracte sub-prag, sumă combinată 463K RON</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-15"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-15-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; BETIRA CONSTRUCT&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 1,875,552 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-01&lt;/p&gt;&lt;p&gt;&lt;strong&gt;BETIRA CONSTRUCT&lt;/strong&gt; (CUI 30520358) apare în &lt;strong&gt;3 tipuri diferite&lt;/strong&gt; de nereguli: ACHIZITIE_DIRECTA_PESTE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Valoare totală implicată: &lt;strong&gt;1.88 mil. RON&lt;/strong&gt;. Când o firmă acumulează probleme în atât de multe categorii, nu e coincidență — e un pattern sistematic care merită o investigație serioasă. &lt;a href=&quot;https://termene.ro/firma/30520358&quot; target=&quot;_blank&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-15-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; RALEX PROIECT CONSTRUCT&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 463,350 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-08-18&lt;/p&gt;&lt;p&gt;Furnizor &quot;RALEX PROIECT CONSTRUCT&quot; (CUI 29101593) a primit 2 contracte individuale sub pragul de 270K RON, cu titluri similare (&quot;servicii de supraveghere a&quot;), în fereastră de 90 de zile (2025-08-18 – 2025-10-14). Sumă combinată: 463K RON, care depășește pragul legal. Acesta este un semnal automat pentru categoria produse/servicii, care necesită verificarea obiectului și a valorii estimate totale. Art. 11 alin. (1) din Legea 98/2016 interzice divizarea cu scopul evitării procedurilor aplicabile.&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Firmă cu risc sistemic — 3 tipuri de nereguli</title>
+    <title>[CRITIC] Furnizor cu indicatori cumulați — 3 categorii</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-16"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-16-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; PANORAMIC CONCEPT CONS&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 1,410,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-01&lt;/p&gt;&lt;p&gt;&lt;strong&gt;PANORAMIC CONCEPT CONS&lt;/strong&gt; (CUI 37655409) apare în &lt;strong&gt;3 tipuri diferite&lt;/strong&gt; de nereguli: ACHIZITIE_DIRECTA_PESTE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Valoare totală implicată: &lt;strong&gt;1.41 mil. RON&lt;/strong&gt;. Când o firmă acumulează probleme în atât de multe categorii, nu e coincidență — e un pattern sistematic care merită o investigație serioasă. &lt;a href=&quot;https://termene.ro/firma/37655409&quot; target=&quot;_blank&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-16-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; STRABO COSTRUCTION &amp; MENTENANCE&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 362,058 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-25&lt;/p&gt;&lt;p&gt;&lt;strong&gt;STRABO COSTRUCTION &amp; MENTENANCE&lt;/strong&gt; (CUI 50464376) apare în &lt;strong&gt;3 categorii de indicatori&lt;/strong&gt;: CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Suma asociată flagurilor (poate include același contract de mai multe ori): &lt;strong&gt;362K RON&lt;/strong&gt;. Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. &lt;a href=&quot;https://termene.ro/firma/50464376&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Firmă cu risc sistemic — 3 tipuri de nereguli</title>
+    <title>[CRITIC] Semnal de fragmentare temporară: 3 contracte sub-prag, sumă combinată 281K RON</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-17"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-17-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; MASTER SOLUTIONS TEAM&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 1,340,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-01&lt;/p&gt;&lt;p&gt;&lt;strong&gt;MASTER SOLUTIONS TEAM&lt;/strong&gt; (CUI 32099000) apare în &lt;strong&gt;3 tipuri diferite&lt;/strong&gt; de nereguli: ACHIZITIE_DIRECTA_PESTE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Valoare totală implicată: &lt;strong&gt;1.34 mil. RON&lt;/strong&gt;. Când o firmă acumulează probleme în atât de multe categorii, nu e coincidență — e un pattern sistematic care merită o investigație serioasă. &lt;a href=&quot;https://termene.ro/firma/32099000&quot; target=&quot;_blank&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-17-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; PERCONS EU&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 281,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-02-12&lt;/p&gt;&lt;p&gt;Furnizor &quot;PERCONS EU&quot; (CUI 25535239) a primit 3 contracte individuale sub pragul de 270K RON, cu titluri similare (&quot;servicii de consultanta in&quot;), în fereastră de 90 de zile (2026-02-12 – 2026-02-24). Sumă combinată: 281K RON, care depășește pragul legal. Acesta este un semnal automat pentru categoria produse/servicii, care necesită verificarea obiectului și a valorii estimate totale. Art. 11 alin. (1) din Legea 98/2016 interzice divizarea cu scopul evitării procedurilor aplicabile.&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Firmă cu risc sistemic — 4 tipuri de nereguli</title>
+    <title>[CRITIC] Valori diferite pentru același contract, la aceeași dată</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-18"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-18-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; CREATIVE PEOPLE&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 1,200,000 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-01&lt;/p&gt;&lt;p&gt;&lt;strong&gt;CREATIVE PEOPLE&lt;/strong&gt; (CUI 39329387) apare în &lt;strong&gt;4 tipuri diferite&lt;/strong&gt; de nereguli: ACHIZITIE_DIRECTA_PESTE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Valoare totală implicată: &lt;strong&gt;1.20 mil. RON&lt;/strong&gt;. Când o firmă acumulează probleme în atât de multe categorii, nu e coincidență — e un pattern sistematic care merită o investigație serioasă. &lt;a href=&quot;https://termene.ro/firma/39329387&quot; target=&quot;_blank&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-18-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; SC Do&amp;Do Silver Sprint SRL&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 110,400 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-09-04&lt;/p&gt;&lt;p&gt;Contractul „Transport de pasageri ocazional&quot; apare la aceeași dată (2025-09-04) cu două valori diferite: 23K RON și 110K RON (diferență de 371%). Ordinea versiunilor nu poate fi stabilită din datele publicate. Merită verificat dacă este vorba de un act adițional, de loturi distincte sau de o eroare de raportare.&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Firmă cu risc sistemic — 3 tipuri de nereguli</title>
+    <title>[CRITIC] Contract cu firmă inactiv la ANAF</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-19"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-19-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; SOCIETATEA NATIONALA DE INFORMATICA&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 949,440 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-01&lt;/p&gt;&lt;p&gt;&lt;strong&gt;SOCIETATEA NATIONALA DE INFORMATICA&lt;/strong&gt; (CUI 1556587) apare în &lt;strong&gt;3 tipuri diferite&lt;/strong&gt; de nereguli: ACHIZITIE_DIRECTA_PESTE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Valoare totală implicată: &lt;strong&gt;949K RON&lt;/strong&gt;. Când o firmă acumulează probleme în atât de multe categorii, nu e coincidență — e un pattern sistematic care merită o investigație serioasă. &lt;a href=&quot;https://termene.ro/firma/1556587&quot; target=&quot;_blank&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-19-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; ELLIS STORE CONCEPT&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 12,475 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2025-02-14&lt;/p&gt;&lt;p&gt;&lt;strong&gt;ELLIS STORE CONCEPT&lt;/strong&gt; (CUI 50893467) are statut &lt;strong&gt;INACTIV&lt;/strong&gt; în răspunsul ANAF consultat. Contractul „Produse informative si de promovare (Rev.2)” a valorat 12K RON. Statutul trebuie verificat la data atribuirii și a plății înaintea oricărei concluzii. Verifică administrator și istoricul complet: &lt;a href=&quot;https://termene.ro/firma/50893467&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
   </entry>
   <entry>
-    <title>[CRITIC] Firmă cu risc sistemic — 4 tipuri de nereguli</title>
+    <title>[CRITIC] Rată ridicată de ședințe extraordinare: 43%</title>
     <link href="https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-20"/>
-    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-20-2026-09-01T11:22:39.348809+00:00</id>
-    <updated>2026-09-01T11:22:39.348809+00:00</updated>
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; SC CITY PARK SRL&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 936,746 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-01&lt;/p&gt;&lt;p&gt;&lt;strong&gt;SC CITY PARK SRL&lt;/strong&gt; (CUI 33945345) apare în &lt;strong&gt;4 tipuri diferite&lt;/strong&gt; de nereguli: ACHIZITIE_DIRECTA_PESTE_PRAG, CRESTERE_BRUSCA_VALOARE, FRAGMENTARE, OFERTANT_UNIC. Valoare totală implicată: &lt;strong&gt;937K RON&lt;/strong&gt;. Când o firmă acumulează probleme în atât de multe categorii, nu e coincidență — e un pattern sistematic care merită o investigație serioasă. &lt;a href=&quot;https://termene.ro/firma/33945345&quot; target=&quot;_blank&quot;&gt;Verifică pe termene.ro →&lt;/a&gt;&lt;/p&gt;</summary>
+    <id>https://transparenta-pantelimon.eu/raport_transparenta.html#nereguli-20-2026-09-25T12:16:22.999147+00:00</id>
+    <updated>2026-09-25T12:16:22.999147+00:00</updated>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Furnizor:&lt;/strong&gt; Consiliul Local&lt;br/&gt;&lt;strong&gt;Sumă:&lt;/strong&gt; 0 RON&lt;br/&gt;&lt;strong&gt;Dată:&lt;/strong&gt; 2026-09-25&lt;/p&gt;&lt;p&gt;Din 81 ședințe de Consiliu Local analizate, 35 (43%) sunt &#x27;extraordinare cu convocare de îndată&#x27;. Ponderea este un indicator statistic pentru verificarea motivării urgenței și a respectării etapelor de transparență din Legea 52/2003, art. 7; nu dovedește evitarea consultării.&lt;/p&gt;</summary>
   </entry>
 </feed>

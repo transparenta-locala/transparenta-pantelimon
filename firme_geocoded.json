@@ -312,9 +312,9 @@
   {
     "name": "VITERI CONCEPT SOLUTIONS S.R.L.",
     "cif": "50324046",
-    "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. SFINŢII CONSTANTIN ŞI ELENA, NR.14",
-    "lat": 44.451879,
-    "lng": 26.203556,
+    "adresa": "JUD. PRAHOVA, SAT IZVOARELE COM. IZVOARELE,  , NR.651",
+    "lat": 45.281586,
+    "lng": 26.010572,
     "valoare": 166000.0,
     "nr_contracte": 2,
     "slug": "viteri-concept-solutions-srl"
@@ -753,8 +753,8 @@
     "name": "OPIUM OFFICE CONSULTING S.R.L.",
     "cif": "32265200",
     "adresa": "JUD. ILFOV, SAT 1 DECEMBRIE COM. 1 DECEMBRIE, STR. 13, NR.18",
-    "lat": 44.495849,
-    "lng": 26.174806,
+    "lat": 44.495934,
+    "lng": 26.174623,
     "valoare": 4500.0,
     "nr_contracte": 1,
     "slug": "opium-office-consulting-srl"
@@ -803,8 +803,8 @@
     "name": "STANGER DESIGN S.R.L.",
     "cif": "40412167",
     "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, PRL. BUCUREŞTI, NR.24, BL.M19, SC.2, ET.3, AP.6",
-    "lat": 44.189851,
-    "lng": 27.352862,
+    "lat": 44.200888,
+    "lng": 27.316998,
     "valoare": 115500.0,
     "nr_contracte": 1,
     "slug": "stanger-design-srl"
@@ -1052,7 +1052,7 @@
   {
     "name": "FLAX COMPUTERS SRL",
     "cif": "14639030",
-    "adresa": "JUD. DÂMBOVIŢA, MUN. TÂRGOVIŞTE, CAL. DOMNEASCA, NR.345",
+    "adresa": "JUD. DÂMBOVIŢA, MUN. TÂRGOVIŞTE, CAL. DOMNEASCA, NR.349",
     "lat": 44.926771,
     "lng": 25.462816,
     "valoare": 209.7,
@@ -1553,8 +1553,8 @@
     "name": "SELGROS CASH & CARRY SRL",
     "cif": "11805367",
     "adresa": "JUD. BRAŞOV, MUN. BRAŞOV, CAL. BUCUREŞTI, NR.231",
-    "lat": 45.64404,
-    "lng": 25.62385,
+    "lat": 45.606983,
+    "lng": 25.65437,
     "valoare": 9031.31,
     "nr_contracte": 2,
     "slug": "selgros-cash-carry-srl"
