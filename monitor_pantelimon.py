@@ -2192,8 +2192,14 @@ def detect_crestere_brusca_valoare(contracte: list) -> list:
         # Afirmăm o creștere „între versiuni" doar când numărul de contract/anunț
         # e același în ambele înregistrări.
         if data_initiala != data_finala:
-            nr_prima = str(prima.get("numar") or prima.get("id") or "")
-            nr_ultima = str(ultima.get("numar") or ultima.get("id") or "")
+            # „–" este placeholder-ul pus la regenerarea din contracte.json, nu un număr:
+            # două „–" nu înseamnă același contract.
+            def _nr(c):
+                n = str(c.get("numar") or "").strip()
+                if n in ("", "–", "-", "—", "None", "nan"):
+                    n = str(c.get("id") or "").strip()
+                return n
+            nr_prima, nr_ultima = _nr(prima), _nr(ultima)
             if not nr_prima or nr_prima != nr_ultima:
                 continue
 
