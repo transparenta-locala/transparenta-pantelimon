@@ -5552,6 +5552,33 @@ def actualizeaza_kpi_buget_index(budget: dict) -> None:
         print(f"  [OK] index.html: cheltuieli {an} sincronizate ({valoare_text}M RON)")
 
 
+def actualizeaza_semnale_index(n_semnale: int, n_critic: int, index_path: str = None) -> bool:
+    """Sincronizează valorile de rezervă (fără JS) din index.html cu raport.json.
+
+    JS-ul paginii le suprascrie oricum din raport.json, dar crawlerele, previzualizările
+    și vizitatorii fără JS vedeau cifre vechi (ex. 251/40 după o rulare cu 231/20).
+    Returnează True dacă fișierul a fost modificat.
+    """
+    import re as _re_idx
+    if index_path is None:
+        index_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
+    if not os.path.exists(index_path):
+        return False
+    with open(index_path, encoding="utf-8") as handle:
+        content = handle.read()
+    nou = content
+    for _id, _val in (("idx-nereguli", n_semnale), ("idx-banner-nereguli", n_semnale),
+                      ("idx-banner-critic", n_critic)):
+        nou = _re_idx.sub(rf'(<span[^>]*id="{_id}"[^>]*>)[^<]*(</span>)',
+                          rf'\g<1>{int(_val)}\2', nou, count=1)
+    if nou == content:
+        return False
+    with open(index_path, "w", encoding="utf-8") as handle:
+        handle.write(nou)
+    print(f"  [OK] index.html: {n_semnale} semnale / {n_critic} critice sincronizate")
+    return True
+
+
 def actualizeaza_contoare_analiza(contracte_export: list) -> None:
     """
     BUG-10: Actualizează contoarele „N contracte · YYYY" din secțiunile de analiză
@@ -6600,6 +6627,7 @@ def regenereaza_din_exporturile_existente() -> None:
     actualizeaza_tabel_contracte(contracte_export)
     actualizeaza_kpi_seap(contracte_export)
     actualizeaza_kpi_buget_index(budget)
+    actualizeaza_semnale_index(len(toate_flags), sum(1 for _f in toate_flags if _f.get("severitate") == "CRITIC"))
     actualizeaza_contoare_analiza(contracte_export)
     with open("delta.json", "w", encoding="utf-8") as handle:
         json.dump({
@@ -7066,6 +7094,7 @@ def main():
     # §2.5: Actualizează KPI valoare contracte (fix BUG-1/2/3/8/9)
     actualizeaza_kpi_seap(contracte_export)
     actualizeaza_kpi_buget_index(budget)
+    actualizeaza_semnale_index(len(toate_flags), sum(1 for _f in toate_flags if _f.get("severitate") == "CRITIC"))
     # BUG-10: Actualizează contoare „N contracte · YYYY" din secțiunile de analiză
     actualizeaza_contoare_analiza(contracte_export)
 

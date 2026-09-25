@@ -80,6 +80,8 @@ jobs:
           git config --local user.name "Monitor Transparență Cetățenesc Pantelimon"
           # fix: adăugăm fiecare fișier separat cu || true (unele pot lipsi)
           git add raport_transparenta.html 2>/dev/null || true
+          git add index.html 2>/dev/null || true
+          git add transparenta_pantelimon.html 2>/dev/null || true
           git add stare_anterioara.json 2>/dev/null || true
           git add contracte.json 2>/dev/null || true
           git add delta.json 2>/dev/null || true
