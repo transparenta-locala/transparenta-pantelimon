@@ -345,6 +345,16 @@ class TestCrestereBruscaCronologica(unittest.TestCase):
         ]
         self.assertEqual(self._cresteri(contracte), [])
 
+    def test_placeholder_numar_nu_leaga_achizitii_separate(self):
+        """La regenerarea din contracte.json, „numar" devine „–" pentru toate contractele."""
+        contracte = [
+            self._contract("achizitie-directa-2025-80581", "Piatra (Rev.2)", 137_750, "2025-01-22",
+                           firma="GEMCO TRADE", numar="–"),
+            self._contract("achizitie-directa-2026-299822", "Piatra (Rev.2)", 268_800, "2026-03-03",
+                           firma="GEMCO TRADE", numar="–"),
+        ]
+        self.assertEqual(self._cresteri(contracte), [])
+
     def test_firme_diferite_cu_acelasi_obiect_nu_se_compara(self):
         contracte = [
             self._contract("a", "Servicii curatenie", 100_000, "2025-01-01", firma="ALFA SRL"),
