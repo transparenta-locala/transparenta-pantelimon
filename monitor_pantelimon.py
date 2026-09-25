@@ -2185,16 +2185,28 @@ def detect_crestere_brusca_valoare(contracte: list) -> list:
         data_initiala = prima.get("data_publicare", "?")
         data_finala = ultima.get("data_publicare", "?")
 
+        # „(Rev.2)" din titlu este revizia nomenclatorului CPV, nu o revizie a
+        # contractului. Două achiziții directe cu același cod CPV, la același
+        # furnizor, publicate la luni distanță (ex. GEMCO TRADE, piatră, 01.2025 și
+        # 03.2026) sunt achiziții SEPARATE, nu versiuni ale aceluiași contract.
+        # Afirmăm o creștere „între versiuni" doar când numărul de contract/anunț
+        # e același în ambele înregistrări.
+        if data_initiala != data_finala:
+            nr_prima = str(prima.get("numar") or prima.get("id") or "")
+            nr_ultima = str(ultima.get("numar") or ultima.get("id") or "")
+            if not nr_prima or nr_prima != nr_ultima:
+                continue
+
         # Când ambele versiuni au aceeași dată de publicare nu putem stabili care
         # a fost prima, deci nu avem dreptul să afirmăm că valoarea „a crescut".
         # Diferența rămâne un semnal legitim, dar formulat fără direcție.
         if data_initiala == data_finala:
-            titlu_flag = "Valori diferite pentru același contract, la aceeași dată"
-            descriere = (f'Contractul „{titlu_base[:55]}" apare la aceeași dată ({data_finala}) '
-                         f'cu două valori diferite: {_fmt_ron(v_initial)} și {_fmt_ron(v_final)} '
-                         f'(diferență de {crestere_pct:.0f}%). Ordinea versiunilor nu poate fi '
-                         f'stabilită din datele publicate. Merită verificat dacă este vorba de un '
-                         f'act adițional, de loturi distincte sau de o eroare de raportare.')
+            titlu_flag = "Două înregistrări cu același obiect și aceeași dată, valori diferite"
+            descriere = (f'În datele SEAP apar, la aceeași dată ({data_finala}) și la același furnizor, '
+                         f'două înregistrări „{titlu_base[:55]}" cu valori diferite: '
+                         f'{_fmt_ron(v_initial)} și {_fmt_ron(v_final)}. Nu se poate stabili din datele '
+                         f'publicate dacă sunt loturi distincte, o republicare a aceluiași contract '
+                         f'sau o eroare de raportare; valorile nu trebuie adunate fără verificare în SEAP.')
         else:
             titlu_flag = "Creștere bruscă de valoare în revizie contract"
             descriere = (f'Contractul „{titlu_base[:55]}" a crescut cu {crestere_pct:.0f}% între versiuni: '
@@ -2205,7 +2217,9 @@ def detect_crestere_brusca_valoare(contracte: list) -> list:
 
         flags.append({
             "tip": "CRESTERE_BRUSCA_VALOARE",
-            "severitate": "MAJOR" if crestere_pct < 200 else "CRITIC",
+            # o înregistrare dublă sau un lot nu justifică „CRITIC"
+            "severitate": ("MEDIU" if data_initiala == data_finala
+                           else ("MAJOR" if crestere_pct < 200 else "CRITIC")),
             "titlu": titlu_flag,
             "descriere": descriere,
             "contract_id": ultima.get("id", ""),
@@ -2760,18 +2774,27 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
     # Cumulul de indicatori prioritizează verificarea, fără a stabili vinovăția.
     from collections import Counter, defaultdict
     flags_per_firma: dict = defaultdict(set)
-    valoare_per_firma: dict = defaultdict(float)
+    # Valoarea afișată = suma contractelor DISTINCTE cu semnale, nu suma flagurilor.
+    # Același contract de 270K cu 3-4 flaguri era numărat de 3-4 ori (ex. Constopograf
+    # Expert apărea cu 8,37 mil. RON „asociați", la ~1,9 mil. RON în contracte reale).
+    _valoare_contract = {c.get("id"): (c.get("valoare_ron", 0) or 0) for c in contracte}
+    contracte_per_firma: dict = defaultdict(set)
     for f in flags:
         furn = f.get("furnizor", "")
         tip  = f.get("tip", "")
         if furn and tip:
             flags_per_firma[furn].add(tip)
-            valoare_per_firma[furn] += f.get("valoare", 0) or 0
+            cid = f.get("contract_id")
+            if cid in _valoare_contract:
+                contracte_per_firma[furn].add(cid)
+    valoare_per_firma = {furn: sum(_valoare_contract[cid] for cid in ids)
+                         for furn, ids in contracte_per_firma.items()}
 
     for furnizor, tipuri in flags_per_firma.items():
         if len(tipuri) >= 3:
             cui_f   = next((c.get("castigator_cui","") for c in contracte if c["castigator"] == furnizor), "")
-            valoare = valoare_per_firma[furnizor]
+            valoare = valoare_per_firma.get(furnizor, 0)
+            n_contracte = len(contracte_per_firma.get(furnizor, ()))
             cui_display = (cui_f.lstrip("RO").lstrip("ro")) if cui_f else "necunoscut"
             tipuri_str  = ", ".join(sorted(tipuri))
             flags.append({
@@ -2781,8 +2804,9 @@ def analizeaza_red_flags(contracte: list, config: dict) -> list:
                 "descriere": (
                     f'<strong>{furnizor}</strong> (CUI {cui_display}) apare în '
                     f'<strong>{len(tipuri)} categorii de indicatori</strong>: {tipuri_str}. '
-                    f'Suma asociată flagurilor (poate include același contract de mai multe ori): '
-                    f'<strong>{_fmt_ron(valoare)}</strong>. Cumulul prioritizează verificarea manuală '
+                    f'Contractele distincte cu semnale: <strong>{n_contracte}</strong>, în valoare de '
+                    f'<strong>{_fmt_ron(valoare)}</strong> (fiecare contract numărat o singură dată). '
+                    f'Cumulul prioritizează verificarea manuală '
                     f'și nu reprezintă o constatare juridică. '
                     f'<a href="{_termene_url(cui_f)}" target="_blank" rel="noopener noreferrer">Verifică pe termene.ro →</a>'
                 ),
