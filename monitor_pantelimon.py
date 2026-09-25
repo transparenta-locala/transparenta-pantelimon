@@ -1942,24 +1942,29 @@ def detect_valori_identice_aceeasi_zi(contracte: list,
         if len(firme_unice) < min_firme:
             continue
         firme_names = sorted({_firma(c) for c in ctrs})
+        # Aceeași valoare, aceeași zi, firme diferite = de regulă UN SINGUR contract
+        # atribuit unei asocieri (SEAP listează fiecare asociat cu valoarea întreagă)
+        # sau un acord-cadru cu mai mulți operatori. Varianta veche aduna valorile
+        # (3 × 29,5 mil. = „88,5 mil.") și afirma „împărțire artificială a unui lot"
+        # pentru o licitație deschisă — o afirmație falsă despre firme reale.
         flags.append({
             "tip": "VALORI_IDENTICE_ACEEASI_ZI",
-            "severitate": "CRITIC",
-            "titlu": f"{len(ctrs)} contracte de valoare identică ({val:,.0f} RON) în aceeași zi",
+            "severitate": "MEDIU",
+            "titlu": f"Aceeași valoare ({val:,.0f} RON) la {len(firme_unice)} firme, în aceeași zi",
             "descriere": (
-                f"În data de {data}, {len(firme_unice)} firme diferite au primit contracte cu "
-                f"valoare EXACT identică ({val:,.0f} RON fiecare). "
-                f"Total: {val * len(ctrs):,.0f} RON. "
-                f"Firme: {', '.join(firme_names[:5])}{'...' if len(firme_names) > 5 else ''}. "
-                f"Pattern clasic de împărțire artificială a unui lot (art. 11 alin. (1) L98/2016)."
+                f"În data de {data}, {len(firme_unice)} firme apar în datele SEAP cu aceeași valoare "
+                f"({val:,.0f} RON): {', '.join(firme_names[:5])}{'...' if len(firme_names) > 5 else ''}. "
+                f"De obicei este un singur contract atribuit unei asocieri sau un acord-cadru cu mai "
+                f"mulți operatori, iar SEAP listează fiecare firmă cu valoarea întreagă — valorile nu "
+                f"se adună. Merită verificat în SEAP cum a fost structurată atribuirea."
             ),
             "data": data,
-            "valoare": val * len(ctrs),
+            "valoare": val,
             "valoare_per_contract": val,
             "nr_firme": len(firme_unice),
             "nr_contracte": len(ctrs),
             "firme": firme_names,
-            "legi": ["L98/2016 art.11 (interzicerea fragmentării artificiale)"],
+            "legi": ["L98/2016 art.11 (verificare structură atribuire)"],
         })
     return sorted(flags, key=lambda f: f["valoare"], reverse=True)
 
@@ -2011,7 +2016,12 @@ def detect_burst_contracte(contracte: list,
 
     flags = []
     for data, ctrs in pe_zi.items():
-        valoare_zi = sum(_val(c) for c in ctrs)
+        # înregistrările cu același obiect și aceeași valoare (membrii unei asocieri)
+        # se numără o singură dată în valoarea zilei
+        _unice_zi = {}
+        for c in ctrs:
+            _unice_zi.setdefault((round(float(_val(c)), 2), (c.get("titlu") or c.get("denumire") or "")[:60]), c)
+        valoare_zi = sum(_val(c) for c in _unice_zi.values())
         try:
             zi_sapt = _dt3.strptime(data, "%Y-%m-%d").weekday()
         except ValueError:
