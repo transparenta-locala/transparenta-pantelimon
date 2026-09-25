@@ -885,8 +885,8 @@
       "label": "STANGER DESIGN S.R.L.",
       "cui": "40412167",
       "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, PRL. BUCUREŞTI, NR.24, BL.M19, SC.2, ET.3, AP.6",
-      "lat": 44.207754,
-      "lng": 27.309634,
+      "lat": 44.213586,
+      "lng": 27.302916,
       "valoare": 115500.0,
       "nr_contracte": 1,
       "in_retea": false
@@ -2060,5 +2060,5 @@
     "edges_adresa_comuna": 4,
     "total_edges": 4
   },
-  "generated_at": "2026-09-25T13:46:06.962551"
+  "generated_at": "2026-09-25T14:03:30.766902"
 }

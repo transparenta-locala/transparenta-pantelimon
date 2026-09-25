@@ -6,19 +6,19 @@ Monitorizare cetățenească automată a achizițiilor publice — Orașul Pante
 
 | Indicator | Valoare |
 |---|---|
-| Semnale automate totale | 231 |
+| Semnale automate totale | 227 |
 | Contracte unice cu semnale | 163 |
-| Critice / Majore / Medii | 19 / 71 / 141 |
+| Critice / Majore / Medii | 18 / 68 / 141 |
 | Contracte analizate | 506 |
 | Valoare totală contracte | 313.68 M RON |
-| Scor transparență | 35/100 |
+| Scor transparență | 36/100 |
 
 ## Top 5 semnale (severitate + valoare)
 
 1. [CRITIC] **3 contracte de valoare identică (29,508,940 RON) în aceeași zi** —  — 88,526,820 RON
 2. [CRITIC] **Furnizor cu indicatori cumulați — 4 categorii** — Constopograf Expert — 1,890,000 RON
 3. [CRITIC] **Furnizor cu indicatori cumulați — 3 categorii** — RALEX PROIECT CONSTRUCT — 997,350 RON
-4. [CRITIC] **Furnizor cu indicatori cumulați — 4 categorii** — GEMCO TRADE — 946,470 RON
+4. [CRITIC] **Furnizor cu indicatori cumulați — 3 categorii** — GEMCO TRADE — 946,470 RON
 5. [CRITIC] **Furnizor cu indicatori cumulați — 3 categorii** — BETIRA CONSTRUCT — 802,776 RON
 
 ## Top 5 firme după valoare contracte

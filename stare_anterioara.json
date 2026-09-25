@@ -174,9 +174,6 @@
     "achizitie-directa-2025-272782,achizitie-directa-2025-272827,achizitie-directa-2025-272845_CONTRACTE_CONSECUTIVE",
     "achizitie-directa-2025-139720,achizitie-directa-2025-139803,achizitie-directa-2025-240729_CONTRACTE_CONSECUTIVE",
     "achizitie-directa-2025-181852,achizitie-directa-2025-259835,achizitie-directa-2025-264435_CONTRACTE_CONSECUTIVE",
-    "achizitie-directa-2026-299822_CRESTERE_BRUSCA_VALOARE",
-    "achizitie-directa-2026-315250_CRESTERE_BRUSCA_VALOARE",
-    "achizitie-directa-2025-287475_CRESTERE_BRUSCA_VALOARE",
     "contract-2025-79964_CRESTERE_BRUSCA_VALOARE",
     "contract-2025-135150_CRESTERE_BRUSCA_VALOARE",
     "achizitie-directa-2025-343418_CRESTERE_BRUSCA_VALOARE",
@@ -213,7 +210,6 @@
     "achizitie-directa-2026-355882_VALOARE_ROTUNDA_SUSPECTA",
     "achizitie-directa-2026-384386_VALOARE_ROTUNDA_SUSPECTA",
     "achizitie-directa-2025-195226_FIRMA_INACTIVA",
-    "global_RISC_SISTEMIC_FIRMA",
     "global_RISC_SISTEMIC_FIRMA",
     "global_RISC_SISTEMIC_FIRMA",
     "global_RISC_SISTEMIC_FIRMA",
@@ -741,6 +737,6 @@
     "contract-2026-181043"
   ],
   "hcl_urls_vazute": [],
-  "data_ultima_rulare": "2026-09-25T13:41:55.435951",
-  "total_flags": 231
+  "data_ultima_rulare": "2026-09-25T13:59:26.629094",
+  "total_flags": 227
 }

@@ -7,16 +7,16 @@
     "judet": "Ilfov"
   },
   "statistici": {
-    "total_nereguli": 231,
-    "total_semnale": 231,
+    "total_nereguli": 227,
+    "total_semnale": 227,
     "contracte_cu_semnale": 163,
-    "critice": 19,
-    "majore": 71,
+    "critice": 18,
+    "majore": 68,
     "medii": 141,
     "total_contracte": 506,
     "valoare_totala_ron": 313680510.12,
     "valoare_totala_mil": 313.68,
-    "scor_transparenta": 35
+    "scor_transparenta": 36
   },
   "top_nereguli": [
     {
@@ -28,7 +28,7 @@
       "data": "2025-07-29",
       "contract_id": "",
       "tip": "VALORI_IDENTICE_ACEEASI_ZI",
-      "anchor": "#nereguli-224"
+      "anchor": "#nereguli-220"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
@@ -39,7 +39,7 @@
       "data": "2026-09-25",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-214"
+      "anchor": "#nereguli-211"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
@@ -50,18 +50,18 @@
       "data": "2026-09-25",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-219"
+      "anchor": "#nereguli-215"
     },
     {
-      "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
+      "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
       "severitate": "CRITIC",
-      "descriere": "<strong>GEMCO TRADE</strong> (CUI 31335227) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>4</strong>, în valoare de <strong>946K RON</strong> (fiecare contract numărat ",
+      "descriere": "<strong>GEMCO TRADE</strong> (CUI 31335227) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>4</strong>, în valoare de <strong>946K RON</strong> (fiecare contract numărat o singură dată). Cumulul ",
       "furnizor": "GEMCO TRADE",
       "valoare_ron": 946470.0,
       "data": "2026-09-25",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-215"
+      "anchor": "#nereguli-212"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
@@ -72,7 +72,7 @@
       "data": "2026-09-25",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-217"
+      "anchor": "#nereguli-214"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
@@ -83,7 +83,7 @@
       "data": "2026-09-25",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-216"
+      "anchor": "#nereguli-213"
     },
     {
       "titlu": "Semnal de posibilă fragmentare a contractelor",
@@ -140,7 +140,7 @@
       "data": "2025-07-29",
       "contract_id": "",
       "tip": "VALORI_IDENTICE_ACEEASI_ZI",
-      "anchor": "#nereguli-224"
+      "anchor": "#nereguli-220"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
@@ -151,7 +151,7 @@
       "data": "2026-09-25",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-214"
+      "anchor": "#nereguli-211"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
@@ -162,18 +162,18 @@
       "data": "2026-09-25",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-219"
+      "anchor": "#nereguli-215"
     },
     {
-      "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
+      "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
       "severitate": "CRITIC",
-      "descriere": "<strong>GEMCO TRADE</strong> (CUI 31335227) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>4</strong>, în valoare de <strong>946K RON</strong> (fiecare contract numărat ",
+      "descriere": "<strong>GEMCO TRADE</strong> (CUI 31335227) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>4</strong>, în valoare de <strong>946K RON</strong> (fiecare contract numărat o singură dată). Cumulul ",
       "furnizor": "GEMCO TRADE",
       "valoare_ron": 946470.0,
       "data": "2026-09-25",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-215"
+      "anchor": "#nereguli-212"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
@@ -184,7 +184,7 @@
       "data": "2026-09-25",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-217"
+      "anchor": "#nereguli-214"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
@@ -195,7 +195,7 @@
       "data": "2026-09-25",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-216"
+      "anchor": "#nereguli-213"
     },
     {
       "titlu": "Semnal de posibilă fragmentare a contractelor",

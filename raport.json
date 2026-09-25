@@ -1,20 +1,20 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-25T13:41:55.417832",
+  "generated_at": "2026-09-25T13:59:26.610713",
   "entity": {
     "name": "Orașul Pantelimon",
     "cif": "4420759",
     "judet": "Ilfov"
   },
   "totals": {
-    "flags": 231,
-    "signals": 231,
+    "flags": 227,
+    "signals": 227,
     "contracts_analyzed": 506,
     "contracts_with_signals": 163,
     "total_value_ron": 313680510.12,
     "by_severity": {
-      "CRITIC": 19,
-      "MAJOR": 71,
+      "CRITIC": 18,
+      "MAJOR": 68,
       "MEDIU": 141
     }
   },
@@ -2457,48 +2457,6 @@
     },
     {
       "id": 175,
-      "severity": "MAJOR",
-      "title": "Creștere bruscă de valoare în revizie contract",
-      "explanation": "Contractul „Piatra de cariera si concasata\" a crescut cu 95% între versiuni: de la 138K RON (2025-01-22) la 269K RON (2026-03-03). Diferența este un semnal pentru verificarea actelor adiționale și a condițiilor de modificare prevăzute de Legea 98/2016; nu dovedește o abatere.",
-      "supplier": "GEMCO TRADE",
-      "supplier_cif": "31335227",
-      "sum_ron": 268800.0,
-      "date": "2026-03-03",
-      "contract_id": "achizitie-directa-2026-299822",
-      "procedure": "",
-      "type": "CRESTERE_BRUSCA_VALOARE",
-      "anchor": "nereguli-175"
-    },
-    {
-      "id": 176,
-      "severity": "MAJOR",
-      "title": "Creștere bruscă de valoare în revizie contract",
-      "explanation": "Contractul „Alte materiale de constructii diverse\" a crescut cu 138% între versiuni: de la 80K RON (2025-01-22) la 189K RON (2026-03-05). Diferența este un semnal pentru verificarea actelor adiționale și a condițiilor de modificare prevăzute de Legea 98/2016; nu dovedește o abatere.",
-      "supplier": "GENERAL UTIL CONS",
-      "supplier_cif": "34772064",
-      "sum_ron": 189000.0,
-      "date": "2026-03-05",
-      "contract_id": "achizitie-directa-2026-315250",
-      "procedure": "",
-      "type": "CRESTERE_BRUSCA_VALOARE",
-      "anchor": "nereguli-176"
-    },
-    {
-      "id": 177,
-      "severity": "MAJOR",
-      "title": "Creștere bruscă de valoare în revizie contract",
-      "explanation": "Contractul „Lucrari de vopsire\" a crescut cu 146% între versiuni: de la 33K RON (2025-03-24) la 80K RON (2025-08-26). Diferența este un semnal pentru verificarea actelor adiționale și a condițiilor de modificare prevăzute de Legea 98/2016; nu dovedește o abatere.",
-      "supplier": "STRABO COSTRUCTION & MENTENANCE",
-      "supplier_cif": "50464376",
-      "sum_ron": 80000.0,
-      "date": "2025-08-26",
-      "contract_id": "achizitie-directa-2025-287475",
-      "procedure": "",
-      "type": "CRESTERE_BRUSCA_VALOARE",
-      "anchor": "nereguli-177"
-    },
-    {
-      "id": 178,
       "severity": "MEDIU",
       "title": "Două înregistrări cu același obiect și aceeași dată, valori diferite",
       "explanation": "În datele SEAP apar, la aceeași dată (2025-02-24) și la același furnizor, două înregistrări „Motorina\" cu valori diferite: 1.46 mil. RON și 2.91 mil. RON. Nu se poate stabili din datele publicate dacă sunt loturi distincte, o republicare a aceluiași contract sau o eroare de raportare; valorile nu trebuie adunate fără verificare în SEAP.",
@@ -2509,10 +2467,10 @@
       "contract_id": "contract-2025-79964",
       "procedure": "Licitatie deschisa",
       "type": "CRESTERE_BRUSCA_VALOARE",
-      "anchor": "nereguli-178"
+      "anchor": "nereguli-175"
     },
     {
-      "id": 179,
+      "id": 176,
       "severity": "MEDIU",
       "title": "Două înregistrări cu același obiect și aceeași dată, valori diferite",
       "explanation": "În datele SEAP apar, la aceeași dată (2025-05-26) și la același furnizor, două înregistrări „Servicii de paza\" cu valori diferite: 5.02 mil. RON și 10.05 mil. RON. Nu se poate stabili din datele publicate dacă sunt loturi distincte, o republicare a aceluiași contract sau o eroare de raportare; valorile nu trebuie adunate fără verificare în SEAP.",
@@ -2523,10 +2481,10 @@
       "contract_id": "contract-2025-135150",
       "procedure": "Licitatie deschisa",
       "type": "CRESTERE_BRUSCA_VALOARE",
-      "anchor": "nereguli-179"
+      "anchor": "nereguli-176"
     },
     {
-      "id": 180,
+      "id": 177,
       "severity": "MEDIU",
       "title": "Două înregistrări cu același obiect și aceeași dată, valori diferite",
       "explanation": "În datele SEAP apar, la aceeași dată (2025-09-04) și la același furnizor, două înregistrări „Transport de pasageri ocazional\" cu valori diferite: 23K RON și 110K RON. Nu se poate stabili din datele publicate dacă sunt loturi distincte, o republicare a aceluiași contract sau o eroare de raportare; valorile nu trebuie adunate fără verificare în SEAP.",
@@ -2537,10 +2495,10 @@
       "contract_id": "achizitie-directa-2025-343418",
       "procedure": "",
       "type": "CRESTERE_BRUSCA_VALOARE",
-      "anchor": "nereguli-180"
+      "anchor": "nereguli-177"
     },
     {
-      "id": 181,
+      "id": 178,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "INDOOR MEDIA GROUP a primit exact 120K RON pentru „Servicii de promovare (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2551,10 +2509,10 @@
       "contract_id": "achizitie-directa-2025-7219",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-181"
+      "anchor": "nereguli-178"
     },
     {
-      "id": 182,
+      "id": 179,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "Constopograf Expert a primit exact 270K RON pentru „Servicii de cadastru (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2565,10 +2523,10 @@
       "contract_id": "achizitie-directa-2025-51666",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-182"
+      "anchor": "nereguli-179"
     },
     {
-      "id": 183,
+      "id": 180,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "Constopograf Expert a primit exact 270K RON pentru „Servicii de topografie (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2579,10 +2537,10 @@
       "contract_id": "achizitie-directa-2025-69059",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-183"
+      "anchor": "nereguli-180"
     },
     {
-      "id": 184,
+      "id": 181,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "Constopograf Expert a primit exact 270K RON pentru „Servicii de arpentaj cadastral (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2593,10 +2551,10 @@
       "contract_id": "achizitie-directa-2025-79099",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-184"
+      "anchor": "nereguli-181"
     },
     {
-      "id": 185,
+      "id": 182,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "PERCONS EU a primit exact 270K RON pentru „Servicii de elaborare de studii (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2607,10 +2565,10 @@
       "contract_id": "achizitie-directa-2025-130585",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-185"
+      "anchor": "nereguli-182"
     },
     {
-      "id": 186,
+      "id": 183,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "MASTER SOLUTIONS TEAM a primit exact 110K RON pentru „Servicii de proiectare tehnica pentru infrastructura de”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2621,10 +2579,10 @@
       "contract_id": "achizitie-directa-2025-170844",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-186"
+      "anchor": "nereguli-183"
     },
     {
-      "id": 187,
+      "id": 184,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "Constopograf Expert a primit exact 270K RON pentru „Servicii de cartografie aeriana (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2635,10 +2593,10 @@
       "contract_id": "achizitie-directa-2025-220295",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-187"
+      "anchor": "nereguli-184"
     },
     {
-      "id": 188,
+      "id": 185,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "BETIRA CONSTRUCT a primit exact 270K RON pentru „Servicii de curatare a canalelor de ape reziduale (Rev.”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2649,10 +2607,10 @@
       "contract_id": "achizitie-directa-2025-396843",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-188"
+      "anchor": "nereguli-185"
     },
     {
-      "id": 189,
+      "id": 186,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "ADLO PROCARS SRL a primit exact 100K RON pentru „Servicii de reparare si de intretinere a grupurilor de ”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2663,10 +2621,10 @@
       "contract_id": "achizitie-directa-2025-144043",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-189"
+      "anchor": "nereguli-186"
     },
     {
-      "id": 190,
+      "id": 187,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "IFNCONS MEDIA a primit exact 240K RON pentru „Servicii de consultanta financiara (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2677,10 +2635,10 @@
       "contract_id": "achizitie-directa-2025-222535",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-190"
+      "anchor": "nereguli-187"
     },
     {
-      "id": 191,
+      "id": 188,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "CXB CONSULTING & TECHNICAL SUPPORT a primit exact 180K RON pentru „Servicii generale de consultanta in management (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2691,10 +2649,10 @@
       "contract_id": "achizitie-directa-2025-344097",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-191"
+      "anchor": "nereguli-188"
     },
     {
-      "id": 192,
+      "id": 189,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "ALPHA CONSULT GENERAL a primit exact 50K RON pentru „Servicii de supraveghere a lucrarilor (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2705,10 +2663,10 @@
       "contract_id": "achizitie-directa-2025-391697",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-192"
+      "anchor": "nereguli-189"
     },
     {
-      "id": 193,
+      "id": 190,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "GEMCO TRADE a primit exact 270K RON pentru „Pietris, nisip, piatra concasata si agregate (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2719,10 +2677,10 @@
       "contract_id": "achizitie-directa-2025-545933",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-193"
+      "anchor": "nereguli-190"
     },
     {
-      "id": 194,
+      "id": 191,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "CREATIVE PEOPLE a primit exact 250K RON pentru „Servicii de consultanta privind gestionarea proiectelor”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2733,10 +2691,10 @@
       "contract_id": "achizitie-directa-2025-576566",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-194"
+      "anchor": "nereguli-191"
     },
     {
-      "id": 195,
+      "id": 192,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "STRABO COSTRUCTION & MENTENANCE a primit exact 80K RON pentru „Lucrari de vopsire (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2747,10 +2705,10 @@
       "contract_id": "achizitie-directa-2025-287475",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-195"
+      "anchor": "nereguli-192"
     },
     {
-      "id": 196,
+      "id": 193,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "FINANCE PUBLIC CONSULTING a primit exact 50K RON pentru „Servicii generale de consultanta in management (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2761,10 +2719,10 @@
       "contract_id": "achizitie-directa-2025-322582",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-196"
+      "anchor": "nereguli-193"
     },
     {
-      "id": 197,
+      "id": 194,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "CREATIVE PEOPLE a primit exact 100K RON pentru „Servicii generale de consultanta in management (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2775,10 +2733,10 @@
       "contract_id": "achizitie-directa-2025-19677",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-197"
+      "anchor": "nereguli-194"
     },
     {
-      "id": 198,
+      "id": 195,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "FLEXABILITY MANAGEMENT a primit exact 230K RON pentru „Consultanta in afaceri si in management si servicii con”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2789,10 +2747,10 @@
       "contract_id": "achizitie-directa-2025-86474",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-198"
+      "anchor": "nereguli-195"
     },
     {
-      "id": 199,
+      "id": 196,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "FINANCE PUBLIC CONSULTING a primit exact 150K RON pentru „Servicii de consultanta privind gestionarea proiectelor”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2803,10 +2761,10 @@
       "contract_id": "achizitie-directa-2025-116448",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-199"
+      "anchor": "nereguli-196"
     },
     {
-      "id": 200,
+      "id": 197,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "INDOOR MEDIA GROUP a primit exact 60K RON pentru „Servicii de campanii de publicitate (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2817,10 +2775,10 @@
       "contract_id": "achizitie-directa-2025-120775",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-200"
+      "anchor": "nereguli-197"
     },
     {
-      "id": 201,
+      "id": 198,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "SOCIETATEA NATIONALA DE INFORMATICA a primit exact 70K RON pentru „Sistem de contabilitate (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2831,10 +2789,10 @@
       "contract_id": "achizitie-directa-2025-261331",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-201"
+      "anchor": "nereguli-198"
     },
     {
-      "id": 202,
+      "id": 199,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "GREEN DEVELOPMENT SOLUTIONS AND MANAGEMENT S.R.L. a primit exact 270K RON pentru „Servicii de proiectare a sistemelor de energie electric”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2845,10 +2803,10 @@
       "contract_id": "achizitie-directa-2025-283211",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-202"
+      "anchor": "nereguli-199"
     },
     {
-      "id": 203,
+      "id": 200,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "PANORAMIC CONCEPT CONS a primit exact 270K RON pentru „Servicii de proiectare arhitecturala (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2859,10 +2817,10 @@
       "contract_id": "achizitie-directa-2025-302080",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-203"
+      "anchor": "nereguli-200"
     },
     {
-      "id": 204,
+      "id": 201,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "COMPANIA NATIONALA POSTA ROMANA S.A. a primit exact 150K RON pentru „Servicii postale (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2873,10 +2831,10 @@
       "contract_id": "achizitie-directa-2026-107413",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-204"
+      "anchor": "nereguli-201"
     },
     {
-      "id": 205,
+      "id": 202,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "Semnal.EU a primit exact 70K RON pentru „Publicatii periodice (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2887,10 +2845,10 @@
       "contract_id": "achizitie-directa-2026-119204",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-205"
+      "anchor": "nereguli-202"
     },
     {
-      "id": 206,
+      "id": 203,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "MASTER SOLUTIONS TEAM a primit exact 270K RON pentru „Servicii de proiectare tehnica pentru constructia de lu”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2901,10 +2859,10 @@
       "contract_id": "achizitie-directa-2026-166563",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-206"
+      "anchor": "nereguli-203"
     },
     {
-      "id": 207,
+      "id": 204,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "PERCONS EU a primit exact 100K RON pentru „Servicii de consultanta in domeniul achizitiilor (Rev.2”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2915,10 +2873,10 @@
       "contract_id": "achizitie-directa-2026-203198",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-207"
+      "anchor": "nereguli-204"
     },
     {
-      "id": 208,
+      "id": 205,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "PERCONS EU a primit exact 90K RON pentru „Servicii de consultanta in domeniul achizitiilor (Rev.2”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2929,10 +2887,10 @@
       "contract_id": "achizitie-directa-2026-255020",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-208"
+      "anchor": "nereguli-205"
     },
     {
-      "id": 209,
+      "id": 206,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "PANORAMIC CONCEPT CONS a primit exact 200K RON pentru „Servicii de elaborare de studii (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2943,10 +2901,10 @@
       "contract_id": "achizitie-directa-2026-278679",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-209"
+      "anchor": "nereguli-206"
     },
     {
-      "id": 210,
+      "id": 207,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "Constopograf Expert a primit exact 270K RON pentru „Servicii de cadastru (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2957,10 +2915,10 @@
       "contract_id": "achizitie-directa-2026-337092",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-210"
+      "anchor": "nereguli-207"
     },
     {
-      "id": 211,
+      "id": 208,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "Constopograf Expert a primit exact 270K RON pentru „Servicii de topografie (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2971,10 +2929,10 @@
       "contract_id": "achizitie-directa-2026-355882",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-211"
+      "anchor": "nereguli-208"
     },
     {
-      "id": 212,
+      "id": 209,
       "severity": "MEDIU",
       "title": "Semnal statistic: valoare contractuală rotundă",
       "explanation": "Constopograf Expert a primit exact 270K RON pentru „Servicii de arpentaj cadastral (Rev.2)”. Valoarea rotundă este un indicator euristic pentru verificarea documentației de estimare; singură nu indică o abatere.",
@@ -2985,10 +2943,10 @@
       "contract_id": "achizitie-directa-2026-384386",
       "procedure": "",
       "type": "VALOARE_ROTUNDA_SUSPECTA",
-      "anchor": "nereguli-212"
+      "anchor": "nereguli-209"
     },
     {
-      "id": 213,
+      "id": 210,
       "severity": "CRITIC",
       "title": "Contract cu firmă inactiv la ANAF",
       "explanation": "<strong>ELLIS STORE CONCEPT</strong> (CUI 50893467) are statut <strong>INACTIV</strong> în răspunsul ANAF consultat. Contractul „Produse informative si de promovare (Rev.2)” a valorat 12K RON. Statutul trebuie verificat la data atribuirii și a plății înaintea oricărei concluzii. Verifică administrator și istoricul complet: <a href=\"https://termene.ro/firma/50893467\" target=\"_blank\" rel=\"noopener noreferrer\">termene.ro →</a>",
@@ -2999,10 +2957,10 @@
       "contract_id": "achizitie-directa-2025-195226",
       "procedure": "",
       "type": "FIRMA_INACTIVA",
-      "anchor": "nereguli-213"
+      "anchor": "nereguli-210"
     },
     {
-      "id": 214,
+      "id": 211,
       "severity": "CRITIC",
       "title": "Furnizor cu indicatori cumulați — 4 categorii",
       "explanation": "<strong>Constopograf Expert</strong> (CUI 25145252) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>7</strong>, în valoare de <strong>1.89 mil. RON</strong> (fiecare contract numărat o singură dată). Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. <a href=\"https://termene.ro/firma/25145252\" target=\"_blank\" rel=\"noopener noreferrer\">Verifică pe termene.ro →</a>",
@@ -3013,13 +2971,13 @@
       "contract_id": "global",
       "procedure": "Multiple",
       "type": "RISC_SISTEMIC_FIRMA",
-      "anchor": "nereguli-214"
+      "anchor": "nereguli-211"
     },
     {
-      "id": 215,
+      "id": 212,
       "severity": "CRITIC",
-      "title": "Furnizor cu indicatori cumulați — 4 categorii",
-      "explanation": "<strong>GEMCO TRADE</strong> (CUI 31335227) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>4</strong>, în valoare de <strong>946K RON</strong> (fiecare contract numărat o singură dată). Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. <a href=\"https://termene.ro/firma/31335227\" target=\"_blank\" rel=\"noopener noreferrer\">Verifică pe termene.ro →</a>",
+      "title": "Furnizor cu indicatori cumulați — 3 categorii",
+      "explanation": "<strong>GEMCO TRADE</strong> (CUI 31335227) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>4</strong>, în valoare de <strong>946K RON</strong> (fiecare contract numărat o singură dată). Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. <a href=\"https://termene.ro/firma/31335227\" target=\"_blank\" rel=\"noopener noreferrer\">Verifică pe termene.ro →</a>",
       "supplier": "GEMCO TRADE",
       "supplier_cif": "31335227",
       "sum_ron": 946470.0,
@@ -3027,10 +2985,10 @@
       "contract_id": "global",
       "procedure": "Multiple",
       "type": "RISC_SISTEMIC_FIRMA",
-      "anchor": "nereguli-215"
+      "anchor": "nereguli-212"
     },
     {
-      "id": 216,
+      "id": 213,
       "severity": "CRITIC",
       "title": "Furnizor cu indicatori cumulați — 3 categorii",
       "explanation": "<strong>PERCONS EU</strong> (CUI 25535239) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>6</strong>, în valoare de <strong>721K RON</strong> (fiecare contract numărat o singură dată). Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. <a href=\"https://termene.ro/firma/25535239\" target=\"_blank\" rel=\"noopener noreferrer\">Verifică pe termene.ro →</a>",
@@ -3041,10 +2999,10 @@
       "contract_id": "global",
       "procedure": "Multiple",
       "type": "RISC_SISTEMIC_FIRMA",
-      "anchor": "nereguli-216"
+      "anchor": "nereguli-213"
     },
     {
-      "id": 217,
+      "id": 214,
       "severity": "CRITIC",
       "title": "Furnizor cu indicatori cumulați — 3 categorii",
       "explanation": "<strong>BETIRA CONSTRUCT</strong> (CUI 30520358) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>3</strong>, în valoare de <strong>803K RON</strong> (fiecare contract numărat o singură dată). Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. <a href=\"https://termene.ro/firma/30520358\" target=\"_blank\" rel=\"noopener noreferrer\">Verifică pe termene.ro →</a>",
@@ -3055,24 +3013,10 @@
       "contract_id": "global",
       "procedure": "Multiple",
       "type": "RISC_SISTEMIC_FIRMA",
-      "anchor": "nereguli-217"
+      "anchor": "nereguli-214"
     },
     {
-      "id": 218,
-      "severity": "CRITIC",
-      "title": "Furnizor cu indicatori cumulați — 3 categorii",
-      "explanation": "<strong>STRABO COSTRUCTION & MENTENANCE</strong> (CUI 50464376) apare în <strong>3 categorii de indicatori</strong>: CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>3</strong>, în valoare de <strong>202K RON</strong> (fiecare contract numărat o singură dată). Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. <a href=\"https://termene.ro/firma/50464376\" target=\"_blank\" rel=\"noopener noreferrer\">Verifică pe termene.ro →</a>",
-      "supplier": "STRABO COSTRUCTION & MENTENANCE",
-      "supplier_cif": "50464376",
-      "sum_ron": 202058.05,
-      "date": "2026-09-25",
-      "contract_id": "global",
-      "procedure": "Multiple",
-      "type": "RISC_SISTEMIC_FIRMA",
-      "anchor": "nereguli-218"
-    },
-    {
-      "id": 219,
+      "id": 215,
       "severity": "CRITIC",
       "title": "Furnizor cu indicatori cumulați — 3 categorii",
       "explanation": "<strong>RALEX PROIECT CONSTRUCT</strong> (CUI 29101593) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC. Contractele distincte cu semnale: <strong>4</strong>, în valoare de <strong>997K RON</strong> (fiecare contract numărat o singură dată). Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. <a href=\"https://termene.ro/firma/29101593\" target=\"_blank\" rel=\"noopener noreferrer\">Verifică pe termene.ro →</a>",
@@ -3083,10 +3027,10 @@
       "contract_id": "global",
       "procedure": "Multiple",
       "type": "RISC_SISTEMIC_FIRMA",
-      "anchor": "nereguli-219"
+      "anchor": "nereguli-215"
     },
     {
-      "id": 220,
+      "id": 216,
       "severity": "CRITIC",
       "title": "Furnizor cu indicatori cumulați — 3 categorii",
       "explanation": "<strong>GREEN DEVELOPMENT SOLUTIONS AND MANAGEMENT S.R.L.</strong> (CUI 28072147) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>1</strong>, în valoare de <strong>270K RON</strong> (fiecare contract numărat o singură dată). Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. <a href=\"https://termene.ro/firma/28072147\" target=\"_blank\" rel=\"noopener noreferrer\">Verifică pe termene.ro →</a>",
@@ -3097,10 +3041,10 @@
       "contract_id": "global",
       "procedure": "Multiple",
       "type": "RISC_SISTEMIC_FIRMA",
-      "anchor": "nereguli-220"
+      "anchor": "nereguli-216"
     },
     {
-      "id": 221,
+      "id": 217,
       "severity": "CRITIC",
       "title": "Furnizor cu indicatori cumulați — 3 categorii",
       "explanation": "<strong>PANORAMIC CONCEPT CONS</strong> (CUI 37655409) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>2</strong>, în valoare de <strong>470K RON</strong> (fiecare contract numărat o singură dată). Cumulul prioritizează verificarea manuală și nu reprezintă o constatare juridică. <a href=\"https://termene.ro/firma/37655409\" target=\"_blank\" rel=\"noopener noreferrer\">Verifică pe termene.ro →</a>",
@@ -3111,10 +3055,10 @@
       "contract_id": "global",
       "procedure": "Multiple",
       "type": "RISC_SISTEMIC_FIRMA",
-      "anchor": "nereguli-221"
+      "anchor": "nereguli-217"
     },
     {
-      "id": 222,
+      "id": 218,
       "severity": "CRITIC",
       "title": "Semnal de fragmentare temporară: 2 contracte sub-prag, sumă combinată 463K RON",
       "explanation": "Furnizor \"RALEX PROIECT CONSTRUCT\" (CUI 29101593) a primit 2 contracte individuale sub pragul de 270K RON, cu titluri similare (\"servicii de supraveghere a\"), în fereastră de 90 de zile (2025-08-18 – 2025-10-14). Sumă combinată: 463K RON, care depășește pragul legal. Acesta este un semnal automat pentru categoria produse/servicii, care necesită verificarea obiectului și a valorii estimate totale. Art. 11 alin. (1) din Legea 98/2016 interzice divizarea cu scopul evitării procedurilor aplicabile.",
@@ -3125,10 +3069,10 @@
       "contract_id": "achizitie-directa-2025-250386,achizitie-directa-2025-86672",
       "procedure": "",
       "type": "FRAGMENTARE_TEMPORARA",
-      "anchor": "nereguli-222"
+      "anchor": "nereguli-218"
     },
     {
-      "id": 223,
+      "id": 219,
       "severity": "CRITIC",
       "title": "Semnal de fragmentare temporară: 3 contracte sub-prag, sumă combinată 281K RON",
       "explanation": "Furnizor \"PERCONS EU\" (CUI 25535239) a primit 3 contracte individuale sub pragul de 270K RON, cu titluri similare (\"servicii de consultanta in\"), în fereastră de 90 de zile (2026-02-12 – 2026-02-24). Sumă combinată: 281K RON, care depășește pragul legal. Acesta este un semnal automat pentru categoria produse/servicii, care necesită verificarea obiectului și a valorii estimate totale. Art. 11 alin. (1) din Legea 98/2016 interzice divizarea cu scopul evitării procedurilor aplicabile.",
@@ -3139,10 +3083,10 @@
       "contract_id": "achizitie-directa-2026-197259,achizitie-directa-2026-203198,achizitie-directa-2026-255020",
       "procedure": "",
       "type": "FRAGMENTARE_TEMPORARA",
-      "anchor": "nereguli-223"
+      "anchor": "nereguli-219"
     },
     {
-      "id": 224,
+      "id": 220,
       "severity": "CRITIC",
       "title": "3 contracte de valoare identică (29,508,940 RON) în aceeași zi",
       "explanation": "În data de 2025-07-29, 3 firme diferite au primit contracte cu valoare EXACT identică (29,508,940 RON fiecare). Total: 88,526,820 RON. Firme: ALA EXPERT CONSTRUCT, SANTIA PARTNER CONSTRUCT, YARDMAN. Pattern clasic de împărțire artificială a unui lot (art. 11 alin. (1) L98/2016).",
@@ -3153,10 +3097,10 @@
       "contract_id": "",
       "procedure": "",
       "type": "VALORI_IDENTICE_ACEEASI_ZI",
-      "anchor": "nereguli-224"
+      "anchor": "nereguli-220"
     },
     {
-      "id": 225,
+      "id": 221,
       "severity": "MEDIU",
       "title": "9 contracte semnate într-o singură zi (2025-12-03)",
       "explanation": "În 2025-12-03 s-au semnat 9 contracte cu valoare totală 38,124,092 RON.",
@@ -3167,10 +3111,10 @@
       "contract_id": "",
       "procedure": "",
       "type": "BURST_CONTRACTE",
-      "anchor": "nereguli-225"
+      "anchor": "nereguli-221"
     },
     {
-      "id": 226,
+      "id": 222,
       "severity": "CRITIC",
       "title": "Rată ridicată de ședințe extraordinare: 43%",
       "explanation": "Din 81 ședințe de Consiliu Local analizate, 35 (43%) sunt 'extraordinare cu convocare de îndată'. Ponderea este un indicator statistic pentru verificarea motivării urgenței și a respectării etapelor de transparență din Legea 52/2003, art. 7; nu dovedește evitarea consultării.",
@@ -3181,10 +3125,10 @@
       "contract_id": "HCL-META",
       "procedure": "Sedinta CL",
       "type": "SEDINTE_EXTRAORDINARE_EXCESIVE",
-      "anchor": "nereguli-226"
+      "anchor": "nereguli-222"
     },
     {
-      "id": 227,
+      "id": 223,
       "severity": "MAJOR",
       "title": "HCL: Sedinta Extraordinara detectat",
       "explanation": "Cuvânt cheie 'convocare de îndată' detectat în: H.C.L. sedinta ordinara cu convocare de indata din 22.12.2025. Verificați documentul pentru detalii.",
@@ -3195,10 +3139,10 @@
       "contract_id": "H.C.L.-sedinta-ordinara-cu-convocare-de-indata-din-22.12.2025.pdf",
       "procedure": "ordinara",
       "type": "hcl_sedinta_extraordinara",
-      "anchor": "nereguli-227"
+      "anchor": "nereguli-223"
     },
     {
-      "id": 228,
+      "id": 224,
       "severity": "MAJOR",
       "title": "HCL: Sedinta Extraordinara detectat",
       "explanation": "Cuvânt cheie 'convocare de îndată' detectat în: H.C.L.sedinta extraordinara cu convocare de indata din 26.11.2025. Verificați documentul pentru detalii.",
@@ -3209,10 +3153,10 @@
       "contract_id": "H.C.L.sedinta-extraordinara-cu-convocare-de-indata-din-26.11.2025.pdf",
       "procedure": "extraordinara",
       "type": "hcl_sedinta_extraordinara",
-      "anchor": "nereguli-228"
+      "anchor": "nereguli-224"
     },
     {
-      "id": 229,
+      "id": 225,
       "severity": "MAJOR",
       "title": "HCL: Sedinta Extraordinara detectat",
       "explanation": "Cuvânt cheie 'convocare de îndată' detectat în: P.V. sedinta extraodinara cu convocare de indata din 26.11.2025. Verificați documentul pentru detalii.",
@@ -3223,10 +3167,10 @@
       "contract_id": "P.V.-sedinta-extraodinara-cu-convocare-de-indata-din-26.11.2025.pdf",
       "procedure": "ordinara",
       "type": "hcl_sedinta_extraordinara",
-      "anchor": "nereguli-229"
+      "anchor": "nereguli-225"
     },
     {
-      "id": 230,
+      "id": 226,
       "severity": "MAJOR",
       "title": "HCL: Sedinta Extraordinara detectat",
       "explanation": "Cuvânt cheie 'convocare de îndată' detectat în: H.C.L.sedinta extraordinara convocare de indata din 21.11.2025. Verificați documentul pentru detalii.",
@@ -3237,10 +3181,10 @@
       "contract_id": "H.C.L.sedinta-extraordinara-convocare-de-indata-din-21.11.2025.pdf",
       "procedure": "extraordinara",
       "type": "hcl_sedinta_extraordinara",
-      "anchor": "nereguli-230"
+      "anchor": "nereguli-226"
     },
     {
-      "id": 231,
+      "id": 227,
       "severity": "MAJOR",
       "title": "HCL: Sedinta Extraordinara detectat",
       "explanation": "Cuvânt cheie 'convocare de îndată' detectat în: P.V. sedinta extraodinara cu convocare de indata din 21.11.2025. Verificați documentul pentru detalii.",
@@ -3251,13 +3195,13 @@
       "contract_id": "P.V.-sedinta-extraodinara-cu-convocare-de-indata-din-21.11.2025.pdf",
       "procedure": "ordinara",
       "type": "hcl_sedinta_extraordinara",
-      "anchor": "nereguli-231"
+      "anchor": "nereguli-227"
     }
   ],
   "scor_transparenta": {
-    "scor": 35,
+    "scor": 36,
     "componente": {
-      "achizitii_directe": 43,
+      "achizitii_directe": 46,
       "ofertant_unic": 0,
       "sedinte_extraordinare": 57,
       "fragmentare": 40,
@@ -3287,8 +3231,8 @@
   },
   "seap_debug": [
     "IS_CI=True MAX_FILE_MB=80MB cui=4420759",
-    "Pachet 2025 eroare: HTTPSConnectionPool(host='data.gov.ro', port=443): Max retries exceeded with url: /api/3/action/package_show?id=achizitii-publice-2025 (Caused by ConnectTimeoutError(<HTTPSConnection(host='data.gov.ro', port=443) at 0x7fcd4fe2d490>, 'Connection to data.gov.ro timed out. (connect timeout=20)'))",
-    "Pachet 2026 eroare: HTTPSConnectionPool(host='data.gov.ro', port=443): Max retries exceeded with url: /api/3/action/package_show?id=achizitii-publice-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='data.gov.ro', port=443) at 0x7fcd4fe2f310>, 'Connection to data.gov.ro timed out. (connect timeout=20)'))",
+    "Pachet 2025 eroare: HTTPSConnectionPool(host='data.gov.ro', port=443): Max retries exceeded with url: /api/3/action/package_show?id=achizitii-publice-2025 (Caused by ConnectTimeoutError(<HTTPSConnection(host='data.gov.ro', port=443) at 0x7f83df80de50>, 'Connection to data.gov.ro timed out. (connect timeout=20)'))",
+    "Pachet 2026 eroare: HTTPSConnectionPool(host='data.gov.ro', port=443): Max retries exceeded with url: /api/3/action/package_show?id=achizitii-publice-2026 (Caused by ConnectTimeoutError(<HTTPSConnection(host='data.gov.ro', port=443) at 0x7f83dec1b550>, 'Connection to data.gov.ro timed out. (connect timeout=20)'))",
     "surse_ok=0 contracte=0",
     "FALLBACK: loaded 506 contracte din contracte.json"
   ]
