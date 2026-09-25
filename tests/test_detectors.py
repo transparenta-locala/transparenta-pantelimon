@@ -21,7 +21,7 @@ from monitor_pantelimon import (
 # ---------------------------------------------------------------------------
 # Config minimal (folosit de §2.1 + §2.2)
 # ---------------------------------------------------------------------------
-CFG = {"prag_servicii_furnizare": 130_000, "prag_lucrari": 500_000}
+CFG = {"prag_servicii_furnizare": 270_120, "prag_lucrari": 900_400}
 
 
 # ---------------------------------------------------------------------------
@@ -64,21 +64,21 @@ def _ce(titlu, cui, valoare, data='2025-03-01'):
 def test_frag_detecteaza_3_contracte_sub_prag():
     """3 contracte sub-prag, titluri similare, fereastră 30 zile → CRITIC."""
     contracte = [
-        _c('Servicii curatenie strazi', 'CUI1', 50_000, '2025-03-01'),
-        _c('Servicii curatenie strazi', 'CUI1', 50_000, '2025-03-15'),
-        _c('Servicii curatenie strazi', 'CUI1', 50_000, '2025-03-25'),
+        _c('Servicii curatenie strazi', 'CUI1', 100_000, '2025-03-01'),
+        _c('Servicii curatenie strazi', 'CUI1', 100_000, '2025-03-15'),
+        _c('Servicii curatenie strazi', 'CUI1', 100_000, '2025-03-25'),
     ]
     flags = detect_fragmentare_temporara(contracte, CFG)
     assert len(flags) == 1, f'Asteptat 1 flag, got {len(flags)}'
     f = flags[0]
     assert f['tip'] == 'FRAGMENTARE_TEMPORARA'
     assert f['severitate'] == 'CRITIC'
-    assert f['valoare'] == 150_000.0
+    assert f['valoare'] == 300_000.0
     assert f['nr_contracte'] == 3
 
 
 def test_frag_niciun_flag_sub_suma():
-    """2 contracte de 40k fiecare → sum 80k < prag 130k → niciun flag."""
+    """2 contracte de lucrări de 40k → sumă sub pragul de 900.400 → fără flag."""
     contracte = [
         _c('Reparatii drum', 'CUI2', 40_000, '2025-04-01'),
         _c('Reparatii drum', 'CUI2', 40_000, '2025-04-15'),
@@ -117,22 +117,22 @@ def test_frag_titluri_diferite_nu_grupate():
 def test_frag_schema_export_acceptata():
     """Funcția acceptă și schema export (valoare/cui/data) nu doar schema interna."""
     contracte = [
-        _ce('Servicii paza obiective', 'CUI6', 70_000, '2025-02-01'),
-        _ce('Servicii paza obiective', 'CUI6', 70_000, '2025-02-20'),
+        _ce('Servicii paza obiective', 'CUI6', 150_000, '2025-02-01'),
+        _ce('Servicii paza obiective', 'CUI6', 150_000, '2025-02-20'),
     ]
     flags = detect_fragmentare_temporara(contracte, CFG)
     assert len(flags) == 1
-    assert flags[0]['valoare'] == 140_000.0
+    assert flags[0]['valoare'] == 300_000.0
 
 
 def test_frag_rev_ignorate_la_grupare():
     """Rev.2 din titlu e ignorat la grupare — Contract A + Contract A (Rev.2) → acelasi grup."""
     contracte = [
-        _c('Salubrizare (Rev.2)', 'CUI7', 70_000, '2025-03-01'),
-        _c('Salubrizare', 'CUI7', 70_000, '2025-03-10'),
+        _c('Salubrizare (Rev.2)', 'CUI7', 140_000, '2025-03-01'),
+        _c('Salubrizare', 'CUI7', 140_000, '2025-03-10'),
     ]
     flags = detect_fragmentare_temporara(contracte, CFG)
-    # Ambele au titlu_canonic prefix "salubrizare" → grupate → suma 140k > 130k
+    # Ambele au titlu_canonic prefix "salubrizare" → grupate → suma 280k > 270.120
     assert len(flags) == 1
 
 

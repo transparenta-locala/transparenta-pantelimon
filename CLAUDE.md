@@ -1,7 +1,7 @@
 # Monitor Transparență Bugetară — Pantelimon
 ## Context proiect (pentru Claude Code)
 
-Acest proiect este o **inițiativă civică independentă** a unui membru USR Pantelimon (echipa proiectului).
+Acest proiect este o **inițiativă civică independentă de autorități**, inițiată de un membru USR Pantelimon; nu este un proiect oficial al partidului.
 Monitorizează automat contractele și achizițiile publice ale Primăriei Pantelimon (CUI 4420759) și publică un raport HTML pe GitHub Pages.
 
 ---
@@ -56,8 +56,8 @@ git push origin main
 2. **Fetch contracte** din data.gov.ro (export oficial SEAP trimestrial, fișiere .xlsx)
 3. **Analizează HCL-uri** (Hotărâri Consiliu Local) de pe site-ul primăriei
 4. **Detectează red flags** — algoritmi de detectare a neregulilor:
-   - Algoritm 1: Achiziții directe aproape de prag (>97% din 130.000 RON)
-   - Algoritm 1b: Achiziție directă individuală PESTE pragul legal (>130.000 RON) → flag CRITIC
+  - Algoritm 1: Achiziții directe aproape de pragul categoriei (>97%)
+  - Algoritm 1b: Achiziție directă individuală peste pragul categoriei → flag CRITIC
    - Algoritm 2: Furnizor monopol (singur ofertant repetat)
    - Algoritm 3: Fragmentare artificială (același furnizor, contracte similare, sumă combinată > prag)
    - Algoritm 4: Contracte fără licitație (achiziție directă pentru valori mari)
@@ -119,7 +119,7 @@ git commit -m "Date financiare ANAF 2025 integrate"
 (verificat via `git log`), CI re-descarcă WEB_BL + WEB_UU automat.
 
 ### Flag nou: ACHIZITIE_DIRECTA_PESTE_PRAG
-- Adăugat **Algoritm 1b** care detectează când un singur contract depășește individual pragul de 130.000 RON
+- Adăugat **Algoritm 1b** care detectează când un singur contract depășește pragul aplicabil categoriei: 270.120 RON fără TVA pentru produse/servicii sau 900.400 RON fără TVA pentru lucrări
 - Anterior existau doar flags pentru valoare combinată (fragmentare) — acum și pentru contract individual
 - Locație în cod: funcția `analizeaza_red_flags()`, imediat înainte de Algoritm 2
 
@@ -210,8 +210,8 @@ Hooks integrate în `analizeaza_red_flags()` și `analizeaza_hcl()`.
 ## Praguri legale folosite (Legea 98/2016)
 
 ```python
-"prag_servicii_furnizare": 130_000,   # RON — sub acest prag = cumpărare directă legală
-"prag_lucrari": 500_000,              # RON — sub acest prag = procedură simplificată
+  "prag_servicii_furnizare": 270_120,   # RON fără TVA — produse/servicii
+  "prag_lucrari": 900_400,              # RON fără TVA — lucrări
 "marja_fragmentare_pct": 0.97,        # dacă valoarea > 97% din prag = suspect
 ```
 
@@ -230,7 +230,7 @@ Hooks integrate în `analizeaza_red_flags()` și `analizeaza_hcl()`.
 
 **`gdpr.html`** — pagină completă de politică de confidențialitate:
 - Tabel surse date (SEAP/ANAF/primărie/ONRC/mfinante) cu baza legală
-- Temei GDPR: Art. 6(1)(e) + Legea 363/2018 + Legea 544/2001
+- GDPR: interes legitim / informare (art. 6(1)(f)), libertatea de exprimare și informare, Legea 190/2018 și minimizarea datelor; vezi `gdpr.html`
 - Declarație ne-colectare, hosting GitHub Pages, drepturi GDPR, contact ANSPDCP
 
 **`petitie.html`** — pagină petiție cetățenească (§5.5):
@@ -398,7 +398,7 @@ fost ajustate pe baza cadenței reale de publicare a fiecărei surse:
 
 Sursele fără cache anterior (SEAP contracte, HCL, ANAF v9) au primit acum
 cache SQLite/JSON dedicat, pentru a evita re-descărcarea acelorași date la
-fiecare rulare a cron-ului săptămânal (`update-report.yml`).
+fiecare rulare a cron-ului lunar (`update-report.yml`).
 
 ---
 

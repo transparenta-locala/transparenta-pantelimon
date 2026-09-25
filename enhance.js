@@ -217,6 +217,16 @@ html[data-tp-theme="dark"] {
   text-align: center; padding: 3rem 1rem;
   color: var(--tp-muted);
 }
+.tp-empty p { margin: .4rem 0; }
+.tp-empty code {
+  background: var(--tp-card-bg, #f1f5f9); padding: 1px 5px;
+  border-radius: 4px; font-size: .85em;
+}
+.tp-suggest {
+  display: flex; flex-wrap: wrap; gap: .4rem;
+  justify-content: center; margin: .5rem 0 1rem;
+}
+.tp-suggest-btn { font-weight: 600; }
 
 /* Back-to-top */
 .tp-back-top {
@@ -309,13 +319,13 @@ html[data-tp-theme="dark"] {
   .tp-nav-links a:last-child { border-bottom: none; }
   .tp-nav-brand { font-size: .82rem; flex: 1; }
   .tp-toolbar { padding: .5rem .6rem; }
-  .tp-toolbar-row { flex-wrap: nowrap; }
+  .tp-toolbar-row { flex-wrap: wrap; max-width: 100%; }
   .tp-chips-sev { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .tp-chips-sev::-webkit-scrollbar { display: none; }
   .tp-toolbar-row:nth-child(2) { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .tp-toolbar-row:nth-child(2)::-webkit-scrollbar { display: none; }
   .tp-select { min-width: 140px; flex: 0 0 auto; }
-  .tp-search { font-size: 16px; flex-basis: 100%; flex-shrink: 0; }
+  .tp-search { font-size: 16px; flex: 1 1 100%; min-width: 0; }
 }
 @media (max-width: 480px) {
   .tp-nav-brand { font-size: .78rem; }
@@ -480,6 +490,98 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     }[c]));
   }
 
+  // ──────────────────────────────────────────────────────────────
+  // NORMALIZARE CĂUTARE
+  // ──────────────────────────────────────────────────────────────
+  // Datele SEAP conțin nume „murdare": spații duble, diacritice inconsistente,
+  // „&" vs „and", sufixe juridice prezente sau nu (SRL / S.R.L. / lipsă).
+  // Fără normalizare, „DAV GARDEN&SERVICE SRL" nu găsea „DAV  GARDEN & SERVICE"
+  // (două spații, fără SRL) — firma exista în date, dar căutarea returna 0.
+  const TP_LEGAL_TOKENS = {
+    srl: 1, srlu: 1, srld: 1, sarl: 1, sa: 1, sca: 1, snc: 1, scs: 1,
+    pfa: 1, ii: 1, sc: 1, societate: 1, societatea: 1, comerciala: 1,
+    asociatia: 1, asociatie: 1, ong: 1
+  };
+
+  // lowercase → fără diacritice → „&" devine „and" → punctuația devine spațiu
+  function nzText(s) {
+    let t = String(s == null ? '' : s).toLowerCase();
+    if (t.normalize) t = t.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    // abrevieri punctate: „s.r.l." → „srl", „i.i." → „ii"
+    t = t.replace(/\b(?:[a-z]\.){2,}/g, m => m.replace(/\./g, ''));
+    return t
+      .replace(/[șş]/g, 's')   // ș / ş (dacă NFD nu e disponibil)
+      .replace(/[țţ]/g, 't')   // ț / ţ
+      .replace(/[ăâ]/g, 'a')   // ă / â
+      .replace(/î/g, 'i')           // î
+      .replace(/&/g, ' and ')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  // ca nzText, dar aruncă sufixele juridice (SRL, SA, PFA, SC…)
+  function nzCore(s) {
+    const out = [];
+    nzText(s).split(' ').forEach(t => { if (t && !TP_LEGAL_TOKENS[t]) out.push(t); });
+    return out.join(' ');
+  }
+
+  // Pre-calculează câmpurile de căutare o singură dată, indiferent de calea
+  // prin care au fost construite items (tp-data JSON sau parsing DOM).
+  function indexSearchFields(items) {
+    items.forEach(it => {
+      it.nzHay = nzCore([
+        it.haystack || '', it.supplier || '', it.title || '',
+        it.contract || '', it.procedure || '', it.type || ''
+      ].join(' '));
+      it.nzCif = String(it.supplierCif || '').replace(/[^0-9]/g, '');
+    });
+  }
+
+  // Query → listă de tokenuri normalizate. Potrivirea e AND pe tokenuri, deci
+  // ordinea cuvintelor nu contează („garden dav" găsește „DAV GARDEN").
+  function setQuery(state, raw) {
+    state.qRaw = String(raw == null ? '' : raw).trim();
+    state.q = nzCore(state.qRaw);
+    state.qTokens = state.q ? state.q.split(' ').filter(Boolean) : [];
+  }
+
+  function matchesQuery(it, state) {
+    const toks = state.qTokens;
+    if (!toks || !toks.length) return true;
+    if (it.nzHay == null) indexSearchFields([it]);
+    const hay = it.nzHay, cif = it.nzCif;
+    for (let i = 0; i < toks.length; i++) {
+      const t = toks[i];
+      if (hay.indexOf(t) === -1 && !(cif && cif.indexOf(t) !== -1)) return false;
+    }
+    return true;
+  }
+
+  // Sugestii „ai vrut să spui…" pentru starea goală — scor pe potrivire de tokenuri
+  function suggestSuppliers(items, state, max) {
+    const toks = state.qTokens || [];
+    if (!toks.length) return [];
+    const best = new Map();
+    items.forEach(it => {
+      if (!it.supplier) return;
+      const n = nzCore(it.supplier);
+      let score = 0;
+      toks.forEach(t => {
+        if (n.indexOf(t) !== -1) { score += 3; return; }
+        for (let L = Math.min(t.length, 8); L >= 4; L--) {
+          if (n.indexOf(t.slice(0, L)) !== -1) { score += 1; return; }
+        }
+      });
+      if (score > 0 && score > (best.get(it.supplier) || 0)) best.set(it.supplier, score);
+    });
+    return Array.from(best.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, max || 5)
+      .map(e => e[0]);
+  }
+
   function loadPrefs() {
     try { return JSON.parse(localStorage.getItem(CFG.storageKey)) || {}; }
     catch (e) { return {}; }
@@ -552,7 +654,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     // §4.4 aria-hidden on decorative emojis — screen readers announce link text only
     const links = [
       { href: 'index.html',                   emoji: '🏠', text: 'Acasă' },
-      { href: 'raport_transparenta.html',      emoji: '🚩', text: 'Nereguli' },
+      { href: 'raport_transparenta.html',      emoji: '🚩', text: 'Semnale de risc' },
       { href: 'transparenta_pantelimon.html',  emoji: '📊', text: 'Buget' },
       { href: 'despre.html',                   emoji: 'ℹ️', text: 'Despre' },
       { href: 'presa.html',                    emoji: '🗞️', text: 'Presă' },
@@ -794,9 +896,13 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
   // PAGINA RAPORT
   // ──────────────────────────────────────────────────────────────
   function enhanceReport() {
+    // Idempotent: dacă toolbar-ul există deja, nu îl mai injectăm o dată
+    // (altfel apar două bare de căutare și două seturi de chips, iar filtrele
+    // se aplică doar pe unul dintre ele).
+    if (document.querySelector('.tp-toolbar')) return;
     const cardEls = detectCards();
     if (!cardEls.length) {
-      console.warn('[tp-enhance] Nu am detectat carduri de nereguli. Toolbar-ul nu va fi inserat.');
+    console.warn('[tp-enhance] Nu am detectat carduri de semnale. Toolbar-ul nu va fi inserat.');
       return;
     }
 
@@ -805,6 +911,9 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     const items = jsonItems && jsonItems.length >= cardEls.length * 0.8
       ? jsonItems
       : cardEls.map((el, i) => parseCard(el, i));
+
+    // Index de căutare normalizat (nume firme „murdare" din SEAP)
+    indexSearchFields(items);
 
     // Butoane sesizare ANAP pe fiecare card
     injectAnapButtons(items);
@@ -850,6 +959,8 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     const prefs = loadPrefs();
     const state = {
       q: '',
+      qRaw: '',
+      qTokens: [],
       sev: { CRITIC: true, MAJOR: true, MEDIU: true },
       supplier: '',
       sort: prefs.sort || 'idx-asc',
@@ -866,8 +977,8 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
       <div class="tp-toolbar-inner">
         <div class="tp-toolbar-row">
           <input type="search" class="tp-search" id="tp-q"
-                 placeholder="🔍 Caută în nereguli (furnizor, sumă, cod contract, lege)…"
-                 aria-label="Caută în nereguli">
+                 placeholder="🔍 Caută firmă, CUI, cod contract sau cuvânt-cheie…"
+                 aria-label="Caută în semnalele automate">
           <div class="tp-chips-sev">
             <button class="tp-chip active" data-sev="CRITIC" aria-pressed="true">🔴 CRITIC</button>
             <button class="tp-chip active" data-sev="MAJOR"  aria-pressed="true">🟠 MAJOR</button>
@@ -896,15 +1007,15 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
         <div class="tp-toolbar-row" id="tp-shell-row">
           <span style="font-size:.78rem;color:var(--tp-muted);margin-right:.25rem">🏢 Profil firmă:</span>
           <button class="tp-chip" data-shell="zero-sal" aria-pressed="false"
-                  title="Arată doar nereguli unde furnizorul are 0 angajați declarați la ANAF">👥 0 angajați</button>
+                  title="Arată doar semnale unde furnizorul are 0 angajați declarați la ANAF">👥 0 angajați</button>
           <button class="tp-chip" data-shell="zero-ca" aria-pressed="false"
-                  title="Arată doar nereguli unde furnizorul are cifra de afaceri 0 RON">📉 CA = 0 RON</button>
+                  title="Arată doar semnale unde furnizorul are cifra de afaceri 0 RON">📉 CA = 0 RON</button>
           <button class="tp-chip" data-shell="ca-sub" aria-pressed="false"
-                  title="Arată nereguli unde cifra de afaceri a furnizorului e sub 50% din valoarea contractului">📊 CA sub contract</button>
+                  title="Arată semnale unde cifra de afaceri a furnizorului e sub 50% din valoarea contractului">📊 CA sub contract</button>
           <button class="tp-chip" data-shell="any-risk" aria-pressed="false"
-                  title="Arată doar nereguli unde furnizorul are cel puțin un indicator de risc financiar">⚠️ Orice risc</button>
+                  title="Arată doar semnale unde furnizorul are cel puțin un indicator de risc financiar">⚠️ Orice risc</button>
           <button class="tp-chip" data-shell="presa-risc" aria-pressed="false"
-                  title="Arată doar nereguli unde furnizorul are mențiuni de risc detectate automat în presă" style="display:none">📰 În presă</button>
+                  title="Arată doar semnale unde furnizorul are mențiuni de risc detectate automat în presă" style="display:none">📰 În presă</button>
         </div>
         <div class="tp-toolbar-row">
           <div class="tp-stats" id="tp-stats" aria-live="polite"></div>
@@ -1109,16 +1220,34 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     const apply = debounce(() => applyFilters(items, state), 80);
 
     $('#tp-q').addEventListener('input', (e) => {
-      state.q = e.target.value.trim().toLowerCase();
+      setQuery(state, e.target.value);
       state.shown = CFG.pageSize;
       apply();
     });
+    // Chips severitate. Comportament intuitiv: din starea „toate pornite",
+    // un click IZOLEAZĂ severitatea aleasă (nu o ascunde, cum se întâmpla
+    // înainte). Click-urile următoare adaugă/scot severități; dacă rămâne
+    // niciuna, revenim la toate.
+    const SEVS = ['CRITIC', 'MAJOR', 'MEDIU'];
+    function syncSevChips() {
+      toolbar.querySelectorAll('.tp-chip[data-sev]').forEach(c => {
+        const on = !!state.sev[c.dataset.sev];
+        c.classList.toggle('active', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+        c.title = on ? 'Afișat — click pentru a ascunde' : 'Ascuns — click pentru a afișa';
+      });
+    }
     toolbar.querySelectorAll('.tp-chip[data-sev]').forEach(chip => {
       chip.addEventListener('click', () => {
         const s = chip.dataset.sev;
-        state.sev[s] = !state.sev[s];
-        chip.classList.toggle('active', state.sev[s]);
-        chip.setAttribute('aria-pressed', state.sev[s] ? 'true' : 'false');
+        const allOn = SEVS.every(x => state.sev[x]);
+        if (allOn) {
+          SEVS.forEach(x => { state.sev[x] = (x === s); });   // izolează
+        } else {
+          state.sev[s] = !state.sev[s];
+          if (!SEVS.some(x => state.sev[x])) SEVS.forEach(x => { state.sev[x] = true; });
+        }
+        syncSevChips();
         state.shown = CFG.pageSize;
         apply();
       });
@@ -1148,15 +1277,12 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
       apply();
     });
     $('#tp-reset').addEventListener('click', () => {
-      state.q = ''; state.supplier = ''; state.shellFilter = '';
+      setQuery(state, ''); state.supplier = ''; state.shellFilter = '';
       state.sev = { CRITIC: true, MAJOR: true, MEDIU: true };
       state.shown = CFG.pageSize;
       $('#tp-q').value = '';
       $('#tp-supplier').value = '';
-      toolbar.querySelectorAll('.tp-chip[data-sev]').forEach(c => {
-        c.classList.add('active');
-        c.setAttribute('aria-pressed', 'true');
-      });
+      syncSevChips();
       toolbar.querySelectorAll('.tp-chip[data-shell]').forEach(c => {
         c.classList.remove('active');
         c.setAttribute('aria-pressed', 'false');
@@ -1189,7 +1315,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
       if (e.target.matches('input, textarea, select')) {
         if (e.key === 'Escape' && e.target.id === 'tp-q') {
           e.target.value = '';
-          state.q = '';
+          setQuery(state, '');
           apply();
         }
         return;
@@ -1226,7 +1352,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     if (!h.includes('=')) return;
     const params = new URLSearchParams(h);
     if (params.has('q')) {
-      state.q = params.get('q').toLowerCase();
+      setQuery(state, params.get('q'));
       const inp = $('#tp-q'); if (inp) inp.value = params.get('q');
     }
     if (params.has('sev')) {
@@ -1251,12 +1377,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     let visible = items.filter(it => {
       if (!state.sev[it.severity]) return false;
       if (state.supplier && it.supplier !== state.supplier) return false;
-      if (state.q) {
-        const q = state.q;
-        if (!it.haystack.includes(q) &&
-            !it.supplier.toLowerCase().includes(q) &&
-            !it.title.toLowerCase().includes(q)) return false;
-      }
+      if (!matchesQuery(it, state)) return false;
       // Filtre shell company (bazate pe panelul risc_firma.py)
       if (state.shellFilter) {
         const f = state.shellFilter;
@@ -1313,7 +1434,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     const stats = $('#tp-stats');
     if (stats) {
       stats.innerHTML = `
-        <span><strong>${visible.length}</strong> / ${items.length} nereguli afișate</span>
+      <span><strong>${visible.length}</strong> / ${items.length} semnale afișate</span>
         <span>🔴 <strong>${byS.CRITIC || 0}</strong> · 🟠 <strong>${byS.MAJOR || 0}</strong> · 🟡 <strong>${byS.MEDIU || 0}</strong></span>
         <span>Total: <strong>${fmtRON(totalSum)}</strong></span>
         ${state.shown < visible.length ? `<span style="color: var(--tp-muted)">Vizibile primele ${Math.min(state.shown, visible.length)}</span>` : ''}
@@ -1332,7 +1453,63 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
       }
     }
     const emp = $('#tp-empty');
-    if (emp) emp.classList.toggle('tp-card-hidden', visible.length > 0);
+    if (emp) {
+      emp.classList.toggle('tp-card-hidden', visible.length > 0);
+      if (!visible.length) renderEmptyState(emp, items, state);
+    }
+  }
+
+  // Stare goală utilă: spune CE filtru a dat zero și propune firme apropiate.
+  // (Înainte afișa doar „🤷 Niciun rezultat", ceea ce părea că firma nu există.)
+  function renderEmptyState(emp, items, state) {
+    const sugg = state.qTokens && state.qTokens.length
+      ? suggestSuppliers(items, state, 5) : [];
+    const sevOff = ['CRITIC', 'MAJOR', 'MEDIU'].filter(s => !state.sev[s]);
+    let html = '';
+
+    if (state.qRaw) {
+      html += `<p>🤷 Niciun rezultat pentru <strong>„${escapeHTML(state.qRaw)}"</strong>.</p>`;
+    } else {
+      html += '<p>🤷 Niciun rezultat pentru filtrele curente.</p>';
+    }
+
+    if (sugg.length) {
+      html += '<p style="font-size:.9rem">Ai vrut să spui:</p><div class="tp-suggest">'
+        + sugg.map(name =>
+            `<button class="tp-btn tp-suggest-btn" data-suggest="${escapeHTML(name)}">${escapeHTML(name)}</button>`
+          ).join('')
+        + '</div>';
+    } else if (state.qRaw) {
+      html += '<p style="font-size:.85rem;color:var(--tp-muted)">'
+        + 'Caută după o parte din nume (ex. <code>dav</code> sau <code>garden</code>), '
+        + 'după CUI, sau după codul contractului. Sufixele SRL / S.A. sunt ignorate automat.</p>';
+    }
+
+    if (sevOff.length) {
+      html += `<p style="font-size:.85rem;color:var(--tp-muted)">Filtre de severitate dezactivate: `
+        + `${sevOff.join(', ')}. Rezultatele de acest tip sunt ascunse.</p>`;
+    }
+    if (state.supplier) {
+      html += `<p style="font-size:.85rem;color:var(--tp-muted)">Filtrat pe furnizorul `
+        + `<strong>${escapeHTML(state.supplier)}</strong>.</p>`;
+    }
+
+    html += '<button class="tp-btn" id="tp-empty-reset">Curăță filtrele</button>';
+    emp.innerHTML = html;
+
+    const rst = emp.querySelector('#tp-empty-reset');
+    if (rst) rst.addEventListener('click', () => {
+      const r = document.getElementById('tp-reset'); if (r) r.click();
+    });
+    emp.querySelectorAll('[data-suggest]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const inp = $('#tp-q');
+        if (inp) { inp.value = btn.dataset.suggest; }
+        setQuery(state, btn.dataset.suggest);
+        state.shown = CFG.pageSize;
+        applyFilters(items, state);
+      });
+    });
   }
 
   // ──────────────────────────────────────────────────────────────
@@ -1342,12 +1519,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     return items.filter(it => {
       if (!state.sev[it.severity]) return false;
       if (state.supplier && it.supplier !== state.supplier) return false;
-      if (state.q) {
-        const q = state.q;
-        if (!it.haystack.includes(q) &&
-            !it.supplier.toLowerCase().includes(q) &&
-            !it.title.toLowerCase().includes(q)) return false;
-      }
+      if (!matchesQuery(it, state)) return false;
       return true;
     });
   }
@@ -1423,7 +1595,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     const topByValue = suppliers.slice().sort((a, b) => b[1].sum - a[1].sum).slice(0, 10);
 
     wrap.innerHTML = `
-      <h3>📈 Rezumat — ${items.length} nereguli analizate</h3>
+      <h3>📈 Rezumat — ${items.length} semnale automate</h3>
       <div class="tp-summary-bar" aria-label="Distribuție pe severități">
         <span style="background:${CFG.severityColor.CRITIC}; width:${(sevCount.CRITIC/total*100).toFixed(1)}%">
           ${sevCount.CRITIC > 5 ? sevCount.CRITIC + ' CRITIC' : ''}
@@ -1437,7 +1609,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
       </div>
       <div class="tp-summary-grid" style="margin-top:1rem">
         <div>
-          <strong style="font-size:.85rem">🏢 Top furnizori după nereguli</strong>
+          <strong style="font-size:.85rem">🏢 Top furnizori după numărul de semnale</strong>
           <div class="tp-summary-list" style="margin-top:.5rem">
             ${topByCount.map(([name, info]) => `
               <div class="tp-summary-li">
@@ -1559,7 +1731,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     var cardUrl = location.origin + location.pathname + '#nereguli-' + (card.idx + 1);
     var body = encodeURIComponent([
       'Subsemnatul/a [NUMELE TĂU], domiciliat în [ADRESA], CNP [CNP],',
-      'în calitate de cetățean, sesizez următoarea posibilă neregulă:',
+      'în calitate de cetățean, solicit verificarea următorului semnal automat:',
       '',
       'OBIECT: ' + card.title,
       '',
@@ -1651,7 +1823,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
       banner.className = 'tp-banner-whats-new';
       banner.setAttribute('role', 'status');
       banner.innerHTML =
-        `🚩 <strong>${d.nereguli_noi} nereguli noi</strong> detectate față de raportul anterior` +
+      `🚩 <strong>${d.nereguli_noi} semnale noi</strong> față de raportul anterior` +
         (topNoi ? ` — ${topNoi}` : '') +
         ` <a href="${link}">vezi raportul →</a>` +
         `<button class="tp-banner-close" aria-label="Închide bannerul">×</button>`;
@@ -1717,7 +1889,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
   // BREADCRUMBS — navigare ierarhică pe paginile secundare
   // ──────────────────────────────────────────────────────────────
   var BREADCRUMB_MAP = {
-    'raport_transparenta.html': 'Raport Nereguli',
+    'raport_transparenta.html': 'Raport semnale de risc',
     'transparenta_pantelimon.html': 'Buget & Grafice',
     'harta.html': 'Hartă Furnizori',
     'presa.html': 'Presă',

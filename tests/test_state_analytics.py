@@ -304,18 +304,18 @@ class TestSlugify:
 class TestDetectFlagSimple:
 
     def test_peste_prag_critic(self):
-        """Valoare > 130.000 RON → CRITIC."""
-        c = {"valoare": 150000, "firma": "F", "ofertanti": 2}
+        """Valoare servicii > 270.120 RON → CRITIC."""
+        c = {"valoare": 300000, "firma": "F", "ofertanti": 2}
         assert _detect_flag_simple(c, {}) == "CRITIC"
 
     def test_exact_la_prag_critic(self):
-        """Valoare = 130.001 → CRITIC."""
-        c = {"valoare": 130001, "firma": "F", "ofertanti": 2}
+        """Valoare = 270.121 → CRITIC."""
+        c = {"valoare": 270121, "firma": "F", "ofertanti": 2}
         assert _detect_flag_simple(c, {}) == "CRITIC"
 
     def test_aproape_de_prag_major(self):
         """Valoare intre 97% si 100% din prag → MAJOR."""
-        c = {"valoare": 127000, "firma": "F", "ofertanti": 2}
+        c = {"valoare": 265000, "firma": "F", "ofertanti": 2}
         assert _detect_flag_simple(c, {}) == "MAJOR"
 
     def test_valoare_mai_mica_decat_97pct_ok(self):
@@ -334,9 +334,9 @@ class TestDetectFlagSimple:
         assert _detect_flag_simple(c, {}) == "OK"
 
     def test_suma_firma_depaseste_pragul_major(self):
-        """Firma cu total >130k si valoare contract > 65k → MAJOR (fragmentare)."""
-        c = {"valoare": 70000, "firma": "FRAG SRL", "ofertanti": 2}
-        firma_sums = {"FRAG SRL": 200000}
+        """Firma cu total >270.120 și contract > jumătate din prag → MAJOR."""
+        c = {"valoare": 150000, "firma": "FRAG SRL", "ofertanti": 2}
+        firma_sums = {("FRAG SRL", "produse/servicii"): 300000}
         assert _detect_flag_simple(c, firma_sums) == "MAJOR"
 
     def test_valoare_zero_ok(self):
@@ -399,7 +399,7 @@ class TestRenderContracteTbodyRows:
         contracte = [{
             "id": "x-002",
             "titlu": "Contract mare",
-            "valoare": 200000,
+            "valoare": 300000,
             "firma": "BIG SRL",
             "ofertanti": 0,
         }]

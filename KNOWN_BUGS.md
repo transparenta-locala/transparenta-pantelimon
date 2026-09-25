@@ -177,3 +177,81 @@ funcție nouă `actualizeaza_contoare_analiza()` apelată din `main()`.
 
 **Fișier:** `201.html`  
 **Rezolvat prin:** fișier șters (nu era tracked de git, zero referințe în proiect).
+
+---
+
+## ~~BUG-14: căutarea nu găsea firme care există în date~~ ✅ REZOLVAT 04.08.2026
+
+**Raportat de utilizator:** căutarea `DAV GARDEN&SERVICE SRL` returna 0 rezultate,
+deși firma are 3 contracte și 2 red flags în raport.
+
+**Cauză:** potrivire de subșir brută, fără normalizare. În `loadDataFromJson()`
+haystack-ul se construia din `raport.json` **fără** `.replace(/\s+/g,' ')`, spre
+deosebire de căile de fallback DOM. Datele SEAP conțin nume „murdare": firma apare
+ca `DAV  GARDEN & SERVICE` (două spații, fără sufix juridic). Efect măsurat pe
+datele reale: `dav garden` → 0 rezultate; doar `dav  garden` (două spații) mergea.
+
+**Rezolvat prin:**
+- `nzText()` / `nzCore()` în `enhance.js` — lowercase, fără diacritice, `&`→`and`,
+  abrevieri punctate (`S.R.L.`→`srl`), punctuația devine spațiu, sufixe juridice ignorate
+- potrivire AND pe tokenuri (ordinea cuvintelor nu mai contează)
+- `normalizeaza_nume_firma()` / `nume_firma_esential()` în `monitor_pantelimon.py`
+  (aceeași logică, testabilă; lista de sufixe e verificată că e identică în ambele)
+- stare goală cu sugestii „ai vrut să spui" în loc de „🤷 Niciun rezultat"
+
+**Verificare:** toți cei 94 de furnizori sunt găsibili după numele propriu ȘI după
+varianta cu „SRL" adăugat (188/188). Teste: `tests/test_cautare_firme.py`.
+
+---
+
+## ~~BUG-15: căutarea după CUI nu returna nimic~~ ✅ REZOLVAT 04.08.2026
+
+**Cauză:** 0 din 304 flag-uri aveau `supplier_cif` — exportul SEAP nu pune CUI-ul
+pe anunț, iar `raport.json` prelua direct câmpul gol.
+
+**Rezolvat prin:** index `_cui_by_supplier` construit din `contracte` +
+`firme_geocoded.json`, propagat în `raport.json` și în `risc-firma-data`.
+Acoperire: **300/304** flag-uri, 92/94 furnizori (lipsesc doar „Consiliul Local" și „Multiple").
+
+---
+
+## ~~BUG-16: profilul de firmă — acuzații fără justificare, cifre umflate~~ ✅ REZOLVAT 04.08.2026
+
+Confirmat în `AUDIT_transparenta-pantelimon_01iul2026.md` (P1–P5).
+
+| Problemă | Cauză | Fix |
+|---|---|---|
+| Nereguli fără explicație | `risc-firma-data` nu conținea `descriere` | câmp adăugat, randat în panou |
+| Rândurile arătau ca butoane, dar nu răspundeau | erau `<div>` fără handler | `<a href="#nereguli-N">` spre neregula detaliată |
+| „Valoare totală expusă" umflată (Constopograf: 16.74 mil. vs 1.89 mil. real) | se afișa suma tuturor semnalelor; un contract generează 3-4 semnale | se afișează suma contractelor distincte; suma semnalelor rămâne ca linie secundară, etichetată |
+| Badge-uri desincronizate de listă | contoare calculate în paralel cu lista | contoarele se calculează DIN listă (0/94 firme desincronizate acum) |
+| Buton SEAP → pagină goală | URL generic `/list/0/0` | anunț direct pe `contract_id`, altfel căutare după numele firmei |
+| Valoarea firmei dublată | exporturile trimestriale repetă același contract cu id-uri diferite | deduplicare pe (firmă, dată, valoare, obiect) — afecta chiar DAV GARDEN (4.62 mil. numărați de două ori) |
+
+---
+
+## ~~BUG-17: filtrele de severitate aveau logică inversă~~ ✅ REZOLVAT 04.08.2026
+
+Click pe „🔴 CRITIC" **ascundea** criticele. Acum, din starea „toate pornite",
+un click **izolează** severitatea aleasă; click-urile următoare adaugă/scot;
+dacă nu mai rămâne niciuna, revine la toate.
+
+---
+
+## ~~BUG-18: `enhanceReport()` nu era idempotent~~ ✅ REZOLVAT 04.08.2026
+
+La o a doua inițializare se injecta un al doilea toolbar, iar filtrele se aplicau
+doar pe unul. Guard adăugat: `if (document.querySelector('.tp-toolbar')) return;`
+
+---
+
+## ⚠️ De reținut: `enhance.min.js` e fișierul servit în producție
+
+`raport_transparenta.html` și paginile de furnizori încarcă `enhance.min.js`, nu
+`enhance.js`. Nu există pas de build în CI, deci după orice modificare în sursă:
+
+```bash
+npx terser enhance.js --compress --mangle --comments "/^!/" -o enhance.min.js
+```
+
+`tests/test_cautare_firme.py::TestEnhanceJsSincronizat` prinde omisiunea.

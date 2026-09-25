@@ -82,7 +82,7 @@ class TestGenereazaPressKit:
         """Câmpul schema_version este prezent."""
         monkeypatch.chdir(tmp_path)
         rez = genereaza_press_kit(NEREGULI_OK, CONTRACTE_OK, SCOR_OK, CONFIG_TEST)
-        assert rez.get("schema_version") == "1.0"
+        assert rez.get("schema_version") == "1.1"
 
     def test_statistici_corecte(self, tmp_path, monkeypatch):
         """Statisticile reflectă datele de intrare."""

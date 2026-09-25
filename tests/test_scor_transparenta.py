@@ -58,8 +58,13 @@ class TestStructuraReturnata:
     def test_cheile_obligatorii_prezente(self):
         """Dict-ul contine cheile scor, componente, ponderi, data."""
         result = calculeaza_scor_transparenta([], [], {})
-        for cheie in ("scor", "componente", "ponderi", "data"):
+        for cheie in ("scor", "componente", "ponderi", "componente_estimate", "metodologie", "data"):
             assert cheie in result, f"Cheia '{cheie}' lipseste"
+
+    def test_estimarile_sunt_declarate_explicit(self):
+        result = calculeaza_scor_transparenta([], [], {})
+        assert set(result["componente_estimate"]) == {"documente_publicate", "raspuns_544"}
+        assert "neoficial" in result["metodologie"].lower()
 
     def test_componente_are_6_subscoruri(self):
         """componente contine exact 6 subscoruri."""

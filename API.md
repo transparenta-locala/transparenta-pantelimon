@@ -11,7 +11,7 @@ Actualizate lunar (de obicei pe 15 ale lunii).
 
 **URL:** `https://transparenta-pantelimon.eu/raport.json`
 
-Raportul complet cu toate neregulile detectate, totaluri și scor de transparență.
+Raportul complet cu toate semnalele automate, totaluri și indicele euristic de transparență.
 
 ### Schema
 
@@ -68,7 +68,7 @@ Raportul complet cu toate neregulile detectate, totaluri și scor de transparen�
 |---|---|---|
 | `id` | integer | Index 1-based în ordinea sortată (CRITIC → MAJOR → MEDIU) |
 | `severity` | string | `CRITIC`, `MAJOR` sau `MEDIU` |
-| `title` | string | Titlu scurt al neregulii |
+| `title` | string | Titlu scurt al semnalului |
 | `explanation` | string | Descriere detaliată cu baza legală (max ~500 caractere) |
 | `supplier` | string | Denumire firmă furnizor (dacă e aplicabil) |
 | `sum_ron` | number | Valoare contract în RON |
@@ -78,12 +78,12 @@ Raportul complet cu toate neregulile detectate, totaluri și scor de transparen�
 | `type` | string | Codul intern al tipului de nereguă (vezi mai jos) |
 | `anchor` | string | ID-ul HTML al cardului în raport (`nereguli-N`) |
 
-### Tipuri de nereguli (`type`)
+### Tipuri de semnale (`type`)
 
 | Cod | Severitate tipică | Descriere |
 |---|---|---|
 | `ACHIZITIE_DIRECTA_PRAG` | MEDIU | Achiziție directă >97% din prag (126.100 RON) |
-| `ACHIZITIE_DIRECTA_PESTE_PRAG` | CRITIC | Achiziție directă individuală depășește 130.000 RON |
+| `ACHIZITIE_DIRECTA_PESTE_PRAG` | CRITIC | Achiziție directă individuală peste 270.120 RON produse/servicii sau 900.400 RON lucrări, fără TVA |
 | `OFERTANT_UNIC` | MEDIU/MAJOR | Un singur ofertant — lipsă concurență reală |
 | `FRAGMENTARE` | CRITIC | Fragmentare artificială pentru eludarea pragului |
 | `FRAGMENTARE_TEMPORARA` | CRITIC | Contracte similare consecutive sub prag (L98/2016 art.11) |
@@ -126,7 +126,7 @@ Lista tuturor contractelor analizate (sursa: SEAP).
 
 **URL:** `https://transparenta-pantelimon.eu/feed.xml`
 
-Feed Atom cu top 20 nereguli (compatibil RSS). Util pentru Feedly, Inoreader etc.
+Feed Atom cu top 20 semnale (compatibil RSS). Util pentru Feedly, Inoreader etc.
 
 ---
 
@@ -155,7 +155,7 @@ Același dataset ca `contracte.json` în format CSV — compatibil Excel, Google
 
 **URL:** `https://transparenta-pantelimon.eu/press_kit.json`
 
-Press kit auto-generat cu statistici și top nereguli — destinat jurnaliștilor.
+Press kit auto-generat cu statistici și top semnale — destinat jurnaliștilor.
 
 ### Schema
 
@@ -258,8 +258,8 @@ Cache TTL: 30 zile.
 
 **URL:** `https://transparenta-pantelimon.eu/ted_notices.json`
 
-Anunțuri de achiziție publică din Jurnalul Oficial al UE (TED Europa) pentru cumpărătorul cu CIF 4420759.
-Contracte > 500.000 EUR trebuie publicate obligatoriu în TED (Directiva UE 2014/24).
+Anunțuri de achiziție publică din Jurnalul Oficial al UE (TED Europa) asociate cumpărătorului cu CIF 4420759.
+Pentru 2026–2027, pragurile Directivei 2014/24/UE sunt 216.000 EUR fără TVA pentru produse/servicii atribuite de autorități locale și 5.404.000 EUR fără TVA pentru lucrări. Absența unui rezultat din acest export nu dovedește singură nerespectarea unei obligații de publicare.
 Cache TTL: 7 zile.
 
 ### Schema (array de obiecte)
@@ -322,7 +322,7 @@ Folosit de harta.html (Leaflet.js).
 - Respectă limitele serverului (max 1 req/minut dacă faci poll automat)
 - Citează sursa: „Date: Transparența Pantelimon / transparenta-pantelimon.eu, CC-BY 4.0"
 - Datele SEAP au decalaj de 1-3 luni față de realitate
-- Neregulile detectate sunt indicatori factuali, nu concluzii juridice definitive
+- Semnalele sunt indicatori euristici, pot avea suprapuneri și nu sunt concluzii juridice sau prejudicii
 
 ## Contact
 
