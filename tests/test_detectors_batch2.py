@@ -55,7 +55,10 @@ def _ce(titlu, cui, valoare, data='2025-03-01'):
 # ===========================================================================
 
 def test_ident_3_firme_aceeasi_zi_aceeasi_valoare():
-    """3 firme diferite, aceeași valoare, aceeași zi → CRITIC, 1 flag."""
+    """3 firme, aceeași valoare, aceeași zi → 1 semnal MEDIU, valoarea NU se înmulțește.
+
+    Regresie reală (2025-07-29, școli gimnaziale): un contract atribuit unei asocieri
+    de 3 firme era raportat ca „88,5 mil." și „împărțire artificială a unui lot"."""
     contracte = [
         _c('Contract A', 'CUI1', 29_508_940, '2025-07-29'),
         _c('Contract B', 'CUI2', 29_508_940, '2025-07-29'),
@@ -65,10 +68,12 @@ def test_ident_3_firme_aceeasi_zi_aceeasi_valoare():
     assert len(flags) == 1, f'Asteptat 1 flag, got {len(flags)}'
     f = flags[0]
     assert f['tip'] == 'VALORI_IDENTICE_ACEEASI_ZI'
-    assert f['severitate'] == 'CRITIC'
+    assert f['severitate'] == 'MEDIU'
     assert f['nr_firme'] == 3
     assert f['nr_contracte'] == 3
-    assert abs(f['valoare'] - 29_508_940 * 3) < 1
+    assert abs(f['valoare'] - 29_508_940) < 1
+    assert 'artificial' not in f['descriere']
+    assert 'nu se adună' in f['descriere']
 
 
 def test_ident_2_firme_aceeasi_zi():
