@@ -1,24 +1,8 @@
 {
-  "data_curenta": "2026-09-25T12:16:00.849138",
-  "data_anterioara": "2026-09-01T11:22:39.367799",
-  "nereguli_noi": 25,
-  "nereguli_rezolvate": 81,
+  "data_curenta": "2026-09-25T13:41:31.533382",
+  "data_anterioara": "2026-09-25T12:16:23.025007",
+  "nereguli_noi": 0,
+  "nereguli_rezolvate": 0,
   "scor_transparenta": 35,
-  "top_noi": [
-    {
-      "titlu": "Semnal: valoare aproape de prag",
-      "severitate": "MAJOR",
-      "index": 1
-    },
-    {
-      "titlu": "Semnal: valoare aproape de prag",
-      "severitate": "MAJOR",
-      "index": 2
-    },
-    {
-      "titlu": "Semnal: valoare aproape de prag",
-      "severitate": "MAJOR",
-      "index": 3
-    }
-  ]
+  "top_noi": []
 }
