@@ -26,7 +26,7 @@ jobs:
         run: sudo apt-get install -y tesseract-ocr tesseract-ocr-ron poppler-utils
 
       - name: 📦 Instalare dependențe Python
-        run: pip install requests beautifulsoup4 openpyxl pytesseract pdf2image Pillow
+        run: pip install -r requirements.txt pdf2image
 
       - name: 🔍 Rulare monitor transparență
         # ANAF v9 e gratuit și fără cheie API; openapi.ro key e opțional (not required)
