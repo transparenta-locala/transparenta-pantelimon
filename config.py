@@ -10,6 +10,14 @@ cadenței reale de publicare a sursei — vezi CLAUDE.md secțiunea
 Import: `from config import TTL_MOL_DAYS` etc.
 """
 
+# Legea nr. 98/2016, art. 7 alin. (5): praguri pentru achiziții directe,
+# exprimate în lei fără TVA. O singură definiție previne diferențe între
+# detectori, paginile publice și teste.
+PRAG_ACHIZITIE_DIRECTA_PRODUSE_SERVICII_RON = 270_120
+PRAG_ACHIZITIE_DIRECTA_LUCRARI_RON = 900_400
+PRAGURI_LEGALE_VERIFICATE_LA = "2026-07-13"
+PRAGURI_LEGALE_SURSA = "https://legislatie.just.ro/Public/DetaliiDocument/178667"
+
 # mfinante.gov.ro — situații financiare firme furnizoare (risc_firma.py).
 # Publicate anual; TTL istoric păstrat neschimbat.
 TTL_MFINANTE_DAYS = 30

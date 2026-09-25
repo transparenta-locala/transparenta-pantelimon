@@ -3,21 +3,21 @@
 Monitorizare cetateasca automata a achizitiilor publice ale Primariei Pantelimon.
 
 **Site live:** [transparenta-pantelimon.eu](https://transparenta-pantelimon.eu)  
-**Raport nereguli:** [transparenta-pantelimon.eu/raport_transparenta.html](https://transparenta-pantelimon.eu/raport_transparenta.html)  
+**Raport semnale de risc:** [transparenta-pantelimon.eu/raport_transparenta.html](https://transparenta-pantelimon.eu/raport_transparenta.html)
 **Retele firme:** [transparenta-pantelimon.eu/retele.html](https://transparenta-pantelimon.eu/retele.html)
 
-> **Stare curentă (automatizat):** 299 nereguli · 506 contracte analizate · 313M RON total · 90/93 firme cu CUI · 83 cu date ANAF
+> **Stare curentă:** valorile live (semnale, contracte unice afectate, severități și data generării) sunt publicate în `raport.json`; nu se mențin manual în README.
 
 ---
 
 ## Ce face
 
-- Trage saptamanal contractele din SEAP (e-licitatie.ro) si bugetul de la ANAF
+- Trage lunar contractele din SEAP (e-licitatie.ro) si bugetul de la ANAF
 - Aplica **19 algoritmi** de detectie pentru pattern-uri de risc (fragmentare artificiala, monopol furnizor, achizitii directe peste prag, shell companies, geocodare furnizori, date financiare ANAF)
 - Detecteaza **mentiuni de risc in presa** automat (Google News + Context.ro RSS)
 - Analizeaza **retele de firme** cu adresa fiscala comuna (Cytoscape.js)
 - Genereaza raport HTML + JSON + RSS + press-kit + harta + retele interactiva furnizori
-- Publica automat pe GitHub Pages prin GitHub Actions (cron saptamanal, luni 06:00 UTC)
+- Publica automat pe GitHub Pages prin GitHub Actions (cron lunar, în ziua 1 la 06:00 UTC)
 - Surse externe: Curtea de Conturi, ANI declaratii avere, TED Europa, MOL primarie, data.gov.ro ANAF
 
 ## Structura repo
@@ -42,8 +42,8 @@ manifest.webmanifest           # PWA manifest (instalabil pe telefon)
 icon-192.png / icon-512.png    # Icoane PWA
 contracte.json                 # Export contracte SEAP (JSON)
 contracte.csv                  # Export contracte SEAP (CSV — Excel/Sheets)
-raport.json                    # Export flags/nereguli (format JSON public)
-feed.xml                       # RSS/Atom feed nereguli noi
+    raport.json                    # Export semnale automate (format JSON public)
+    feed.xml                       # RSS/Atom feed semnale noi
 press_kit.json                 # Press kit date structurate (generat automat)
 firme_geocoded.json            # Sedii firme geocodate cu Nominatim OSM
 firme_financiar.json           # Situatii financiare ANAF 2024 (83 firme)
@@ -51,7 +51,7 @@ retele_firme.json              # Graf retele firme (noduri + edges)
 mentiuni_presa_auto.json       # Mentiuni presa detectate automat (generat automat)
 furnizori/                     # Pagini per furnizor (generate automat)
 risc_firma.py                  # Modul detector shell companies + date financiare
-.github/workflows/             # GitHub Actions (rulare automata saptamanala, luni)
+    .github/workflows/             # GitHub Actions (rulare automata lunara)
 tests/                         # 380+ teste unitare (toate offline, mock urllib)
 API.md                         # Documentatie API JSON/CSV public
 AUDIT.md                       # Audit tehnic public
@@ -75,8 +75,8 @@ py monitor_uat.py 4420759 --dry-run                                  # Preview C
 
 | Algoritm | Tip flag | Severitate | Ce detecteaza |
 |----------|----------|-----------|---------------|
-| 1a | `OFERTANT_UNIC` | MAJOR | Achizitie directa aproape de prag (>97% din 130.000 RON) |
-| 1b | `ACHIZITIE_DIRECTA_PESTE_PRAG` | CRITIC | Contract individual PESTE pragul legal (>130.000 RON) |
+| 1a | `OFERTANT_UNIC` | MAJOR | Setul de date indică un singur ofertant; necesită verificare |
+| 1b | `ACHIZITIE_DIRECTA_PESTE_PRAG` | CRITIC | Contract individual peste pragul categoriei aplicabile |
 | 2 | `PROCEDURI_NON_COMPETITIVE` | MAJOR | Exces proceduri non-competitive (>40%) |
 | 3 | `FRAGMENTARE` | CRITIC | Fragmentare artificiala (acelasi furnizor, titluri similare, interval <60 zile) |
 | 4 | `FURNIZOR_DOMINANT` | MEDIU | Furnizor cu >35% din totalul contractelor |
@@ -89,14 +89,14 @@ py monitor_uat.py 4420759 --dry-run                                  # Preview C
 | 11 | `SEMNARE_ZI_NELUCRATOARE` | MEDIU | Contract semnat in weekend sau sarbatoare legala |
 | 12 | `FIRMA_INACTIVA` | CRITIC | Contract cu firma inactiva/radiata la ANAF/ORC |
 | 13 | `FIRMA_NOU_CREATA` | MAJOR/CRITIC | Firma cu <24 luni vechime la data contractului |
-| 14 | `RISC_SISTEMIC_FIRMA` | CRITIC | Firma aparuta in >=3 categorii diferite de nereguli |
+| 14 | `RISC_SISTEMIC_FIRMA` | CRITIC | Furnizor apărut în >=3 categorii diferite de indicatori |
 | 15 | `PUBLICARE_INTARZIATA` | MEDIU/CRITIC | Intarziere publicare contract (>11 zile lucratoare) |
 | 16 | `SEDINTE_EXTRAORDINARE_EXCESIVE` | MAJOR/CRITIC | Rata ridicata sedinte extraordinare (>25% / >=40%) |
 | 17 | `GEOGRAFIE_ANORMALA` | MEDIU | Servicii locale (curatenie/paza/salubrizare) de la firma din afara Ilfov+limitrofe |
 | 18 | `CIFRA_AFACERI_ZERO` | CRITIC | CA = 0 RON in anul anterior contractului (risc_firma.py) |
 | 19 | `ZERO_ANGAJATI` | MAJOR | 0 angajati declarati la ANAF (risc_firma.py) |
 
-Praguri: Legea 98/2016 — 130.000 RON (servicii/furnizare), 500.000 RON (lucrari).
+Praguri fără TVA: Legea 98/2016 art. 7 alin. (5) — **270.120 RON** (produse/servicii), **900.400 RON** (lucrări). Valorile sunt centralizate în `config.py`.
 
 ## Surse externe integrate
 
@@ -111,7 +111,7 @@ Praguri: Legea 98/2016 — 130.000 RON (servicii/furnizare), 500.000 RON (lucrar
 | Context.ro RSS | Mentiuni investigatii locale | 7 zile |
 | Curtea de Conturi | Rapoarte audit UAT | 30 zile |
 | ANI integritate.eu | Declaratii avere alesi locali | 30 zile |
-| TED Europa | Anunturi contracte >500k EUR | 7 zile |
+| TED Europa | Anunțuri europene asociate cumpărătorului | 7 zile |
 | MOL primarie | HCL-uri / rectificari buget | 7 zile |
 | Nominatim OSM | Geocodare sedii firme | 180 zile |
 | proiecte.pnrr.gov.ro | Proiecte PNRR beneficiar CIF | 7 zile |
@@ -168,7 +168,7 @@ Concluziile sunt la latitudinea cititorului.
 
 ## Contact
 
-Initiativa civica independenta a unui membru USR Pantelimon.
+Inițiativă civică independentă de autorități. Inițiatorul este membru USR Pantelimon; proiectul nu este un proiect oficial al partidului.
 Intrebari si sesizari: [deschide un Issue](https://github.com/transparenta-locala/transparenta-pantelimon/issues)
 
 ---

@@ -122,11 +122,11 @@ class TestServiceWorker:
         assert '/contracte.csv' in content
 
     def test_sw_cache_version_bumped(self):
-        """Versiunea cache CACHE_STATIC este tp-static-v6 (bump: WebView mailto fix + nav fallback + accesibilitate)."""
+        """Versiunea cache CACHE_STATIC este tp-static-v7 (bump: fix normalizare cautare in enhance.min.js)."""
         path = os.path.join(REPO_ROOT, 'sw.js')
         with open(path, encoding='utf-8') as f:
             content = f.read()
-        assert 'tp-static-v6' in content
+        assert 'tp-static-v7' in content
 
     def test_sw_network_first_csv(self):
         """sw.js contine functia networkFirstCsv pentru fallback CSV offline."""
