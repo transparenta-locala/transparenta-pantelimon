@@ -43,6 +43,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://transparenta-pantelimon.eu/modele.html</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://transparenta-pantelimon.eu/harta.html</loc>
     <lastmod>2026-09-25</lastmod>
     <changefreq>weekly</changefreq>

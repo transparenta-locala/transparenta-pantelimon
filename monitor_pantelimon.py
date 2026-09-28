@@ -5942,6 +5942,7 @@ def genereaza_sitemap(index_furnizori: list) -> str:
         ("/presa.html",                   "0.7", "monthly"),
         ("/gdpr.html",                    "0.5", "yearly"),
         ("/petitie.html",                 "0.6", "monthly"),
+        ("/modele.html",                 "0.6", "monthly"),
         ("/harta.html",                   "0.6", "weekly"),
         ("/furnizori/index.html",         "0.6", "weekly"),
     ]
