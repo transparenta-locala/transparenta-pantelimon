@@ -61,16 +61,16 @@ def test_sitemap_structura_xml_valida():
 
 
 def test_sitemap_fara_furnizori_contine_9_url():
-    """Fără furnizori, sitemap-ul are exact 9 URL-uri statice (incl. gdpr + petitie + harta)."""
+    """Fără furnizori, sitemap-ul are exact 10 URL-uri statice (incl. gdpr + petitie + harta + modele)."""
     xml = genereaza_sitemap([])
-    assert xml.count('<url>') == 9
+    assert xml.count('<url>') == 10  # + modele.html
 
 
 def test_sitemap_cu_furnizori_creste_numaratoarea():
     """Cu 3 furnizori, sitemap-ul are 9 + 3 = 12 URL-uri."""
     index = [_idx(f'firma-{i}') for i in range(3)]
     xml = genereaza_sitemap(index)
-    assert xml.count('<url>') == 12
+    assert xml.count('<url>') == 13  # + modele.html
 
 
 def test_sitemap_contine_slug_furnizor():
