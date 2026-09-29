@@ -139,7 +139,9 @@ def test_pagina_semnal_are_meta_og_proprii():
     assert 'href="../furnizori/constopograf-expert.html"' in html
     assert "Date SEAP până la 30.03.2026" in html
     assert "nu este o constatare juridică" in html
-    assert "view/51666" in html
+    # numărul din exportul data.gov.ro nu e codul DA din SEAP → fără link direct „view/<nr>”
+    assert "view/51666" not in html
+    assert "direct-acquisitions/list" in html
 
 
 def test_pagina_semnal_fara_redirect_meta():

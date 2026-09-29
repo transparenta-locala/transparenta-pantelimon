@@ -331,9 +331,9 @@ def deseneaza_semnal(semnal: dict, output: str, data_seap: str = "") -> bool:
         fapte.append(fmt_lei(semnal["suma"]))
     if semnal.get("data"):
         fapte.append(f"{eticheta_data(semnal)}: {fmt_data(semnal['data'])}")
-    ids = ids_seap(semnal)
-    if ids:
-        fapte.append("SEAP " + ", ".join(ids[:2]) + (f" +{len(ids) - 2}" if len(ids) > 2 else ""))
+    # Fără numerele din exportul data.gov.ro: nu sunt codurile DA căutabile în SEAP
+    # (e-licitatie.ro/…/view/<nr> dă pagină goală) — un identificator de nevăzut la sursă
+    # ar contrazice „verifică singur”.
     y_fapte = max(y + 18, 420)
     y_fapte = min(y_fapte, 460)
     f_fp = _font(30, True)
@@ -420,11 +420,10 @@ def pagina_semnal(semnal: dict, slug_furnizor: str = "", data_seap: str = "") ->
     img = f"{BASE_URL}/og/semnale/{slug}.png"
     culoare = CULORI_SEV.get(semnal.get("severitate"), "#64748b")
 
-    linkuri_seap = "".join(
-        f'<a class="btn sec" href="https://e-licitatie.ro/pub/notices/da-direct-acquisition/view/{n}" '
-        f'target="_blank" rel="noopener noreferrer">SEAP {n} ↗</a>'
-        for n in ids_seap(semnal)[:4] if (semnal.get("contract_id") or "").startswith("achizitie-directa")
-    )
+    # Căutare în lista publică SEAP (numărul din export nu deschide direct anunțul)
+    linkuri_seap = ('<a class="btn sec" href="https://e-licitatie.ro/pub/direct-acquisitions/list/1" '
+                    'target="_blank" rel="noopener noreferrer">Caută în SEAP ↗</a>'
+                    if (semnal.get("contract_id") or "").startswith("achizitie-directa") else "")
     link_firma = (f'<a class="btn sec" href="../furnizori/{e(slug_furnizor)}.html">Toate contractele firmei →</a>'
                   if slug_furnizor else "")
     limita = (f'<p class="lim">Date SEAP până la {e(fmt_data(data_seap))}. Semnalul e generat automat; '
