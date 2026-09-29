@@ -425,6 +425,39 @@ html[data-tp-theme="dark"] .tp-mailto-copy { background: #3f1515; border-color: 
 html[data-tp-theme="dark"] .tp-mailto-field textarea,
 html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-color: #2a2a2a; color: #f3f4f6; }
 
+/* Bandă limită date SEAP */
+.tp-data-band {
+  background: #fffbeb; color: #78350f; border-bottom: 1px solid #fde68a;
+  padding: .45rem 1rem; text-align: center; font-size: .85rem; line-height: 1.4;
+}
+.tp-data-band strong { font-weight: 700; }
+html[data-tp-theme="dark"] .tp-data-band { background: #2a1f05; color: #fde68a; border-color: #4a3a0a; }
+
+/* Butoane de partajare */
+.tp-share {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .4rem;
+  margin-top: .6rem; font-size: .8rem; color: var(--tp-muted);
+}
+.tp-share-lbl { margin-right: .15rem; }
+.tp-share a, .tp-share button {
+  display: inline-flex; align-items: center; gap: .3rem;
+  min-height: 36px; padding: 0 .75rem; border-radius: 999px;
+  font: inherit; font-weight: 600; text-decoration: none; cursor: pointer;
+  border: 1px solid var(--tp-border); background: var(--tp-bg); color: var(--tp-fg);
+}
+.tp-share a:hover, .tp-share button:hover { background: var(--tp-card-bg); }
+.tp-share .tp-sh-wa { color: #15803d; }
+.tp-share .tp-sh-fb { color: #1d4ed8; }
+html[data-tp-theme="dark"] .tp-share .tp-sh-wa { color: #4ade80; }
+html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
+@media (max-width: 480px) {
+  .tp-share-lbl { display: none; }
+  .tp-share a, .tp-share button { padding: 0 .6rem; }
+}
+.tp-share-page { margin: .25rem 0 1rem; font-size: .88rem; }
+.tp-share-page a, .tp-share-page button { min-height: 44px; }
+@media print { .tp-share, .tp-data-band { display: none !important; } }
+
 /* Banner "ce e nou" */
 .tp-banner-whats-new {
   background: var(--tp-accent, #dc2626); color: #fff;
@@ -610,6 +643,12 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     }
   }
 
+  // Rădăcina site-ului, și din subdirectoare (furnizori/, semnale/) — altfel
+  // linkurile din nav duc la /furnizori/raport_transparenta.html (404).
+  function siteBase() {
+    return location.pathname.replace(/\/[^/]*$/, '/').replace(/\/(furnizori|semnale)\/$/, '/');
+  }
+
   // ──────────────────────────────────────────────────────────────
   // NAV (toate paginile)
   // ──────────────────────────────────────────────────────────────
@@ -649,7 +688,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     nav.setAttribute('aria-label', 'Navigare principală');
 
     const here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-    const base = location.pathname.replace(/\/[^/]*$/, '/');
+    const base = siteBase();
 
     // §4.4 aria-hidden on decorative emojis — screen readers announce link text only
     const links = [
@@ -659,6 +698,7 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
       { href: 'despre.html',                   emoji: 'ℹ️', text: 'Despre' },
       { href: 'presa.html',                    emoji: '🗞️', text: 'Presă' },
       { href: 'petitie.html',                  emoji: '✍️', text: 'Petiție' },
+      { href: 'modele.html',                   emoji: '📝', text: 'Modele' },
       { href: 'harta.html',                    emoji: '🗺️', text: 'Hartă' },
       { href: 'retele.html',                   emoji: '🔗', text: 'Rețele' },
     ];
@@ -1778,6 +1818,147 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
   }
 
   // ──────────────────────────────────────────────────────────────
+  // BANDĂ „Date SEAP până la …" — limita datelor, pe toate paginile
+  // ──────────────────────────────────────────────────────────────
+  function fmtDataRO(iso) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || '');
+    return m ? m[3] + '.' + m[2] + '.' + m[1] : '';
+  }
+
+  async function injectDataBand() {
+    if ($('.tp-data-band')) return;
+    const base = siteBase();
+    let iso = '';
+    try {
+      const r = await fetch(base + 'delta.json', { cache: 'no-store' });
+      if (r.ok) iso = ((await r.json()).date_seap_pana_la) || '';
+    } catch (e) {}
+    if (!iso) {
+      // Rezervă: calculăm din contracte.json (mai mare, doar dacă delta.json nu are câmpul)
+      try {
+        const r = await fetch(base + 'contracte.json');
+        if (r.ok) {
+          const c = await r.json();
+          (Array.isArray(c) ? c : []).forEach(x => {
+            const d = String(x.data || '').slice(0, 10);
+            if (/^\d{4}-\d{2}-\d{2}$/.test(d) && d > iso) iso = d;
+          });
+        }
+      } catch (e) {}
+    }
+    const txt = fmtDataRO(iso);
+    if (!txt || $('.tp-data-band')) return;
+    const band = document.createElement('div');
+    band.className = 'tp-data-band';
+    band.setAttribute('role', 'note');
+    band.innerHTML = '<span aria-hidden="true">📅</span> <strong>Date SEAP până la ' + txt + '.</strong> ' +
+      'Contractele atribuite după această dată nu sunt încă incluse.';
+    const nav = $('.tp-nav');
+    if (nav && nav.parentNode) nav.parentNode.insertBefore(band, nav.nextSibling);
+    else document.body.insertBefore(band, document.body.firstChild);
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // PARTAJARE — WhatsApp / Facebook / copiere link
+  // ──────────────────────────────────────────────────────────────
+  const SITE_URL = 'https://transparenta-pantelimon.eu';
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise((resolve, reject) => {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        const ok = document.execCommand('copy');
+        ta.remove();
+        ok ? resolve() : reject(new Error('copy'));
+      } catch (e) { reject(e); }
+    });
+  }
+
+  function buildShareRow(url, text, extraClass) {
+    const row = document.createElement('div');
+    row.className = 'tp-share no-print' + (extraClass ? ' ' + extraClass : '');
+    row.setAttribute('data-tp-share', '1');
+    const wa = 'https://wa.me/?text=' + encodeURIComponent(text + ' ' + url);
+    const fb = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
+    row.innerHTML =
+      '<span class="tp-share-lbl">Distribuie:</span>' +
+      '<a class="tp-sh-wa" href="' + wa + '" target="_blank" rel="noopener noreferrer" aria-label="Distribuie pe WhatsApp">WhatsApp</a>' +
+      '<a class="tp-sh-fb" href="' + fb + '" target="_blank" rel="noopener noreferrer" aria-label="Distribuie pe Facebook">Facebook</a>' +
+      '<button type="button" class="tp-sh-copy" aria-label="Copiază linkul">Copiază link</button>';
+    // Clicurile nu trebuie să deschidă/închidă cardul din raport
+    row.addEventListener('click', e => e.stopPropagation());
+    row.querySelector('.tp-sh-copy').addEventListener('click', () => {
+      copyText(url).then(() => showToast('Link copiat')).catch(() => {
+        window.prompt('Copiază linkul:', url);
+      });
+    });
+    return row;
+  }
+
+  function sumaScurta(n) {
+    n = Number(n) || 0;
+    if (!n) return '';
+    return Math.round(n).toLocaleString('ro-RO') + ' RON';
+  }
+
+  // Raport: câte un rând de partajare pe fiecare card; linkul duce la pagina
+  // semnalului (semnale/<slug>.html), care are propria imagine de previzualizare.
+  async function injectShareReport() {
+    const cards = $$('.tp-flag[id]');
+    if (!cards.length) return;
+    let harta = {};
+    try {
+      const r = await fetch(siteBase() + 'semnale/harta.json');
+      if (r.ok) harta = await r.json();
+    } catch (e) {}
+    const pagina = SITE_URL + '/raport_transparenta.html';
+    cards.forEach(card => {
+      if (card.querySelector('[data-tp-share]')) return;
+      const slug = harta[card.id];
+      const url = slug ? SITE_URL + '/semnale/' + slug + '.html' : pagina + '#' + card.id;
+      const titluEl = Array.from(card.querySelectorAll('span')).find(sp => /^\s*—\s*\S/.test(sp.textContent));
+      const titlu = titluEl ? titluEl.textContent.replace(/^\s*—\s*/, '').trim() : 'Semnal automat';
+      const firma = (card.dataset.supplier || '').trim();
+      const suma = sumaScurta(card.dataset.sumRon);
+      const text = titlu + (firma ? ' — ' + firma : '') + (suma ? ', ' + suma : '') +
+        '. Verifică singur pe transparenta-pantelimon.eu:';
+      const row = buildShareRow(url, text);
+      const detail = card.querySelector('.flag-detail');
+      if (detail) card.insertBefore(row, detail); else card.appendChild(row);
+    });
+  }
+
+  // Pagini de furnizor și pagini de semnal: un rând sub titlu
+  function injectSharePage() {
+    const path = location.pathname;
+    if ($('[data-tp-share]')) return;
+    const h1 = $('h1');
+    if (!h1) return;
+    const canonical = $('link[rel="canonical"]');
+    const url = canonical ? canonical.href : SITE_URL + path;
+    let text;
+    if (/\/furnizori\//.test(path)) {
+      text = 'Contractele ' + h1.textContent.trim() + ' cu Primăria Pantelimon, într-un singur loc. Verifică singur pe transparenta-pantelimon.eu:';
+      const anchor = $('.stats') || $('.meta') || h1;
+      anchor.parentNode.insertBefore(buildShareRow(url, text, 'tp-share-page'), anchor.nextSibling);
+    } else if (/\/semnale\//.test(path)) {
+      const art = $('[data-tp-share-title]');
+      const firma = art ? art.getAttribute('data-tp-share-firma') : '';
+      const suma = art ? art.getAttribute('data-tp-share-suma') : '';
+      text = h1.textContent.trim() + (firma ? ' — ' + firma : '') + (suma ? ', ' + suma : '') +
+        '. Verifică singur pe transparenta-pantelimon.eu:';
+      const btns = $('.btns');
+      (btns || h1).parentNode.insertBefore(buildShareRow(url, text, 'tp-share-page'), (btns || h1).nextSibling);
+    }
+  }
+
+  // ──────────────────────────────────────────────────────────────
   // BOOT
   // ──────────────────────────────────────────────────────────────
   async function injectLastUpdated() {
@@ -1896,21 +2077,23 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     'despre.html': 'Despre',
     'petitie.html': 'Petiție',
     'gdpr.html': 'GDPR',
-    'retele.html': 'Rețele'
+    'retele.html': 'Rețele',
+    'modele.html': 'Modele de cereri'
   };
 
   function injectBreadcrumbs() {
     var path = location.pathname.split('/').pop() || 'index.html';
     if (path === 'index.html' || path === '' || path === '/') return;
     var pageName = BREADCRUMB_MAP[path];
-    if (!pageName && /^furnizori\//.test(location.pathname)) pageName = document.title.split('—')[0].trim() || 'Furnizor';
+    if (!pageName && /\/furnizori\//.test(location.pathname)) pageName = document.title.split('—')[0].trim() || 'Furnizor';
+    if (!pageName && /\/semnale\//.test(location.pathname)) pageName = 'Semnal';
     if (!pageName) return;
 
     var nav = document.createElement('nav');
     nav.className = 'tp-breadcrumb';
     nav.setAttribute('aria-label', 'Breadcrumb');
     var ol = document.createElement('ol');
-    ol.innerHTML = '<li><a href="index.html">Acasă</a></li><li aria-current="page">' + pageName + '</li>';
+    ol.innerHTML = '<li><a href="' + siteBase() + 'index.html">Acasă</a></li><li aria-current="page">' + escapeHTML(pageName) + '</li>';
     nav.appendChild(ol);
     var main = document.querySelector('main, .page-wrap, header');
     if (main) main.parentNode.insertBefore(nav, main);
@@ -1948,10 +2131,14 @@ html[data-tp-theme="dark"] .tp-mailto-field input { background: #141414; border-
     showWhatsNewBanner();
     interceptMailtoLinks();
     injectStickyCTA();
+    injectDataBand();
 
     const path = location.pathname.toLowerCase();
     if (/raport_transparenta/.test(path)) {
       enhanceReport();
+      injectShareReport();
+    } else if (/\/(furnizori|semnale)\/[^/]+\.html$/.test(path) && !/\/furnizori\/index\.html$/.test(path)) {
+      injectSharePage();
     }
   }
 

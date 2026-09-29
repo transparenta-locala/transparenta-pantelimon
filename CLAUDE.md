@@ -207,6 +207,18 @@ Hooks integrate în `analizeaza_red_flags()` și `analizeaza_hcl()`.
 
 ---
 
+### Lansare 06.10 — partajare, meniu, bandă date, previzualizări (PR din 29.09.2026)
+
+- **`genereaza_previzualizari.py`** — apelat la finalul `main()` și al regenerării offline (`genereaza_previzualizari_partajare()`), sau singur: `python genereaza_previzualizari.py`
+  - `og/semnale/<slug>.png` + `og/furnizori/<slug>.png` (1200×630, font DejaVu inclus în `assets/fonts/` → aceleași imagini local și în CI)
+  - `semnale/<slug>.html` — permalink per semnal cu `og:*` proprii (Facebook/WhatsApp ignoră `#nereguli-N`). Slug din tip + id-urile contractelor, NU din numărul de ordine. Fără `<meta refresh>` (Facebook ar prelua imaginea paginii-țintă). Semnalele dispărute își păstrează pagina, cu notă și fără ancoră.
+  - `semnale/harta.json` — `nereguli-N` → slug; citit de `enhance.js` pentru butoanele de partajare din raport
+  - `delta.json` → `date_seap_pana_la` (data celui mai recent contract) pentru banda „Date SEAP până la …"
+  - fișele `furnizori/*.html` primesc `og:image` proprie (doar dacă imaginea există)
+- **`enhance.js`**: link „Modele" în meniu; `siteBase()` — meniul/breadcrumb-ul mergeau la `/furnizori/raport_transparenta.html` (404) pe fișele de furnizor; banda de date; rând „Distribuie: WhatsApp / Facebook / Copiază link" pe carduri, fișe de furnizor și pagini de semnal
+- `update-report.yml` adaugă `og/` și `semnale/` la commit. `sw.js` → tp-v8.
+- Teste: `tests/test_previzualizari.py`
+
 ## Praguri legale folosite (Legea 98/2016)
 
 ```python

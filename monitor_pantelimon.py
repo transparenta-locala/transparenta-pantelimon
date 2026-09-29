@@ -6512,6 +6512,21 @@ def genereaza_pagini_furnizori_locale(contracte: list, flags: list) -> list:
     return index_furnizori
 
 
+def genereaza_previzualizari_partajare() -> bool:
+    """Imagini 1200×630 per semnal/furnizor, pagini semnale/ și `date_seap_pana_la` în delta.json.
+
+    Rulează după ce raportul și fișele de furnizor sunt scrise. Nu blochează monitorul:
+    orice eroare e raportată și rularea continuă.
+    """
+    try:
+        from genereaza_previzualizari import genereaza_toate
+        genereaza_toate(".")  # același director de lucru în care monitorul a scris raportul
+        return True
+    except Exception as exc:  # noqa: BLE001 — previzualizările nu trebuie să oprească raportul
+        print(f"  [WARN] Previzualizări de partajare negenerate: {exc}")
+        return False
+
+
 def regenereaza_din_exporturile_existente() -> None:
     """Regenerează determinist raportul fără apeluri externe.
 
@@ -6680,6 +6695,7 @@ def regenereaza_din_exporturile_existente() -> None:
             "top_noi": [],
         }, handle, ensure_ascii=False, indent=2)
     salveaza_stare(CONFIG["fisier_stare"], toate_flags, contracte, [])
+    genereaza_previzualizari_partajare()
     print(
         f"  [OK] Regenerare offline completă: {len(toate_flags)} semnale, "
         f"{numara_contracte_cu_semnale(toate_flags, contracte)} contracte unice cu semnale."
@@ -7144,6 +7160,8 @@ def main():
     hcl_urls_noi = rezultat_hcl.get("hcl_urls", [])
     salveaza_stare(CONFIG["fisier_stare"], toate_flags, contracte, hcl_urls_noi)
     print(f"  ✓ Stare salvata: {CONFIG['fisier_stare']}")
+    # Previzualizări de partajare + permalinkuri semnale (după raport și fișele de furnizor)
+    genereaza_previzualizari_partajare()
 
     if trimite_email and toate_flags:
         flags_noi = [f for f in toate_flags
