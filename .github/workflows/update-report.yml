@@ -107,6 +107,8 @@ jobs:
           git add ani_declaratii.json 2>/dev/null || true
           git add ted_notices.json 2>/dev/null || true
           git add mol_primarie.json 2>/dev/null || true
+          # Previzualizări de partajare (genereaza_previzualizari.py, apelat din monitor)
+          git add og/ semnale/ 2>/dev/null || true
           # Commit doar dacă există modificări
           git diff --staged --quiet || git commit -m "🚩 Raport actualizat $(date +'%d.%m.%Y')"
           # Curăță fișiere neadăugate (ex. __pycache__, tmp) care ar bloca rebase-ul
