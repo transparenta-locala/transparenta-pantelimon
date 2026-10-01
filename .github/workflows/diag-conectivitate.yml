@@ -1,0 +1,34 @@
+name: 🔌 Diagnostic conectivitate surse
+
+"on":
+  push:
+    branches: ['diag/**']
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: data.gov.ro API
+        continue-on-error: true
+        run: curl -sS -m 25 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://data.gov.ro/api/3/action/package_show?id=achizitii-publice-2026"
+      - name: data.gov.ro pagina
+        continue-on-error: true
+        run: curl -sS -m 25 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://data.gov.ro/"
+      - name: e-licitatie.ro API publica
+        continue-on-error: true
+        run: |
+          curl -sS -m 25 -X POST -H "Content-Type: application/json" \
+            -d '{"pageSize":5,"pageIndex":0,"showOngoingDa":false,"publicationDateStart":"2026-01-01T00:00:00.000Z","publicationDateEnd":"2026-09-30T00:00:00.000Z"}' \
+            -o /tmp/r.json -w "%{http_code} %{time_total}s\n" "https://e-licitatie.ro/api-pub/DirectAcquisitionCommon/GetDirectAcquisitionList/"
+          head -c 300 /tmp/r.json; echo
+          grep -q '"total"' /tmp/r.json
+      - name: transparenta.eu
+        continue-on-error: true
+        run: curl -sS -m 25 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://transparenta.eu/entities/4420759"
+      - name: primariapantelimon.ro
+        continue-on-error: true
+        run: curl -sS -m 25 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://www.primariapantelimon.ro/hotarari-2025/"
+      - name: ANAF webservicesp
+        continue-on-error: true
+        run: curl -sS -m 25 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://webservicesp.anaf.ro/"
