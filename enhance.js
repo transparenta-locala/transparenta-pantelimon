@@ -2001,7 +2001,7 @@ html.tp-theme .container .back-link { color: var(--tp-link); }
       'Semnătura: [SEMNĂTURĂ OLOGRAFĂ]',
     ].filter(Boolean).join('\n'));
 
-    return { email: 'sesizari@anap.gov.ro', subject: subject, body: body, webUrl: 'https://www.anap.gov.ro/web/sesizari/' };
+    return { email: 'contact@anap.gov.ro', subject: subject, body: body, webUrl: 'https://anap.gov.ro/ro/contact/' };
   }
 
   function generateAnapEmail(card) {
@@ -2330,11 +2330,11 @@ html.tp-theme .container .back-link { color: var(--tp-link); }
   function interceptMailtoLinks() {
     if (!isWebView()) return;
     var WEB_URLS = {
-      'sesizari@anap.gov.ro': 'https://www.anap.gov.ro/web/sesizari/',
-      'sesizari@pna.ro': 'https://www.pna.ro/sesizare.xhtml',
-      'avp@avp.ro': 'https://www.avp.ro/index.php/petitii-si-sesizari',
-      'prefectura@prefecturaif.ro': 'https://ilfov.prefecturas.ro/contact/',
-      'secretariat@primariapantelimon.ro': 'https://www.primariapantelimon.ro/contact/'
+      'contact@anap.gov.ro': 'https://anap.gov.ro/ro/contact/',
+      'anticoruptie@dna.ro': 'https://www.dna.ro/sesizare.xhtml',
+      'petitii@avp.ro': 'https://avp.ro/index.php/contact/sediul-central/',
+      'relatiicupublicul@prefecturailfov.ro': 'https://if.prefectura.mai.gov.ro/petitii/',
+      'secretariat@primariapantelimon.ro': 'https://www.primariapantelimon.ro/registratura-online/'
     };
     document.addEventListener('click', function(e) {
       var link = e.target.closest('a[href^="mailto:"]');

@@ -967,7 +967,7 @@ Solicit verificarea acestei achiziții și informarea în legătură cu rezultat
 Data: ${new Date().toLocaleDateString('ro-RO')}
 Semnătura: [SEMNĂTURĂ]
   `.trim());
-  return `mailto:sesizari@anap.gov.ro?subject=${subject}&body=${body}`;
+  return `mailto:contact@anap.gov.ro?subject=${subject}&body=${body}`;
 }
 ```
 
