@@ -219,6 +219,12 @@ Hooks integrate în `analizeaza_red_flags()` și `analizeaza_hcl()`.
 - `update-report.yml` adaugă `og/` și `semnale/` la commit. `sw.js` → tp-v8.
 - Teste: `tests/test_previzualizari.py`
 
+### Monitorul rulează doar pe GitHub (01.10.2026)
+
+- `update-report.yml`: pe 1 și 15 ale lunii (05:17 UTC) + pornire manuală. `ruleaza_monitor.bat` de pe PC e dezactivat (făcea `git push --force` dintr-o copie rămasă în urmă și a șters PR #56 din main pe 01.10).
+- **data.gov.ro blochează IP-urile GitHub Actions** (verificat 01.10: 8 din 9 runnere — connect timeout pe 80 și 443). În CI monitorul cade pe `contracte.json` din rularea anterioară și afișează un `::warning`. **API-ul public SEAP** (`e-licitatie.ro/api-pub/...`, cu header `Referer`) răspunde din toate runnerele — candidat pentru sursa de contracte în CI.
+- Aspect (01.10): tema „Registru” în `enhance.js` (fonturi Source Serif 4 / Source Sans 3 în `assets/fonts/`, `font-src 'self'`), prima pagină cu căutare în `contracte.json`. Etichetele rămân CRITIC / MAJOR / MEDIU. Textul de prezentare: „Inițiativă civică” (fără „independentă”).
+
 ## Praguri legale folosite (Legea 98/2016)
 
 ```python
