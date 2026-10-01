@@ -1,0 +1,13 @@
+IP runner: 20.169.102.6
+curl: (28) Connection timed out after 20001 milliseconds
+data.gov.ro https 000 20.001401s
+curl: (28) Connection timed out after 20002 milliseconds
+data.gov.ro http 000 20.002056s
+SEAP API 200 8.995363s {"total":178,"items":[{"directAcquisitionId":121886413,"directAcquisitionName":"Ortofotoplan","sysDirectAcquisitionState":{"id":7,"text":"Oferta acceptata","loc
+SEAP view 200 1.538775s
+curl: (28) Connection timed out after 20000 milliseconds
+data.gov.ro https 000 20.000933s
+curl: (28) Connection timed out after 20002 milliseconds
+data.gov.ro http 000 20.002024s
+SEAP API 200 1.272273s {"total":178,"items":[{"directAcquisitionId":121886413,"directAcquisitionName":"Ortofotoplan","sysDirectAcquisitionState":{"id":7,"text":"Oferta acceptata","loc
+SEAP view 200 2.814185s
