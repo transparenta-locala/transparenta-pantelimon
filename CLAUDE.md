@@ -1,7 +1,7 @@
 # Monitor Transparență Bugetară — Pantelimon
 ## Context proiect (pentru Claude Code)
 
-Acest proiect este o **inițiativă civică independentă de autorități**, inițiată de un membru USR Pantelimon; nu este un proiect oficial al partidului.
+Acest proiect este o **inițiativă civică**, inițiată de un membru USR Pantelimon; nu este un proiect oficial al partidului.
 Monitorizează automat contractele și achizițiile publice ale Primăriei Pantelimon (CUI 4420759) și publică un raport HTML pe GitHub Pages.
 
 ---

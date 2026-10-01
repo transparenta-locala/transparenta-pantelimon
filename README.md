@@ -168,7 +168,7 @@ Concluziile sunt la latitudinea cititorului.
 
 ## Contact
 
-Inițiativă civică independentă de autorități. Inițiatorul este membru USR Pantelimon; proiectul nu este un proiect oficial al partidului.
+Inițiativă civică. Inițiatorul este membru USR Pantelimon; proiectul nu este un proiect oficial al partidului.
 Intrebari si sesizari: [deschide un Issue](https://github.com/transparenta-locala/transparenta-pantelimon/issues)
 
 ---

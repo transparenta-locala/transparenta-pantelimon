@@ -39,8 +39,10 @@ OG_W, OG_H = 1200, 630
 _ROOT = os.path.dirname(os.path.abspath(__file__))
 _FONT_DIR = os.path.join(_ROOT, "assets", "fonts")
 
-CULORI_SEV = {"CRITIC": "#dc2626", "MAJOR": "#ea580c", "MEDIU": "#d97706"}
-FUNDAL = "#0a1628"
+CULORI_SEV = {"CRITIC": "#A23B2C", "MAJOR": "#8F5A1E", "MEDIU": "#5E6B78"}
+# Etichete afișate (datele păstrează CRITIC/MAJOR/MEDIU)
+ETICHETE_SEV = {"CRITIC": "Prioritate ridicată", "MAJOR": "Prioritate medie", "MEDIU": "De urmărit"}
+FUNDAL = "#14263D"
 DISCLAIMER = "Indicator automat din datele SEAP, nu o constatare juridică."
 
 # Tipuri fără contract individual: data din card e data analizei, nu a contractului
@@ -277,13 +279,13 @@ def _cadru(data_seap: str):
 
     img = Image.new("RGB", (OG_W, OG_H), FUNDAL)
     d = ImageDraw.Draw(img)
-    d.text((64, 44), "TRANSPARENȚA PANTELIMON", fill="#94a3b8", font=_font(24, True))
-    d.line([(64, 552), (OG_W - 64, 552)], fill="#1e3a5f", width=2)
+    d.text((64, 44), "Transparența Pantelimon", fill="#A9B8CC", font=_font(24, True))
+    d.line([(64, 552), (OG_W - 64, 552)], fill="#2B4364", width=2)
     d.text((64, 570), "Verifică singur: transparenta-pantelimon.eu", fill="#ffffff", font=_font(26, True))
     if data_seap:
         t = f"Date SEAP până la {fmt_data(data_seap)}"
         f = _font(22)
-        d.text((OG_W - 64 - d.textlength(t, font=f), 574), t, fill="#94a3b8", font=f)
+        d.text((OG_W - 64 - d.textlength(t, font=f), 574), t, fill="#A9B8CC", font=f)
     return img, d
 
 
@@ -307,7 +309,7 @@ def deseneaza_semnal(semnal: dict, output: str, data_seap: str = "") -> bool:
 
     # Eticheta de severitate
     f_sev = _font(24, True)
-    eticheta = f"SEMNAL {sev}"
+    eticheta = ETICHETE_SEV.get(sev, "Semnal automat")
     w = d.textlength(eticheta, font=f_sev)
     d.rounded_rectangle([(64, 92), (64 + w + 32, 134)], radius=21, fill=culoare)
     d.text((80, 99), eticheta, fill="#ffffff", font=f_sev)
@@ -323,7 +325,7 @@ def deseneaza_semnal(semnal: dict, output: str, data_seap: str = "") -> bool:
         y += 14
         f_f, linii_f, m_f = _text_potrivit(d, firma, False, (36, 32, 28), OG_W - 128, 2)
         for linie in linii_f:
-            d.text((64, y), linie, fill="#93c5fd", font=f_f)
+            d.text((64, y), linie, fill="#9CC0E6", font=f_f)
             y += int(m_f * 1.25)
 
     fapte = []
@@ -343,12 +345,12 @@ def deseneaza_semnal(semnal: dict, output: str, data_seap: str = "") -> bool:
         if x + sep + d.textlength(fapt, font=f_fp) > OG_W - 64:
             break
         if i:
-            d.text((x, y_fapte), "·", fill="#475569", font=f_fp)
+            d.text((x, y_fapte), "·", fill="#5E7593", font=f_fp)
             x += sep
-        d.text((x, y_fapte), fapt, fill="#e2e8f0", font=f_fp)
+        d.text((x, y_fapte), fapt, fill="#E6ECF4", font=f_fp)
         x += d.textlength(fapt, font=f_fp) + 18
 
-    d.text((64, 508), DISCLAIMER, fill="#94a3b8", font=_font(22))
+    d.text((64, 508), DISCLAIMER, fill="#A9B8CC", font=_font(22))
     _salveaza(img, output)
     return True
 
@@ -359,8 +361,8 @@ def deseneaza_furnizor(info: dict, output: str, data_seap: str = "") -> bool:
     except ImportError:
         return False
     img, d = _cadru(data_seap)
-    d.rectangle([(0, 0), (12, OG_H)], fill="#0070C0")
-    d.text((64, 100), "Contractele cu Primăria Pantelimon", fill="#93c5fd", font=_font(30))
+    d.rectangle([(0, 0), (12, OG_H)], fill="#4D86C2")
+    d.text((64, 100), "Contractele cu Primăria Pantelimon", fill="#9CC0E6", font=_font(30))
 
     y = 150
     f_n, linii_n, m_n = _text_potrivit(d, info.get("nume", ""), True, (60, 52, 44, 38), OG_W - 128, 2)
@@ -368,7 +370,7 @@ def deseneaza_furnizor(info: dict, output: str, data_seap: str = "") -> bool:
         d.text((64, y), linie, fill="#ffffff", font=f_n)
         y += int(m_n * 1.2)
     if info.get("cui"):
-        d.text((64, y + 6), f"CUI {info['cui']}", fill="#94a3b8", font=_font(24))
+        d.text((64, y + 6), f"CUI {info['cui']}", fill="#A9B8CC", font=_font(24))
         y += 40
 
     # Trei cifre mari
@@ -385,7 +387,7 @@ def deseneaza_furnizor(info: dict, output: str, data_seap: str = "") -> bool:
             continue
         f_v = _font(52, True)
         d.text((x, y_st), val, fill="#ffffff", font=f_v)
-        d.text((x, y_st + 66), lbl, fill="#94a3b8", font=_font(24))
+        d.text((x, y_st + 66), lbl, fill="#A9B8CC", font=_font(24))
         x += max(d.textlength(val, font=f_v), d.textlength(lbl, font=_font(24))) + 72
 
     detalii = []
@@ -393,8 +395,8 @@ def deseneaza_furnizor(info: dict, output: str, data_seap: str = "") -> bool:
         if info.get(sev):
             detalii.append(f"{info[sev]} {sev}")
     if detalii:
-        d.text((64, y_st + 112), "Din care: " + " · ".join(detalii), fill="#cbd5e1", font=_font(24))
-    d.text((64, 508), "Semnalele sunt indicatori automați, nu constatări juridice.", fill="#94a3b8", font=_font(22))
+        d.text((64, y_st + 112), "Din care: " + " · ".join(detalii), fill="#C3CEDD", font=_font(24))
+    d.text((64, 508), "Semnalele sunt indicatori automați, nu constatări juridice.", fill="#A9B8CC", font=_font(22))
     _salveaza(img, output)
     return True
 
@@ -453,24 +455,24 @@ def pagina_semnal(semnal: dict, slug_furnizor: str = "", data_seap: str = "") ->
 <link rel="canonical" href="{url}">
 <script src="../enhance.js" defer></script>
 <style>
-body{{font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;margin:0;background:#f5f7fa;color:#1a1a1a}}
+body{{font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;margin:0;background:#F4F6F9;color:#15243A}}
 main{{max-width:760px;margin:0 auto;padding:24px 16px 48px}}
-.card{{background:#fff;border-left:5px solid {culoare};border-radius:0 10px 10px 0;padding:20px 22px;box-shadow:0 1px 4px rgba(0,0,0,.08)}}
-.sev{{display:inline-block;background:{culoare};color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;letter-spacing:.03em}}
-h1{{font-size:1.45rem;line-height:1.3;margin:12px 0 6px}}
-.firma{{font-size:1.05rem;color:#00427A;font-weight:600;margin:0 0 12px}}
-.fapte{{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:#374151;margin:0 0 14px}}
-.expl{{font-size:15px;line-height:1.6;color:#333;margin:0 0 16px}}
+.card{{background:var(--tp-bg,#fff);border:1px solid var(--tp-border,#D7DEE8);border-left:4px solid {culoare};border-radius:6px;padding:24px 26px}}
+.sev{{display:inline-block;background:color-mix(in srgb,{culoare} 12%,transparent);color:{culoare};font-size:14px;font-weight:700;padding:3px 12px;border-radius:999px}}
+h1{{font-size:1.9rem;line-height:1.2;margin:14px 0 6px}}
+.firma{{font-size:1.1rem;color:var(--tp-link,#2A5C8F);font-weight:600;margin:0 0 12px}}
+.fapte{{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:16px;color:var(--tp-muted,#55627A);margin:0 0 14px}}
+.expl{{font-size:17px;line-height:1.6;margin:0 0 18px;max-width:62ch}}
 .btns{{display:flex;flex-wrap:wrap;gap:8px}}
-.btn{{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:8px;background:#0070C0;color:#fff;text-decoration:none;font-size:14px;font-weight:600}}
-.btn.sec{{background:#eef2f7;color:#00427A}}
-.lim{{font-size:12.5px;color:#6b7280;margin:18px 0 0;line-height:1.5}}
+.btn{{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:8px;background:var(--tp-accent,#2A5C8F);color:#fff;text-decoration:none;font-size:15px;font-weight:600}}
+.btn.sec{{background:var(--tp-tint,#E6EDF5);color:var(--tp-accent-d,#1D3F63)}}
+.lim{{font-size:14px;color:var(--tp-muted,#55627A);margin:18px 0 0;line-height:1.5}}
 </style>
 </head>
 <body>
 <main id="main-content">
   <article class="card" data-tp-share-title="{e(titlu)}" data-tp-share-firma="{e(firma)}" data-tp-share-suma="{e(fmt_lei(semnal['suma']) if semnal.get('suma') else '')}">
-    <span class="sev">SEMNAL {e(semnal.get('severitate', ''))}</span>
+    <span class="sev">{e(ETICHETE_SEV.get(semnal.get('severitate', ''), 'Semnal automat'))}</span>
     <h1>{e(titlu)}</h1>
     {f'<p class="firma">{e(firma)}</p>' if firma else ''}
     <div class="fapte">{''.join(f'<span>{e(x)}</span>' for x in fapte)}</div>
