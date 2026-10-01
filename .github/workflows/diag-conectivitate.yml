@@ -21,25 +21,19 @@ jobs:
           set +e
           {
           echo "IP runner: $(curl -s -m 10 https://api.ipify.org)"
-          for i in 1 2 3; do
-            curl -sS -m 25 -o /dev/null -w "curl %{http_code} %{time_total}s\n" "https://data.gov.ro/api/3/action/package_show?id=achizitii-publice-2026" 2>&1
-            python - <<'PY'
-          import requests, time
-          H = {"User-Agent": "Mozilla/5.0 (compatible; MonitorCivic/1.0; civic transparency)", "Accept": "application/json, text/html", "Content-Type": "application/json"}
-          for nume, h in (("monitor-headers", H), ("fara-headers", {})):
-              t = time.time()
-              try:
-                  r = requests.get("https://data.gov.ro/api/3/action/package_show?id=achizitii-publice-2026", timeout=(15, 30), headers=h)
-                  print(nume, r.status_code, f"{time.time()-t:.1f}s")
-              except Exception as e:
-                  print(nume, "EROARE", type(e).__name__, f"{time.time()-t:.1f}s")
-          PY
-            sleep 15
+          for i in 1 2; do
+            curl -sS -m 20 -o /dev/null -w "data.gov.ro https %{http_code} %{time_total}s\n" "https://data.gov.ro/api/3/action/package_show?id=achizitii-publice-2026" 2>&1
+            curl -sS -m 20 -o /dev/null -w "data.gov.ro http %{http_code} %{time_total}s\n" "http://data.gov.ro/" 2>&1
+            curl -sS -m 25 -X POST -H "Content-Type: application/json;charset=UTF-8" -H "Referer: https://e-licitatie.ro/pub/direct-acquisitions/list/1" -H "Origin: https://e-licitatie.ro" \
+              -d '{"pageSize":3,"pageIndex":0,"showOngoingDa":false,"contractingAuthorityId":null,"supplierId":124356,"publicationDateStart":"2026-01-01T00:00:00.000Z","publicationDateEnd":"2026-09-30T00:00:00.000Z"}' \
+              -o /tmp/r.json -w "SEAP API %{http_code} %{time_total}s " "https://e-licitatie.ro/api-pub/DirectAcquisitionCommon/GetDirectAcquisitionList/" 2>&1; head -c 160 /tmp/r.json; echo
+            curl -sS -m 20 -o /dev/null -w "SEAP view %{http_code} %{time_total}s\n" -H "Referer: https://e-licitatie.ro/pub" "https://e-licitatie.ro/api-pub/PublicDirectAcquisition/getView/118853764" 2>&1
+            sleep 10
           done
-          } > "diag_${{ matrix.n }}.txt" 2>&1
-          cat "diag_${{ matrix.n }}.txt"
+          } > "diag2_${{ matrix.n }}.txt" 2>&1
+          cat "diag2_${{ matrix.n }}.txt"
       - name: Salvez
         run: |
           git config user.email "diag@transparenta-pantelimon.eu"; git config user.name "diag"
-          git add diag_*.txt; git commit -m "diag ${{ matrix.n }} [skip ci]"
+          git add diag2_*.txt; git commit -m "diag ${{ matrix.n }} [skip ci]"
           for i in 1 2 3 4 5; do git pull --rebase -q && git push -q && break; sleep $((RANDOM % 10 + 3)); done
