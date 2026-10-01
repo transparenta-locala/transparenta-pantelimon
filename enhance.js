@@ -28,9 +28,15 @@
     storageKey: 'tp-prefs-v1',
     severityOrder: { CRITIC: 0, MAJOR: 1, MEDIU: 2 },
     severityColor: {
-      CRITIC: '#dc2626',
-      MAJOR:  '#f59e0b',
-      MEDIU:  '#eab308',
+      CRITIC: '#A23B2C',
+      MAJOR:  '#8F5A1E',
+      MEDIU:  '#5E6B78',
+    },
+    // Etichete afișate pe pastile (aceleași cu datele)
+    sevLabel: {
+      CRITIC: 'CRITIC',
+      MAJOR:  'MAJOR',
+      MEDIU:  'MEDIU',
     },
   };
 
@@ -473,6 +479,190 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
   padding: 0 .2rem;
 }
 .tp-banner-close:hover { opacity: .8; }
+
+/* ════════════════════════════════════════════════════════════════
+   TEMA „REGISTRU” (oct. 2026) — albastru-ardezie, serif pentru titluri.
+   Vine ultima în CSS, deci suprascrie regulile de mai sus. Culorile vechi
+   din stilurile inline ale paginilor generate sunt remapate prin selectori
+   de atribut (vezi „Remapare culori inline”).
+   ════════════════════════════════════════════════════════════════ */
+@font-face { font-family: "TP Serif"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("/assets/fonts/source-serif-4-latin-ext-600-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "TP Serif"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("/assets/fonts/source-serif-4-latin-600-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "TP Sans"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("/assets/fonts/source-sans-3-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "TP Sans"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("/assets/fonts/source-sans-3-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "TP Sans"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("/assets/fonts/source-sans-3-latin-ext-600-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "TP Sans"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("/assets/fonts/source-sans-3-latin-600-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "TP Sans"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("/assets/fonts/source-sans-3-latin-ext-700-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "TP Sans"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("/assets/fonts/source-sans-3-latin-700-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+
+:root {
+  --tp-bg:#ffffff; --tp-paper:#F4F6F9; --tp-fg:#15243A; --tp-muted:#55627A;
+  --tp-border:#D7DEE8; --tp-card-bg:#F4F6F9; --tp-link:#2A5C8F;
+  --tp-accent:#2A5C8F; --tp-accent-d:#1D3F63; --tp-tint:#E6EDF5; --tp-line:#4D86C2;
+  --tp-hi:#A23B2C; --tp-mid:#8F5A1E; --tp-low:#5E6B78;
+  --tp-hi-t:#F6E7E4; --tp-mid-t:#F3EADF; --tp-low-t:#ECEFF2;
+  --tp-serif:"TP Serif", "Source Serif 4", Georgia, "Times New Roman", serif;
+  --tp-sans:"TP Sans", "Source Sans 3", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+html[data-tp-theme="dark"] {
+  --tp-bg:#111A27; --tp-paper:#0C131E; --tp-fg:#E6ECF4; --tp-muted:#A2AFC2;
+  --tp-border:#26354A; --tp-card-bg:#16212F; --tp-link:#8DB6E3;
+  --tp-accent:#6E9FD6; --tp-accent-d:#4F82BB; --tp-tint:#17263A; --tp-line:#6E9FD6;
+  --tp-hi:#E08A79; --tp-mid:#D6A160; --tp-low:#A2AFC2;
+  --tp-hi-t:#3A211D; --tp-mid-t:#35291A; --tp-low-t:#1E2834;
+}
+html.tp-theme body { font-family: var(--tp-sans) !important; background: var(--tp-paper) !important; color: var(--tp-fg); }
+html.tp-theme h1, html.tp-theme h2, html.tp-theme h3 { font-family: var(--tp-serif) !important; font-weight: 600 !important; letter-spacing: -.005em; }
+:where(html.tp-theme) :where(a) { color: var(--tp-link); }
+
+/* Meniu */
+.tp-nav { background: var(--tp-bg); border-bottom: 1px solid var(--tp-border); }
+.tp-nav-inner { max-width: 1120px; padding: 0 24px; min-height: 64px; gap: 24px; flex-wrap: nowrap; }
+.tp-nav-brand { font-family: var(--tp-serif); font-weight: 600; font-size: 1.15rem; display: block; line-height: 1.15; margin-right: auto; color: var(--tp-fg); }
+.tp-nav-brand small { display: block; font-family: var(--tp-sans); font-weight: 400; font-size: .78rem; color: var(--tp-muted); margin-top: 2px; }
+.tp-nav-date { display: none; }
+.tp-nav-links { flex: 0 1 auto; gap: 22px; align-items: center; flex-wrap: nowrap; }
+.tp-nav-links a, .tp-more summary { padding: 0; border-radius: 0; font-size: .98rem; font-weight: 600; color: var(--tp-fg); text-decoration: none; min-height: 64px; display: inline-flex; align-items: center; white-space: nowrap; }
+.tp-nav-links a:hover, .tp-more summary:hover { background: none; color: var(--tp-link); }
+.tp-nav-links a.active { background: none; color: var(--tp-link); box-shadow: inset 0 -3px 0 var(--tp-link); }
+.tp-more { position: relative; }
+.tp-more summary { list-style: none; cursor: pointer; }
+.tp-more summary::-webkit-details-marker { display: none; }
+.tp-more summary::after { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); margin: -4px 0 0 8px; }
+.tp-more-list { position: absolute; right: 0; top: 100%; background: var(--tp-bg); border: 1px solid var(--tp-border); border-radius: 8px; box-shadow: 0 10px 30px rgba(21,36,58,.12); padding: 6px; min-width: 260px; z-index: 300; }
+.tp-more-list a { display: flex; min-height: 44px; padding: 0 12px; font-weight: 400; border-radius: 6px; }
+.tp-more-list a:hover { background: var(--tp-tint); }
+.tp-theme-toggle { border: 1px solid var(--tp-border); color: var(--tp-muted); width: 40px; height: 40px; padding: 0; border-radius: 8px; display: inline-grid; place-items: center; }
+@media (max-width: 1000px) {
+  .tp-nav-inner { padding: 0 16px; min-height: 58px; gap: 8px; }
+  .tp-hamburger { display: flex !important; order: 3; }
+  .tp-theme-toggle { order: 2; }
+  .tp-nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 200;
+    flex-direction: column; align-items: stretch; gap: 0; background: var(--tp-bg);
+    border-bottom: 1px solid var(--tp-border); box-shadow: 0 10px 24px rgba(21,36,58,.12); padding: 6px 16px 12px; }
+  .tp-nav.open .tp-nav-links { display: flex; }
+  .tp-nav-links a { min-height: 48px; border-bottom: 1px solid var(--tp-border); font-size: 1.02rem; }
+  .tp-nav-links a.active { box-shadow: inset 3px 0 0 var(--tp-link); padding-left: 12px; }
+  .tp-more summary { display: none; }
+  .tp-more-list { position: static; display: block; border: 0; box-shadow: none; padding: 0; min-width: 0; }
+  .tp-more:not([open]) .tp-more-list { display: block; }
+  .tp-more-list a { padding: 0; border-radius: 0; border-bottom: 1px solid var(--tp-border); color: var(--tp-muted); }
+  .tp-more-list a:last-child { border-bottom: 0; }
+  .tp-nav-brand { font-size: 1.02rem; }
+}
+@media (min-width: 1001px) { .tp-hamburger { display: none !important; } }
+/* <details> închis ascunde conținutul; pe telefon îl vrem mereu vizibil */
+@media (max-width: 1000px) { .tp-more > .tp-more-list { display: block !important; } .tp-more { display: block; } .tp-more:not([open]) > :not(summary) { display: block; } }
+
+/* Bandă date + banner + breadcrumb */
+.tp-data-band { background: var(--tp-tint); color: var(--tp-accent-d); border-bottom: 1px solid var(--tp-border); text-align: left; font-size: .92rem; padding: 9px 24px; }
+.tp-data-band strong { font-weight: 600; }
+html[data-tp-theme="dark"] .tp-data-band { background: var(--tp-tint); color: var(--tp-fg); border-color: var(--tp-border); }
+.tp-banner-whats-new { background: var(--tp-accent-d); }
+.tp-breadcrumb { max-width: 1120px; margin: 0 auto; padding: 10px 24px; }
+.tp-breadcrumb a { color: var(--tp-link); }
+
+/* Butoane, chips, căutare */
+.tp-btn { border-radius: 8px; font-weight: 600; }
+.tp-btn-primary, .tp-btn-primary:hover { background: var(--tp-accent); border-color: var(--tp-accent); }
+.tp-search { border: 2px solid var(--tp-fg); border-radius: 10px; font-size: 1rem; }
+.tp-chip { font-weight: 600; }
+.tp-chip[data-sev="CRITIC"].active { background: var(--tp-hi); border-color: var(--tp-hi); color: #fff; }
+.tp-chip[data-sev="MAJOR"].active  { background: var(--tp-mid); border-color: var(--tp-mid); color: #fff; }
+.tp-chip[data-sev="MEDIU"].active  { background: var(--tp-low); border-color: var(--tp-low); color: #fff; }
+.tp-chip[data-shell].active        { background: var(--tp-accent-d); border-color: var(--tp-accent-d); color: #fff; }
+.tp-summary { background: var(--tp-bg); border-radius: 8px; }
+.tp-summary h3 { font-size: 1.15rem; }
+.tp-summary-bar > span { color: #fff !important; }
+.tp-sticky-cta a { font-size: 13px; }
+.tp-share a, .tp-share button { border-radius: 8px; }
+.tp-share .tp-sh-wa, .tp-share .tp-sh-fb { color: var(--tp-link); }
+@keyframes tpFlash { 0% { background: rgba(42,92,143,.16); } 100% { background: transparent; } }
+
+/* Carduri de semnal (raport) */
+html.tp-theme .tp-flag { background: var(--tp-bg) !important; border: 1px solid var(--tp-border) !important;
+  border-left: 4px solid var(--sev, var(--tp-low)) !important; border-radius: 6px !important; box-shadow: none !important; }
+html.tp-theme .tp-flag:hover { box-shadow: 0 4px 14px rgba(21,36,58,.08) !important; }
+.tp-flag[data-severity="CRITIC"] { --sev: var(--tp-hi); --sev-t: var(--tp-hi-t); }
+.tp-flag[data-severity="MAJOR"]  { --sev: var(--tp-mid); --sev-t: var(--tp-mid-t); }
+.tp-flag[data-severity="MEDIU"]  { --sev: var(--tp-low); --sev-t: var(--tp-low-t); }
+.tp-sevpill { display: inline-block; font-size: .8rem; font-weight: 700; color: var(--sev, var(--tp-low)) !important;
+  background: var(--sev-t, var(--tp-low-t)); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
+html.tp-theme .tp-flag .tp-riskpill { background: transparent !important; color: var(--tp-muted) !important; border: 1px solid var(--tp-border);
+  font-weight: 600 !important; border-radius: 999px !important; }
+html.tp-theme .tp-anap-btn { background: var(--tp-bg); border-color: var(--tp-border); color: var(--tp-fg); font-weight: 600; border-radius: 8px; }
+html.tp-theme .tp-anap-btn:hover { background: var(--tp-tint); }
+html.tp-theme .tp-flag > div:nth-child(3) span { white-space: nowrap; }
+
+/* Antetul raportului (stilurile inline sunt scoase din JS) */
+.tp-rhero { background: var(--tp-bg); border-bottom: 1px solid var(--tp-border); padding: 40px 24px 32px; color: var(--tp-fg); }
+.tp-rhero > div { max-width: 960px; margin: 0 auto; }
+.tp-rhero h1 { font-size: 2.3rem; line-height: 1.12; margin: 0 0 8px; }
+.tp-rhero h1 span { color: var(--tp-link); }
+.tp-rhero p { color: var(--tp-muted); margin: 0; }
+.tp-rhero .no-print { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 18px; }
+.tp-rhero .no-print a, .tp-rhero .no-print button { font: 600 .95rem var(--tp-sans); border-radius: 8px; padding: 10px 16px;
+  border: 1px solid var(--tp-border); background: var(--tp-bg); color: var(--tp-fg); text-decoration: none; cursor: pointer; }
+.tp-rhero .no-print button { background: var(--tp-accent); border-color: var(--tp-accent); color: #fff; }
+.tp-rhero .no-print span { font-size: .85rem; color: var(--tp-muted); }
+.tp-rhero-stats { display: flex; flex-wrap: wrap; gap: 0; margin-top: 26px; border-top: 3px solid var(--tp-line); }
+.tp-rhero-stats > div { padding: 14px 28px 4px 0; margin-right: 28px; }
+.tp-rhero-stats > div > div:first-child { font: 600 1.7rem/1.1 var(--tp-serif); color: var(--tp-fg); }
+.tp-rhero-stats > div > div:last-child { font-size: .9rem; color: var(--tp-muted); }
+
+/* Remapare culori inline (paginile generate de monitor: raport, fișe furnizori) */
+html.tp-theme [style*="color:#0070C0"], html.tp-theme [style*="color:#1A5276"], html.tp-theme [style*="color:#00427A"],
+html.tp-theme [style*="color:#005A9C"], html.tp-theme [style*="color:#00244A"], html.tp-theme [style*="color:#2E86C1"] { color: var(--tp-link) !important; }
+html.tp-theme [style*="background:#0070C0"], html.tp-theme [style*="background:#00427A"], html.tp-theme [style*="background:#00244A"] { background: var(--tp-accent) !important; }
+html.tp-theme [style*="background:#1E8449"], html.tp-theme [style*="background:#117A65"],
+html.tp-theme [style*="background:#8E44AD"], html.tp-theme [style*="background:#6C3483"] { background: var(--tp-accent-d) !important; }
+html.tp-theme [style*="background:#EBF5FB"] { background: var(--tp-tint) !important; }
+html.tp-theme [style*="border-left:4px solid #0070C0"] { border-left-color: var(--tp-line) !important; }
+html.tp-theme [style*="color:#C0392B"], html.tp-theme [style*="color:#641E16"] { color: var(--tp-hi) !important; }
+html.tp-theme [style*="color:#E67E22"], html.tp-theme [style*="color:#B7950B"] { color: var(--tp-mid) !important; }
+html.tp-theme [style*="color:#F39C12"] { color: var(--tp-low) !important; }
+html.tp-theme [style*="color:#27AE60"] { color: var(--tp-muted) !important; }
+html.tp-theme [style*="background:#C0392B"], html.tp-theme [style*="background:#641E16"] { background: var(--tp-hi) !important; }
+html.tp-theme [style*="background:#E67E22"], html.tp-theme [style*="background:#B7950B"] { background: var(--tp-mid) !important; }
+html.tp-theme [style*="background:#F39C12"] { background: var(--tp-low) !important; }
+html.tp-theme [style*="background:#FDEDEC"] { background: var(--tp-hi-t) !important; }
+html.tp-theme [style*="border-left:4px solid #C0392B"] { border-left-color: var(--tp-hi) !important; }
+html.tp-theme [style*="border-left:4px solid #E67E22"] { border-left-color: var(--tp-mid) !important; }
+html.tp-theme [style*="border-left:4px solid #F39C12"] { border-left-color: var(--tp-low) !important; }
+html.tp-theme [style*="border-top:4px solid"] { border-top: 3px solid var(--tp-line) !important; box-shadow: none !important; border-radius: 6px !important; }
+html.tp-theme [style*="border-top:4px solid"] > span:first-child { color: var(--tp-fg) !important; font-family: var(--tp-serif); }
+html.tp-theme thead { background: var(--tp-accent-d) !important; }
+html.tp-theme [style*="background:#F4F6F9"], html.tp-theme [style*="background:#f5f7fa"] { background: var(--tp-paper) !important; }
+/* Tema întunecată: griurile inline gândite pentru fond alb */
+html[data-tp-theme="dark"].tp-theme :is([style*="color:#333"],[style*="color:#444"],[style*="color:#1A1A2E"],[style*="color:#1a1a1a"]) { color: var(--tp-fg) !important; }
+html[data-tp-theme="dark"].tp-theme :is([style*="color:#555"],[style*="color:#666"],[style*="color:#777"],[style*="color:#888"],[style*="color:#999"],[style*="color:#aaa"],[style*="color:#bbb"]) { color: var(--tp-muted) !important; }
+html[data-tp-theme="dark"].tp-theme :is([style*="background:#fff"],[style*="background:#F4F6F8"],[style*="background:#f8f9fa"],[style*="background:#f5f5f5"]) { background: var(--tp-card-bg) !important; }
+/* Fișe furnizori */
+html.tp-theme .container .stat { box-shadow: none; border: 1px solid var(--tp-border); border-radius: 6px; }
+html.tp-theme .container .stat-val { font-family: var(--tp-serif); font-weight: 600; color: var(--tp-fg); }
+html.tp-theme .container .ext-btn { background: var(--tp-accent); border-radius: 8px; font-weight: 600; }
+html.tp-theme .container .stat-val[style*="color:#C0392B"] { color: var(--tp-hi) !important; }
+html.tp-theme .container .stat-val[style*="color:#E67E22"] { color: var(--tp-mid) !important; }
+html.tp-theme .container .stat-val[style*="color:#F39C12"] { color: var(--tp-low) !important; }
+html.tp-theme .container h2 { color: var(--tp-fg); }
+html.tp-theme .container .back-link { color: var(--tp-link); }
+
 `;
 
   // ──────────────────────────────────────────────────────────────
@@ -667,7 +857,7 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
     document.head.appendChild(link);
     if (!document.querySelector('meta[name="theme-color"]')) {
       const meta = document.createElement('meta');
-      meta.name = 'theme-color'; meta.content = '#dc2626';
+      meta.name = 'theme-color'; meta.content = '#14263D';
       document.head.appendChild(meta);
     }
   }
@@ -690,37 +880,47 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
     const here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     const base = siteBase();
 
-    // §4.4 aria-hidden on decorative emojis — screen readers announce link text only
+    // Meniu principal scurt; restul paginilor stau sub „Mai mult” (pe telefon, în listă)
     const links = [
-      { href: 'index.html',                   emoji: '🏠', text: 'Acasă' },
-      { href: 'raport_transparenta.html',      emoji: '🚩', text: 'Semnale de risc' },
-      { href: 'transparenta_pantelimon.html',  emoji: '📊', text: 'Buget' },
-      { href: 'despre.html',                   emoji: 'ℹ️', text: 'Despre' },
-      { href: 'presa.html',                    emoji: '🗞️', text: 'Presă' },
-      { href: 'petitie.html',                  emoji: '✍️', text: 'Petiție' },
-      { href: 'modele.html',                   emoji: '📝', text: 'Modele' },
-      { href: 'harta.html',                    emoji: '🗺️', text: 'Hartă' },
-      { href: 'retele.html',                   emoji: '🔗', text: 'Rețele' },
+      { href: 'index.html',                   text: 'Acasă' },
+      { href: 'raport_transparenta.html',      text: 'Semnale' },
+      { href: 'furnizori/index.html',          text: 'Firme' },
+      { href: 'transparenta_pantelimon.html',  text: 'Buget' },
+      { href: 'modele.html',                   text: 'Modele de cereri' },
+      { href: 'despre.html',                   text: 'Despre' },
     ];
-
-    const linksHTML = links.map(l => {
-      const active = l.href.toLowerCase() === here || (here === '' && l.href === 'index.html');
-      return `<a href="${base}${l.href}"${active ? ' class="active" aria-current="page"' : ''}><span aria-hidden="true">${l.emoji}</span> ${l.text}</a>`;
-    }).join('');
+    const more = [
+      { href: 'petitie.html', text: 'Petiție' },
+      { href: 'harta.html',   text: 'Harta firmelor' },
+      { href: 'retele.html',  text: 'Rețele de firme' },
+      { href: 'presa.html',   text: 'Pentru presă' },
+      { href: 'https://transparenta.eu/entities/4420759', text: 'Date ANAF (transparenta.eu)', ext: true },
+      { href: 'https://github.com/transparenta-locala/transparenta-pantelimon', text: 'Codul sursă (GitHub)', ext: true },
+    ];
+    const inSub = /\/(furnizori|semnale)\//.test(location.pathname);
+    const isActive = l => {
+      if (l.href === 'furnizori/index.html') return /\/furnizori\//.test(location.pathname);
+      if (l.href === 'raport_transparenta.html' && /\/semnale\//.test(location.pathname)) return true;
+      if (inSub) return false;
+      return l.href.toLowerCase() === here || (here === '' && l.href === 'index.html');
+    };
+    const linkHTML = l => l.ext
+      ? `<a href="${l.href}" target="_blank" rel="noopener">${l.text}</a>`
+      : `<a href="${base}${l.href}"${isActive(l) ? ' class="active" aria-current="page"' : ''}>${l.text}</a>`;
+    const linksHTML = links.map(linkHTML).join('');
 
     nav.style.position = 'sticky';
     nav.innerHTML = `
       <div class="tp-nav-inner">
-        <a href="${base}index.html" class="tp-nav-brand"><span aria-hidden="true">🏛️</span> Transparența Pantelimon</a>
+        <a href="${base}index.html" class="tp-nav-brand">Transparența Pantelimon<small>Inițiativă civică</small></a>
         <button class="tp-hamburger" id="tp-hamburger" aria-label="Meniu" aria-expanded="false" aria-controls="tp-nav-links">
           <span></span><span></span><span></span>
         </button>
         <div class="tp-nav-links" id="tp-nav-links">
           ${linksHTML}
-          <a href="https://transparenta.eu/entities/4420759" target="_blank" rel="noopener">ANAF ↗</a>
-          <a href="https://github.com/transparenta-locala/transparenta-pantelimon" target="_blank" rel="noopener">GitHub ↗</a>
+          <details class="tp-more"><summary>Mai mult</summary><div class="tp-more-list">${more.map(linkHTML).join('')}</div></details>
         </div>
-        <button class="tp-theme-toggle" id="tp-theme-btn" aria-label="Comută temă luminoasă/întunecată" title="Comută temă"><span aria-hidden="true">🌓</span></button>
+        <button class="tp-theme-toggle" id="tp-theme-btn" aria-label="Comută temă luminoasă/întunecată" title="Temă luminoasă / întunecată"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 2a8 8 0 0 1 0 16z" fill="currentColor"/></svg></button>
       </div>
     `;
     document.body.insertBefore(nav, skipLink.nextSibling);
@@ -732,9 +932,14 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
         e.stopPropagation();
         const isOpen = nav.classList.toggle('open');
         hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        // pe telefon, „Mai mult” se arată ca listă deschisă sub meniul principal
+        const moreEl = nav.querySelector('.tp-more');
+        if (moreEl) moreEl.open = isOpen;
       });
       document.addEventListener('click', (e) => {
         if (!nav.contains(e.target)) { nav.classList.remove('open'); hamburgerBtn.setAttribute('aria-expanded', 'false'); }
+        const moreEl = nav.querySelector('.tp-more');
+        if (moreEl && moreEl.open && !moreEl.contains(e.target) && !nav.classList.contains('open')) moreEl.open = false;
       });
       nav.querySelectorAll('.tp-nav-links a').forEach(a => {
         a.addEventListener('click', () => { nav.classList.remove('open'); hamburgerBtn.setAttribute('aria-expanded', 'false'); });
@@ -1017,12 +1222,12 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
       <div class="tp-toolbar-inner">
         <div class="tp-toolbar-row">
           <input type="search" class="tp-search" id="tp-q"
-                 placeholder="🔍 Caută firmă, CUI, cod contract sau cuvânt-cheie…"
+                 placeholder="Caută o firmă, un CUI sau ce s-a cumpărat"
                  aria-label="Caută în semnalele automate">
           <div class="tp-chips-sev">
-            <button class="tp-chip active" data-sev="CRITIC" aria-pressed="true">🔴 CRITIC</button>
-            <button class="tp-chip active" data-sev="MAJOR"  aria-pressed="true">🟠 MAJOR</button>
-            <button class="tp-chip active" data-sev="MEDIU"  aria-pressed="true">🟡 MEDIU</button>
+            <button class="tp-chip active" data-sev="CRITIC" aria-pressed="true">${CFG.sevLabel.CRITIC}</button>
+            <button class="tp-chip active" data-sev="MAJOR"  aria-pressed="true">${CFG.sevLabel.MAJOR}</button>
+            <button class="tp-chip active" data-sev="MEDIU"  aria-pressed="true">${CFG.sevLabel.MEDIU}</button>
           </div>
         </div>
         <div class="tp-toolbar-row">
@@ -1040,22 +1245,22 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
             <option value="supplier-asc">Furnizor (A → Z)</option>
             <option value="date-desc">Dată (recent → vechi)</option>
           </select>
-          <button class="tp-btn" id="tp-export-csv" title="Descarcă rezultatele filtrate ca CSV">⬇ CSV</button>
-          <button class="tp-btn" id="tp-export-json" title="Descarcă rezultatele filtrate ca JSON">⬇ JSON</button>
-          <button class="tp-btn" id="tp-reset" title="Curăță toate filtrele">✕ Reset</button>
+          <button class="tp-btn" id="tp-export-csv" title="Descarcă rezultatele filtrate ca CSV">Descarcă CSV</button>
+          <button class="tp-btn" id="tp-export-json" title="Descarcă rezultatele filtrate ca JSON">JSON</button>
+          <button class="tp-btn" id="tp-reset" title="Curăță toate filtrele">Resetează filtrele</button>
         </div>
         <div class="tp-toolbar-row" id="tp-shell-row">
-          <span style="font-size:.78rem;color:var(--tp-muted);margin-right:.25rem">🏢 Profil firmă:</span>
+          <span style="font-size:.85rem;color:var(--tp-muted);margin-right:.25rem">Profilul firmei:</span>
           <button class="tp-chip" data-shell="zero-sal" aria-pressed="false"
-                  title="Arată doar semnale unde furnizorul are 0 angajați declarați la ANAF">👥 0 angajați</button>
+                  title="Arată doar semnale unde furnizorul are 0 angajați declarați la ANAF">0 angajați</button>
           <button class="tp-chip" data-shell="zero-ca" aria-pressed="false"
-                  title="Arată doar semnale unde furnizorul are cifra de afaceri 0 RON">📉 CA = 0 RON</button>
+                  title="Arată doar semnale unde furnizorul are cifra de afaceri 0 RON">Cifră de afaceri 0</button>
           <button class="tp-chip" data-shell="ca-sub" aria-pressed="false"
-                  title="Arată semnale unde cifra de afaceri a furnizorului e sub 50% din valoarea contractului">📊 CA sub contract</button>
+                  title="Arată semnale unde cifra de afaceri a furnizorului e sub 50% din valoarea contractului">Cifra de afaceri sub contract</button>
           <button class="tp-chip" data-shell="any-risk" aria-pressed="false"
-                  title="Arată doar semnale unde furnizorul are cel puțin un indicator de risc financiar">⚠️ Orice risc</button>
+                  title="Arată doar semnale unde furnizorul are cel puțin un indicator de risc financiar">Orice indicator</button>
           <button class="tp-chip" data-shell="presa-risc" aria-pressed="false"
-                  title="Arată doar semnale unde furnizorul are mențiuni de risc detectate automat în presă" style="display:none">📰 În presă</button>
+                  title="Arată doar semnale unde furnizorul are mențiuni de risc detectate automat în presă" style="display:none">În presă</button>
         </div>
         <div class="tp-toolbar-row">
           <div class="tp-stats" id="tp-stats" aria-live="polite"></div>
@@ -1388,7 +1593,10 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
 
   function applyHash(items, state) {
     // Permite #q=foo&sev=CRITIC&supplier=BAR în URL
-    const h = location.hash.replace(/^#/, '');
+    let h = location.hash.replace(/^#/, '');
+    // ?q=… vine din formularul de căutare de pe prima pagină când JS-ul ei nu rulează
+    const qs = new URLSearchParams(location.search).get('q');
+    if (!h.includes('=') && qs) h = 'q=' + encodeURIComponent(qs);
     if (!h.includes('=')) return;
     const params = new URLSearchParams(h);
     if (params.has('q')) {
@@ -1475,7 +1683,7 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
     if (stats) {
       stats.innerHTML = `
       <span><strong>${visible.length}</strong> / ${items.length} semnale afișate</span>
-        <span>🔴 <strong>${byS.CRITIC || 0}</strong> · 🟠 <strong>${byS.MAJOR || 0}</strong> · 🟡 <strong>${byS.MEDIU || 0}</strong></span>
+        <span>CRITIC: <strong>${byS.CRITIC || 0}</strong>, MAJOR: <strong>${byS.MAJOR || 0}</strong>, MEDIU: <strong>${byS.MEDIU || 0}</strong></span>
         <span>Total: <strong>${fmtRON(totalSum)}</strong></span>
         ${state.shown < visible.length ? `<span style="color: var(--tp-muted)">Vizibile primele ${Math.min(state.shown, visible.length)}</span>` : ''}
       `;
@@ -1635,21 +1843,21 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
     const topByValue = suppliers.slice().sort((a, b) => b[1].sum - a[1].sum).slice(0, 10);
 
     wrap.innerHTML = `
-      <h3>📈 Rezumat — ${items.length} semnale automate</h3>
+      <h3>Rezumat: ${items.length} semnale automate</h3>
       <div class="tp-summary-bar" aria-label="Distribuție pe severități">
         <span style="background:${CFG.severityColor.CRITIC}; width:${(sevCount.CRITIC/total*100).toFixed(1)}%">
-          ${sevCount.CRITIC > 5 ? sevCount.CRITIC + ' CRITIC' : ''}
+          ${sevCount.CRITIC > 5 ? sevCount.CRITIC : ''}
         </span>
-        <span style="background:${CFG.severityColor.MAJOR}; color:#1a1a1a; width:${(sevCount.MAJOR/total*100).toFixed(1)}%">
-          ${sevCount.MAJOR > 5 ? sevCount.MAJOR + ' MAJOR' : ''}
+        <span style="background:${CFG.severityColor.MAJOR}; width:${(sevCount.MAJOR/total*100).toFixed(1)}%">
+          ${sevCount.MAJOR > 5 ? sevCount.MAJOR : ''}
         </span>
-        <span style="background:${CFG.severityColor.MEDIU}; color:#1a1a1a; width:${(sevCount.MEDIU/total*100).toFixed(1)}%">
-          ${sevCount.MEDIU > 5 ? sevCount.MEDIU + ' MEDIU' : ''}
+        <span style="background:${CFG.severityColor.MEDIU}; width:${(sevCount.MEDIU/total*100).toFixed(1)}%">
+          ${sevCount.MEDIU > 5 ? sevCount.MEDIU : ''}
         </span>
       </div>
       <div class="tp-summary-grid" style="margin-top:1rem">
         <div>
-          <strong style="font-size:.85rem">🏢 Top furnizori după numărul de semnale</strong>
+          <strong style="font-size:.9rem">Firmele cu cele mai multe semnale</strong>
           <div class="tp-summary-list" style="margin-top:.5rem">
             ${topByCount.map(([name, info]) => `
               <div class="tp-summary-li">
@@ -1663,7 +1871,7 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
           </div>
         </div>
         <div>
-          <strong style="font-size:.85rem">💰 Top furnizori după valoare</strong>
+          <strong style="font-size:.9rem">Firmele cu cea mai mare valoare semnalată</strong>
           <div class="tp-summary-list" style="margin-top:.5rem">
             ${topByValue.map(([name, info]) => `
               <div class="tp-summary-li">
@@ -1807,7 +2015,7 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
       var btn = document.createElement('a');
       btn.className = 'tp-anap-btn';
       btn.href = generateAnapEmail(card);
-      btn.textContent = '📧 Sesizare ANAP';
+      btn.textContent = 'Sesizare către ANAP';
       btn.title = 'Deschide client email cu sesizare pre-completată pentru ANAP';
       btn.addEventListener('click', function(e) {
         var parts = generateAnapEmailParts(card);
@@ -1851,7 +2059,7 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
     const band = document.createElement('div');
     band.className = 'tp-data-band';
     band.setAttribute('role', 'note');
-    band.innerHTML = '<span aria-hidden="true">📅</span> <strong>Date SEAP până la ' + txt + '.</strong> ' +
+    band.innerHTML = '<strong>Date SEAP până la ' + txt + '.</strong> ' +
       'Contractele atribuite după această dată nu sunt încă incluse.';
     const nav = $('.tp-nav');
     if (nav && nav.parentNode) nav.parentNode.insertBefore(band, nav.nextSibling);
@@ -1958,6 +2166,83 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
     }
   }
 
+
+  // ──────────────────────────────────────────────────────────────
+  // TEMĂ — retușuri de DOM pe paginile generate (fără emoji în titluri,
+  // etichete de prioritate în loc de CRITIC/MAJOR/MEDIU, antet raport sobru)
+  // ──────────────────────────────────────────────────────────────
+  const EMOJI_LEAD = /^[\s←-⇿⌀-➿⬀-⯿️‍]*(?:[\u{1F000}-\u{1FAFF}☀-➿][️‍]?\s*)+/u;
+  const EMOJI_ONLY = /^[\s\u{1F000}-\u{1FAFF}☀-➿️‍]+$/u;
+
+  function stripLeadingEmoji(el) {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let n;
+    while ((n = walker.nextNode())) {
+      if (!n.nodeValue.trim()) continue;
+      n.nodeValue = n.nodeValue.replace(EMOJI_LEAD, '');
+      break;
+    }
+  }
+
+  function sevPill(sev) {
+    const sp = document.createElement('span');
+    sp.className = 'tp-sevpill';
+    sp.textContent = CFG.sevLabel[sev] || sev;
+    return sp;
+  }
+
+  function themeDom() {
+    $$('h1, h2, h3, h4').forEach(stripLeadingEmoji);
+    const path = location.pathname.toLowerCase();
+
+    if (/raport_transparenta/.test(path)) {
+      const hero = $('body > div[style*="linear-gradient"]');
+      if (hero) {
+        hero.classList.add('tp-rhero');
+        hero.removeAttribute('style');
+        hero.querySelectorAll('[style]').forEach(e => e.removeAttribute('style'));
+        const inner = hero.firstElementChild;
+        if (inner && inner.lastElementChild) inner.lastElementChild.classList.add('tp-rhero-stats');
+        const kicker = inner && inner.firstElementChild;
+        if (kicker && !kicker.matches('h1')) kicker.remove();
+        hero.querySelectorAll('button, a').forEach(stripLeadingEmoji);
+        hero.querySelectorAll('span').forEach(sp => {
+          if (/^\s*→/.test(sp.textContent)) sp.textContent = sp.textContent.replace(/^\s*→\s*/, '');
+        });
+      }
+      $$('.tp-flag[data-severity]').forEach(card => {
+        const head = card.firstElementChild;
+        if (!head) return;
+        // Rândul de fapte (sumă, firmă, dată…) și butoanele din detalii: fără emoji
+        card.querySelectorAll(':scope > div:nth-child(3) > span, .flag-detail a, .flag-detail button').forEach(stripLeadingEmoji);
+        Array.from(head.children).forEach(ch => {
+          const t = ch.textContent.trim();
+          if (ch.tagName === 'SPAN' && t && EMOJI_ONLY.test(t)) ch.remove();
+          else if (ch.tagName === 'STRONG' && /^\[(CRITIC|MAJOR|MEDIU)\]$/.test(t)) ch.replaceWith(sevPill(card.dataset.severity));
+          else if (ch.tagName === 'SPAN' && /RISC\s+\d+/.test(t)) {
+            ch.classList.add('tp-riskpill');
+            ch.textContent = 'Scor firmă ' + (t.match(/\d+/) || [''])[0];
+          }
+        });
+      });
+    }
+
+    if (/\/furnizori\/[^/]+\.html$/.test(path) && !/\/furnizori\/index\.html$/.test(path)) {
+      $$('.container div[style*="border-left:4px solid"] > div:first-child').forEach(div => {
+        const m = /^\s*\S*\s*\[(CRITIC|MAJOR|MEDIU)\]\s*/u.exec(div.textContent);
+        if (!m) return;
+        const titlu = div.textContent.slice(m[0].length);
+        div.textContent = '';
+        const pill = sevPill(m[1]);
+        const sevVar = { CRITIC: 'hi', MAJOR: 'mid', MEDIU: 'low' }[m[1]];
+        pill.style.cssText = `--sev:var(--tp-${sevVar});--sev-t:var(--tp-${sevVar}-t);margin-right:8px`;
+        div.append(pill, document.createTextNode(titlu));
+        div.style.color = 'var(--tp-fg)';
+      });
+      $$('.container .ext-btn').forEach(stripLeadingEmoji);
+    }
+  }
+
   // ──────────────────────────────────────────────────────────────
   // BOOT
   // ──────────────────────────────────────────────────────────────
@@ -2004,7 +2289,7 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
       banner.className = 'tp-banner-whats-new';
       banner.setAttribute('role', 'status');
       banner.innerHTML =
-      `🚩 <strong>${d.nereguli_noi} semnale noi</strong> față de raportul anterior` +
+      `<strong>${d.nereguli_noi} semnale noi</strong> față de raportul anterior` +
         (topNoi ? ` — ${topNoi}` : '') +
         ` <a href="${link}">vezi raportul →</a>` +
         `<button class="tp-banner-close" aria-label="Închide bannerul">×</button>`;
@@ -2108,13 +2393,14 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
 
     var bar = document.createElement('div');
     bar.className = 'tp-sticky-cta';
-    bar.innerHTML = '<a href="raport_transparenta.html"><span aria-hidden="true">🚩</span> Raport</a>' +
-      '<a href="transparenta_pantelimon.html"><span aria-hidden="true">📊</span> Buget</a>' +
-      '<a href="petitie.html"><span aria-hidden="true">✍️</span> Petiție</a>';
+    bar.innerHTML = '<a href="raport_transparenta.html">Semnale</a>' +
+      '<a href="furnizori/index.html">Firme</a>' +
+      '<a href="modele.html">Modele de cereri</a>';
     document.body.appendChild(bar);
   }
 
   function boot() {
+    document.documentElement.classList.add('tp-theme');
     applyTheme();
     injectHead();
     injectStyle();
@@ -2133,6 +2419,7 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
     injectStickyCTA();
     injectDataBand();
 
+    themeDom();
     const path = location.pathname.toLowerCase();
     if (/raport_transparenta/.test(path)) {
       enhanceReport();
@@ -2212,7 +2499,7 @@ html[data-tp-theme="dark"] .tp-share .tp-sh-fb { color: #93c5fd; }
     if (!document.querySelector('meta[name="theme-color"]')) {
       const meta = document.createElement('meta');
       meta.name = 'theme-color';
-      meta.content = '#dc2626';
+      meta.content = '#14263D';
       document.head.appendChild(meta);
     }
   })();

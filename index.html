@@ -1,14 +1,14 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ro">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Transparența Banului Public — Primăria Pantelimon</title>
+<title>Transparența Pantelimon: contractele primăriei, într-un singur loc</title>
 
 <!-- SEO -->
 <meta name="description" content="Monitorizare cetățenească a Primăriei Pantelimon: semnale de risc detectate automat în achiziții publice. Date din SEAP și ANAF.">
 <meta name="keywords" content="transparență, Pantelimon, primărie, achiziții publice, SEAP, ANAF, monitorizare cetățenească, Ilfov">
-<meta name="author" content="Inițiativă cetățenească independentă">
+<meta name="author" content="Inițiativă civică">
 <link rel="canonical" href="https://transparenta-pantelimon.eu/">
 
 <!-- Open Graph (Facebook, LinkedIn) -->
@@ -46,7 +46,7 @@
   "description": "Monitorizare cetățenească a achizițiilor publice ale Primăriei Pantelimon, bazată pe date SEAP și ANAF.",
   "publisher": {
     "@type": "Organization",
-    "name": "Inițiativă cetățenească independentă",
+    "name": "Inițiativă civică",
     "url": "https://transparenta-pantelimon.eu/"
   },
   "potentialAction": {
@@ -58,243 +58,107 @@
 </script>
 
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; background: #F4F6F9; color: #1A1A2E; }
+  :root{--paper:#F4F6F9;--surface:#fff;--ink:#15243A;--muted:#55627A;--blue:#2A5C8F;--blue-d:#1D3F63;--tint:#E6EDF5;--line:#D7DEE8;--accent:#4D86C2;--hi:#A23B2C;--mid:#8F5A1E;--low:#5E6B78;--hi-t:#F6E7E4;--mid-t:#F3EADF;--low-t:#ECEFF2;
+    --serif:"TP Serif","Source Serif 4",Georgia,serif;--sans:"TP Sans","Source Sans 3",system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  html[data-tp-theme="dark"]{--paper:#0C131E;--surface:#111A27;--ink:#E6ECF4;--muted:#A2AFC2;--blue:#8DB6E3;--blue-d:#6E9FD6;--tint:#17263A;--line:#26354A;--accent:#6E9FD6;--hi:#E08A79;--mid:#D6A160;--low:#A2AFC2;--hi-t:#3A211D;--mid-t:#35291A;--low-t:#1E2834}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font:17px/1.55 var(--sans);background:var(--paper);color:var(--ink)}
+  a{color:var(--blue)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--serif);font-weight:600}
+  .skip-link{position:absolute;top:-100%;left:1rem;background:var(--blue);color:#fff;padding:.5rem 1rem;z-index:9999}
+  .skip-link:focus{top:0}
+  .static-nav{background:var(--surface);border-bottom:1px solid var(--line);padding:12px 24px;display:flex;gap:18px;flex-wrap:wrap}
+  .static-nav a{color:var(--ink);font-weight:600;text-decoration:none}
+  .static-nav .nav-brand{font-family:var(--serif);margin-right:auto}
+  .tp-nav ~ .static-nav{display:none}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-  /* HERO */
-  header {
-    background: linear-gradient(135deg, #00427A 0%, #0070C0 100%);
-    color: #fff;
-    padding: 56px 24px 48px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 300px; height: 300px;
-    background: rgba(255,255,255,.04);
-    border-radius: 50%;
-  }
-  header::after {
-    content: '';
-    position: absolute;
-    bottom: -80px; left: -40px;
-    width: 250px; height: 250px;
-    background: rgba(255,255,255,.04);
-    border-radius: 50%;
-  }
+  .hero{padding:60px 0 52px}
+  .hero .wrap{display:grid;grid-template-columns:1.35fr 1fr;gap:56px;align-items:start}
+  .hero h1{font-size:50px;line-height:1.08;letter-spacing:-.01em;max-width:13ch}
+  .lead{font-size:20px;color:var(--muted);margin:20px 0 28px;max-width:40ch}
+  .search{display:flex;background:var(--surface);border:2px solid var(--ink);border-radius:10px;overflow:hidden;max-width:580px}
+  .search input{flex:1;min-width:0;border:0;font:inherit;font-size:18px;padding:15px 18px;outline:none;background:transparent;color:var(--ink)}
+  .search button{border:0;background:var(--blue);color:#fff;font:600 18px var(--sans);padding:0 28px;cursor:pointer}
+  html[data-tp-theme="dark"] .search button{color:#0C131E}
+  .search:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+  .try{font-size:15px;color:var(--muted);margin-top:12px}
+  .try a{margin-right:12px}
+  .ledger{border-top:3px solid var(--accent);margin-top:8px}
+  .ledger div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .ledger b{font:600 30px var(--serif)}
+  .ledger > div > span{color:var(--muted);text-align:right}
+  .ledger-note{font-size:15px;color:var(--muted);margin-top:14px}
 
-  .badge {
-    background: #FF6B35; color: #00427A; font-weight: 800;
-    padding: 4px 16px; border-radius: 20px; font-size: 11px;
-    letter-spacing: 1.5px; text-transform: uppercase;
-    display: inline-block; margin-bottom: 20px;
-  }
+  .results{margin-top:22px;max-width:640px}
+  .results[hidden]{display:none}
+  .res-head{font-size:15px;color:var(--muted);margin-bottom:8px}
+  .res-item{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin-bottom:8px}
+  .res-item b{display:block}
+  .res-item .meta{font-size:15px;color:var(--muted)}
+  .res-item .links{font-size:15px;margin-top:4px}
+  .res-item .links a{margin-right:14px;font-weight:600}
+  .res-more{font-size:15px}
 
-  header h1 { font-size: 36px; font-weight: 900; margin-bottom: 12px; line-height: 1.2; }
-  header h1 span { color: #FF6B35; }
-  header p { font-size: 16px; opacity: .85; max-width: 560px; margin: 0 auto 28px; line-height: 1.6; }
+  section{padding:56px 0;border-top:1px solid var(--line)}
+  h2{font-size:30px;line-height:1.2;margin-bottom:10px}
+  .sub{color:var(--muted);max-width:62ch;margin-bottom:28px}
+  .sig{display:grid;grid-template-columns:1fr auto;gap:4px 24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:6px;padding:16px 22px;margin-bottom:12px;color:inherit;text-decoration:none}
+  .sig:hover{border-color:var(--c)}
+  .sig .t{font-weight:700;font-size:18px;color:var(--ink)}
+  .sig .d{color:var(--muted);font-size:16px}
+  .sig .p{grid-column:2;grid-row:1/span 2;font-size:14px;font-weight:700;color:var(--c);background:var(--ct);padding:4px 10px;border-radius:99px;white-space:nowrap}
+  .more-link{display:inline-block;margin-top:14px;font-weight:700}
 
-  .hero-stats {
-    display: flex; justify-content: center; gap: 16px;
-    flex-wrap: wrap; margin-bottom: 32px;
-  }
-  .hero-stat {
-    background: rgba(255,255,255,.13);
-    border: 1px solid rgba(255,255,255,.2);
-    border-radius: 10px; padding: 14px 22px; text-align: center; min-width: 110px;
-  }
-  .hero-stat .v { font-size: 26px; font-weight: 900; display: block; color: #FF6B35; }
-  .hero-stat .l { font-size: 11px; opacity: .8; text-transform: uppercase; letter-spacing: .5px; }
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:24px}
+  .panel h3{font-size:21px;margin-bottom:6px}
+  .panel p{color:var(--muted);font-size:16px}
+  .big{font:600 34px/1.1 var(--serif);margin:14px 0 2px;display:block}
+  .bigl{color:var(--muted);font-size:15px}
+  #scor-val{font:600 34px/1.1 var(--serif);margin:14px 0 2px}
+  .scor-bar{height:8px;border-radius:4px;background:var(--tint);overflow:hidden;margin:8px 0 4px}
+  #scor-fill{height:100%;width:0;background:var(--blue);transition:width .6s ease}
+  #scor-componente{font-size:15px;color:var(--muted);margin-top:12px}
+  #scor-componente div{display:flex;justify-content:space-between;gap:8px;padding:3px 0;border-bottom:1px solid var(--line)}
+  #scor-componente strong{color:var(--ink);font-weight:600}
+  .small{font-size:14px;color:var(--muted);margin-top:10px}
 
-  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .btn-primary {
-    background: #C0392B; color: #fff; padding: 14px 28px;
-    border-radius: 10px; text-decoration: none; font-size: 15px; font-weight: 700;
-    display: inline-flex; align-items: center; gap: 8px;
-    transition: background .2s, transform .15s;
-  }
-  .btn-primary:hover { background: #A93226; transform: translateY(-2px); }
-  .btn-secondary {
-    background: rgba(255,255,255,.15); color: #fff;
-    border: 1.5px solid rgba(255,255,255,.4);
-    padding: 14px 24px; border-radius: 10px; text-decoration: none;
-    font-size: 15px; font-weight: 600;
-    display: inline-flex; align-items: center; gap: 8px;
-    transition: background .2s;
-  }
-  .btn-secondary:hover { background: rgba(255,255,255,.25); }
+  .acts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .act{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:24px;display:flex;flex-direction:column}
+  .act h3{font-size:21px;margin-bottom:8px}
+  .act p{color:var(--muted);font-size:16px;margin-bottom:14px;flex:1}
+  .act a{font-weight:700;text-decoration:none}
+  .inst{margin-top:24px;font-size:16px;color:var(--muted)}
+  .inst a{margin-right:16px;white-space:nowrap}
 
-  /* ALERT BANNER */
-  .alert-banner {
-    background: #FFF3CD; border-bottom: 3px solid #F39C12;
-    padding: 14px 24px; text-align: center; font-size: 13px; color: #7D6608;
-  }
-  .alert-banner strong { color: #5D4E37; }
-  .alert-banner a { color: #C0392B; font-weight: 700; text-decoration: none; }
-  .alert-banner a:hover { text-decoration: underline; }
+  .sources{background:var(--surface);border:1px solid var(--line);border-radius:8px}
+  .src{display:flex;justify-content:space-between;gap:16px;padding:14px 20px;border-bottom:1px solid var(--line);color:inherit;text-decoration:none}
+  .src:last-child{border-bottom:0}
+  .src b{display:block;color:var(--ink)}
+  .src span{color:var(--muted);font-size:15px}
+  .src .st{font-size:14px;white-space:nowrap;color:var(--muted)}
+  .src .st.bad{color:var(--hi);font-weight:600}
 
-  /* MAIN */
-  main { max-width: 960px; margin: 0 auto; padding: 40px 16px 80px; }
+  footer{background:#14263D;color:#C3CEDD;font-size:15px;padding:36px 0;line-height:1.7}
+  footer a{color:#fff}
+  footer p+p{margin-top:8px}
 
-  .section-label {
-    font-size: 11px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1.5px; color: #6b7280; margin-bottom: 14px;
+  @media(max-width:860px){
+    .hero{padding:36px 0 40px}.hero .wrap{grid-template-columns:1fr;gap:32px}
+    .hero h1{font-size:36px}.lead{font-size:18px}
+    .two,.acts{grid-template-columns:1fr}
+    .search button{padding:0 18px}
+    .sig{grid-template-columns:1fr}.sig .p{grid-column:1;grid-row:auto;justify-self:start;margin-top:6px}
+    h2{font-size:26px}
   }
-
-  /* CARDS */
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 48px; }
-
-  .card {
-    background: #fff; border-radius: 14px; padding: 28px 24px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.07);
-    text-decoration: none; color: inherit;
-    display: flex; flex-direction: column; gap: 10px;
-    transition: transform .2s, box-shadow .2s;
-    border-top: 5px solid #0070C0;
-    position: relative; overflow: hidden;
-  }
-  .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
-  .card.red { border-top-color: #C0392B; }
-  .card.green { border-top-color: #27AE60; }
-
-  .card-icon { font-size: 38px; }
-  .card h2 { font-size: 18px; font-weight: 800; color: #00427A; }
-  .card.red h2 { color: #C0392B; }
-  .card.green h2 { color: #27AE60; }
-  .card p { font-size: 13px; color: #666; line-height: 1.65; flex: 1; }
-  .card .arrow {
-    margin-top: 6px; font-size: 13px; font-weight: 700; color: #0070C0;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .card.red .arrow { color: #C0392B; }
-  .card.green .arrow { color: #27AE60; }
-  .card-badge {
-    position: absolute; top: 16px; right: 16px;
-    background: #C0392B; color: #fff;
-    font-size: 10px; font-weight: 700; padding: 2px 8px;
-    border-radius: 10px; letter-spacing: .5px;
-  }
-
-  /* FLAGS PREVIEW */
-  .flags-preview {
-    background: #fff; border-radius: 14px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.07);
-    margin-bottom: 40px; overflow: hidden;
-  }
-  .flags-header {
-    background: linear-gradient(90deg, #C0392B, #E74C3C);
-    color: #fff; padding: 16px 24px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .flags-header h3 { font-size: 16px; font-weight: 800; }
-  .flags-header a { color: #FF6B35; font-size: 13px; font-weight: 700; text-decoration: none; }
-  .flags-header a:hover { text-decoration: underline; }
-  .flag-item {
-    display: flex; align-items: flex-start; gap: 14px;
-    padding: 14px 24px; border-bottom: 1px solid #F5F5F5;
-  }
-  .flag-item:last-child { border-bottom: none; }
-  .flag-sev {
-    font-size: 10px; font-weight: 800; padding: 3px 8px;
-    border-radius: 6px; white-space: nowrap; margin-top: 2px; flex-shrink: 0;
-  }
-  .sev-critic { background: #FDECEA; color: #C0392B; }
-  .sev-major { background: #FEF3E2; color: #E67E22; }
-  .sev-mediu { background: #FEF9E7; color: #D4AC0D; }
-  .flag-text strong { font-size: 14px; color: #1A1A2E; display: block; margin-bottom: 3px; }
-  .flag-text span { font-size: 12px; color: #777; }
-
-  /* METODOLOGIE */
-  .metodologie {
-    background: #EBF5FB; border-left: 4px solid #0070C0;
-    border-radius: 0 10px 10px 0; padding: 18px 22px;
-    font-size: 13px; color: #1A5276; margin-bottom: 40px; line-height: 1.7;
-  }
-  .metodologie strong { display: block; margin-bottom: 6px; font-size: 14px; }
-
-  /* SURSE */
-  .section-title { font-size: 20px; font-weight: 800; color: #00427A; margin-bottom: 16px; }
-  .surse-box {
-    background: #fff; border-radius: 14px; padding: 8px 24px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.07); margin-bottom: 40px;
-  }
-  .sursa-item {
-    display: flex; align-items: center; gap: 14px;
-    padding: 12px 0; border-bottom: 1px solid #F0F2F5;
-    text-decoration: none; color: inherit; font-size: 13px;
-  }
-  .sursa-item:last-child { border-bottom: none; }
-  .sursa-item:hover strong { color: #0070C0; }
-  .sursa-item .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-left: auto; }
-  .dot-green { background: #27AE60; }
-  .dot-red { background: #C0392B; }
-  .dot-yellow { background: #F39C12; }
-
-  /* FOOTER */
-  footer {
-    background: #00427A; color: rgba(255,255,255,.7);
-    text-align: center; padding: 24px 16px; font-size: 12px;
-  }
-  footer a { color: #FF6B35; text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-
-  @media (max-width: 600px) {
-    header h1 { font-size: 26px; }
-    .hero-stats { gap: 10px; }
-    .hero-stat { padding: 10px 14px; min-width: 90px; }
-    .hero-stat .v { font-size: 20px; }
-    #scor-gauge { min-width: 90px !important; }
-    #scor-componente { min-width: auto !important; width: 100% !important; }
-  }
-  @media (max-width: 400px) {
-    #scor-gauge { min-width: 70px !important; }
-    .hero-stat { min-width: 70px; padding: 8px 10px; }
-    .hero-stat .v { font-size: 18px; }
-  }
-
-  /* Skip link */
-  .skip-link {
-    position: absolute; top: -100%; left: 1rem;
-    background: #C0392B; color: #fff;
-    padding: .5rem 1.1rem; border-radius: 0 0 6px 6px;
-    font-size: .9rem; font-weight: 600; z-index: 9999;
-    text-decoration: none; transition: top .15s;
-  }
-  .skip-link:focus { top: 0; outline: 2px solid #fff; outline-offset: 2px; }
-
-  /* Static nav fallback */
-  .static-nav {
-    background: #fff; border-bottom: 1px solid #e5e7eb;
-    padding: 8px 16px; display: flex; align-items: center;
-    gap: 8px; flex-wrap: wrap; font-size: 13px;
-  }
-  .static-nav a {
-    color: #00427A; text-decoration: none; padding: 6px 12px;
-    border-radius: 6px; font-weight: 600; min-height: 44px;
-    display: inline-flex; align-items: center;
-  }
-  .static-nav a:hover { background: #f4f6f9; }
-  .static-nav .nav-brand { font-weight: 700; margin-right: auto; }
-  .tp-nav ~ .static-nav { display: none; }
-
-  /* Action cards */
-  .action-card {
-    background: #fff; border-radius: 12px; padding: 20px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  }
-  .action-card-icon { font-size: 22px; margin-bottom: 8px; }
-  .action-card-title { font-size: 15px; font-weight: 700; }
-  .action-card-desc { font-size: 13px; color: #555; margin: 8px 0 12px; line-height: 1.65; }
-  .action-card-link {
-    font-size: 13px; font-weight: 600; text-decoration: none;
-    display: inline-flex; align-items: center; min-height: 44px;
-    padding: 8px 0;
-  }
+  @media(prefers-reduced-motion:reduce){#scor-fill{transition:none}}
 </style>
+<link rel="preload" href="/assets/fonts/source-serif-4-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/source-sans-3-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+
 <link rel="alternate" type="application/atom+xml" title="Semnale noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <script src="enhance.js" defer></script>
@@ -304,379 +168,203 @@
 <a href="#main-content" class="skip-link">Salt la conținut</a>
 
 <nav class="static-nav" id="static-nav-fallback" aria-label="Navigare principală">
-  <a href="index.html" class="nav-brand"><span aria-hidden="true">🏛️</span> Transparența Pantelimon</a>
-  <a href="raport_transparenta.html"><span aria-hidden="true">🚩</span> Semnale de risc</a>
-  <a href="transparenta_pantelimon.html"><span aria-hidden="true">📊</span> Buget</a>
-  <a href="harta.html"><span aria-hidden="true">🗺️</span> Hartă</a>
-  <a href="petitie.html"><span aria-hidden="true">✍️</span> Petiție</a>
-  <a href="modele.html"><span aria-hidden="true">📝</span> Modele</a>
-  <a href="presa.html"><span aria-hidden="true">📰</span> Presă</a>
+  <a href="index.html" class="nav-brand">Transparența Pantelimon</a>
+  <a href="raport_transparenta.html">Semnale</a>
+  <a href="furnizori/index.html">Firme</a>
+  <a href="transparenta_pantelimon.html">Buget</a>
+  <a href="modele.html">Modele de cereri</a>
+  <a href="despre.html">Despre</a>
 </nav>
-
-<!-- ALERT BANNER -->
-<div class="alert-banner">
-  🔴 <strong><span id="idx-banner-nereguli">227</span> semnale automate</strong> în ultima analiză<span id="idx-data-analiza"></span>, din care <strong><span id="idx-banner-critic">17</span> cu prioritate CRITICĂ</strong> —
-  <a href="raport_transparenta.html">Vezi raportul complet →</a>
-</div>
-
-<!-- HERO -->
-<header>
-  <div class="badge">Monitorizare Cetățenească</div>
-  <h1>Transparența Banului Public<br><span>Primăria Pantelimon</span></h1>
-  <p>Monitorizăm cheltuielile administrației locale și identificăm indicatori care necesită verificare — exclusiv pe baza datelor publice oficiale.</p>
-
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <span class="v" id="idx-nereguli">227</span>
-      <span class="l">Semnale automate</span>
-    </div>
-    <div class="hero-stat">
-      <span class="v" id="idx-contracte">506</span>
-      <span class="l">Contracte analizate</span>
-    </div>
-    <div class="hero-stat">
-      <span class="v" id="idx-cheltuieli">146,43M RON</span>
-      <span class="l" id="idx-cheltuieli-label">Cheltuieli 2026</span>
-    </div>
-    <div class="hero-stat">
-      <span class="v" id="idx-ultima-actualizare">săpt.</span>
-      <span class="l">Actualizare automată</span>
-    </div>
-  </div>
-
-  <div class="hero-ctas">
-    <a class="btn-primary" href="raport_transparenta.html">🚩 Deschide raportul de semnale</a>
-    <a class="btn-secondary" href="transparenta_pantelimon.html">📊 Analiză Buget & Grafice</a>
-  </div>
-</header>
-
-  <!-- SCOR TRANSPARENTA -->
-  <section id="scor-transparenta" style="background:#fff;border-bottom:1px solid #e2e8f0;padding:24px 40px;">
-    <div style="max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;gap:24px;align-items:center;">
-      <div id="scor-gauge" style="text-align:center;min-width:140px;">
-        <div id="scor-val" style="font-size:2.3rem;font-weight:700;color:#e53e3e;">23/100</div>
-        <div style="font-size:.85rem;color:#718096;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;">Indice euristic de transparență</div>
-        <div style="height:10px;border-radius:5px;background:#e2e8f0;margin-top:8px;overflow:hidden;">
-          <div id="scor-fill" style="height:100%;width:23%;transition:width .6s ease;background:#e53e3e;"></div>
-        </div>
-        <div id="scor-data" style="font-size:.75rem;color:#a0aec0;margin-top:4px;"></div>
-      </div>
-      <div style="flex:1;min-width:200px;">
-        <canvas id="scor-chart" height="60" role="img" aria-label="Evoluția indicelui euristic de transparență pe o scară de la 0 la 100"></canvas>
-        <div id="scor-no-history" style="display:none;font-size:.8rem;color:#a0aec0;text-align:center;padding:12px 0;">Istoricul va fi disponibil după prima rulare automată.</div>
-      </div>
-      <div id="scor-componente" style="font-size:.8rem;color:#4a5568;min-width:210px;"></div>
-    </div>
-    <p style="max-width:900px;margin:12px auto 0;font-size:.78rem;color:#64748b;line-height:1.5">
-      Indice neoficial. Fiecare componentă este un punctaj /100, ponderat conform
-      <a href="despre.html#scor-transparenta">metodologiei</a>. Componentele marcate cu * sunt estimări manuale.
-    </p>
-  </section>
-  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" integrity="sha384-9nhczxUqK87bcKHh20fSQcTGD4qq5GhayNYSYWqwBkINBhOfQLg/P5HG5lF1urn4" crossorigin="anonymous"></script>
-  <script>
-  (function(){
-    // Revalidare condiționată (ETag) în loc de ?Date.now() — nu sparge cache-ul SW/HTTP,
-    // dar ia mereu versiunea proaspătă când fișierul s-a schimbat (304 ieftin când e identic).
-    var opts = { cache: 'no-cache' };
-    Promise.all([
-      fetch('raport.json', opts).then(function(r){return r.json();}).catch(function(){return null;}),
-      fetch('istoric_scor.json', opts).then(function(r){return r.json();}).catch(function(){return [];})
-    ]).then(function(results){
-      var raport = results[0], istoric = results[1];
-      // istoric_scor.json are forma {puncte:[...]} (scris de monitor) — acceptam si array direct
-      if (istoric && !Array.isArray(istoric) && Array.isArray(istoric.puncte)) istoric = istoric.puncte;
-      var scorObj = raport && raport.scor_transparenta;
-      if (!scorObj) return;
-      var val = (typeof scorObj === 'object') ? scorObj.scor : scorObj;
-      if (val == null) return;
-      var color = val >= 75 ? '#38a169' : val >= 60 ? '#d69e2e' : val >= 40 ? '#dd6b20' : '#e53e3e';
-      var el = document.getElementById('scor-val');
-      if (el) { el.textContent = val + '/100'; el.style.color = color; }
-      var fill = document.getElementById('scor-fill');
-      if (fill) { fill.style.width = val + '%'; fill.style.background = color; }
-      var dataEl = document.getElementById('scor-data');
-      if (dataEl && scorObj.data) dataEl.textContent = scorObj.data;
-      var labels = {achizitii_directe:'Achiziții directe',ofertant_unic:'Ofertant unic',sedinte_extraordinare:'Ședințe extraord.',fragmentare:'Fragmentare',documente_publicate:'Documente publicate',raspuns_544:'Răspuns L.544'};
-      var comp = scorObj.componente;
-      if (comp) {
-        var html = Object.keys(comp).map(function(k){
-          var estimated = Array.isArray(scorObj.componente_estimate) && scorObj.componente_estimate.indexOf(k) !== -1;
-          return '<div style="display:flex;justify-content:space-between;gap:8px;margin:3px 0"><span>' + (labels[k] || k) + (estimated ? ' *' : '') + '</span><strong style="color:' + (comp[k]>=75?'#38a169':comp[k]>=50?'#d69e2e':'#e53e3e') + '">' + comp[k] + '/100</strong></div>';
-        }).join('');
-        var compEl = document.getElementById('scor-componente');
-        if (compEl) compEl.innerHTML = html;
-      }
-      // BUG-11 fix: actualizare dinamică statistici din raport.json
-      var totals = raport && raport.totals;
-      if (totals) {
-        var nf   = totals.flags || 0;
-        var nc   = (totals.by_severity && totals.by_severity.CRITIC) || 0;
-        var ncon = totals.contracts_analyzed || 0;
-        var _upd = function(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; };
-        _upd('idx-nereguli', nf);
-        _upd('idx-contracte', ncon);
-        _upd('idx-banner-nereguli', nf);
-        _upd('idx-banner-critic', nc);
-        var elSeeAll = document.getElementById('idx-see-all');
-        if (elSeeAll) elSeeAll.textContent = 'Vezi toate ' + nf + ' →';
-      }
-      // Marker prospețime: data ultimei analize din raport.json (generated_at)
-      var gen = raport && raport.generated_at;
-      if (gen) {
-        var d = new Date(gen);
-        if (!isNaN(d)) {
-          var elData = document.getElementById('idx-data-analiza');
-          if (elData) elData.textContent = ' (' + d.toLocaleDateString('ro-RO', {day:'numeric', month:'long', year:'numeric'}) + ')';
-          var elUpd = document.getElementById('idx-ultima-actualizare');
-          if (elUpd) {
-            var diff = Math.floor((Date.now() - d.getTime()) / 86400000);
-            elUpd.textContent = diff === 0 ? 'azi' : diff === 1 ? 'ieri' : diff + ' zile';
-          }
-        }
-      }
-
-      if (Array.isArray(istoric) && istoric.length > 1 && typeof Chart !== 'undefined') {
-        var ctx = document.getElementById('scor-chart');
-        if (ctx) {
-          new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: istoric.map(function(x){ return x.luna || x.data || ''; }),
-              datasets: [{
-                data: istoric.map(function(x){ return x.scor; }),
-                borderColor: color,
-                backgroundColor: color + '33',
-                tension: 0.3,
-                pointRadius: 3,
-                fill: true
-              }]
-            },
-            options: {
-              plugins: { legend: { display: false }, tooltip: { callbacks: { title: function(items){ return items[0].label; }, label: function(item){ return 'Scor: ' + item.raw; } } } },
-              scales: { x: { display: false }, y: { min: 0, max: 100, display: true, ticks: { maxTicksLimit: 3 } } },
-              animation: { duration: 400 }
-            }
-          });
-        }
-      } else {
-        var noHist = document.getElementById('scor-no-history');
-        if (noHist) noHist.style.display = 'block';
-      }
-    });
-  })();
-  </script>
-
 
 <main id="main-content">
 
-  <!-- FLAGS PREVIEW -->
-  <div class="flags-preview">
-    <div class="flags-header">
-      <h2 style="font-size:1.1rem">🚩 Exemple de semnale automate</h2>
-      <a href="raport_transparenta.html" id="idx-see-all">Vezi toate 251 →</a>
+<div class="hero"><div class="wrap">
+  <div>
+    <h1>Banii orașului, contract cu contract.</h1>
+    <p class="lead">Contractele Primăriei Pantelimon publicate în SEAP, într-un singur loc. Caută o firmă și vezi ce a primit, pentru ce și când.</p>
+    <form class="search" id="cauta" action="raport_transparenta.html" method="get" role="search">
+      <label for="q" class="sr-only">Caută o firmă sau un contract</label>
+      <input id="q" name="q" type="search" autocomplete="off" placeholder="Numele firmei, CUI sau ce s-a cumpărat">
+      <button type="submit">Caută</button>
+    </form>
+    <p class="try">De exemplu: <a href="#" data-q="iluminat">iluminat</a><a href="#" data-q="pază">pază</a><a href="#" data-q="canalizare">canalizare</a><a href="#" data-q="Constopograf">Constopograf</a></p>
+    <div class="results" id="rezultate" hidden aria-live="polite"></div>
+  </div>
+  <div>
+    <div class="ledger">
+      <div><b><span class="v" id="idx-contracte">506</span></b><span>contracte analizate</span></div>
+      <div><b id="idx-firme">181</b><span>firme</span></div>
+      <div><b><span class="v" id="idx-nereguli">227</span></b><span>semnale de verificat</span></div>
     </div>
-    <div class="flag-item">
-      <span class="flag-sev sev-critic">CRITIC</span>
-      <div class="flag-text">
-        <strong>Achiziție directă peste pragul aplicabil</strong>
-        <span>Praguri fără TVA: 270.120 RON pentru produse/servicii și 900.400 RON pentru lucrări; încadrarea trebuie verificată în SEAP.</span>
-      </div>
+    <p class="ledger-note"><span id="idx-banner-nereguli">227</span> de semnale în ultima analiză<span id="idx-data-analiza"></span>, din care <span id="idx-banner-critic">17</span> CRITICE. Analiza se reface automat; ultima rulare: <span id="idx-ultima-actualizare">recent</span>.</p>
+  </div>
+</div></div>
+
+<section><div class="wrap">
+  <h2>Ce înseamnă un semnal</h2>
+  <p class="sub">Un semnal arată un contract care merită o a doua privire, nu o încălcare a legii. Lângă fiecare găsești datele din care a pornit și linkul spre sursă.</p>
+  <a class="sig" style="--c:var(--hi);--ct:var(--hi-t)" href="semnale/fragmentare-2025-51666-2025-69059.html"><span class="t">Contracte asemănătoare cu aceeași firmă, la câteva zile distanță</span><span class="p">CRITIC</span><span class="d">Constopograf Expert: 2 contracte de 270.000 lei în 5 zile</span></a>
+  <a class="sig" style="--c:var(--mid);--ct:var(--mid-t)" href="semnale/ofertant-unic-2025-161218.html"><span class="t">Un singur ofertant raportat</span><span class="p">MAJOR</span><span class="d">GPK Infrastructure Design, 252.500 lei, 27.10.2025</span></a>
+  <a class="sig" style="--c:var(--low);--ct:var(--low-t)" href="semnale/valoare-rotunda-suspecta-2025-396843.html"><span class="t">Valoare rotundă, aproape de pragul achiziției directe</span><span class="p">MEDIU</span><span class="d">Betira Construct, 270.000 lei, 17.03.2025</span></a>
+  <a class="more-link" href="raport_transparenta.html" id="idx-see-all">Vezi toate cele 227 de semnale</a>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Bugetul și indicele de transparență</h2>
+  <p class="sub">Execuția bugetară vine de la Ministerul Finanțelor (ANAF). Indicele e calculat de noi din date publice, după o <a href="despre.html#scor-transparenta">metodologie publicată</a>.</p>
+  <div class="two">
+    <div class="panel">
+      <h3>Bugetul orașului</h3>
+      <span class="big"><span class="v" id="idx-cheltuieli">146,43M RON</span></span>
+      <span class="bigl"><span class="l" id="idx-cheltuieli-label">Cheltuieli 2026</span></span>
+      <p style="margin-top:12px">Venituri și cheltuieli pe capitole, investiții realizate față de cele planificate.</p>
+      <p style="margin-top:12px"><a href="transparenta_pantelimon.html" style="font-weight:700">Vezi bugetul pe capitole</a></p>
     </div>
-    <div class="flag-item">
-      <span class="flag-sev sev-critic">CRITIC</span>
-      <div class="flag-text">
-        <strong>Pondere ridicată a ședințelor extraordinare</strong>
-        <span>Indicator statistic raportat la Legea 52/2003; nu dovedește evitarea consultării publice.</span>
-      </div>
-    </div>
-    <div class="flag-item">
-      <span class="flag-sev sev-major">MAJOR</span>
-      <div class="flag-text">
-        <strong>Un singur ofertant raportat în date</strong>
-        <span>Semnal pentru verificarea documentației procedurii și a nivelului real de concurență.</span>
-      </div>
-    </div>
-    <div class="flag-item">
-      <span class="flag-sev sev-major">MAJOR</span>
-      <div class="flag-text">
-        <strong>Posibilă fragmentare a contractelor</strong>
-        <span>Contracte similare, apropiate în timp, a căror sumă depășește pragul categoriei.</span>
-      </div>
-    </div>
-    <div class="flag-item">
-      <span class="flag-sev sev-mediu">MEDIU</span>
-      <div class="flag-text">
-        <strong>Valori contracte aproape de pragul de licitație</strong>
-        <span>Indicator statistic; apropierea de prag nu dovedește evitarea deliberată a unei proceduri.</span>
-      </div>
+    <div class="panel" id="scor-transparenta">
+      <h3>Indice de transparență</h3>
+      <div id="scor-val">–/100</div>
+      <div class="scor-bar"><div id="scor-fill"></div></div>
+      <div class="small" id="scor-data"></div>
+      <canvas id="scor-chart" height="60" role="img" aria-label="Evoluția indicelui de transparență pe o scară de la 0 la 100" style="margin-top:8px"></canvas>
+      <div id="scor-no-history" class="small" style="display:none">Istoricul apare după următoarele rulări lunare.</div>
+      <div id="scor-componente"></div>
+      <p class="small">Indice neoficial. Componentele marcate cu * sunt estimări manuale.</p>
     </div>
   </div>
+</div></section>
 
-  <!-- CARDS -->
-  <div class="section-label">Secțiuni disponibile</div>
-  <div class="cards">
-
-    <a class="card red" href="raport_transparenta.html">
-      <span class="card-badge">NOU</span>
-      <span class="card-icon">🚩</span>
-      <h2>Raport lunar<br>Semnale de risc</h2>
-      <p>Analiză automată a achizițiilor publice din SEAP. Indicatorii prioritizează verificarea și nu reprezintă constatări juridice.</p>
-      <span class="arrow">Deschide raportul →</span>
-    </a>
-
-    <a class="card" href="transparenta_pantelimon.html">
-      <span class="card-icon">📊</span>
-      <h2>Buget vs.<br>Cheltuieli Realizate</h2>
-      <p>Grafice interactive cu execuția bugetară pe capitole, evoluție 2020–2025, structura cheltuielilor și gradul de realizare a investițiilor.</p>
-      <span class="arrow">Deschide analiza →</span>
-    </a>
-
-    <a class="card green" href="https://transparenta.eu/entities/4420759" target="_blank" rel="noopener noreferrer">
-      <span class="card-icon">🏛️</span>
-      <h2>Date ANAF<br>pe Transparenta.eu</h2>
-      <p>Execuțiile bugetare oficiale raportate de primărie la Ministerul Finanțelor — date agregate actualizate periodic.</p>
-      <span class="arrow">Deschide ↗</span>
-    </a>
-
+<section id="drepturile-tale"><div class="wrap">
+  <h2>Ce poți face</h2>
+  <p class="sub">Ai dreptul să ceri documentele oricărui contract. Consultă documentele originale înainte de a trage concluzii sau de a face o sesizare.</p>
+  <div class="acts">
+    <div class="act"><h3>Cere documentele</h3><p>Cerere pe Legea 544/2001. Primăria are 10 zile să răspundă; refuzul poate fi contestat.</p><a href="modele.html">Descarcă modelul Word</a></div>
+    <div class="act"><h3>Semnează petiția</h3><p>Patru cereri concrete pentru achiziții mai transparente la Primăria Pantelimon.</p><a href="petitie.html">Citește petiția</a></div>
+    <div class="act"><h3>Sesizează o instituție</h3><p>Pentru un contract pe care îl consideri de verificat. Descrii faptele și sursele, nu concluzii.</p><a href="modele.html">Vezi modelele de sesizare</a></div>
   </div>
+  <p class="inst">Instituții: <a href="https://www.anap.gov.ro/web/sesizari/" target="_blank" rel="noopener noreferrer">ANAP</a><a href="https://www.prefecturailfov.ro/petitii/" target="_blank" rel="noopener noreferrer">Prefectura Ilfov</a><a href="https://www.curteadeconturi.ro/sesizari" target="_blank" rel="noopener noreferrer">Curtea de Conturi</a><a href="https://www.pna.ro/sesizare.xhtml" target="_blank" rel="noopener noreferrer">DNA</a></p>
+</div></section>
 
-  <!-- METODOLOGIE -->
-  <div class="metodologie">
-    <strong>📐 Cum funcționează monitorizarea</strong>
-    Un script Python rulează automat lunar pe serverele GitHub. Trage datele bugetare din
-    transparenta.eu (sursă: ANAF/MF) și contractele din SEAP (e-licitatie.ro), aplică 19 detectori
-    de semnale, compară cu raportul anterior și publică automat rezultatele pe acest site.
-    Tot codul sursă este public și verificabil.
+<section><div class="wrap">
+  <h2>De unde vin datele</h2>
+  <p class="sub">Numai surse publice oficiale. Analiza rulează automat o dată pe lună, iar codul e public pe <a href="https://github.com/transparenta-locala/transparenta-pantelimon" target="_blank" rel="noopener noreferrer">GitHub</a>, ca oricine să poată verifica metoda.</p>
+  <div class="sources">
+    <a class="src" href="https://www.e-licitatie.ro/pub" target="_blank" rel="noopener noreferrer"><div><b>SEAP (e-licitatie.ro)</b><span>Contractele și achizițiile directe ale primăriei</span></div><span class="st">Funcționează</span></a>
+    <a class="src" href="https://transparenta.eu/entities/4420759" target="_blank" rel="noopener noreferrer"><div><b>transparenta.eu (ANAF / Ministerul Finanțelor)</b><span>Execuția bugetară raportată oficial</span></div><span class="st">Funcționează</span></a>
+    <a class="src" href="https://www.primariapantelimon.ro/hotarari-2025/" target="_blank" rel="noopener noreferrer"><div><b>Hotărârile Consiliului Local</b><span>Buget aprobat, rectificări, decizii</span></div><span class="st">Funcționează</span></a>
+    <a class="src" href="https://www.primariapantelimon.ro/documente-si-informatii-financiare/" target="_blank" rel="noopener noreferrer"><div><b>Documente financiare pe site-ul primăriei</b><span>Pagina e marcată „în lucru” de la lansarea site-ului primăriei</span></div><span class="st bad">Pagină goală</span></a>
   </div>
-
-
-  <!-- CE POȚI FACE CA CETĂȚEAN -->
-  <div class="section-title" id="drepturile-tale">⚖️ Ce poți face ca cetățean</div>
-  <p style="font-size:14px;color:#555;margin:0 0 20px;max-width:720px">Dacă un semnal din raport merită verificat, ai instrumente legale la dispoziție. Consultă documentele originale înainte de a formula o sesizare.</p>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:32px">
-
-    <div class="action-card" style="border-top:4px solid #0070C0">
-      <div class="action-card-icon" aria-hidden="true">📄</div>
-      <span class="action-card-title" style="color:#0070C0">Cerere de informații publice</span>
-      <p class="action-card-desc">Orice cetățean poate solicita orice document public. Primăria e obligată să răspundă în <strong>10 zile</strong> (L. 544/2001). Refuzul poate fi contestat în instanță.</p>
-      <a class="action-card-link" style="color:#0070C0" href="modele.html">Modele de cereri în Word →</a>
-    </div>
-
-    <div class="action-card" style="border-top:4px solid #8E44AD">
-      <div class="action-card-icon" aria-hidden="true">📬</div>
-      <span class="action-card-title" style="color:#8E44AD">Petiție / Sesizare la primărie</span>
-      <p class="action-card-desc">Poți depune o petiție la orice instituție publică. Răspunsul este obligatoriu în <strong>30 de zile</strong>. Fără răspuns → sesizezi prefectura.</p>
-      <a class="action-card-link" style="color:#8E44AD" href="petitie.html"><span aria-hidden="true">✍️</span> Semnează petiția cetățenilor →</a><br>
-      <a class="action-card-link" style="color:#8E44AD" href="https://www.prefecturailfov.ro/petitii/" target="_blank" rel="noopener">Sesizare Prefectură Ilfov →</a>
-    </div>
-
-    <div class="action-card" style="border-top:4px solid #E67E22">
-      <div class="action-card-icon" aria-hidden="true">🏗️</div>
-      <span class="action-card-title" style="color:#E67E22">Sesizare ANAP</span>
-      <p class="action-card-desc">Agenția Națională pentru Achiziții Publice. Sesizează dacă suspectezi: fragmentare contracte, criteriu discriminatoriu, atribuire fără licitație.</p>
-      <a class="action-card-link" style="color:#E67E22" href="https://www.anap.gov.ro/web/sesizari/" target="_blank" rel="noopener">Sesizare online ANAP →</a>
-    </div>
-
-    <div class="action-card" style="border-top:4px solid #27AE60">
-      <div class="action-card-icon" aria-hidden="true">🏦</div>
-      <span class="action-card-title" style="color:#27AE60">Sesizare Curtea de Conturi</span>
-      <p class="action-card-desc">Controlează utilizarea fondurilor publice. Sesizează dacă observi: cheltuieli nejustificate, bugete fabricate, investiții abandonate.</p>
-      <a class="action-card-link" style="color:#27AE60" href="https://www.curteadeconturi.ro/sesizari" target="_blank" rel="noopener">Sesizare Curtea de Conturi →</a>
-    </div>
-
-    <div class="action-card" style="border-top:4px solid #C0392B">
-      <div class="action-card-icon" aria-hidden="true">🔵</div>
-      <span class="action-card-title" style="color:#C0392B">Sesizare DNA / Parchet</span>
-      <p class="action-card-desc">Pentru fapte penale: corupție, abuz în serviciu, conflict de interese. Sesizarea trebuie să conțină fapte concrete și documente.</p>
-      <a class="action-card-link" style="color:#C0392B" href="https://www.pna.ro/sesizare.xhtml" target="_blank" rel="noopener">Sesizare online DNA →</a>
-    </div>
-
-    <div class="action-card" style="background:#EBF5FB;border-top:4px solid #2E86C1">
-      <div class="action-card-icon" aria-hidden="true">📖</div>
-      <span class="action-card-title" style="color:#2E86C1">Ghid complet + modele cereri</span>
-      <p class="action-card-desc">Pe pagina de analiză completă găsești pași detaliați, ce lege se aplică, termene, și modele de cereri pentru fiecare caz în parte.</p>
-      <a class="action-card-link" style="color:#2E86C1;font-weight:700" href="transparenta_pantelimon.html#drepturile-tale">Deschide ghidul complet →</a>
-    </div>
-
-  </div>
-
-  <!-- SURSE -->
-  <div class="section-title">🔗 Surse de date</div>
-  <div class="surse-box">
-
-      <a class="sursa-item" href="https://transparenta.eu/entities/4420759" target="_blank" rel="noopener noreferrer">
-      <span style="font-size:22px">📈</span>
-      <div>
-        <strong>transparenta.eu / ANAF</strong><br>
-        <span style="color:#6b7280">Execuții bugetare oficiale raportate la Ministerul Finanțelor</span>
-      </div>
-      <div class="dot dot-green"></div>
-    </a>
-
-      <a class="sursa-item" href="https://www.e-licitatie.ro/pub" target="_blank" rel="noopener noreferrer">
-      <span style="font-size:22px">🛒</span>
-      <div>
-        <strong>SEAP / e-licitatie.ro</strong><br>
-        <span style="color:#6b7280">Sistemul electronic de achiziții publice — contracte și licitații</span>
-      </div>
-      <div class="dot dot-green"></div>
-    </a>
-
-      <a class="sursa-item" href="https://www.primariapantelimon.ro/hotarari-2025/" target="_blank" rel="noopener noreferrer">
-      <span style="font-size:22px">📋</span>
-      <div>
-        <strong>Hotărâri Consiliu Local — primariapantelimon.ro</strong><br>
-        <span style="color:#6b7280">Buget aprobat, rectificări bugetare, decizii administrative</span>
-      </div>
-      <div class="dot dot-green"></div>
-    </a>
-
-      <a class="sursa-item" href="https://www.primariapantelimon.ro/documente-si-informatii-financiare/" target="_blank" rel="noopener noreferrer">
-      <span style="font-size:22px">💰</span>
-      <div>
-        <strong>Documente financiare — primariapantelimon.ro</strong><br>
-        <span style="color:#C0392B;font-weight:600">⚠️ Pagina este goală — „în lucru" de la lansarea site-ului</span>
-      </div>
-      <div class="dot dot-red"></div>
-    </a>
-
-  </div>
-
-  <!-- COD SURSA -->
-  <div class="section-title">💻 Cod sursă</div>
-  <div class="surse-box" style="padding:20px 24px">
-    <p style="font-size:13px;color:#555;line-height:1.8">
-      Tot codul acestui site și al scriptului de monitorizare este public pe GitHub.<br>
-      Oricine poate verifica metodologia, propune îmbunătățiri sau adapta proiectul pentru altă localitate.
-    </p>
-    <a href="https://github.com/transparenta-locala/transparenta-pantelimon" target="_blank" rel="noopener noreferrer"
-       style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;
-              background:#00427A;color:#fff;padding:10px 20px;border-radius:8px;
-              text-decoration:none;font-size:13px;font-weight:600">
-      ⭐ Vezi codul pe GitHub →
-    </a>
-  </div>
+</div></section>
 
 </main>
 
-<footer>
-  <p>
-    <a href="raport_transparenta.html">Raport semnale</a> &nbsp;·&nbsp;
-    <a href="transparenta_pantelimon.html">Buget</a> &nbsp;·&nbsp;
-    <a href="harta.html">Hartă</a> &nbsp;·&nbsp;
-    <a href="petitie.html"><span aria-hidden="true">✍️</span> Petiție</a> &nbsp;·&nbsp;
-    <a href="presa.html">Presă</a> &nbsp;·&nbsp;
-    <a href="gdpr.html"><span aria-hidden="true">🔒</span> GDPR</a>
-  </p>
-  <p style="margin-top:6px">
-    Surse: <a href="https://www.primariapantelimon.ro" target="_blank" rel="noopener">primariapantelimon.ro</a> &nbsp;·&nbsp;
-    <a href="https://www.e-licitatie.ro/pub" target="_blank" rel="noopener">e-licitatie.ro</a> &nbsp;·&nbsp;
-    <a href="https://transparenta.eu" target="_blank" rel="noopener">transparenta.eu</a>
-  </p>
-  <p style="margin-top:8px;font-size:11px;opacity:.6">
-    Inițiativă civică independentă de autorități. Inițiatorul este membru USR Pantelimon; proiectul nu este un proiect oficial al partidului. Monitorizare bazată pe date publice.
-  </p>
-</footer>
+<footer><div class="wrap">
+  <p><a href="raport_transparenta.html">Semnale</a> &nbsp; <a href="furnizori/index.html">Firme</a> &nbsp; <a href="transparenta_pantelimon.html">Buget</a> &nbsp; <a href="harta.html">Harta firmelor</a> &nbsp; <a href="petitie.html">Petiție</a> &nbsp; <a href="presa.html">Pentru presă</a> &nbsp; <a href="gdpr.html">Date personale</a></p>
+  <p>Inițiativă civică. Inițiatorul este membru USR Pantelimon; proiectul nu este un proiect oficial al partidului. Monitorizare bazată exclusiv pe date publice.</p>
+</div></footer>
+
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" integrity="sha384-9nhczxUqK87bcKHh20fSQcTGD4qq5GhayNYSYWqwBkINBhOfQLg/P5HG5lF1urn4" crossorigin="anonymous"></script>
+<script>
+(function(){
+  var opts = { cache: 'no-cache' };
+  function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim() || '#2A5C8F'; }
+
+  // ── Indice + cifre din raport.json ───────────────────────────
+  Promise.all([
+    fetch('raport.json', opts).then(function(r){return r.json();}).catch(function(){return null;}),
+    fetch('istoric_scor.json', opts).then(function(r){return r.json();}).catch(function(){return [];})
+  ]).then(function(res){
+    var raport = res[0], istoric = res[1];
+    if (istoric && !Array.isArray(istoric) && Array.isArray(istoric.puncte)) istoric = istoric.puncte;
+    var totals = raport && raport.totals;
+    var _upd = function(id, val){ var el = document.getElementById(id); if (el) el.textContent = val; };
+    if (totals) {
+      var nf = totals.flags || 0, nc = (totals.by_severity && totals.by_severity.CRITIC) || 0;
+      _upd('idx-nereguli', nf); _upd('idx-contracte', totals.contracts_analyzed || 0);
+      _upd('idx-banner-nereguli', nf); _upd('idx-banner-critic', nc);
+      _upd('idx-see-all', 'Vezi toate cele ' + nf + ' de semnale');
+    }
+    var gen = raport && raport.generated_at;
+    if (gen) {
+      var d = new Date(gen);
+      if (!isNaN(d)) {
+        _upd('idx-data-analiza', ' (' + d.toLocaleDateString('ro-RO', {day:'numeric', month:'long', year:'numeric'}) + ')');
+        var diff = Math.floor((Date.now() - d.getTime()) / 86400000);
+        _upd('idx-ultima-actualizare', diff === 0 ? 'azi' : diff === 1 ? 'ieri' : 'acum ' + diff + ' zile');
+      }
+    }
+    var scorObj = raport && raport.scor_transparenta;
+    if (!scorObj) return;
+    var val = (typeof scorObj === 'object') ? scorObj.scor : scorObj;
+    if (val == null) return;
+    _upd('scor-val', val + '/100');
+    var fill = document.getElementById('scor-fill'); if (fill) fill.style.width = val + '%';
+    if (scorObj.data) _upd('scor-data', 'Calculat la ' + scorObj.data.split('-').reverse().join('.'));
+    var labels = {achizitii_directe:'Achiziții directe',ofertant_unic:'Ofertant unic',sedinte_extraordinare:'Ședințe extraordinare',fragmentare:'Fragmentare',documente_publicate:'Documente publicate',raspuns_544:'Răspuns la cereri 544'};
+    var comp = scorObj.componente;
+    if (comp) {
+      document.getElementById('scor-componente').innerHTML = Object.keys(comp).map(function(k){
+        var est = Array.isArray(scorObj.componente_estimate) && scorObj.componente_estimate.indexOf(k) !== -1;
+        return '<div><span>' + (labels[k] || k) + (est ? ' *' : '') + '</span><strong>' + comp[k] + '/100</strong></div>';
+      }).join('');
+    }
+    if (Array.isArray(istoric) && istoric.length > 1 && typeof Chart !== 'undefined') {
+      var c = css('--blue');
+      new Chart(document.getElementById('scor-chart'), {
+        type: 'line',
+        data: { labels: istoric.map(function(x){ return x.luna || x.data || ''; }),
+                datasets: [{ data: istoric.map(function(x){ return x.scor; }), borderColor: c, backgroundColor: c + '22', tension: .3, pointRadius: 3, fill: true }] },
+        options: { plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { min: 0, max: 100, ticks: { maxTicksLimit: 3 } } }, animation: { duration: 400 } }
+      });
+    } else {
+      var nh = document.getElementById('scor-no-history'); if (nh) nh.style.display = 'block';
+    }
+  });
+
+  // ── Căutare în contracte (contracte.json) ────────────────────
+  var contracte = null, perFirma = {};
+  function nz(s){ return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, ' ').trim(); }
+  function slug(s){
+    s = String(s || '').trim().toLowerCase().replace(/[șş]/g,'s').replace(/[țţ]/g,'t').replace(/[ăâ]/g,'a').replace(/î/g,'i')
+      .replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+    return s.slice(0, 60) || 'furnizor';
+  }
+  function lei(v){ return Math.round(Number(v) || 0).toLocaleString('ro-RO') + ' lei'; }
+  function dataRo(s){ var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || ''); return m ? m[3] + '.' + m[2] + '.' + m[1] : ''; }
+  function esc(s){ return String(s || '').replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function incarca(){
+    if (contracte) return Promise.resolve(contracte);
+    return fetch('contracte.json', opts).then(function(r){ return r.json(); }).then(function(c){
+      contracte = Array.isArray(c) ? c : [];
+      contracte.forEach(function(x){ x._k = nz(x.firma + ' ' + x.titlu + ' ' + x.cui); perFirma[x.firma] = (perFirma[x.firma] || 0) + 1; });
+      var firme = {}; contracte.forEach(function(x){ if (x.cui || x.firma) firme[x.cui || nz(x.firma)] = 1; });
+      var el = document.getElementById('idx-firme'); if (el) el.textContent = Object.keys(firme).length;
+      return contracte;
+    });
+  }
+  incarca().catch(function(){});
+  var out = document.getElementById('rezultate');
+  function arata(q){
+    var tok = nz(q).split(' ').filter(Boolean);
+    if (!tok.length) { out.hidden = true; return; }
+    incarca().then(function(c){
+      var gasite = c.filter(function(x){ return tok.every(function(t){ return x._k.indexOf(t) !== -1; }); })
+        .sort(function(a, b){ return (b.data || '').localeCompare(a.data || ''); });
+      var html = '<p class="res-head">' + (gasite.length ? gasite.length + (gasite.length === 1 ? ' contract găsit' : ' de contracte găsite') + ' pentru „' + esc(q) + '”' : 'Niciun contract pentru „' + esc(q) + '”. Încearcă doar o parte din nume sau CUI-ul firmei.') + '</p>';
+      html += gasite.slice(0, 12).map(function(x){
+        var fisa = perFirma[x.firma] >= 3 ? '<a href="furnizori/' + slug(x.firma) + '.html">Toate contractele firmei</a>' : '';
+        return '<div class="res-item"><b>' + esc(x.firma) + '</b><span class="meta">' + esc(x.titlu) + ', ' + lei(x.valoare) + ', ' + dataRo(x.data) + '</span>' +
+          '<div class="links">' + fisa + '<a href="raport_transparenta.html#q=' + encodeURIComponent(x.firma) + '">Semnalele firmei</a></div></div>';
+      }).join('');
+      if (gasite.length > 12) html += '<p class="res-more">Se văd primele 12, cele mai recente. Scrie mai precis ca să restrângi lista.</p>';
+      out.innerHTML = html; out.hidden = false;
+    }).catch(function(){ location.href = 'raport_transparenta.html#q=' + encodeURIComponent(q); });
+  }
+  document.getElementById('cauta').addEventListener('submit', function(e){ e.preventDefault(); arata(document.getElementById('q').value); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-q]'), function(a){
+    a.addEventListener('click', function(e){ e.preventDefault(); var q = a.getAttribute('data-q'); document.getElementById('q').value = q; arata(q); });
+  });
+})();
+</script>
 
 <script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

@@ -8,7 +8,7 @@
 <!-- SEO -->
 <meta name="description" content="Grafice interactive: execuție bugetară pe capitole, evoluție 2020–2025, structura cheltuielilor Primăriei Pantelimon. Date din transparenta.eu / ANAF.">
 <meta name="keywords" content="buget Pantelimon, execuție bugetară, cheltuieli primărie, transparență, ANAF, Ilfov">
-<meta name="author" content="Inițiativă cetățenească independentă">
+<meta name="author" content="Inițiativă civică">
 <link rel="canonical" href="https://transparenta-pantelimon.eu/transparenta_pantelimon.html">
 
 <!-- Open Graph (Facebook, LinkedIn) -->
@@ -32,15 +32,15 @@
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" integrity="sha384-9nhczxUqK87bcKHh20fSQcTGD4qq5GhayNYSYWqwBkINBhOfQLg/P5HG5lF1urn4" crossorigin="anonymous"></script>
 <style>
   :root {
-    --albastru: #00427A;
-    --albastru-deschis: #0070C0;
-    --galben: #FF6B35;
-    --rosu: #C0392B;
-    --portocaliu: #E67E22;
-    --verde: #27AE60;
+    --albastru: #1D3F63;
+    --albastru-deschis: #2A5C8F;
+    --galben: #4D86C2;
+    --rosu: #A23B2C;
+    --portocaliu: #8F5A1E;
+    --verde: #3B6E5A;
     --gri-deschis: #F4F6F9;
     --gri-mediu: #BDC3C7;
-    --text: #1A1A2E;
+    --text: #15243A;
     --alb: #FFFFFF;
   }
 
@@ -56,7 +56,7 @@
 
   /* HEADER */
   header {
-    background: linear-gradient(135deg, #00244A 0%, #00427A 60%, #0070C0 100%);
+    background: #14263D;
     color: var(--alb);
     padding: 0;
     position: relative;
@@ -83,7 +83,7 @@
   }
 
   .badge-civic {
-    background: linear-gradient(90deg, #FF6B35, #FFD700);
+    background: #E6EDF5;
     color: #00427A;
     font-weight: 800;
     padding: 3px 12px;
@@ -178,7 +178,7 @@
   nav.tabs ul li a:hover,
   nav.tabs ul li a.active {
     color: var(--albastru);
-    border-bottom-color: #FF6B35;
+    border-bottom-color: #4D86C2;
     background: rgba(255,107,53,0.05);
   }
 
@@ -694,7 +694,7 @@
   .slogan {
     font-size: 18px;
     font-weight: 700;
-    color: #FFD700;
+    color: #9CC0E6;
     margin-top: 10px;
     margin-bottom: 4px;
     letter-spacing: 0.3px;
@@ -704,12 +704,12 @@
 
   /* FOCUS STYLES — keyboard navigation */
   :focus-visible {
-    outline: 3px solid #FF6B35;
+    outline: 3px solid #4D86C2;
     outline-offset: 2px;
     border-radius: 3px;
   }
   a:focus-visible, button:focus-visible {
-    outline: 3px solid #FF6B35;
+    outline: 3px solid #4D86C2;
     outline-offset: 2px;
   }
 
@@ -755,7 +755,7 @@
     margin-top: 6px;
     display: none;
   }
-  #active-tab-hint strong { color: #FFD700; }
+  #active-tab-hint strong { color: #9CC0E6; }
 
   @media (max-width: 600px) {
     .header-main h1 { font-size: 22px; }
@@ -776,7 +776,7 @@
 <script src="enhance.js" defer></script>
 </head>
 <body>
-<div id="progress-bar" style="position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#FF6B35,#FFD700);z-index:9999;transition:width .1s"></div>
+<div id="progress-bar" style="position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#4D86C2,#9CC0E6);z-index:9999;transition:width .1s"></div>
 <script>
 document.addEventListener('scroll', function() {
   var el = document.getElementById('progress-bar');
@@ -830,7 +830,7 @@ document.addEventListener('scroll', function() {
       </a>
       <button type="button" onclick="window.print()"
               aria-label="Salvează pagina ca fișier PDF prin dialogul de imprimare"
-              style="background:#FF6B35;color:#00427A;border:none;padding:9px 18px;border-radius:8px;
+              style="background:#4D86C2;color:#00427A;border:none;padding:9px 18px;border-radius:8px;
                      font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
         <span aria-hidden="true">🖨️</span> Salvează ca PDF
       </button>
@@ -2186,8 +2186,8 @@ document.addEventListener('scroll', function() {
   <div style="max-width:1100px;margin:0 auto">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px;margin-bottom:28px">
       <div>
-        <div style="font-size:18px;font-weight:800;color:#FFD700;margin-bottom:8px">💡 Aprindem lumina în Pantelimon</div>
-        <div style="font-size:13px;line-height:1.7;opacity:0.85">Inițiativă civică independentă pentru transparența cheltuielilor publice ale Primăriei Pantelimon.</div>
+        <div style="font-size:18px;font-weight:800;color:#9CC0E6;margin-bottom:8px">💡 Aprindem lumina în Pantelimon</div>
+        <div style="font-size:13px;line-height:1.7;opacity:0.85">Inițiativă civică pentru transparența cheltuielilor publice ale Primăriei Pantelimon.</div>
       </div>
       <div>
         <div style="font-weight:700;color:#fff;margin-bottom:10px;font-size:14px">📋 Resurse rapide</div>
@@ -2759,7 +2759,7 @@ function printCitizenReport() {
 </head><body>
 
 <div class="center">
-  <p style="font-size:10pt;color:#555">Inițiativă civică independentă — Pantelimon, Ilfov</p>
+  <p style="font-size:10pt;color:#555">Inițiativă civică — Pantelimon, Ilfov</p>
   <h1>SOLICITARE DE VERIFICARE<br>A UNUI SEMNAL DIN DATELE PUBLICE</h1>
   <p style="font-size:11pt"><strong>Autoritatea contractantă:</strong> Primăria Pantelimon, județul Ilfov<br>
   <strong>CUI:</strong> 4420759 &nbsp;|&nbsp; <strong>Data raportului:</strong> ${dateStr}</p>
@@ -2930,7 +2930,7 @@ document.addEventListener('DOMContentLoaded', function() {
         datasets: [{
           data: [16.7, 8.3, 18.6, 4.3, 7.9, 13.1, 24.0, 4.8],
           backgroundColor: [
-            '#00427A','#0070C0','#FF6B35','#C0392B',
+            '#00427A','#0070C0','#4D86C2','#C0392B',
             '#27AE60','#E67E22','#8E44AD','#BDC3C7'
           ]
         }]

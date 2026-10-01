@@ -4428,7 +4428,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
 <!-- SEO -->
 <meta name="description" content="{seo_description}">
 <meta name="keywords" content="transparență, Pantelimon, primărie, achiziții publice, SEAP, ANAF, monitorizare cetățenească, Ilfov, semnale de risc, raport">
-<meta name="author" content="Inițiativă cetățenească independentă">
+<meta name="author" content="Inițiativă civică">
 <link rel="canonical" href="https://transparenta-pantelimon.eu/raport_transparenta.html">
 
 <!-- Open Graph (Facebook, LinkedIn) -->
@@ -4560,7 +4560,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
     </div>
     <h1 style="font-size:26px;font-weight:800;margin:0 0 6px">
       Raport Transparență Bugetară<br>
-      <span style="color:#FF6B35">{config['nume_entitate']}</span>
+      <span style="color:#4D86C2">{config['nume_entitate']}</span>
     </h1>
     <p style="opacity:.85;margin:0">Generat automat la {data_generare} · CUI: {config['cui']}</p>
     <div style="margin-top:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap" class="no-print">
@@ -4571,7 +4571,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
         ← Pagina Principală
       </a>
       <button onclick="printRaport()"
-              style="background:#FF6B35;color:#00427A;border:none;padding:9px 20px;
+              style="background:#4D86C2;color:#00427A;border:none;padding:9px 20px;
                      border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;
                      display:inline-flex;align-items:center;gap:8px">
         🖨️ Salvează ca PDF / Tipărește
@@ -4586,7 +4586,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
         <div style="font-size:11px;opacity:.8">Semnale automate</div>
       </div>
       <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
-        <div style="font-size:22px;font-weight:800;color:{"#FF6B35" if flags_noi else "#27AE60"}">{len(flags_noi)}</div>
+        <div style="font-size:22px;font-weight:800;color:{"#4D86C2" if flags_noi else "#27AE60"}">{len(flags_noi)}</div>
         <div style="font-size:11px;opacity:.8">Semnale noi (față de ultima rulare)</div>
       </div>
       <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
@@ -5128,12 +5128,12 @@ function closeFirmaPanel() {{
 document.addEventListener('keydown', function(e) {{ if (e.key==='Escape') closeFirmaPanel(); }});
 </script>
 <footer style="background:#00427A;color:rgba(255,255,255,.7);text-align:center;padding:16px;font-size:12px;margin-top:40px">
-  <p>Surse date: <a href="https://transparenta.eu/entities/{config['cui']}#achizitii" target="_blank" rel="noopener noreferrer" style="color:#FF6B35">transparenta.eu</a> (ANAF/MF) &nbsp;·&nbsp;
-     <a href="https://www.e-licitatie.ro/pub" target="_blank" rel="noopener noreferrer" style="color:#FF6B35">e-licitatie.ro (SEAP)</a> &nbsp;·&nbsp;
-     <a href="https://www.primariapantelimon.ro" target="_blank" rel="noopener noreferrer" style="color:#FF6B35">primariapantelimon.ro</a></p>
+  <p>Surse date: <a href="https://transparenta.eu/entities/{config['cui']}#achizitii" target="_blank" rel="noopener noreferrer" style="color:#4D86C2">transparenta.eu</a> (ANAF/MF) &nbsp;·&nbsp;
+     <a href="https://www.e-licitatie.ro/pub" target="_blank" rel="noopener noreferrer" style="color:#4D86C2">e-licitatie.ro (SEAP)</a> &nbsp;·&nbsp;
+     <a href="https://www.primariapantelimon.ro" target="_blank" rel="noopener noreferrer" style="color:#4D86C2">primariapantelimon.ro</a></p>
   <p style="margin-top:6px;font-size:11px;opacity:.7">
     Raport generat automat de <strong>monitor_pantelimon.py</strong> &nbsp;·&nbsp;
-    Inițiativă cetățenească independentă &nbsp;·&nbsp;
+    Inițiativă civică &nbsp;·&nbsp;
     Datele sunt extrase exclusiv din surse publice oficiale.
   </p>
 <script type="application/json" id="tp-data">{raport_json_embedded}</script>
@@ -5229,7 +5229,7 @@ def genereaza_feed_atom(nereguli: list, data_generare: datetime) -> str:
         f'  <link href="{BASE}/raport_transparenta.html"/>\n'
         f"  <updated>{updated}</updated>\n"
         f"  <id>{BASE}/feed.xml</id>\n"
-        "  <author><name>Inițiativă cetățenească independentă</name></author>\n"
+        "  <author><name>Inițiativă civică</name></author>\n"
         + "\n".join(entries) + "\n"
         "</feed>\n"
     )
@@ -5264,7 +5264,7 @@ Monitor Transparență Bugetară — Pantelimon
 Raport complet: https://transparenta-pantelimon.eu/raport_transparenta.html
 
 ---
-Inițiativă cetățenească independentă · Date din surse publice oficiale.
+Inițiativă civică · Date din surse publice oficiale.
 """
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subiect
@@ -5668,10 +5668,16 @@ def actualizeaza_contoare_analiza(contracte_export: list) -> None:
 
 
 def genereaza_og_image(n_flags: int, n_critic: int, valoare_mil: float,
-                       scor: int = None, output: str = "og-image.png") -> bool:
+                       scor: int = None, output: str = "og-image.png",
+                       n_contracte: int = None) -> bool:
     """
-    §5.7 AUDIT.md — Generează og-image.png (1200×630px) cu statisticile curente.
+    §5.7 AUDIT.md — Generează og-image.png (1200×630px), imaginea generală a site-ului.
     Returnează True dacă imaginea a fost creată, False dacă Pillow nu e disponibil.
+
+    Din oct. 2026: tema „Registru” (bleumarin, fără roșu de alarmă) și fără valoarea
+    totală însumată — suma din export include dubluri (asocieri listate la fiecare
+    firmă, republicări), deci nu e o cifră bună pentru o imagine distribuită.
+    `valoare_mil` și `n_critic` rămân în semnătură pentru compatibilitate.
     """
     try:
         from PIL import Image, ImageDraw, ImageFont
@@ -5679,71 +5685,46 @@ def genereaza_og_image(n_flags: int, n_critic: int, valoare_mil: float,
         print("  [WARN] Pillow nu e instalat — og-image.png nu a fost generat.")
         return False
 
-    img = Image.new('RGB', (1200, 630), '#0a1628')
+    baza = os.path.dirname(os.path.abspath(__file__))
+
+    def _font(size, bold=True):
+        nume = "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"
+        for path in [
+            os.path.join(baza, "assets", "fonts", nume),
+            os.path.join("/usr/share/fonts/truetype/dejavu", nume),
+            r'C:\Windows\Fonts\arialbd.ttf' if bold else r'C:\Windows\Fonts\arial.ttf',
+        ]:
+            try:
+                return ImageFont.truetype(path, size)
+            except (OSError, IOError):
+                continue
+        return ImageFont.load_default()
+
+    img = Image.new('RGB', (1200, 630), '#14263D')
     d = ImageDraw.Draw(img)
-
-    # Bandă de accent
-    d.rectangle([(0, 0), (8, 630)], fill='#dc2626')
-
-    # Încercăm fonturi sistem; fallback la default
-    def _font(size):
-        for path in [
-            r'C:\Windows\Fonts\calibrib.ttf',
-            r'C:\Windows\Fonts\arialbd.ttf',
-            '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',
-            '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf',
-        ]:
-            try:
-                return ImageFont.truetype(path, size)
-            except (OSError, IOError):
-                continue
-        return ImageFont.load_default()
-
-    def _font_reg(size):
-        for path in [
-            r'C:\Windows\Fonts\calibri.ttf',
-            r'C:\Windows\Fonts\arial.ttf',
-            '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
-            '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
-        ]:
-            try:
-                return ImageFont.truetype(path, size)
-            except (OSError, IOError):
-                continue
-        return ImageFont.load_default()
-
-    # Header
-    d.text((40, 40), 'Transparența Pantelimon', fill='#94a3b8', font=_font_reg(30))
-    d.text((40, 90), 'transparenta-pantelimon.eu', fill='#64748b', font=_font_reg(22))
-
-    # Numărul de semnale automate
-    d.text((40, 150), f'{n_flags}', fill='#dc2626', font=_font(130))
-    d.text((40, 290), 'semnale automate', fill='#ffffff', font=_font(44))
-
-    # Statistici secundare
-    d.text((40, 370), f'{n_critic} CRITICE', fill='#f59e0b', font=_font(36))
-    d.text((40, 420), f'{valoare_mil:.0f} mil. RON contracte analizate', fill='#cbd5e1', font=_font_reg(28))
-
-    # Scor (dacă disponibil)
-    if scor is not None:
-        d.rectangle([(40, 480), (500, 540)], fill='#1e3a5f')
-        d.text((55, 490), f'Scor transparență: {scor}/100', fill='#ffffff', font=_font_reg(30))
-
-    # Siglă
-    d.text((750, 560), 'Inițiativă civică independentă', fill='#475569', font=_font_reg(22))
+    d.rectangle([(0, 0), (12, 630)], fill='#4D86C2')
+    d.text((64, 52), 'Transparența Pantelimon', fill='#A9B8CC', font=_font(26))
+    if n_contracte:
+        titlu = [f'{n_contracte} de contracte', 'ale primăriei, într-un', 'singur loc.']
+    else:
+        titlu = ['Contractele primăriei,', 'într-un singur loc.']
+    y = 120
+    for linie in titlu:
+        d.text((64, y), linie, fill='#FFFFFF', font=_font(66))
+        y += 80
+    d.text((64, y + 18), 'Caută o firmă și vezi ce a primit, pentru ce și când.', fill='#C3CEDD', font=_font(30, False))
+    if n_flags:
+        d.text((64, y + 74), f'{n_flags} de semnale automate de verificat', fill='#9CC0E6', font=_font(30))
+    d.line([(64, 552), (1136, 552)], fill='#2B4364', width=2)
+    d.text((64, 570), 'Verifică singur: transparenta-pantelimon.eu', fill='#FFFFFF', font=_font(26))
 
     try:
         img.save(output, 'PNG', optimize=True)
-        print(f"  [OK] og-image.png generat ({n_flags} semnale, {n_critic} critice)")
+        print(f"  [OK] og-image.png generat ({n_flags} semnale)")
         return True
     except Exception as e:
         print(f"  [WARN] og-image.png: eroare la salvare: {e}")
         return False
-
-
-# ==============================================================================
-# §5.1  PRESS KIT AUTO-GENERAT — pentru jurnaliști și ONG-uri
-# ==============================================================================
 
 def genereaza_press_kit(
     nereguli: list,
@@ -6375,7 +6356,7 @@ def genereaza_pagina_furnizor(
   {mentiuni_auto_html}
   {firme_legate_html}
   <footer>
-    Date extrase din surse publice oficiale (SEAP / data.gov.ro) · Inițiativă cetățenească independentă
+    Date extrase din surse publice oficiale (SEAP / data.gov.ro) · Inițiativă civică
   </footer>
 </div>
 <script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
@@ -6431,7 +6412,7 @@ def genereaza_index_furnizori(index: list) -> str:
     <tbody>{rânduri}</tbody>
   </table>
   </div>
-  <footer>Date extrase din surse publice oficiale · Inițiativă cetățenească independentă</footer>
+  <footer>Date extrase din surse publice oficiale · Inițiativă civică</footer>
 </div>
 <script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
@@ -6679,6 +6660,7 @@ def regenereaza_din_exporturile_existente() -> None:
         sum(1 for flag in toate_flags if flag.get("severitate") == "CRITIC"),
         round(total_valoare / 1_000_000, 1),
         scor.get("scor"),
+        n_contracte=len(contracte),
     )
     actualizeaza_tabel_contracte(contracte_export)
     actualizeaza_kpi_seap(contracte_export)
@@ -7070,6 +7052,7 @@ def main():
         n_critic=sum(1 for f in toate_flags if f.get("severitate") == "CRITIC"),
         valoare_mil=_val_mil,
         scor=_scor_val,
+        n_contracte=len(contracte),
     )
 
     # Export feed.xml (Atom) pentru cititori RSS / jurnaliști
