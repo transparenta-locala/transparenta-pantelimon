@@ -1,0 +1,13 @@
+IP runner: 20.55.214.67
+curl: (28) Connection timed out after 25001 milliseconds
+curl 000 25.001472s
+monitor-headers EROARE ConnectTimeout 15.2s
+fara-headers EROARE ConnectTimeout 15.1s
+curl: (28) Connection timed out after 25002 milliseconds
+curl 000 25.002679s
+monitor-headers EROARE ConnectTimeout 15.1s
+fara-headers EROARE ConnectTimeout 15.1s
+curl: (28) Connection timed out after 25002 milliseconds
+curl 000 25.002393s
+monitor-headers EROARE ConnectTimeout 15.1s
+fara-headers EROARE ConnectTimeout 15.0s
