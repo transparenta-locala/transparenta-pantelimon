@@ -3,32 +3,45 @@ name: 🔌 Diagnostic conectivitate surse
 "on":
   push:
     branches: ['diag/**']
-  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: data.gov.ro API
-        continue-on-error: true
-        run: curl -sS -m 25 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://data.gov.ro/api/3/action/package_show?id=achizitii-publice-2026"
-      - name: data.gov.ro pagina
-        continue-on-error: true
-        run: curl -sS -m 25 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://data.gov.ro/"
-      - name: e-licitatie.ro API publica
-        continue-on-error: true
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - name: Teste
         run: |
-          curl -sS -m 25 -X POST -H "Content-Type: application/json" \
-            -d '{"pageSize":5,"pageIndex":0,"showOngoingDa":false,"publicationDateStart":"2026-01-01T00:00:00.000Z","publicationDateEnd":"2026-09-30T00:00:00.000Z"}' \
-            -o /tmp/r.json -w "%{http_code} %{time_total}s\n" "https://e-licitatie.ro/api-pub/DirectAcquisitionCommon/GetDirectAcquisitionList/"
-          head -c 300 /tmp/r.json; echo
-          grep -q '"total"' /tmp/r.json
-      - name: transparenta.eu
-        continue-on-error: true
-        run: curl -sS -m 25 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://transparenta.eu/entities/4420759"
-      - name: primariapantelimon.ro
-        continue-on-error: true
-        run: curl -sS -m 25 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://www.primariapantelimon.ro/hotarari-2025/"
-      - name: ANAF webservicesp
-        continue-on-error: true
-        run: curl -sS -m 25 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://webservicesp.anaf.ro/"
+          {
+          echo "== DNS"; getent ahosts data.gov.ro | head -5
+          for u in "https://data.gov.ro/api/3/action/package_show?id=achizitii-publice-2026" "https://e-licitatie.ro/pub" "https://transparenta.eu/entities/4420759" "https://www.primariapantelimon.ro/hotarari-2025/"; do
+            echo "== curl $u"; curl -sS -m 25 -o /dev/null -w "%{http_code} ip=%{remote_ip} %{time_total}s\n" "$u" 2>&1
+            echo "== curl -4 $u"; curl -4 -sS -m 25 -o /dev/null -w "%{http_code} ip=%{remote_ip} %{time_total}s\n" "$u" 2>&1
+          done
+          echo "== python requests (ca monitorul)"
+          python - <<'PY'
+          import requests, time
+          for u in ["https://data.gov.ro/api/3/action/package_show?id=achizitii-publice-2026",
+                    "https://data.gov.ro/api/3/action/package_show?id=achizitii-publice-2025"]:
+              t=time.time()
+              try:
+                  r=requests.get(u, timeout=20, headers={"User-Agent":"Mozilla/5.0 (compatible; MonitorTransparenta/1.0)"})
+                  j=r.json(); res=j.get("result",{}).get("resources",[])
+                  print(u, r.status_code, f"{time.time()-t:.1f}s", "resurse:", len(res))
+                  for x in res[:3]: print("   ", x.get("name"), x.get("url"))
+              except Exception as e:
+                  print(u, "EROARE", repr(e)[:300])
+          PY
+          echo "== SEAP API"
+          curl -sS -m 25 -X POST -H "Content-Type: application/json" -d '{"pageSize":2,"pageIndex":0,"showOngoingDa":false,"supplierId":124356,"publicationDateStart":"2026-01-01T00:00:00.000Z","publicationDateEnd":"2026-09-30T00:00:00.000Z"}' "https://e-licitatie.ro/api-pub/DirectAcquisitionCommon/GetDirectAcquisitionList/" | head -c 400; echo
+          } > diag.txt 2>&1 || true
+          cat diag.txt
+      - name: Salvez rezultatul
+        run: |
+          git config user.email "diag@transparenta-pantelimon.eu"; git config user.name "diag"
+          git add diag.txt && git commit -m "diag: rezultat [skip ci]" && git push
