@@ -1,4 +1,4 @@
-# Press kit — Transparența Pantelimon (25.09.2026)
+# Press kit — Transparența Pantelimon (01.10.2026)
 
 Monitorizare cetățenească automată a achizițiilor publice — Orașul Pantelimon.
 
@@ -49,4 +49,4 @@ https://transparenta-pantelimon.eu/despre.html
 Semnalele sunt indicatori euristici și nu reprezintă constatări juridice sau prejudicii.
 
 ---
-*Generat automat de monitor_pantelimon.py la 2026-09-25*
+*Generat automat de monitor_pantelimon.py la 2026-10-01*
