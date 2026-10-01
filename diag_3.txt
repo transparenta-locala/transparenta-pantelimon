@@ -1,0 +1,13 @@
+IP runner: 64.236.145.64
+curl: (28) Connection timed out after 25001 milliseconds
+curl 000 25.001218s
+monitor-headers EROARE ConnectTimeout 15.4s
+fara-headers EROARE ConnectTimeout 15.4s
+curl: (28) Connection timed out after 25001 milliseconds
+curl 000 25.001480s
+monitor-headers EROARE ConnectTimeout 15.4s
+fara-headers EROARE ConnectTimeout 15.4s
+curl: (28) Connection timed out after 25002 milliseconds
+curl 000 25.002263s
+monitor-headers EROARE ConnectTimeout 15.4s
+fara-headers EROARE ConnectTimeout 15.0s
