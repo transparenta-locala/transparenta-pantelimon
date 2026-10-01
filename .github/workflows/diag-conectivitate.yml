@@ -7,13 +7,19 @@ name: 🔌 Diagnostic conectivitate surse
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
+      fail-fast: false
       matrix:
         n: [1, 2, 3, 4]
     steps:
+      - uses: actions/checkout@v4
       - run: pip install requests
       - name: Teste
         run: |
+          set +e
+          {
           echo "IP runner: $(curl -s -m 10 https://api.ipify.org)"
           for i in 1 2 3; do
             curl -sS -m 25 -o /dev/null -w "curl %{http_code} %{time_total}s\n" "https://data.gov.ro/api/3/action/package_show?id=achizitii-publice-2026" 2>&1
@@ -28,5 +34,12 @@ jobs:
               except Exception as e:
                   print(nume, "EROARE", type(e).__name__, f"{time.time()-t:.1f}s")
           PY
-            sleep 20
+            sleep 15
           done
+          } > "diag_${{ matrix.n }}.txt" 2>&1
+          cat "diag_${{ matrix.n }}.txt"
+      - name: Salvez
+        run: |
+          git config user.email "diag@transparenta-pantelimon.eu"; git config user.name "diag"
+          git add diag_*.txt; git commit -m "diag ${{ matrix.n }} [skip ci]"
+          for i in 1 2 3 4 5; do git pull --rebase -q && git push -q && break; sleep $((RANDOM % 10 + 3)); done
