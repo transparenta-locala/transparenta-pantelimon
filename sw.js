@@ -6,8 +6,8 @@
  * Permite consultare offline a raportului și paginii principale.
  */
 
-const CACHE_VERSION = 'tp-v7';
-const CACHE_STATIC = 'tp-static-v7';
+const CACHE_VERSION = 'tp-v8';
+const CACHE_STATIC = 'tp-static-v8';
 const CACHE_DATA   = 'tp-data-v2';
 
 // Resurse core — pre-cached la install (offline-first pentru navigare)
@@ -22,6 +22,7 @@ const CORE_URLS = [
   '/despre.html',
   '/petitie.html',
   '/gdpr.html',
+  '/modele.html',
   '/offline.html',
 ];
 
