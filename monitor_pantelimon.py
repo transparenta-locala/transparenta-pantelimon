@@ -280,7 +280,7 @@ def _fetch_contracts_seap_live(cui: str, luni: int = 12) -> tuple:
     # Fișierele "Contracte" sunt ~22MB; "Achizitii directe" sunt ~57MB.
     # Runnerul GitHub Actions are 7GB RAM și openpyxl read_only iterează lazy,
     # deci putem procesa și fișierul mare. Plafon generos doar ca siguranță.
-    MAX_FILE_MB = 80 if IS_CI else 200
+    MAX_FILE_MB = 150 if IS_CI else 200
 
     debug_log = [f"IS_CI={IS_CI} MAX_FILE_MB={MAX_FILE_MB}MB cui={cui}"]
     print(f"  [data.gov.ro] Caut contracte pentru CUI {cui} (IS_CI={IS_CI}, max={MAX_FILE_MB}MB)...")
@@ -293,10 +293,21 @@ def _fetch_contracts_seap_live(cui: str, luni: int = 12) -> tuple:
     for an in ani_de_verificat:
         package_id = f"achizitii-publice-{an}"
         try:
-            r = requests.get(
-                f"{DATAGOV_BASE}/package_show?id={package_id}",
-                timeout=20, headers=HEADERS
-            )
+            # data.gov.ro răspunde uneori lent / deloc din rețeaua GitHub (vezi seap_debug
+            # din iun.–sep. 2026: „connect timeout=20”). 3 încercări, cu pauze crescătoare.
+            r = None
+            for incercare in range(3):
+                try:
+                    r = requests.get(
+                        f"{DATAGOV_BASE}/package_show?id={package_id}",
+                        timeout=(30, 60), headers=HEADERS
+                    )
+                    break
+                except requests.exceptions.RequestException as e_req:
+                    debug_log.append(f"Pachet {an} încercarea {incercare + 1}: {e_req}")
+                    if incercare == 2:
+                        raise
+                    time.sleep(20 * (incercare + 1))
             if r.status_code != 200:
                 msg = f"Pachet {an} HTTP {r.status_code}"
                 print(f"    \u26a0 {msg}")
@@ -6787,6 +6798,10 @@ def main():
                 ]
                 seap_debug.append(f"FALLBACK: loaded {len(contracte)} contracte din contracte.json")
                 print(f"  ↩ Fallback: {len(contracte)} contracte din contracte.json (data.gov.ro inaccesibil)")
+                if os.environ.get("GITHUB_ACTIONS"):
+                    # vizibil în pagina rulării: datele SEAP NU au fost reîmprospătate
+                    print("::warning title=Date SEAP nereîmprospătate::data.gov.ro nu a răspuns; "
+                          "raportul folosește contracte.json din rularea anterioară.")
             except Exception as _fe:
                 seap_debug.append(f"FALLBACK FAIL: {_fe}")
 
