@@ -41,7 +41,7 @@ _FONT_DIR = os.path.join(_ROOT, "assets", "fonts")
 
 CULORI_SEV = {"CRITIC": "#A23B2C", "MAJOR": "#8F5A1E", "MEDIU": "#5E6B78"}
 # Etichete afișate (datele păstrează CRITIC/MAJOR/MEDIU)
-ETICHETE_SEV = {"CRITIC": "Prioritate ridicată", "MAJOR": "Prioritate medie", "MEDIU": "De urmărit"}
+ETICHETE_SEV = {"CRITIC": "Semnal CRITIC", "MAJOR": "Semnal MAJOR", "MEDIU": "Semnal MEDIU"}
 FUNDAL = "#14263D"
 DISCLAIMER = "Indicator automat din datele SEAP, nu o constatare juridică."
 

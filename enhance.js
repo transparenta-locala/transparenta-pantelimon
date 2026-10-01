@@ -32,11 +32,11 @@
       MAJOR:  '#8F5A1E',
       MEDIU:  '#5E6B78',
     },
-    // Etichete afișate; datele (data-severity, raport.json) păstrează CRITIC/MAJOR/MEDIU
+    // Etichete afișate pe pastile (aceleași cu datele)
     sevLabel: {
-      CRITIC: 'Prioritate ridicată',
-      MAJOR:  'Prioritate medie',
-      MEDIU:  'De urmărit',
+      CRITIC: 'CRITIC',
+      MAJOR:  'MAJOR',
+      MEDIU:  'MEDIU',
     },
   };
 
@@ -1239,7 +1239,7 @@ html.tp-theme .container .back-link { color: var(--tp-link); }
           </select>
           <select class="tp-select" id="tp-sort" aria-label="Sortare">
             <option value="idx-asc">Sortare: ordinea originală</option>
-            <option value="sev-asc">Prioritate (ridicată întâi)</option>
+            <option value="sev-asc">Severitate (CRITIC întâi)</option>
             <option value="sum-desc">Sumă (mare → mic)</option>
             <option value="sum-asc">Sumă (mic → mare)</option>
             <option value="supplier-asc">Furnizor (A → Z)</option>
@@ -1683,7 +1683,7 @@ html.tp-theme .container .back-link { color: var(--tp-link); }
     if (stats) {
       stats.innerHTML = `
       <span><strong>${visible.length}</strong> / ${items.length} semnale afișate</span>
-        <span>${CFG.sevLabel.CRITIC}: <strong>${byS.CRITIC || 0}</strong>, ${CFG.sevLabel.MAJOR.toLowerCase()}: <strong>${byS.MAJOR || 0}</strong>, ${CFG.sevLabel.MEDIU.toLowerCase()}: <strong>${byS.MEDIU || 0}</strong></span>
+        <span>CRITIC: <strong>${byS.CRITIC || 0}</strong>, MAJOR: <strong>${byS.MAJOR || 0}</strong>, MEDIU: <strong>${byS.MEDIU || 0}</strong></span>
         <span>Total: <strong>${fmtRON(totalSum)}</strong></span>
         ${state.shown < visible.length ? `<span style="color: var(--tp-muted)">Vizibile primele ${Math.min(state.shown, visible.length)}</span>` : ''}
       `;
@@ -2238,10 +2238,6 @@ html.tp-theme .container .back-link { color: var(--tp-link); }
         pill.style.cssText = `--sev:var(--tp-${sevVar});--sev-t:var(--tp-${sevVar}-t);margin-right:8px`;
         div.append(pill, document.createTextNode(titlu));
         div.style.color = 'var(--tp-fg)';
-      });
-      $$('.container .stat-lbl').forEach(l => {
-        const m = /^Semnale (CRITIC|MAJOR|MEDIU)$/.exec(l.textContent.trim());
-        if (m) l.textContent = CFG.sevLabel[m[1]];
       });
       $$('.container .ext-btn').forEach(stripLeadingEmoji);
     }
