@@ -649,6 +649,10 @@ html.tp-theme [style*="border-top:4px solid"] { border-top: 3px solid var(--tp-l
 html.tp-theme [style*="border-top:4px solid"] > span:first-child { color: var(--tp-fg) !important; font-family: var(--tp-serif); }
 html.tp-theme thead { background: var(--tp-accent-d) !important; }
 html.tp-theme [style*="background:#F4F6F9"], html.tp-theme [style*="background:#f5f7fa"] { background: var(--tp-paper) !important; }
+/* Tema întunecată: griurile inline gândite pentru fond alb */
+html[data-tp-theme="dark"].tp-theme :is([style*="color:#333"],[style*="color:#444"],[style*="color:#1A1A2E"],[style*="color:#1a1a1a"]) { color: var(--tp-fg) !important; }
+html[data-tp-theme="dark"].tp-theme :is([style*="color:#555"],[style*="color:#666"],[style*="color:#777"],[style*="color:#888"],[style*="color:#999"],[style*="color:#aaa"],[style*="color:#bbb"]) { color: var(--tp-muted) !important; }
+html[data-tp-theme="dark"].tp-theme :is([style*="background:#fff"],[style*="background:#F4F6F8"],[style*="background:#f8f9fa"],[style*="background:#f5f5f5"]) { background: var(--tp-card-bg) !important; }
 /* Fișe furnizori */
 html.tp-theme .container .stat { box-shadow: none; border: 1px solid var(--tp-border); border-radius: 6px; }
 html.tp-theme .container .stat-val { font-family: var(--tp-serif); font-weight: 600; color: var(--tp-fg); }
@@ -928,9 +932,14 @@ html.tp-theme .container .back-link { color: var(--tp-link); }
         e.stopPropagation();
         const isOpen = nav.classList.toggle('open');
         hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        // pe telefon, „Mai mult” se arată ca listă deschisă sub meniul principal
+        const moreEl = nav.querySelector('.tp-more');
+        if (moreEl) moreEl.open = isOpen;
       });
       document.addEventListener('click', (e) => {
         if (!nav.contains(e.target)) { nav.classList.remove('open'); hamburgerBtn.setAttribute('aria-expanded', 'false'); }
+        const moreEl = nav.querySelector('.tp-more');
+        if (moreEl && moreEl.open && !moreEl.contains(e.target) && !nav.classList.contains('open')) moreEl.open = false;
       });
       nav.querySelectorAll('.tp-nav-links a').forEach(a => {
         a.addEventListener('click', () => { nav.classList.remove('open'); hamburgerBtn.setAttribute('aria-expanded', 'false'); });
