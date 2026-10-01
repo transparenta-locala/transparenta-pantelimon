@@ -548,7 +548,7 @@ html.tp-theme h1, html.tp-theme h2, html.tp-theme h3 { font-family: var(--tp-ser
 .tp-more-list { position: absolute; right: 0; top: 100%; background: var(--tp-bg); border: 1px solid var(--tp-border); border-radius: 8px; box-shadow: 0 10px 30px rgba(21,36,58,.12); padding: 6px; min-width: 260px; z-index: 300; }
 .tp-more-list a { display: flex; min-height: 44px; padding: 0 12px; font-weight: 400; border-radius: 6px; }
 .tp-more-list a:hover { background: var(--tp-tint); }
-.tp-theme-toggle { border: 1px solid var(--tp-border); color: var(--tp-muted); width: 40px; height: 40px; padding: 0; border-radius: 8px; font-size: 1.1rem; }
+.tp-theme-toggle { border: 1px solid var(--tp-border); color: var(--tp-muted); width: 40px; height: 40px; padding: 0; border-radius: 8px; display: inline-grid; place-items: center; }
 @media (max-width: 1000px) {
   .tp-nav-inner { padding: 0 16px; min-height: 58px; gap: 8px; }
   .tp-hamburger { display: flex !important; order: 3; }
@@ -916,7 +916,7 @@ html.tp-theme .container .back-link { color: var(--tp-link); }
           ${linksHTML}
           <details class="tp-more"><summary>Mai mult</summary><div class="tp-more-list">${more.map(linkHTML).join('')}</div></details>
         </div>
-        <button class="tp-theme-toggle" id="tp-theme-btn" aria-label="Comută temă luminoasă/întunecată" title="Temă luminoasă / întunecată"><span aria-hidden="true">◐</span></button>
+        <button class="tp-theme-toggle" id="tp-theme-btn" aria-label="Comută temă luminoasă/întunecată" title="Temă luminoasă / întunecată"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 2a8 8 0 0 1 0 16z" fill="currentColor"/></svg></button>
       </div>
     `;
     document.body.insertBefore(nav, skipLink.nextSibling);
