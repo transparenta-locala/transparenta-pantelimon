@@ -123,7 +123,10 @@ jobs:
           # Curăță fișiere neadăugate (ex. __pycache__, tmp) care ar bloca rebase-ul
           git checkout -- . 2>/dev/null || true
           git clean -fd 2>/dev/null || true
-          git pull --rebase origin main
-          git push
+          # Rebase pe ramura rulării (main la rularea programată; o ramură de probă la
+          # pornirea manuală pe ramură) — checkout-ul e superficial, iar un rebase pe main
+          # dintr-o altă ramură dădea conflicte add/add pe toate fișierele.
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
 
