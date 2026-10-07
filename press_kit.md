@@ -1,4 +1,4 @@
-# Press kit — Transparența Pantelimon (01.10.2026)
+# Press kit — Transparența Pantelimon (07.10.2026)
 
 Monitorizare cetățenească automată a achizițiilor publice — Orașul Pantelimon.
 
@@ -6,28 +6,28 @@ Monitorizare cetățenească automată a achizițiilor publice — Orașul Pante
 
 | Indicator | Valoare |
 |---|---|
-| Semnale automate totale | 227 |
-| Contracte unice cu semnale | 163 |
-| Critice / Majore / Medii | 17 / 68 / 142 |
-| Contracte analizate | 506 |
-| Valoare totală contracte | 313.68 M RON |
-| Scor transparență | 37/100 |
+| Semnale automate totale | 340 |
+| Contracte unice cu semnale | 242 |
+| Critice / Majore / Medii | 26 / 97 / 217 |
+| Contracte analizate | 704 |
+| Valoare totală contracte | 203.82 M RON |
+| Scor transparență | 23/100 |
 
 ## Top 5 semnale (severitate + valoare)
 
-1. [CRITIC] **Furnizor cu indicatori cumulați — 4 categorii** — Constopograf Expert — 1,890,000 RON
-2. [CRITIC] **Furnizor cu indicatori cumulați — 3 categorii** — RALEX PROIECT CONSTRUCT — 997,350 RON
-3. [CRITIC] **Furnizor cu indicatori cumulați — 3 categorii** — GEMCO TRADE — 946,470 RON
-4. [CRITIC] **Furnizor cu indicatori cumulați — 3 categorii** — BETIRA CONSTRUCT — 802,776 RON
-5. [CRITIC] **Furnizor cu indicatori cumulați — 3 categorii** — PERCONS EU — 721,000 RON
+1. [CRITIC] **Furnizor cu indicatori cumulați — 4 categorii** — BETIRA CONSTRUCT — 9,571,901 RON
+2. [CRITIC] **Furnizor cu indicatori cumulați — 5 categorii** — Constopograf Expert — 2,160,000 RON
+3. [CRITIC] **Furnizor cu indicatori cumulați — 3 categorii** — GEMCO TRADE — 1,216,430 RON
+4. [CRITIC] **Furnizor cu indicatori cumulați — 4 categorii** — RALEX PROIECT CONSTRUCT — 1,117,350 RON
+5. [CRITIC] **Furnizor cu indicatori cumulați — 4 categorii** — FINANCE PUBLIC CONSULTING — 1,045,000 RON
 
 ## Top 5 firme după valoare contracte
 
-1. **ALA EXPERT CONSTRUCT** — 29.51 M RON (1 contracte)
-2. **SANTIA PARTNER CONSTRUCT** — 29.51 M RON (1 contracte)
-3. **YARDMAN** — 29.51 M RON (1 contracte)
-4. **GLOBEXTERRA** — 24.18 M RON (1 contracte)
-5. **ROMCO SYSTEM S.R.L.** — 24.18 M RON (1 contracte)
+1. **SANTIA PARTNER CONSTRUCT** — 29.51 M RON (1 contracte)
+2. **YARDMAN** — 29.51 M RON (1 contracte)
+3. **ALA EXPERT CONSTRUCT** — 29.51 M RON (1 contracte)
+4. **ROMCO SYSTEM S.R.L.** — 24.74 M RON (1 contracte)
+5. **GLOBEXTERRA** — 24.74 M RON (1 contracte)
 
 ## Date deschise
 
@@ -49,4 +49,4 @@ https://transparenta-pantelimon.eu/despre.html
 Semnalele sunt indicatori euristici și nu reprezintă constatări juridice sau prejudicii.
 
 ---
-*Generat automat de monitor_pantelimon.py la 2026-10-01*
+*Generat automat de monitor_pantelimon.py la 2026-10-07*

@@ -1,6 +1,116 @@
 {
   "nodes": [
     {
+      "id": "45058860",
+      "label": "TOP A-Z CONCEPT S.R.L.",
+      "cui": "45058860",
+      "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, STR. MĂRULUI, NR.19, CAMERA 2, SC.A, ET.2, AP.16",
+      "lat": 44.457952,
+      "lng": 26.162859,
+      "valoare": 16728053.76,
+      "nr_contracte": 3,
+      "in_retea": false
+    },
+    {
+      "id": "40092259",
+      "label": "GPK INFRASTRUCTURE DESIGN S.R.L.",
+      "cui": "40092259",
+      "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. RĂSCOALEI, NR. PROVENIT 41 A",
+      "lat": 44.451879,
+      "lng": 26.203556,
+      "valoare": 8896324.58,
+      "nr_contracte": 2,
+      "in_retea": false
+    },
+    {
+      "id": "24206645",
+      "label": "MORNINGSTAR CONSULTING SRL",
+      "cui": "24206645",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, ALEEA SOLIDARITĂŢII, NR.1A, BL.Y6, SC.2, ET.P, AP.22",
+      "lat": 44.418284,
+      "lng": 26.165099,
+      "valoare": 8643824.58,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "30520358",
+      "label": "BETIRA CONSTRUCT SRL",
+      "cui": "30520358",
+      "adresa": "JUD. ILFOV, SAT BRĂNEŞTI COM. BRĂNEŞTI, STR. INDUSTRIILOR, NR.26, CAMERA 3, ET.1",
+      "lat": 44.457562,
+      "lng": 26.33501,
+      "valoare": 9571900.58,
+      "nr_contracte": 6,
+      "in_retea": false
+    },
+    {
+      "id": "15049525",
+      "label": "EURO EST GROUP SRL",
+      "cui": "15049525",
+      "adresa": "JUD. SUCEAVA, SAT ŞCHEIA COM. ŞCHEIA,  , NR.390 A, CAMERA 2",
+      "lat": 47.6561,
+      "lng": 26.226358,
+      "valoare": 8643824.58,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "29256636",
+      "label": "AVALON UTILAJE SRL",
+      "cui": "29256636",
+      "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, STR. NICOLAE BĂLCESCU, NR.4A, CAM. 1",
+      "lat": 44.451879,
+      "lng": 26.203556,
+      "valoare": 1203674.0,
+      "nr_contracte": 3,
+      "in_retea": false
+    },
+    {
+      "id": "27019056",
+      "label": "BEPA CONSTRUCTII CIVILE SRL",
+      "cui": "27019056",
+      "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. CORBULUI, NR.5, ET.1",
+      "lat": 44.451879,
+      "lng": 26.203556,
+      "valoare": 21983792.3,
+      "nr_contracte": 6,
+      "in_retea": false
+    },
+    {
+      "id": "26281970",
+      "label": "NIPLICAD SRL",
+      "cui": "26281970",
+      "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR INTRAREA CIUCAŞ, NR.2 A",
+      "lat": 44.451879,
+      "lng": 26.203556,
+      "valoare": 299288.0,
+      "nr_contracte": 3,
+      "in_retea": false
+    },
+    {
+      "id": "8078978",
+      "label": "SOCIETATEA AGRICOLA ORIZONT PANTELIMON",
+      "cui": "8078978",
+      "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, ŞOS. CERNICA, NR.7",
+      "lat": 44.451879,
+      "lng": 26.203556,
+      "valoare": 623321.0,
+      "nr_contracte": 3,
+      "in_retea": false
+    },
+    {
+      "id": "19737276",
+      "label": "VAL CRISTI CONSTRUCT AUTO SRL",
+      "cui": "19737276",
+      "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, STR. LIVEZILOR, NR.15, BL.I, SC.2, ET.1, AP.13",
+      "lat": 44.451879,
+      "lng": 26.203556,
+      "valoare": 434403.0,
+      "nr_contracte": 3,
+      "in_retea": false
+    },
+    {
       "id": "26181156",
       "label": "ASOCIATIA CENTRUL ROMAN PENTRU INITIATIVA SOCIALA",
       "cui": "26181156",
@@ -29,8 +139,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, ȘOS PIPERA, NR.61, PARTER+MEZANIN, BL.4, SC.2, AP.80",
       "lat": 44.459585,
       "lng": 26.130345,
-      "valoare": 461950.0,
-      "nr_contracte": 10,
+      "valoare": 516950.0,
+      "nr_contracte": 12,
       "in_retea": false
     },
     {
@@ -40,8 +150,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR. RÎMNICU VÎLCEA, NR.31, BL.17A, SC.1, ET.2, AP.11",
       "lat": 44.418284,
       "lng": 26.165099,
-      "valoare": 246990.0,
-      "nr_contracte": 4,
+      "valoare": 708351.69,
+      "nr_contracte": 10,
       "in_retea": false
     },
     {
@@ -62,8 +172,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, ŞOS PANTELIMON, NR.6-8,  CU INTRARE PRIN STRADA ION HELIADE RADULESCU. NR. 26. CAMERA 1. ETAJ 1",
       "lat": 44.459585,
       "lng": 26.130345,
-      "valoare": 152102.1,
-      "nr_contracte": 4,
+      "valoare": 261302.1,
+      "nr_contracte": 5,
       "in_retea": false
     },
     {
@@ -106,8 +216,8 @@
       "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. GRĂDINARILOR, NR.11",
       "lat": 44.451879,
       "lng": 26.203556,
-      "valoare": 40373.41,
-      "nr_contracte": 29,
+      "valoare": 49381.31,
+      "nr_contracte": 37,
       "in_retea": false
     },
     {
@@ -117,8 +227,8 @@
       "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, STR. MIORITEI, NR.20, AP.CAMERA 6",
       "lat": 44.451879,
       "lng": 26.203556,
-      "valoare": 1890000.0,
-      "nr_contracte": 7,
+      "valoare": 2160000.0,
+      "nr_contracte": 8,
       "in_retea": false
     },
     {
@@ -139,8 +249,8 @@
       "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, STR. SF. GHEORGHE, NR.38, BL.N, SC.A, ET.1, AP.15",
       "lat": 44.451879,
       "lng": 26.203556,
-      "valoare": 300539.0,
-      "nr_contracte": 7,
+      "valoare": 451811.0,
+      "nr_contracte": 12,
       "in_retea": false
     },
     {
@@ -161,8 +271,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, SOS. PANTELIMON, NR.450",
       "lat": 44.459585,
       "lng": 26.130345,
-      "valoare": 41854.69,
-      "nr_contracte": 26,
+      "valoare": 61308.86,
+      "nr_contracte": 34,
       "in_retea": false
     },
     {
@@ -172,8 +282,8 @@
       "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. APUSULUI, NR.1, CAMERA 2",
       "lat": 44.451879,
       "lng": 26.203556,
-      "valoare": 162381.08,
-      "nr_contracte": 51,
+      "valoare": 209382.08,
+      "nr_contracte": 68,
       "in_retea": false
     },
     {
@@ -194,8 +304,8 @@
       "adresa": "JUD. CĂLĂRAŞI, ORŞ. LEHLIU-GARĂ, STR. NICOLAE TITULESCU, NR.2",
       "lat": 44.439839,
       "lng": 26.851534,
-      "valoare": 946470.0,
-      "nr_contracte": 4,
+      "valoare": 1216430.0,
+      "nr_contracte": 5,
       "in_retea": false
     },
     {
@@ -205,8 +315,8 @@
       "adresa": "JUD. ILFOV, SAT MOARA DOMNEASCĂ COM. GĂNEASA, STR P. KONTSZBUIE, NR.10, BIROUL NR. 6",
       "lat": 44.703255,
       "lng": 26.326122,
-      "valoare": 321000.0,
-      "nr_contracte": 4,
+      "valoare": 589800.0,
+      "nr_contracte": 5,
       "in_retea": false
     },
     {
@@ -216,8 +326,8 @@
       "adresa": "JUD. GORJ, MUN. TÂRGU JIU, STR. TUDOR VLADIMIRESCU, NR.17",
       "lat": 45.042295,
       "lng": 23.272812,
-      "valoare": 26095.0,
-      "nr_contracte": 13,
+      "valoare": 27245.0,
+      "nr_contracte": 15,
       "in_retea": false
     },
     {
@@ -249,8 +359,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, STR. GARA HERĂSTRĂU, NR.6, CLADIREA GLOBALWORTH SQUARE, ET.1,2,3,5,8",
       "lat": 44.459585,
       "lng": 26.130345,
-      "valoare": 488.99,
-      "nr_contracte": 2,
+      "valoare": 601.54,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -260,8 +370,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR NĂVODARI, NR.32A, PARTER",
       "lat": 44.487945,
       "lng": 26.050155,
-      "valoare": 721000.0,
-      "nr_contracte": 6,
+      "valoare": 891000.0,
+      "nr_contracte": 7,
       "in_retea": false
     },
     {
@@ -282,8 +392,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR. NEGOSTINA, NR.111A",
       "lat": 44.418284,
       "lng": 26.165099,
-      "valoare": 29429.59,
-      "nr_contracte": 22,
+      "valoare": 57114.94,
+      "nr_contracte": 31,
       "in_retea": false
     },
     {
@@ -326,8 +436,8 @@
       "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. LIVEZILOR II, NR.15",
       "lat": 44.451879,
       "lng": 26.203556,
-      "valoare": 389276.66,
-      "nr_contracte": 5,
+      "valoare": 515772.66,
+      "nr_contracte": 8,
       "in_retea": false
     },
     {
@@ -337,8 +447,8 @@
       "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. RĂSCOALEI, NR.37 H",
       "lat": 44.451879,
       "lng": 26.203556,
-      "valoare": 535000.0,
-      "nr_contracte": 3,
+      "valoare": 875000.0,
+      "nr_contracte": 5,
       "in_retea": false
     },
     {
@@ -359,8 +469,8 @@
       "adresa": "JUD. BACĂU, MUN. BACĂU, STR. ALEXEI TOLSTOI, NR.8",
       "lat": 46.556049,
       "lng": 26.915356,
-      "valoare": 35753.34,
-      "nr_contracte": 18,
+      "valoare": 49453.62,
+      "nr_contracte": 29,
       "in_retea": false
     },
     {
@@ -370,8 +480,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR ARISTIDE PASCAL, NR.29-31, CAMERA 1, BL.R3, ET.5, AP.2",
       "lat": 44.418284,
       "lng": 26.165099,
-      "valoare": 127743.0,
-      "nr_contracte": 6,
+      "valoare": 150843.0,
+      "nr_contracte": 7,
       "in_retea": false
     },
     {
@@ -392,8 +502,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 4, STR SOLD. IOAN CIOCODEICA, NR.1, DEMISOL SI ETAJ 1",
       "lat": 44.381903,
       "lng": 26.119018,
-      "valoare": 106847.0,
-      "nr_contracte": 4,
+      "valoare": 215927.0,
+      "nr_contracte": 6,
       "in_retea": true
     },
     {
@@ -414,8 +524,8 @@
       "adresa": "JUD. GIURGIU, SAT MIHAI VODĂ COM. BOLINTIN-DEAL,  , NR.CADASTRAL 4093",
       "lat": 44.139987,
       "lng": 26.05847,
-      "valoare": 1807.98,
-      "nr_contracte": 6,
+      "valoare": 2767.98,
+      "nr_contracte": 9,
       "in_retea": false
     },
     {
@@ -425,8 +535,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, ALEEA ARHITECT PETRE ANTONESCU, NR.6, BL.23, SC.1, ET.6, AP.39",
       "lat": 44.459585,
       "lng": 26.130345,
-      "valoare": 16200.0,
-      "nr_contracte": 1,
+      "valoare": 20700.0,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -436,8 +546,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, ŞOS. MIHAI BRAVU, NR.531-533",
       "lat": 44.418284,
       "lng": 26.165099,
-      "valoare": 89565.0,
-      "nr_contracte": 2,
+      "valoare": 164666.62,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -463,14 +573,25 @@
       "in_retea": false
     },
     {
+      "id": "6836324",
+      "label": "AUTOVEST SRL",
+      "cui": "6836324",
+      "adresa": "JUD. BIHOR, MUN. ORADEA, STR. FRUNZEI, NR.10",
+      "lat": 47.054916,
+      "lng": 21.928523,
+      "valoare": 4369065.0,
+      "nr_contracte": 2,
+      "in_retea": false
+    },
+    {
       "id": "37154246",
       "label": "HIDROCONSTRUCT SUD S.R.L.",
       "cui": "37154246",
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, STR CHIRISTIGIILOR, NR.8, CAMERA 1, BL.P36A, SC.1, ET.7, AP.27",
       "lat": 44.459585,
       "lng": 26.130345,
-      "valoare": 3702.0,
-      "nr_contracte": 2,
+      "valoare": 6792.0,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -480,8 +601,8 @@
       "adresa": "JUD. ILFOV, SAT ROŞU COM. CHIAJNA, STR DRM. BACRIULUI, NR.31D, ET.1, AP.3",
       "lat": 44.450942,
       "lng": 26.008216,
-      "valoare": 31443.54,
-      "nr_contracte": 5,
+      "valoare": 55584.28,
+      "nr_contracte": 8,
       "in_retea": false
     },
     {
@@ -513,8 +634,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, BLD DECEBAL, NR.1, BL.H2, SC.A, ET.6, AP.24",
       "lat": 44.418284,
       "lng": 26.165099,
-      "valoare": 68239.44,
-      "nr_contracte": 13,
+      "valoare": 84171.33,
+      "nr_contracte": 15,
       "in_retea": false
     },
     {
@@ -573,25 +694,14 @@
       "in_retea": false
     },
     {
-      "id": "30520358",
-      "label": "BETIRA CONSTRUCT SRL",
-      "cui": "30520358",
-      "adresa": "JUD. ILFOV, SAT BRĂNEŞTI COM. BRĂNEŞTI, STR. INDUSTRIILOR, NR.26, CAMERA 3, ET.1",
-      "lat": 44.457562,
-      "lng": 26.33501,
-      "valoare": 802776.0,
-      "nr_contracte": 3,
-      "in_retea": false
-    },
-    {
       "id": "30722900",
       "label": "BELLE VIE MEDICAL SRL",
       "cui": "30722900",
       "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, STR. TUDOR VLADIMIRESCU, NR.20, MANSARDA. IN INCINTA POLICLINICII PANTELIMON",
       "lat": 44.451879,
       "lng": 26.203556,
-      "valoare": 39670.0,
-      "nr_contracte": 3,
+      "valoare": 75050.0,
+      "nr_contracte": 4,
       "in_retea": false
     },
     {
@@ -601,8 +711,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR FOIŞORULUI, NR.126, AP. 35-LOT 1. CAMERA 1, SC.B, ET.5",
       "lat": 44.418284,
       "lng": 26.165099,
-      "valoare": 993.53,
-      "nr_contracte": 3,
+      "valoare": 30096.0,
+      "nr_contracte": 6,
       "in_retea": false
     },
     {
@@ -612,8 +722,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR VIRGILIU, NR.55-57, PARTER. CAMERA 1, BL.1, AP.1",
       "lat": 44.487945,
       "lng": 26.050155,
-      "valoare": 180441.6,
-      "nr_contracte": 1,
+      "valoare": 380360.72,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -623,8 +733,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, SOS. PANTELIMON, NR.354, BL.2, SC.1, ET.5, AP.18",
       "lat": 44.459585,
       "lng": 26.130345,
-      "valoare": 32903.12,
-      "nr_contracte": 2,
+      "valoare": 82903.12,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -667,8 +777,8 @@
       "adresa": "JUD. ARGEŞ, SAT GEAMĂNA COM. BRADU, STR. ZONA COMERCIALĂ, NR.5, BL.-, SC.-, ET.-, AP.-",
       "lat": 44.818852,
       "lng": 24.889812,
-      "valoare": 9614.83,
-      "nr_contracte": 2,
+      "valoare": 10889.2,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -678,8 +788,8 @@
       "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, BLD. BIRUINŢEI, NR.227, ET.P",
       "lat": 44.451879,
       "lng": 26.203556,
-      "valoare": 9934.58,
-      "nr_contracte": 4,
+      "valoare": 16980.44,
+      "nr_contracte": 6,
       "in_retea": false
     },
     {
@@ -700,30 +810,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR BUCOVINA, NR.1BIS, BL.L10A, ET.2, AP.28",
       "lat": 44.418284,
       "lng": 26.165099,
-      "valoare": 312248.6,
-      "nr_contracte": 2,
-      "in_retea": false
-    },
-    {
-      "id": "RO 6836324",
-      "label": "AUTOVEST SRL",
-      "cui": "RO 6836324",
-      "adresa": "JUD. BIHOR, MUN. ORADEA, STR. FRUNZEI, NR.10",
-      "lat": 47.054916,
-      "lng": 21.928523,
-      "valoare": 4369065.0,
-      "nr_contracte": 2,
-      "in_retea": false
-    },
-    {
-      "id": "45058860",
-      "label": "TOP A-Z CONCEPT S.R.L.",
-      "cui": "45058860",
-      "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, STR. MĂRULUI, NR.19, CAMERA 2, SC.A, ET.2, AP.16",
-      "lat": 44.457455,
-      "lng": 26.16276,
-      "valoare": 16728051.0,
-      "nr_contracte": 3,
+      "valoare": 320698.6,
+      "nr_contracte": 4,
       "in_retea": false
     },
     {
@@ -733,8 +821,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR SFÂNTUL CONSTANTIN, NR.31, CAMERA NR. 1, ET.1, AP.4",
       "lat": 44.487945,
       "lng": 26.050155,
-      "valoare": 11600.0,
-      "nr_contracte": 3,
+      "valoare": 17000.0,
+      "nr_contracte": 4,
       "in_retea": false
     },
     {
@@ -742,8 +830,8 @@
       "label": "IDEAL - STAR ELECTRIC  SRL",
       "cui": "31717448",
       "adresa": "JUD. ILFOV, SAT DOBROEŞTI COM. DOBROEŞTI, STR. ORIZONTULUI, NR.13",
-      "lat": 44.450786,
-      "lng": 26.182527,
+      "lat": 44.450791,
+      "lng": 26.182526,
       "valoare": 9000.0,
       "nr_contracte": 3,
       "in_retea": false
@@ -755,8 +843,8 @@
       "adresa": "JUD. CONSTANŢA, MUN. CONSTANŢA, STR. ŞTEFAN MIHĂILEANU, NR.50",
       "lat": 44.176716,
       "lng": 28.65076,
-      "valoare": 17000.0,
-      "nr_contracte": 2,
+      "valoare": 127500.0,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -766,8 +854,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR MR. GHEORGHE ŞONŢU, NR.6, PARTER",
       "lat": 44.487945,
       "lng": 26.050155,
-      "valoare": 2300.0,
-      "nr_contracte": 1,
+      "valoare": 4600.0,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -777,8 +865,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 6, STR PRECIZIEI, NR.3",
       "lat": 44.447875,
       "lng": 26.032448,
-      "valoare": 15270.0,
-      "nr_contracte": 1,
+      "valoare": 18240.0,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -788,8 +876,8 @@
       "adresa": "JUD. IAŞI, MUN. IAŞI, STR. ION CREANGĂ, NR.23, BL.H3, SC.B, ET.2, AP.3",
       "lat": 47.16156,
       "lng": 27.583781,
-      "valoare": 30000.0,
-      "nr_contracte": 1,
+      "valoare": 63000.0,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -799,8 +887,8 @@
       "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. INDEPENDENŢEI, NR.6, AP.43",
       "lat": 44.451879,
       "lng": 26.203556,
-      "valoare": 96000.0,
-      "nr_contracte": 1,
+      "valoare": 198000.0,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -810,8 +898,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR AMINTIRII, NR.28, CAMERA 1",
       "lat": 44.487945,
       "lng": 26.050155,
-      "valoare": 135000.0,
-      "nr_contracte": 1,
+      "valoare": 265000.0,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -821,8 +909,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 6, SPL INDEPENDENŢEI, NR.319, OBIECTIV 19B. IN SUPRAFATA DE 297 MP, ET.2",
       "lat": 44.447875,
       "lng": 26.032448,
-      "valoare": 17900.0,
-      "nr_contracte": 5,
+      "valoare": 23000.0,
+      "nr_contracte": 6,
       "in_retea": false
     },
     {
@@ -854,8 +942,8 @@
       "adresa": "JUD. TELEORMAN, MUN. ROŞIORI DE VEDE, STR. CRISAN, NR.10",
       "lat": 44.108349,
       "lng": 24.995209,
-      "valoare": 29000.0,
-      "nr_contracte": 1,
+      "valoare": 74300.0,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -885,9 +973,20 @@
       "label": "STANGER DESIGN S.R.L.",
       "cui": "40412167",
       "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, PRL. BUCUREŞTI, NR.24, BL.M19, SC.2, ET.3, AP.6",
-      "lat": 44.189902,
-      "lng": 27.353423,
+      "lat": 44.207754,
+      "lng": 27.309634,
       "valoare": 115500.0,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "32194177",
+      "label": "OMNI CONSTRUCT LOGISTIC SRL",
+      "cui": "32194177",
+      "adresa": "JUD. CONSTANŢA, MUN. CONSTANŢA, STR. SIRETULUI, NR.1",
+      "lat": 44.176716,
+      "lng": 28.65076,
+      "valoare": 7920929.76,
       "nr_contracte": 1,
       "in_retea": false
     },
@@ -931,7 +1030,18 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 4, STR. POGOANELOR, NR.147",
       "lat": 44.381903,
       "lng": 26.119018,
-      "valoare": 3676.3,
+      "valoare": 6126.82,
+      "nr_contracte": 3,
+      "in_retea": false
+    },
+    {
+      "id": "6879473",
+      "label": "SICURO INVEST SRL",
+      "cui": "6879473",
+      "adresa": "JUD. ILFOV, SAT DOBROEŞTI COM. DOBROEŞTI, BLD. NICOLAE BĂLCESCU, NR.107, PARTER. CAMERA NR. 2",
+      "lat": 44.450791,
+      "lng": 26.182526,
+      "valoare": 15032039.41,
       "nr_contracte": 2,
       "in_retea": false
     },
@@ -953,8 +1063,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, BLD DIMITRIE POMPEI, NR.9-9A, CLADIREA 19, ET.3",
       "lat": 44.459585,
       "lng": 26.130345,
-      "valoare": 0.01,
-      "nr_contracte": 1,
+      "valoare": 0.02,
+      "nr_contracte": 2,
       "in_retea": true
     },
     {
@@ -964,8 +1074,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 6, CAL. CRÂNGAŞI, NR.16, BL.41, SC.B, ET.1, AP.41",
       "lat": 44.447875,
       "lng": 26.032448,
-      "valoare": 108000.0,
-      "nr_contracte": 1,
+      "valoare": 216000.0,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -1002,25 +1112,25 @@
       "in_retea": false
     },
     {
-      "id": "32194177",
-      "label": "OMNI CONSTRUCT LOGISTIC SRL",
-      "cui": "32194177",
-      "adresa": "JUD. CONSTANŢA, MUN. CONSTANŢA, STR. SIRETULUI, NR.1",
-      "lat": 44.176716,
-      "lng": 28.65076,
-      "valoare": 7920929.0,
-      "nr_contracte": 1,
+      "id": "15475580",
+      "label": "ELECTROCONS GROUP PROIECT INTL SRL",
+      "cui": "15475580",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, CALEA VITAN, NR.213, BL.20, SC.1, ET.1, AP.2",
+      "lat": 44.418284,
+      "lng": 26.165099,
+      "valoare": 7151763.25,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
-      "id": "RO6879473",
-      "label": "SICURO INVEST SRL",
-      "cui": "RO6879473",
-      "adresa": "JUD. ILFOV, SAT DOBROEŞTI COM. DOBROEŞTI, BLD. NICOLAE BĂLCESCU, NR.107, PARTER. CAMERA NR. 2",
-      "lat": 44.450786,
-      "lng": 26.182527,
-      "valoare": 15070720.0,
-      "nr_contracte": 2,
+      "id": "24299482",
+      "label": "CORVIN DESIGN SRL",
+      "cui": "24299482",
+      "adresa": "JUD. HUNEDOARA, MUN. HUNEDOARA, STR. SEREI, NR.31",
+      "lat": 45.795407,
+      "lng": 22.945243,
+      "valoare": 7149763.25,
+      "nr_contracte": 1,
       "in_retea": false
     },
     {
@@ -1030,8 +1140,8 @@
       "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. GRĂDINARILOR, NR.30, CAMERA 1, BL.7, ET.1, AP.05",
       "lat": 44.451879,
       "lng": 26.203556,
-      "valoare": 225408.0,
-      "nr_contracte": 1,
+      "valoare": 473808.0,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -1057,6 +1167,28 @@
       "in_retea": false
     },
     {
+      "id": "11289053",
+      "label": "OLTENIA GARDEN SRL",
+      "cui": "11289053",
+      "adresa": "JUD. DOLJ, SAT PIELEŞTI COM. PIELEŞTI,  , TARLAUA 83. PARCELA 675",
+      "lat": 44.34104,
+      "lng": 23.963011,
+      "valoare": 14088258.9,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "17351537",
+      "label": "ACG CONSTRUCTION & PROJECTS S.R.L.",
+      "cui": "17351537",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 4, STR CĂRĂRUIA, NR.33-35, DEMISOL 1. BIROURILE NR. 1 SI 2, SC.A, AP.4",
+      "lat": 44.381903,
+      "lng": 26.119018,
+      "valoare": 14088258.9,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
       "id": "26057280",
       "label": "FOCUS COMPANY CONSULTING CCN SRL",
       "cui": "26057280",
@@ -1068,14 +1200,47 @@
       "in_retea": false
     },
     {
+      "id": "27702350",
+      "label": "SANTIA PARTNER CONSTRUCT SRL",
+      "cui": "27702350",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR PARCULUI, NR.77J",
+      "lat": 44.487945,
+      "lng": 26.050155,
+      "valoare": 29508940.74,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "28250562",
+      "label": "YARDMAN SRL",
+      "cui": "28250562",
+      "adresa": "JUD. ILFOV, ORŞ. VOLUNTARI, STR. GAROAFELOR, NR.13A, PARTER",
+      "lat": 44.490278,
+      "lng": 26.177279,
+      "valoare": 29508940.74,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "30056330",
+      "label": "ALA EXPERT CONSTRUCT SRL",
+      "cui": "30056330",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 5, STR CPT. ILIE NEDELCU, NR.45A",
+      "lat": 44.405054,
+      "lng": 26.071651,
+      "valoare": 29508940.74,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
       "id": "24385699",
       "label": "AXICO GRUP SRL",
       "cui": "24385699",
       "adresa": "JUD. TULCEA, SAT MINERI COM. SOMOVA, STR. VULTURULUI, NR.5, MANSARDA. CAMERA NR.1",
       "lat": 45.163965,
       "lng": 28.714638,
-      "valoare": 22305.36,
-      "nr_contracte": 1,
+      "valoare": 66943.2,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -1107,8 +1272,8 @@
       "adresa": "JUD. BACĂU, MUN. BACĂU, STR. ABATORULUI, NR.4",
       "lat": 46.556049,
       "lng": 26.915356,
-      "valoare": 4568.54,
-      "nr_contracte": 2,
+      "valoare": 8895.86,
+      "nr_contracte": 4,
       "in_retea": false
     },
     {
@@ -1151,8 +1316,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, STR. POPA NAN, NR.14, ET.1, AP.3",
       "lat": 44.459585,
       "lng": 26.130345,
-      "valoare": 4038.0,
-      "nr_contracte": 1,
+      "valoare": 31188.0,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -1173,8 +1338,8 @@
       "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. RĂSCOALEI, NR.14, CORP C1",
       "lat": 44.451879,
       "lng": 26.203556,
-      "valoare": 2850.0,
-      "nr_contracte": 2,
+      "valoare": 5900.0,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -1184,8 +1349,8 @@
       "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, STR. NUFĂRULUI, NR.4, BL.E 7, SC.B, ET.2, AP.6",
       "lat": 44.196165,
       "lng": 27.331323,
-      "valoare": 1017350.0,
-      "nr_contracte": 5,
+      "valoare": 1137350.0,
+      "nr_contracte": 6,
       "in_retea": false
     },
     {
@@ -1206,8 +1371,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR IULIA HAŞDEU, NR.13",
       "lat": 44.487945,
       "lng": 26.050155,
-      "valoare": 275000.0,
-      "nr_contracte": 3,
+      "valoare": 1045000.0,
+      "nr_contracte": 7,
       "in_retea": false
     },
     {
@@ -1230,6 +1395,28 @@
       "lng": 26.245235,
       "valoare": 162495.0,
       "nr_contracte": 3,
+      "in_retea": false
+    },
+    {
+      "id": "15315902",
+      "label": "ROMCO SYSTEM SRL",
+      "cui": "15315902",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, B-DUL THEODOR PALLADY, NR.50, LOTUL II. C21",
+      "lat": 44.418284,
+      "lng": 26.165099,
+      "valoare": 24742834.32,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "28610220",
+      "label": "GLOBEXTERRA S.R.L.",
+      "cui": "28610220",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR MUZEUL ZAMBACCIAN, NR.1, ET.1 ŞI 2",
+      "lat": 44.487945,
+      "lng": 26.050155,
+      "valoare": 24742834.32,
+      "nr_contracte": 1,
       "in_retea": false
     },
     {
@@ -1294,107 +1481,8 @@
       "adresa": "JUD. ILFOV, SAT DRAGOMIREŞTI-DEAL COM. DRAGOMIREŞTI-VALE, ALEEA ŞTEFANIA, NR.2, (CLĂDIREA E - HALA E)",
       "lat": 44.458692,
       "lng": 25.945338,
-      "valoare": 5135.13,
-      "nr_contracte": 3,
-      "in_retea": false
-    },
-    {
-      "id": "RO 24299482",
-      "label": "CORVIN DESIGN SRL",
-      "cui": "RO 24299482",
-      "adresa": "JUD. HUNEDOARA, MUN. HUNEDOARA, STR. SEREI, NR.31",
-      "lat": 45.795407,
-      "lng": 22.945243,
-      "valoare": 7149763.0,
-      "nr_contracte": 1,
-      "in_retea": false
-    },
-    {
-      "id": "RO 15475580",
-      "label": "ELECTROCONS GROUP PROIECT INTL SRL",
-      "cui": "RO 15475580",
-      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, CALEA VITAN, NR.213, BL.20, SC.1, ET.1, AP.2",
-      "lat": 44.418284,
-      "lng": 26.165099,
-      "valoare": 7149763.0,
-      "nr_contracte": 1,
-      "in_retea": false
-    },
-    {
-      "id": "RO17351537",
-      "label": "ACG CONSTRUCTION & PROJECTS S.R.L.",
-      "cui": "RO17351537",
-      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 4, STR CĂRĂRUIA, NR.33-35, DEMISOL 1. BIROURILE NR. 1 SI 2, SC.A, AP.4",
-      "lat": 44.381903,
-      "lng": 26.119018,
-      "valoare": 13570756.0,
-      "nr_contracte": 1,
-      "in_retea": false
-    },
-    {
-      "id": "RO 11289053",
-      "label": "OLTENIA GARDEN SRL",
-      "cui": "RO 11289053",
-      "adresa": "JUD. DOLJ, SAT PIELEŞTI COM. PIELEŞTI,  , TARLAUA 83. PARCELA 675",
-      "lat": 44.34104,
-      "lng": 23.963011,
-      "valoare": 13570756.0,
-      "nr_contracte": 1,
-      "in_retea": false
-    },
-    {
-      "id": "RO30056330",
-      "label": "ALA EXPERT CONSTRUCT SRL",
-      "cui": "RO30056330",
-      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 5, STR CPT. ILIE NEDELCU, NR.45A",
-      "lat": 44.405054,
-      "lng": 26.071651,
-      "valoare": 29508940.0,
-      "nr_contracte": 1,
-      "in_retea": false
-    },
-    {
-      "id": "RO27702350",
-      "label": "SANTIA PARTNER CONSTRUCT SRL",
-      "cui": "RO27702350",
-      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR PARCULUI, NR.77J",
-      "lat": 44.487945,
-      "lng": 26.050155,
-      "valoare": 29508940.0,
-      "nr_contracte": 1,
-      "in_retea": false
-    },
-    {
-      "id": "RO28250562",
-      "label": "YARDMAN SRL",
-      "cui": "RO28250562",
-      "adresa": "JUD. ILFOV, ORŞ. VOLUNTARI, STR. GAROAFELOR, NR.13A, PARTER",
-      "lat": 44.490278,
-      "lng": 26.177279,
-      "valoare": 29508940.0,
-      "nr_contracte": 1,
-      "in_retea": false
-    },
-    {
-      "id": "RO28610220",
-      "label": "GLOBEXTERRA S.R.L.",
-      "cui": "RO28610220",
-      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR MUZEUL ZAMBACCIAN, NR.1, ET.1 ŞI 2",
-      "lat": 44.487945,
-      "lng": 26.050155,
-      "valoare": 24184504.0,
-      "nr_contracte": 1,
-      "in_retea": false
-    },
-    {
-      "id": "RO 15315902",
-      "label": "ROMCO SYSTEM SRL",
-      "cui": "RO 15315902",
-      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, B-DUL THEODOR PALLADY, NR.50, LOTUL II. C21",
-      "lat": 44.418284,
-      "lng": 26.165099,
-      "valoare": 24184504.0,
-      "nr_contracte": 1,
+      "valoare": 94549.74,
+      "nr_contracte": 6,
       "in_retea": false
     },
     {
@@ -1406,7 +1494,7 @@
       "lng": 26.165099,
       "valoare": 3437.06,
       "nr_contracte": 1,
-      "in_retea": false
+      "in_retea": true
     },
     {
       "id": "19179498",
@@ -1415,8 +1503,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR. BARBU DELAVRANCEA, NR.59, ET.1, AP.3",
       "lat": 44.487945,
       "lng": 26.050155,
-      "valoare": 230000.0,
-      "nr_contracte": 1,
+      "valoare": 503000.0,
+      "nr_contracte": 5,
       "in_retea": false
     },
     {
@@ -1426,8 +1514,8 @@
       "adresa": "JUD. GIURGIU, MUN. GIURGIU, BLD. MIHAI VITEAZU, BL.208/3S1, SC.D, ET.P",
       "lat": 43.896127,
       "lng": 25.965645,
-      "valoare": 60000.0,
-      "nr_contracte": 2,
+      "valoare": 110000.0,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -1448,8 +1536,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR LUNCA BRADULUI, NR.8, BL.M31K, SC.B, ET.2, AP.54",
       "lat": 44.418284,
       "lng": 26.165099,
-      "valoare": 747.0,
-      "nr_contracte": 1,
+      "valoare": 4497.0,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -1472,17 +1560,6 @@
       "lng": 26.071651,
       "valoare": 35472.0,
       "nr_contracte": 2,
-      "in_retea": false
-    },
-    {
-      "id": "40092259",
-      "label": "GPK INFRASTRUCTURE DESIGN S.R.L.",
-      "cui": "40092259",
-      "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. RĂSCOALEI, NR. PROVENIT 41 A",
-      "lat": 44.451879,
-      "lng": 26.203556,
-      "valoare": 252500.0,
-      "nr_contracte": 1,
       "in_retea": false
     },
     {
@@ -1558,8 +1635,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, STR. PETRE ANTONESCU, NR.11, BL.11, SC.A, ET.2, AP.16",
       "lat": 44.459585,
       "lng": 26.130345,
-      "valoare": 270000.0,
-      "nr_contracte": 1,
+      "valoare": 470000.0,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -1569,8 +1646,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, INT EPOCII, NR.8-12, CAMERA 3, ET.3, AP.15",
       "lat": 44.487945,
       "lng": 26.050155,
-      "valoare": 470000.0,
-      "nr_contracte": 2,
+      "valoare": 735000.0,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -1602,8 +1679,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, ŞOS. VERGULUI, NR.14 A",
       "lat": 44.459585,
       "lng": 26.130345,
-      "valoare": 1225.0,
-      "nr_contracte": 1,
+      "valoare": 9085.0,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -1613,8 +1690,8 @@
       "adresa": "JUD. CĂLĂRAŞI, ORŞ. FUNDULEA, STR. ROZELOR, NR.15, CAMERA 1, ET.PARTER",
       "lat": 44.468369,
       "lng": 26.50968,
-      "valoare": 3770.0,
-      "nr_contracte": 2,
+      "valoare": 5150.17,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -1636,17 +1713,6 @@
       "lat": 44.487945,
       "lng": 26.050155,
       "valoare": 1043.0,
-      "nr_contracte": 1,
-      "in_retea": false
-    },
-    {
-      "id": "26281970",
-      "label": "NIPLICAD SRL",
-      "cui": "26281970",
-      "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR INTRAREA CIUCAŞ, NR.2 A",
-      "lat": 44.451879,
-      "lng": 26.203556,
-      "valoare": 63008.0,
       "nr_contracte": 1,
       "in_retea": false
     },
@@ -1679,7 +1745,40 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR VALEA BUZĂULUI, NR.14, BL.G26BIS, SC.1, ET.1, AP.4",
       "lat": 44.418284,
       "lng": 26.165099,
-      "valoare": 75000.0,
+      "valoare": 175000.0,
+      "nr_contracte": 2,
+      "in_retea": false
+    },
+    {
+      "id": "41011023",
+      "label": "CRIA GENERAL CONSTRUCT S.R.L.",
+      "cui": "41011023",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 4, STR DUNĂRII, NR.19, ET.1",
+      "lat": 44.381903,
+      "lng": 26.119018,
+      "valoare": 12671650.0,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "41497242",
+      "label": "GRI CONSTRUCT ACM S.R.L.",
+      "cui": "41497242",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR SOLD. PETRE M. TINĂ, NR.2, BL.L9B, SC.1, AP.2",
+      "lat": 44.418284,
+      "lng": 26.165099,
+      "valoare": 12671650.0,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "37920815",
+      "label": "DORBASTI CONSTRUCT S.R.L.",
+      "cui": "37920815",
+      "adresa": "JUD. ILFOV, SAT VIDRA COM. VIDRA, STR. PRELUNGIREA GĂRII, NR.242A, CAM. 1, ET.PARTER",
+      "lat": 44.262661,
+      "lng": 26.164075,
+      "valoare": 12671650.0,
       "nr_contracte": 1,
       "in_retea": false
     },
@@ -1710,8 +1809,8 @@
       "label": "SELGROS CASH & CARRY SRL",
       "cui": "11805367",
       "adresa": "JUD. BRAŞOV, MUN. BRAŞOV, CAL. BUCUREŞTI, NR.231",
-      "lat": 45.606983,
-      "lng": 25.65437,
+      "lat": 45.648698,
+      "lng": 25.618511,
       "valoare": 9031.31,
       "nr_contracte": 2,
       "in_retea": false
@@ -1728,6 +1827,17 @@
       "in_retea": false
     },
     {
+      "id": "28167751",
+      "label": "DAV GARDEN & SERVICE SRL",
+      "cui": "28167751",
+      "adresa": "JUD. CĂLĂRAŞI, SAT NANA COM. NANA,",
+      "lat": 44.30078,
+      "lng": 26.629686,
+      "valoare": 5769478.6,
+      "nr_contracte": 2,
+      "in_retea": false
+    },
+    {
       "id": "38846954",
       "label": "HAHAHA S.R.L.",
       "cui": "38846954",
@@ -1736,17 +1846,6 @@
       "lng": 26.130345,
       "valoare": 600.0,
       "nr_contracte": 1,
-      "in_retea": false
-    },
-    {
-      "id": "RO 28167751",
-      "label": "DAV GARDEN & SERVICE SRL",
-      "cui": "RO 28167751",
-      "adresa": "JUD. CĂLĂRAŞI, SAT NANA COM. NANA,",
-      "lat": 44.30078,
-      "lng": 26.629686,
-      "valoare": 10385059.0,
-      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -1795,11 +1894,11 @@
     },
     {
       "id": "427410",
-      "label": "COMPANIA NATIONALA POSTA ROMANA S.A.",
+      "label": "COMPANIA NATIONALA POSTA ROMANA SA",
       "cui": "427410",
-      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, B-DUL DACIA, NR.140, ET.P",
-      "lat": 44.459585,
-      "lng": 26.130345,
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 6, CAL GIULEȘTI, NR.6-8, CORP B",
+      "lat": 44.447875,
+      "lng": 26.032448,
       "valoare": 150000.0,
       "nr_contracte": 1,
       "in_retea": false
@@ -1811,9 +1910,20 @@
       "adresa": "JUD. DÂMBOVIŢA, MUN. TÂRGOVIŞTE, STR. ION GHICA, BL.13, SC.A, AP.6",
       "lat": 44.926771,
       "lng": 25.462816,
-      "valoare": 1238.84,
-      "nr_contracte": 1,
+      "valoare": 5088.84,
+      "nr_contracte": 2,
       "in_retea": false
+    },
+    {
+      "id": "48590798",
+      "label": "QUANTUM AUTO MAX S.R.L.",
+      "cui": "48590798",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, ŞOS BUCUREŞTI-PLOIEŞTI, NR.73-81, CLADIREA C2. VICTORIA PARK, ET.3",
+      "lat": 44.487945,
+      "lng": 26.050155,
+      "valoare": 2656673.0,
+      "nr_contracte": 1,
+      "in_retea": true
     },
     {
       "id": "15757246",
@@ -1866,8 +1976,8 @@
       "adresa": "JUD. CONSTANŢA, MUN. CONSTANŢA, STR. MERIŞOR, NR.102",
       "lat": 44.176716,
       "lng": 28.65076,
-      "valoare": 70200.0,
-      "nr_contracte": 1,
+      "valoare": 113665.04,
+      "nr_contracte": 2,
       "in_retea": false
     },
     {
@@ -1899,8 +2009,8 @@
       "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 4, BLD DIMITRIE CANTEMIR, NR.17, CAMERA NR.1, BL.10, SC.2, ET.5, AP.58",
       "lat": 44.381903,
       "lng": 26.119018,
-      "valoare": 53600.0,
-      "nr_contracte": 1,
+      "valoare": 105600.0,
+      "nr_contracte": 3,
       "in_retea": false
     },
     {
@@ -1937,58 +2047,289 @@
       "in_retea": false
     },
     {
-      "id": "41011023",
-      "label": "CRIA GENERAL CONSTRUCT S.R.L.",
-      "cui": "41011023",
-      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 4, STR DUNĂRII, NR.19, ET.1",
-      "lat": 44.381903,
-      "lng": 26.119018,
-      "valoare": 12671650.0,
+      "id": "31279763",
+      "label": "UNITH2B SRL",
+      "cui": "31279763",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, ȘOS PIPERA, NR.42, ET.1",
+      "lat": 44.459585,
+      "lng": 26.130345,
+      "valoare": 770000.0,
+      "nr_contracte": 6,
+      "in_retea": false
+    },
+    {
+      "id": "50874732",
+      "label": "CONSULTING PROAMA S.R.L.",
+      "cui": "50874732",
+      "adresa": "JUD. ILFOV, ORŞ. POPEŞTI-LEORDENI, STR. BIRUINŢEI, NR.31, TRONSON 2, BL.3, ET.7, AP.64",
+      "lat": 44.379538,
+      "lng": 26.168322,
+      "valoare": 15000.0,
       "nr_contracte": 1,
       "in_retea": false
     },
     {
-      "id": "37920815",
-      "label": "DORBASTI CONSTRUCT S.R.L.",
-      "cui": "37920815",
-      "adresa": "JUD. ILFOV, SAT VIDRA COM. VIDRA, STR. PRELUNGIREA GĂRII, NR.242A, CAM. 1, ET.PARTER",
-      "lat": 44.262661,
-      "lng": 26.164075,
-      "valoare": 12671650.0,
+      "id": "53369700",
+      "label": "RAMERA MENTENANŢĂ S.R.L.",
+      "cui": "53369700",
+      "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. DUNĂRII, NR.12, CAMERA 2, ET.1",
+      "lat": 44.451879,
+      "lng": 26.203556,
+      "valoare": 102659.6,
       "nr_contracte": 1,
       "in_retea": false
     },
     {
-      "id": "41497242",
-      "label": "GRI CONSTRUCT ACM S.R.L.",
-      "cui": "41497242",
-      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR SOLD. PETRE M. TINĂ, NR.2, BL.L9B, SC.1, AP.2",
+      "id": "16667478",
+      "label": "TEHNO-CONSULTING SOLUTION SRL",
+      "cui": "16667478",
+      "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, STR. RASCOALEI, NR.37H",
+      "lat": 44.451879,
+      "lng": 26.203556,
+      "valoare": 455000.0,
+      "nr_contracte": 3,
+      "in_retea": false
+    },
+    {
+      "id": "50420248",
+      "label": "KLEMA DISTRIBUTIE SI COMERT S.R.L.",
+      "cui": "50420248",
+      "adresa": "JUD. ARGEŞ, SAT MĂRĂCINENI COM. MĂRĂCINENI, G, NR.243",
+      "lat": 44.896756,
+      "lng": 24.874752,
+      "valoare": 1912.5,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "24594008",
+      "label": "CULT MARKET RESEARCH SRL",
+      "cui": "24594008",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, STR TRAIAN, NR.139-141, ET.3, AP.35",
+      "lat": 44.459585,
+      "lng": 26.130345,
+      "valoare": 204000.0,
+      "nr_contracte": 3,
+      "in_retea": false
+    },
+    {
+      "id": "53376015",
+      "label": "DECAS MEDICAL S.R.L.",
+      "cui": "53376015",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR NERVA TRAIAN, NR.27-33, BIROUL 6, SC.B, ET.1",
       "lat": 44.418284,
       "lng": 26.165099,
-      "valoare": 12671650.0,
-      "nr_contracte": 1,
-      "in_retea": false
-    },
-    {
-      "id": "RO48590798",
-      "label": "QUANTUM AUTO MAX S.R.L.",
-      "cui": "RO48590798",
-      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, ŞOS BUCUREŞTI-PLOIEŞTI, NR.73-81, CLADIREA C2. VICTORIA PARK, ET.3",
-      "lat": 44.487945,
-      "lng": 26.050155,
-      "valoare": 2656673.0,
+      "valoare": 1600.0,
       "nr_contracte": 1,
       "in_retea": true
     },
     {
-      "id": "ro 27019056",
-      "label": "BEPA CONSTRUCTII CIVILE SRL",
-      "cui": "ro 27019056",
-      "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. CORBULUI, NR.5, ET.1",
-      "lat": 44.451879,
-      "lng": 26.203556,
-      "valoare": 21561196.0,
-      "nr_contracte": 3,
+      "id": "4236838",
+      "label": "GRUP SOFT SRL",
+      "cui": "4236838",
+      "adresa": "JUD. NEAMŢ, MUN. PIATRA NEAMŢ, BLD. DECEBAL, NR.2, BL.H3, ET.P, AP.18",
+      "lat": 46.830872,
+      "lng": 26.131542,
+      "valoare": 6240.0,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "24721160",
+      "label": "CEFAIN CONSTRUCT SRL",
+      "cui": "24721160",
+      "adresa": "JUD. GIURGIU, MUN. GIURGIU, STR. PIATA 1907, NR.2",
+      "lat": 43.896127,
+      "lng": 25.965645,
+      "valoare": 36110.0,
+      "nr_contracte": 2,
+      "in_retea": false
+    },
+    {
+      "id": "5348490",
+      "label": "GRADINARIU IMPORT EXPORT SRL",
+      "cui": "5348490",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR. CHICIUREI, NR.47",
+      "lat": 44.418284,
+      "lng": 26.165099,
+      "valoare": 8028.0,
+      "nr_contracte": 4,
+      "in_retea": false
+    },
+    {
+      "id": "8852717",
+      "label": "PRO DATA INTERNATIONAL SRL",
+      "cui": "8852717",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 5, SOS. PANDURI, NR.35, BL.P1B, SC.A, ET.6, AP.28",
+      "lat": 44.405054,
+      "lng": 26.071651,
+      "valoare": 1848.8,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "35862319",
+      "label": "EUCONS BIZ SRL",
+      "cui": "35862319",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, CALEA VICTORIEI, NR.155, TRONSON 3+4, CAMERA 20,8 MP, BL.D1, ET.1",
+      "lat": 44.487945,
+      "lng": 26.050155,
+      "valoare": 510000.0,
+      "nr_contracte": 2,
+      "in_retea": false
+    },
+    {
+      "id": "31021267",
+      "label": "DIABLOS GROUP IT SRL",
+      "cui": "31021267",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 5, STR ECHINOCŢIULUI, NR.80",
+      "lat": 44.405054,
+      "lng": 26.071651,
+      "valoare": 872.48,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "27987613",
+      "label": "BET AUTO SERVICE FUNDENI SRL",
+      "cui": "27987613",
+      "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, DRM. GĂRII, NR.8, TEREN IN SUPRAFATA DE 600 MP SI CONSTRUCTIE P+1E",
+      "lat": 44.457952,
+      "lng": 26.162859,
+      "valoare": 3050.0,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "46710731",
+      "label": "CLAR VISION CONSULTING S.R.L.",
+      "cui": "46710731",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, STR VATRA LUMINOASĂ, NR.70, CAMERA 1, BL.W1, ET.3, AP.15",
+      "lat": 44.459585,
+      "lng": 26.130345,
+      "valoare": 363380.0,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "2783308",
+      "label": "STEFANCLAYT S.R.L.",
+      "cui": "2783308",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, STR. PASTORULUI, NR.21",
+      "lat": 44.459585,
+      "lng": 26.130345,
+      "valoare": 1282.56,
+      "nr_contracte": 2,
+      "in_retea": false
+    },
+    {
+      "id": "41213669",
+      "label": "MEBELISSIMO S.R.L.",
+      "cui": "41213669",
+      "adresa": "JUD. SATU MARE, MUN. SATU MARE, STR. LITTECZKY ENDRE, NR.5",
+      "lat": 47.789176,
+      "lng": 22.87256,
+      "valoare": 686396.57,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "7506146",
+      "label": "VLAD RADCOM SRL",
+      "cui": "7506146",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 5, STR. VEDEA, NR.6, BL.86AB, SC.A, ET.4, AP.18",
+      "lat": 44.405054,
+      "lng": 26.071651,
+      "valoare": 2300.0,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "10751714",
+      "label": "MIT MOTORS INTERNATIONAL SRL",
+      "cui": "10751714",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, SOS. BUCURESTI - PLOIESTI, NR.40, BL.C1",
+      "lat": 44.487945,
+      "lng": 26.050155,
+      "valoare": 12399.77,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "16217627",
+      "label": "MEDIATEC TEAM SRL",
+      "cui": "16217627",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 4, STR SG. ILIE DAVID, NR.2, PARTER. CAMERA 1",
+      "lat": 44.381903,
+      "lng": 26.119018,
+      "valoare": 412.36,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "37982648",
+      "label": "SEMA EXPERT BUILDINGS SRL",
+      "cui": "37982648",
+      "adresa": "JUD. ILFOV, SAT CIOROGÂRLA COM. CIOROGÂRLA, STR. MAGNOLIEI, NR.32B, PARTER. CAMERA 2",
+      "lat": 44.443014,
+      "lng": 25.884993,
+      "valoare": 2207777.77,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "48823079",
+      "label": "SPECTRUM DESIGN & CONSTRUCTION S.R.L.",
+      "cui": "48823079",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 5, STR NĂSĂUD, NR.77, BL.1, SC.A, ET.11, AP.1105",
+      "lat": 44.405054,
+      "lng": 26.071651,
+      "valoare": 2207777.77,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "42968712",
+      "label": "ECOLASER TRADING S.R.L.",
+      "cui": "42968712",
+      "adresa": "JUD. CĂLĂRAŞI, SAT GĂLĂŢUI COM. ALEXANDRU ODOBESCU, STR. NICHITA STĂNESCU, NR.13, CONSTRUCȚIA C1, CAMERA 2",
+      "lat": 44.262765,
+      "lng": 27.114068,
+      "valoare": 500.0,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "15271849",
+      "label": "FABRICA DE STEAGURI S.R.L.",
+      "cui": "15271849",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 6, ALEEA PARVA, NR.5, BL.D23B, SC.D, ET.P, AP.32",
+      "lat": 44.447875,
+      "lng": 26.032448,
+      "valoare": 19500.0,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "11228633",
+      "label": "ATTO REGAL SRL",
+      "cui": "11228633",
+      "adresa": "JUD. ILFOV, SAT TUNARI COM. TUNARI, STR. ALEXANDRU IOAN CUZA, NR.1, CORP C2",
+      "lat": 44.545928,
+      "lng": 26.137698,
+      "valoare": 3842.0,
+      "nr_contracte": 1,
+      "in_retea": false
+    },
+    {
+      "id": "34984059",
+      "label": "A-FORTIORI FINANCE S.R.L.",
+      "cui": "34984059",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 6, STR VLĂDEASA, NR.11, CAMERA 2, BL.C33, SC.B, ET.6, AP.93",
+      "lat": 44.447875,
+      "lng": 26.032448,
+      "valoare": 100000.0,
+      "nr_contracte": 1,
       "in_retea": false
     }
   ],
@@ -2026,8 +2367,23 @@
     {
       "tip": "ADRESA_COMUNA",
       "firme": [
+        "17523870",
+        "53376015"
+      ],
+      "nume": [
+        "FRAMEWORKS SRL",
+        "DECAS MEDICAL S.R.L."
+      ],
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR. NERVA TRAIAN, NR.27-33, SC.B, ET.1, AP.BIROU 6",
+      "adresa_norm": "bucuresti 3 nerva traian 27 33",
+      "severitate": "MEDIU",
+      "descriere": "FRAMEWORKS SRL și DECAS MEDICAL S.R.L. au aceeași adresă fiscală înregistrată la ANAF. Poate indica legătură de business sau sediu de companii. Verificare manuală recomandată."
+    },
+    {
+      "tip": "ADRESA_COMUNA",
+      "firme": [
         "5175127",
-        "RO48590798"
+        "48590798"
       ],
       "nume": [
         "WURTH ROMANIA SRL",
@@ -2055,10 +2411,10 @@
     }
   ],
   "stats": {
-    "total_noduri": 181,
-    "noduri_in_retea": 8,
-    "edges_adresa_comuna": 4,
-    "total_edges": 4
+    "total_noduri": 212,
+    "noduri_in_retea": 10,
+    "edges_adresa_comuna": 5,
+    "total_edges": 5
   },
-  "generated_at": "2026-10-01T10:31:52.582037"
+  "generated_at": "2026-10-07T06:52:26.043925"
 }
