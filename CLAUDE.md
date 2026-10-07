@@ -53,7 +53,7 @@ git push origin main
 ## Ce face monitor_pantelimon.py
 
 1. **Fetch date buget** din transparenta.eu (ANAF/MF) pentru CUI 4420759
-2. **Fetch contracte** din data.gov.ro (export oficial SEAP trimestrial, fișiere .xlsx)
+2. **Fetch contracte** din API-ul public SEAP (`sursa_seap_api.py`); data.gov.ro doar la cerere
 3. **Analizează HCL-uri** (Hotărâri Consiliu Local) de pe site-ul primăriei
 4. **Detectează red flags** — algoritmi de detectare a neregulilor:
   - Algoritm 1: Achiziții directe aproape de pragul categoriei (>97%)
@@ -225,13 +225,15 @@ Hooks integrate în `analizeaza_red_flags()` și `analizeaza_hcl()`.
 - **data.gov.ro blochează IP-urile GitHub Actions** (verificat 01.10: 8 din 9 runnere — connect timeout pe 80 și 443). În CI monitorul cade pe `contracte.json` din rularea anterioară și afișează un `::warning`. **API-ul public SEAP** (`e-licitatie.ro/api-pub/...`, cu header `Referer`) răspunde din toate runnerele — candidat pentru sursa de contracte în CI.
 - Aspect (01.10): tema „Registru” în `enhance.js` (fonturi Source Serif 4 / Source Sans 3 în `assets/fonts/`, `font-src 'self'`), prima pagină cu căutare în `contracte.json`. Etichetele rămân CRITIC / MAJOR / MEDIU. Textul de prezentare: „Inițiativă civică” (fără „independentă”).
 
-### Sursa contractelor: API-ul public SEAP (ramura feat/sursa-seap-api, 07.10.2026 — NU e încă în main)
+### Sursa contractelor: API-ul public SEAP (în main din 07.10.2026)
 
 - `sursa_seap_api.py` → `fetch_contracte_seap_api(contracte_anterioare)`: cumpărări directe acceptate (lună cu lună, `finalizationDate`) + contracte din anunțurile de atribuire (CAN/SCNA → `GetCANoticeContracts`). Primăria Pantelimon = `contractingAuthorityId` 842. ~45 de cereri, câte una la 2 s.
 - Nu publică date parțiale: orice refuz (403/429/„Acces restricționat”), eroare repetată sau rezultat sub 80% din rularea anterioară → fallback la `contracte.json` + `::warning`.
 - Id-urile din `contracte.json` se păstrează (potrivire după CUI + valoare + dată, apoi după `k`), ca linkurile `semnale/<slug>.html` deja distribuite să nu devină „retrase”. Numele firmelor deja publicate se păstrează pe CUI.
 - `contracte.json` are câmpuri noi: `cod` (DA… / CAN… / SCNA…), `url` (anunțul SEAP), `k` (cheia contractului), `tipc` (achizitie-directa / contract / acord-cadru / subsecvent).
 - Asocierile: un rând pe membru (ca la data.gov.ro), aceeași `k`; totalurile (`valoare_totala`, `contracte_unice`) numără contractul o dată.
+- Acordurile-cadru (`tipc=acord-cadru`, plafon) NU intră în `valoare_totala` / `_suma_seap_dedupata`; contractele subsecvente da. Se afișează separat (`valoare_acorduri_cadru`, `raport.json` → `framework_agreements_value_ron`). Decis cu Alexandru pe 07.10.2026.
+- Banda de date (enhance.js) are nota despre schimbarea sursei, cu link la `despre.html#schimbare-surse`.
 - `_seap_url` / `_seap_nr` folosesc doar linkurile reale (`inregistreaza_linkuri_seap`); pentru id-urile vechi trimit la lista publică SEAP.
 - data.gov.ro doar la cerere, local: `MONITOR_SURSA_CONTRACTE=datagov`.
 
