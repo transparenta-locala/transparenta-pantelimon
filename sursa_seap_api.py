@@ -313,13 +313,17 @@ def pastreaza_id_uri(noi: list, anterioare: list) -> int:
             potrivite.add(i)
             r["id"] = vechi["id"]
             pastrate += 1
+    chei_noi = {r["cheie_seap"] for r in noi}
     for i, r in enumerate(noi):
         if i in potrivite:
             continue
         este_da = r["tip_contract"] == "achizitie-directa"
         candidati = []
         for c in ramase:
-            if id(c) in folosite or (c.get("cheie_seap") or c.get("k")):
+            k_vechi = c.get("cheie_seap") or c.get("k")
+            # rândurile cu cheie se potrivesc la pasul 1; dacă cheia lor nu mai există
+            # (SEAP a republicat contractul cu alt id), le încercăm și aici
+            if id(c) in folosite or (k_vechi and k_vechi in chei_noi):
                 continue
             if str(c.get("id", "")).startswith("achizitie-directa") != este_da:
                 continue
@@ -385,7 +389,7 @@ def descarca_da(client: ClientSeap, id_autoritate: int, start: date, sfarsit: da
     """Toate cumpărările directe finalizate în [start, sfarsit], lună cu lună."""
     brute, vazute = [], set()
     for inceput, urmator in ferestre_lunare(start, sfarsit):
-        pagina = 0
+        pagina, ids_luna = 0, set()
         while True:
             corp = {
                 "pageSize": 100, "pageIndex": pagina, "showOngoingDa": False,
@@ -403,13 +407,18 @@ def descarca_da(client: ClientSeap, id_autoritate: int, start: date, sfarsit: da
                 raise SeapIndisponibil(f"DA {inceput:%Y-%m}: căutare prea lungă")
             for it in j["items"]:
                 k = it.get("directAcquisitionId")
+                ids_luna.add(k)
                 if k not in vazute:
                     vazute.add(k)
                     brute.append(it)
+            if "total" not in j:
+                raise SeapIndisponibil(f"DA {inceput:%Y-%m}: răspuns fără total")
             total = int(j.get("total") or 0)
-            if (pagina + 1) * 100 >= total:
+            if (pagina + 1) * 100 >= total or not j["items"]:
                 break
             pagina += 1
+        if len(ids_luna) < total:
+            raise SeapIndisponibil(f"DA {inceput:%Y-%m}: {len(ids_luna)} primite din {total}")
         jurnal.append(f"DA {inceput:%Y-%m}: total={total}")
     return brute
 
@@ -427,10 +436,18 @@ def descarca_atribuiri(client: ClientSeap, id_autoritate: int, start: date,
                            "hasUnansweredQuestions": False})
         if not isinstance(j, dict) or "items" not in j:
             raise SeapIndisponibil("lista anunțurilor de atribuire: răspuns fără listă")
+        if "total" not in j:
+            raise SeapIndisponibil("lista anunțurilor de atribuire: răspuns fără total")
         anunturi += j["items"]
-        if (pagina + 1) * 100 >= int(j.get("total") or 0):
+        total = int(j.get("total") or 0)
+        if (pagina + 1) * 100 >= total or not j["items"]:
             break
         pagina += 1
+    if len({a.get("caNoticeId") for a in anunturi}) < total:
+        raise SeapIndisponibil(f"anunțuri de atribuire: {len(anunturi)} primite din {total}")
+    if any(not _zi(a.get("noticeStateDate")) for a in anunturi):
+        # fără dată nu putem filtra corect — mai bine fallback decât contracte lipsă
+        raise SeapIndisponibil("anunțuri de atribuire fără noticeStateDate (s-a schimbat API-ul?)")
     alese = [a for a in anunturi if _zi(a.get("noticeStateDate")) >= start.isoformat()]
     jurnal.append(f"Anunturi de atribuire: {len(anunturi)} in total, {len(alese)} din {start}")
     rezultat = []
@@ -448,10 +465,15 @@ def descarca_atribuiri(client: ClientSeap, id_autoritate: int, start: date,
                               f"/pub/notices/ca-notices/view-c/{a['caNoticeId']}", corp)
             if not isinstance(j, dict) or "items" not in j:
                 raise SeapIndisponibil(f"{a.get('noticeNo')}: răspuns fără contracte")
+            if "total" not in j:
+                raise SeapIndisponibil(f"{a.get('noticeNo')}: răspuns fără total")
             contracte += j["items"]
-            if skip + 100 >= int(j.get("total") or 0):
+            total_c = int(j.get("total") or 0)
+            if skip + 100 >= total_c or not j["items"]:
                 break
             skip += 100
+        if len(contracte) < total_c:
+            raise SeapIndisponibil(f"{a.get('noticeNo')}: {len(contracte)} contracte primite din {total_c}")
         jurnal.append(f"{a.get('noticeNo')}: {len(contracte)} contracte")
         rezultat.append((a, contracte))
     return rezultat
@@ -489,21 +511,36 @@ def fetch_contracte_seap_api(contracte_anterioare: list | None = None,
     return toate, jurnal
 
 
-def verifica_plauzibil(noi: list, anterioare: list) -> str:
+def _este_da(c: dict) -> bool:
+    tip = c.get("tip_contract") or c.get("tipc")
+    if tip:
+        return tip == "achizitie-directa"
+    return str(c.get("id", "")).startswith("achizitie-directa")
+
+
+def verifica_plauzibil(noi: list, anterioare: list, start: date | None = None) -> str:
     """Mesaj de eroare dacă rezultatul pare incomplet față de rularea anterioară, altfel ''.
 
-    Comparăm doar perioada comună: o scădere mare a numărului de rânduri pe
-    aceeași perioadă înseamnă aproape sigur un răspuns trunchiat.
+    Comparăm aceeași perioadă — de la `start` (1 ianuarie anul trecut) până la cea
+    mai recentă dată din rularea anterioară — separat pentru cumpărările directe
+    și pentru contractele din anunțurile de atribuire: o scădere mare pe oricare
+    dintre ele înseamnă aproape sigur un răspuns trunchiat.
     """
-    if not anterioare:
-        return "" if noi else "SEAP API nu a întors niciun contract"
     if not noi:
         return "SEAP API nu a întors niciun contract"
-    inceput = min(_data(c) for c in noi if _data(c)) if any(_data(c) for c in noi) else ""
-    sfarsit = max(_data(c) for c in anterioare if _data(c)) if any(_data(c) for c in anterioare) else ""
-    vechi = [c for c in anterioare if inceput <= _data(c) <= sfarsit]
-    nou = [c for c in noi if inceput <= _data(c) <= sfarsit]
-    if len(vechi) >= 50 and len(nou) < 0.8 * len(vechi):
-        return (f"SEAP API pare incomplet: {len(nou)} rânduri în {inceput}..{sfarsit}, "
-                f"față de {len(vechi)} în rularea anterioară")
+    if not anterioare:
+        return ""
+    date_vechi = [_data(c) for c in anterioare if _data(c)]
+    if not date_vechi:
+        return ""
+    inceput = (start or date.today().replace(year=date.today().year - 1, month=1, day=1)).isoformat()
+    sfarsit = max(date_vechi)
+    for nume, prag_minim, filtru in (("cumpărări directe", 50, _este_da),
+                                      ("contracte din anunțuri de atribuire", 5,
+                                       lambda c: not _este_da(c))):
+        vechi = [c for c in anterioare if filtru(c) and inceput <= _data(c) <= sfarsit]
+        nou = [c for c in noi if filtru(c) and inceput <= _data(c) <= sfarsit]
+        if len(vechi) >= prag_minim and len(nou) < 0.8 * len(vechi):
+            return (f"SEAP API pare incomplet la {nume}: {len(nou)} rânduri în {inceput}..{sfarsit}, "
+                    f"față de {len(vechi)} în rularea anterioară")
     return ""

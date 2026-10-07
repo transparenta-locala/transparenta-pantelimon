@@ -3698,14 +3698,21 @@ def _suma_seap_dedupata(contracte: list, an: int) -> tuple:
         data = c.get('data_publicare') or c.get('data') or ''
         if str(an) not in data:
             continue
-        titlu = c.get('titlu') or ''
-        titlu_canonic = _rev_re.sub('', titlu).strip().lower()
-        # Preferam CUI ca identificator firma (stabil); fallback la nume
-        firma = (c.get('castigator_cui') or c.get('cui') or
-                 c.get('castigator') or c.get('firma') or '').strip()
-        if not titlu_canonic or not firma:
-            continue  # skip date murdare
-        key = (titlu_canonic, firma)
+        # Rânduri din API-ul SEAP: cheia contractului (membrii unei asocieri au
+        # aceeași cheie → contractul se numără o dată; achizițiile directe distincte
+        # rămân distincte). Rândurile vechi data.gov.ro: (titlu canonic, firmă), MAX.
+        cheie = c.get('cheie_seap') or c.get('k')
+        if cheie:
+            key = ('k', cheie)
+        else:
+            titlu = c.get('titlu') or ''
+            titlu_canonic = _rev_re.sub('', titlu).strip().lower()
+            # Preferam CUI ca identificator firma (stabil); fallback la nume
+            firma = (c.get('castigator_cui') or c.get('cui') or
+                     c.get('castigator') or c.get('firma') or '').strip()
+            if not titlu_canonic or not firma:
+                continue  # skip date murdare
+            key = (titlu_canonic, firma)
         valoare = float(c.get('valoare_ron') or c.get('valoare') or 0)
         if key not in seen or valoare > seen[key]:
             seen[key] = valoare
@@ -4874,7 +4881,9 @@ function showFirmaContracts(firma, evt) {{
     var cl = _nzFirma(c.firma || '');
     if (!cl || !_nfc) return false;
     if (!(cl === _nfc || cl.indexOf(_nfc) !== -1 || _nfc.indexOf(cl) !== -1)) return false;
-    var k = cl + '|' + (c.data || '') + '|' + Math.round(c.valoare || 0) + '|' + String(c.titlu || '').slice(0, 60);
+    // Rânduri SEAP API: cheia contractului (două achiziții identice în aceeași zi
+    // sunt două contracte). Rânduri vechi data.gov.ro: firmă|dată|valoare|titlu.
+    var k = c.k ? 'k|' + c.k : cl + '|' + (c.data || '') + '|' + Math.round(c.valoare || 0) + '|' + String(c.titlu || '').slice(0, 60);
     if (_vazuteC[k]) return false;
     _vazuteC[k] = 1;
     return true;
@@ -4944,7 +4953,7 @@ function showFirmaContracts(firma, evt) {{
         + '<th style="padding:6px 10px;font-size:11px;text-align:center">Ofertanți</th>'
         + '<th style="padding:6px 10px;font-size:11px;text-align:center">Cod SEAP</th>'
         + '</tr></thead><tbody>' + rows + '</tbody></table></div>')
-    + '<div style="margin-top:10px;font-size:11px;color:#777">Date: SEAP (e-licitatie.ro) · Perioadă analizată: de la 1 ianuarie anul trecut'
+    + '<div style="margin-top:10px;font-size:11px;color:#777">Date: SEAP (e-licitatie.ro) · Contracte publicate în SEAP de la 1 ianuarie anul trecut'
     + ' · <em>Al doilea ofertant — apasă „→ SEAP" pentru detalii complete</em></div>'
     + '</div>';
 
@@ -5002,7 +5011,7 @@ function openFirmaPanel(firma, evt) {{
     var cn = _nzFirma(c.firma||'');
     if (!cn || !_nf) return false;
     if (!(cn === _nf || cn.indexOf(_nf) !== -1 || _nf.indexOf(cn) !== -1)) return false;
-    var k = cn + '|' + (c.data||'') + '|' + Math.round(c.valoare||0) + '|' + String(c.titlu||'').slice(0,60);
+    var k = c.k ? 'k|' + c.k : cn + '|' + (c.data||'') + '|' + Math.round(c.valoare||0) + '|' + String(c.titlu||'').slice(0,60);
     if (_vazute[k]) return false;
     _vazute[k] = 1;
     return true;
@@ -5487,13 +5496,17 @@ def _categorizeaza_contracte_breakdown(contracte: list, an: int) -> dict:
         data = c.get('data_publicare') or c.get('data') or ''
         if str(an) not in data:
             continue
-        titlu_raw = c.get('titlu') or ''
-        titlu_can = rev_re.sub('', titlu_raw).strip().lower()
-        firma = (c.get('castigator_cui') or c.get('cui') or
-                 c.get('castigator') or c.get('firma') or '').strip()
-        if not titlu_can or not firma:
-            continue
-        key = (titlu_can, firma)
+        cheie = c.get('cheie_seap') or c.get('k')
+        if cheie:
+            key = ('k', cheie)   # contract SEAP: o dată, chiar dacă are mai mulți câștigători
+        else:
+            titlu_raw = c.get('titlu') or ''
+            titlu_can = rev_re.sub('', titlu_raw).strip().lower()
+            firma = (c.get('castigator_cui') or c.get('cui') or
+                     c.get('castigator') or c.get('firma') or '').strip()
+            if not titlu_can or not firma:
+                continue
+            key = (titlu_can, firma)
         val = float(c.get('valoare_ron') or c.get('valoare') or 0)
         if _este_contract_lucrari(c):
             if key not in lucr or val > lucr[key]:
@@ -5681,7 +5694,7 @@ def actualizeaza_contoare_analiza(contracte_export: list) -> None:
     """
     import re as _re_ca
     an_curent = datetime.now().year
-    n_total = len(contracte_export)
+    n_total = len(contracte_unice(contracte_export))
 
     tp_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                            'transparenta_pantelimon.html')
@@ -6812,7 +6825,9 @@ def main():
         try:
             from sursa_seap_api import fetch_contracte_seap_api, verifica_plauzibil
             contracte, seap_debug = fetch_contracte_seap_api(contracte_anterioare)
-            _problema = verifica_plauzibil(contracte, contracte_anterioare)
+            _azi = datetime.now().date()
+            _problema = verifica_plauzibil(contracte, contracte_anterioare,
+                                           _azi.replace(year=_azi.year - 1, month=1, day=1))
             if _problema:
                 seap_debug.append(f"RESPINS: {_problema}")
                 print(f"  ⚠ {_problema}")
@@ -6836,6 +6851,12 @@ def main():
             print("::warning title=Date SEAP nereîmprospătate::API-ul SEAP nu a dat un rezultat "
                   "complet; raportul folosește contracte.json din rularea anterioară.")
     seap_debug.append(f"SURSA CONTRACTE: {sursa_contracte}")
+    if not contracte:
+        # Nici sursa, nici rularea anterioară: nu publicăm un raport fără contracte
+        # (și nu suprascriem contracte.json cu o listă goală).
+        print("::error title=Fără contracte::Nici API-ul SEAP, nici contracte.json nu au dat "
+              "contracte; rularea se oprește fără să publice.")
+        sys.exit(1)
     inregistreaza_linkuri_seap(contracte)
 
     # 3. Hotărâri Consiliu Local

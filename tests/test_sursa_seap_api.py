@@ -173,20 +173,37 @@ class TestPastrare:
 
 
 class TestPlauzibil:
-    def _rows(self, n, zi="2025-06-01"):
-        return [{"id": str(i), "data_publicare": zi} for i in range(n)]
+    START = date(2025, 1, 1)
+
+    def _rows(self, n, zi="2025-06-01", da_=False):
+        pref = "achizitie-directa-2025-" if da_ else "contract-2025-"
+        return [{"id": f"{pref}{i}", "data_publicare": zi} for i in range(n)]
 
     def test_complet_e_acceptat(self):
-        assert S.verifica_plauzibil(self._rows(100), self._rows(100)) == ""
+        assert S.verifica_plauzibil(self._rows(100), self._rows(100), self.START) == ""
 
     def test_trunchiat_e_respins(self):
-        assert "incomplet" in S.verifica_plauzibil(self._rows(40), self._rows(100))
+        assert "incomplet" in S.verifica_plauzibil(self._rows(40), self._rows(100), self.START)
 
     def test_gol_e_respins(self):
-        assert S.verifica_plauzibil([], self._rows(10))
+        assert S.verifica_plauzibil([], self._rows(10), self.START)
 
     def test_fara_istoric_accepta_orice_nevid(self):
-        assert S.verifica_plauzibil(self._rows(3), []) == ""
+        assert S.verifica_plauzibil(self._rows(3), [], self.START) == ""
+
+    def test_lipsa_contractelor_din_atribuiri_e_respinsa(self):
+        """Doar DA, fără contractele din anunțuri (87% din valoare) → respins."""
+        vechi = self._rows(300, da_=True) + self._rows(20)
+        nou = self._rows(300, da_=True)
+        assert "anunțuri de atribuire" in S.verifica_plauzibil(nou, vechi, self.START)
+
+    def test_trecerea_in_anul_nou_nu_respinge_date_bune(self):
+        """La 5 ian. 2027 fereastra începe la 1 ian. 2026: rândurile din 2025 din rularea
+        anterioară nu trebuie comparate cu noile date."""
+        vechi = (self._rows(400, "2025-05-01", True) + self._rows(300, "2026-05-01", True)
+                 + self._rows(10, "2023-09-11"))
+        nou = self._rows(305, "2026-05-01", True) + self._rows(10, "2023-09-11")
+        assert S.verifica_plauzibil(nou, vechi, date(2026, 1, 1)) == ""
 
 
 # ── client HTTP și fluxul complet, cu server simulat ─────────────────────────
@@ -335,3 +352,44 @@ class TestTotaluri:
         toate = r + [d, vechi] + fara_id
         assert len(contracte_unice(toate)) == 5
         assert valoare_totala(toate) == pytest.approx(29508940.74 + 100.0 + 5.0 + 2.0)
+
+
+
+class TestRobustete:
+    def test_paginare_incompleta_e_eroare(self):
+        """Serverul spune total=150 dar dă o singură pagină de 100 → nu acceptăm."""
+        items = [da(i, f"DA{i}", "2025-01-10", 1.0, "1 X") for i in range(100)]
+        def raspunde(url, corp):
+            if "GetDirectAcquisitionList" in url:
+                if corp["pageIndex"] == 0 and corp["finalizationDateStart"].startswith("2025-01"):
+                    return RaspunsFals(json_={"total": 150, "items": items})
+                return RaspunsFals(json_={"total": 150 if corp["finalizationDateStart"].startswith("2025-01") else 0,
+                                          "items": []})
+            return RaspunsFals(json_={"total": 0, "items": []})
+        c, _ = client([raspunde] * 40)
+        with pytest.raises(S.SeapIndisponibil):
+            S.fetch_contracte_seap_api([], azi=date(2026, 1, 10), client=c)
+
+    def test_anunt_fara_data_e_eroare(self):
+        anunt = dict(ANUNT_SCOLI)
+        anunt.pop("noticeStateDate")
+        raspunde = server_simulat({}, [anunt], {})
+        c, _ = client([raspunde] * 40)
+        with pytest.raises(S.SeapIndisponibil):
+            S.fetch_contracte_seap_api([], azi=date(2026, 1, 10), client=c)
+
+    def test_contract_republicat_cu_alt_id_pastreaza_permalinkul(self):
+        noi = S.normalizeaza_contracte_can(ANUNT_SCOLI, [dict(CONTRACT_ASOCIERE, caNoticeContractId=555)])
+        vechi = [{"id": "contract-2025-58067", "valoare": 29508940.74, "data": "2025-07-29",
+                  "cui": "30056330", "k": "can:108000001"}]
+        assert S.pastreaza_id_uri(noi, vechi) == 1
+        assert noi[0]["id"] == "contract-2025-58067"
+
+    def test_suma_dedupata_pe_an_numara_asocierea_o_data(self):
+        from monitor_pantelimon import _suma_seap_dedupata
+        r = S.normalizeaza_contracte_can(ANUNT_SCOLI, [CONTRACT_ASOCIERE])
+        # două achiziții directe identice în aceeași zi = două contracte
+        d1 = S.normalizeaza_da(da(1, "DA1", "2025-05-19", 68000.0, "5 CULT"))
+        d2 = S.normalizeaza_da(da(2, "DA2", "2025-05-19", 68000.0, "5 CULT"))
+        total, n = _suma_seap_dedupata(r + [d1, d2], 2025)
+        assert n == 3 and total == pytest.approx(29508940.74 + 136000.0)
