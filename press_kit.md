@@ -10,7 +10,7 @@ Monitorizare cetățenească automată a achizițiilor publice — Orașul Pante
 | Contracte unice cu semnale | 242 |
 | Critice / Majore / Medii | 26 / 97 / 217 |
 | Contracte analizate | 704 |
-| Valoare totală contracte | 203.82 M RON |
+| Valoare totală contracte | 158.57 M RON |
 | Scor transparență | 23/100 |
 
 ## Top 5 semnale (severitate + valoare)

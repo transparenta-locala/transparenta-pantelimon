@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-07T06:46:55.762131",
+  "generated_at": "2026-10-07T08:23:48.033927",
   "entity": {
     "name": "Orașul Pantelimon",
     "cif": "4420759",
@@ -11,7 +11,8 @@
     "signals": 340,
     "contracts_analyzed": 704,
     "contracts_with_signals": 242,
-    "total_value_ron": 203822977.67,
+    "total_value_ron": 158572995.19000006,
+    "framework_agreements_value_ron": 45249982.48,
     "by_severity": {
       "CRITIC": 26,
       "MAJOR": 97,
@@ -4855,7 +4856,7 @@
     "SCNA1119917: 0 contracte",
     "CAN1111306: 3 contracte",
     "CAN1143030: 2 contracte",
-    "SEAP API: 668 DA acceptate, 47 randuri din atribuiri, 715 dupa deduplicare; 504 id-uri pastrate, 21 nume de firma pastrate; 42 cereri in 84s",
+    "SEAP API: 668 DA acceptate, 47 randuri din atribuiri, 715 dupa deduplicare; 715 id-uri pastrate, 21 nume de firma pastrate; 42 cereri in 82s",
     "SURSA CONTRACTE: seap-api"
   ]
 }

@@ -973,8 +973,8 @@
       "label": "STANGER DESIGN S.R.L.",
       "cui": "40412167",
       "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, PRL. BUCUREŞTI, NR.24, BL.M19, SC.2, ET.3, AP.6",
-      "lat": 44.207754,
-      "lng": 27.309634,
+      "lat": 44.189902,
+      "lng": 27.353423,
       "valoare": 115500.0,
       "nr_contracte": 1,
       "in_retea": false
@@ -1809,8 +1809,8 @@
       "label": "SELGROS CASH & CARRY SRL",
       "cui": "11805367",
       "adresa": "JUD. BRAŞOV, MUN. BRAŞOV, CAL. BUCUREŞTI, NR.231",
-      "lat": 45.648698,
-      "lng": 25.618511,
+      "lat": 45.631239,
+      "lng": 25.637768,
       "valoare": 9031.31,
       "nr_contracte": 2,
       "in_retea": false
@@ -2416,5 +2416,5 @@
     "edges_adresa_comuna": 5,
     "total_edges": 5
   },
-  "generated_at": "2026-10-07T06:52:26.043925"
+  "generated_at": "2026-10-07T08:28:54.814768"
 }
