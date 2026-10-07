@@ -1,9 +1,25 @@
 {
-  "data_curenta": "2026-10-01T10:27:14.094455",
-  "data_anterioara": "2026-10-01T08:58:24.503749",
-  "nereguli_noi": 0,
-  "nereguli_rezolvate": 0,
-  "scor_transparenta": 37,
-  "top_noi": [],
-  "date_seap_pana_la": "2026-03-30"
+  "data_curenta": "2026-10-07T06:46:32.667233",
+  "data_anterioara": "2026-10-01T10:27:32.619774",
+  "nereguli_noi": 113,
+  "nereguli_rezolvate": 2,
+  "scor_transparenta": 23,
+  "top_noi": [
+    {
+      "titlu": "Un singur ofertant raportat în date",
+      "severitate": "MAJOR",
+      "index": 1
+    },
+    {
+      "titlu": "Un singur ofertant raportat în date",
+      "severitate": "MAJOR",
+      "index": 2
+    },
+    {
+      "titlu": "Un singur ofertant raportat în date",
+      "severitate": "MAJOR",
+      "index": 3
+    }
+  ],
+  "date_seap_pana_la": "2026-10-06"
 }

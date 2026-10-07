@@ -573,6 +573,7 @@ html.tp-theme h1, html.tp-theme h2, html.tp-theme h3 { font-family: var(--tp-ser
 /* Bandă date + banner + breadcrumb */
 .tp-data-band { background: var(--tp-tint); color: var(--tp-accent-d); border-bottom: 1px solid var(--tp-border); text-align: left; font-size: .92rem; padding: 9px 24px; }
 .tp-data-band strong { font-weight: 600; }
+.tp-data-band a { color: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
 html[data-tp-theme="dark"] .tp-data-band { background: var(--tp-tint); color: var(--tp-fg); border-color: var(--tp-border); }
 .tp-banner-whats-new { background: var(--tp-accent-d); }
 .tp-breadcrumb { max-width: 1120px; margin: 0 auto; padding: 10px 24px; }
@@ -2060,7 +2061,10 @@ html.tp-theme .container .back-link { color: var(--tp-link); }
     band.className = 'tp-data-band';
     band.setAttribute('role', 'note');
     band.innerHTML = '<strong>Date SEAP până la ' + txt + '.</strong> ' +
-      'Contractele atribuite după această dată nu sunt încă incluse.';
+      'Din 7 octombrie 2026, contractele vin direct din SEAP (e-licitatie.ro), nu din exportul ' +
+      'trimestrial de pe data.gov.ro. Totalul numără o singură dată contractele câștigate de asocieri ' +
+      'și nu include acordurile-cadru (plafoane). ' +
+      '<a href="' + base + 'despre.html#schimbare-surse">Ce s-a schimbat →</a>';
     const nav = $('.tp-nav');
     if (nav && nav.parentNode) nav.parentNode.insertBefore(band, nav.nextSibling);
     else document.body.insertBefore(band, document.body.firstChild);

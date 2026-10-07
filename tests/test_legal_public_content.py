@@ -59,8 +59,11 @@ def test_toate_linkurile_externe_generate_folosesc_noopener():
 
 def test_paginile_publice_nu_pastreaza_praguri_sau_afirmatii_vechi():
     texte = "\n".join(path.read_text(encoding="utf-8") for path in ROOT.rglob("*.html"))
+    # Vechiul prag de 130.000 RON nu mai apare ca prag. (O achiziție reală de
+    # 130.000 RON poate apărea legitim în paginile de semnal, cu sursa SEAP.)
+    import re as _re
+    assert not _re.search(r"prag\w*[^.<]{0,40}130\.000|130\.000 RON[^.<]{0,40}prag", texte, _re.I)
     for fragment in (
-        "130.000 RON",
         "L215/2001",
         "Legea 363/2018",
         "YOUR_FORM_ID",

@@ -1,7 +1,7 @@
 """
 Monitor Transparență Bugetară — Primăria Pantelimon
 ====================================================
-Script de monitorizare automată: trage date din data.gov.ro (export SEAP oficial)
+Script de monitorizare automată: trage contractele din API-ul public SEAP (e-licitatie.ro)
 și transparenta.eu, detectează red flags și generează raport HTML.
 
 Utilizare:
@@ -2986,54 +2986,126 @@ def _cui_pentru_furnizor(furnizor: str, fallback: str, index: dict) -> str:
             or "")
 
 
+# Linkurile reale către SEAP, pe id de contract: {id: (url, cod)}. Se completează
+# din contracte (sursa SEAP API are `url_seap` / `cod_seap`; exportul vechi data.gov.ro
+# nu avea niciun identificator SEAP, doar numărul rândului din fișier).
+_LINKURI_SEAP: dict = {}
+
+LISTA_SEAP_DA = "https://e-licitatie.ro/pub/direct-acquisitions/list/1"
+LISTA_SEAP_ATRIBUIRI = "https://e-licitatie.ro/pub/notices/ca-notices/list/1"
+
+
+def inregistreaza_linkuri_seap(contracte: list) -> int:
+    """Reține (url, cod) SEAP pentru fiecare contract care le are. Întoarce câte."""
+    _LINKURI_SEAP.clear()
+    for c in contracte or []:
+        url = c.get("url_seap") or c.get("url")
+        if c.get("id") and url:
+            _LINKURI_SEAP[c["id"]] = (url, c.get("cod_seap") or c.get("cod") or "")
+    return len(_LINKURI_SEAP)
+
+
 def _seap_url(contract_id: str, tip_procedura: str = '') -> str:
-    """Construiește URL-ul direct SEAP dintr-un contract_id.
+    """URL-ul SEAP al contractului (primul, dacă sunt mai multe id-uri).
 
-    Formate acceptate:
-      achizitie-directa-2025-489392  → da-direct-acquisition
-      contract-2025-79964            → contract-notice (licitatie deschisa)
-      contract-2026-3957             → simplified-tender (procedura simplificata)
-
-    Returnează URL-ul la anunțul specific, sau lista generică dacă ID-ul nu e parsabil.
+    Dacă avem linkul real (sursa SEAP API) îl folosim. Altfel trimitem la lista
+    publică SEAP (cumpărări directe sau anunțuri de atribuire), unde se caută
+    după firmă și dată — id-urile vechi din data.gov.ro erau numere de rând,
+    iar /view/<nr> deschidea o pagină goală.
     """
-    primul_id = contract_id.split(",")[0].strip()
-    parts = primul_id.split("-")
-    numeric_id = parts[-1] if parts and parts[-1].isdigit() else ""
-    if not numeric_id:
-        return "https://e-licitatie.ro/pub/notices/da-direct-acquisition/list/0/0"
-
-    # Detectăm tipul din prefix sau din tip_procedura
-    tip_lower = (tip_procedura or '').lower()
-    if primul_id.startswith('achizitie-directa'):
-        path = 'da-direct-acquisition'
-    elif 'simplif' in tip_lower or 'simplificate' in tip_lower:
-        path = 'simplified-tender'
-    elif 'deschisa' in tip_lower or 'deschis' in tip_lower:
-        path = 'contract-notice'
-    elif primul_id.startswith('contract-'):
-        # fallback: licitatie/contract notice
-        path = 'contract-notice'
-    else:
-        path = 'da-direct-acquisition'
-
-    return f"https://e-licitatie.ro/pub/notices/{path}/view/{numeric_id}"
+    primul_id = (contract_id or "").split(",")[0].strip()
+    if primul_id in _LINKURI_SEAP:
+        return _LINKURI_SEAP[primul_id][0]
+    if primul_id.startswith("contract"):
+        return LISTA_SEAP_ATRIBUIRI
+    return LISTA_SEAP_DA
 
 
 def _seap_nr(contract_id: str) -> str:
-    """Extrage numărul/numerele SEAP din contract_id pentru afișare ca text copiabil.
+    """Codurile SEAP ale contractelor, pentru afișare ca text copiabil.
 
-    Ex: 'achizitie-directa-2025-489392,achizitie-directa-2025-489393'
-        → 'Nr. SEAP: 489392, 489393'
+    Ex: 'achizitie-directa-2025-1,achizitie-directa-2025-2' → 'Cod SEAP: DA37312670, DA37331105'
+    Fără cod SEAP cunoscut → '' (nu afișăm numere de rând drept numere SEAP).
     """
-    ids = [cid.strip() for cid in contract_id.split(",") if cid.strip()]
-    nums = []
-    for cid in ids:
-        parts = cid.split("-")
-        if parts and parts[-1].isdigit():
-            nums.append(parts[-1])
-    if nums:
-        return "Nr. SEAP: " + ", ".join(nums)
-    return ""
+    coduri = []
+    for cid in (contract_id or "").split(","):
+        cod = _LINKURI_SEAP.get(cid.strip(), ("", ""))[1]
+        if cod and cod not in coduri:
+            coduri.append(cod)
+    return ("Cod SEAP: " + ", ".join(coduri)) if coduri else ""
+
+
+def contracte_unice(contracte: list) -> list:
+    """Un rând pe contract: rândurile membrilor unei asocieri (aceeași `cheie_seap`)
+    se numără o singură dată. Rândurile fără cheie (export vechi) rămân separate."""
+    vazute, out = set(), []
+    for i, c in enumerate(contracte or []):
+        k = c.get("cheie_seap") or c.get("k") or (("id", c["id"]) if c.get("id") else ("rand", i))
+        if k in vazute:
+            continue
+        vazute.add(k)
+        out.append(c)
+    return out
+
+
+def _este_acord_cadru(c: dict) -> bool:
+    return (c.get("tip_contract") or c.get("tipc")) == "acord-cadru"
+
+
+def valoare_totala(contracte: list) -> float:
+    """Banii contractați: fiecare contract o singură dată (vezi contracte_unice), fără
+    acordurile-cadru. Un acord-cadru e un plafon; banii se angajează prin contractele
+    subsecvente, care sunt incluse — altfel aceeași sumă ar fi numărată de două ori."""
+    return sum(float(c.get("valoare_ron", c.get("valoare", 0)) or 0)
+               for c in contracte_unice(contracte) if not _este_acord_cadru(c))
+
+
+def valoare_acorduri_cadru(contracte: list) -> float:
+    """Valoarea maximă a acordurilor-cadru (plafon), afișată separat de total."""
+    return sum(float(c.get("valoare_ron", c.get("valoare", 0)) or 0)
+               for c in contracte_unice(contracte) if _este_acord_cadru(c))
+
+
+def contract_din_export(c: dict) -> dict:
+    """Un rând din contracte.json (chei scurte) → schema internă a monitorului."""
+    return {
+        "id":             c.get("id", ""),
+        "numar":          c.get("numar", "–"),
+        "titlu":          c.get("titlu", ""),
+        "valoare_ron":    float(c.get("valoare_ron", c.get("valoare", 0)) or 0),
+        "data_publicare": c.get("data_publicare", c.get("data", "")),
+        "tip_procedura":  c.get("tip_procedura", c.get("tip", "")),
+        "castigator":     c.get("castigator", c.get("firma", "")),
+        "castigator_cui": c.get("castigator_cui", c.get("cui", "")),
+        "nr_ofertanti":   int(c.get("nr_ofertanti", c.get("ofertanti", 0)) or 0),
+        "data_start":     c.get("data_start", ""),
+        "data_sfarsit":   c.get("data_sfarsit", ""),
+        "autoritate":     c.get("autoritate", ""),
+        "cpv":            c.get("cpv", ""),
+        "cod_seap":       c.get("cod_seap", c.get("cod", "")),
+        "url_seap":       c.get("url_seap", c.get("url", "")),
+        "cheie_seap":     c.get("cheie_seap", c.get("k", "")),
+        "tip_contract":   c.get("tip_contract", c.get("tipc", "")),
+    }
+
+
+def contract_pentru_export(c: dict) -> dict:
+    """Schema internă → rândul din contracte.json (chei scurte, câmpurile SEAP doar dacă există)."""
+    out = {
+        "id": c["id"],
+        "titlu": c["titlu"][:80],
+        "valoare": c["valoare_ron"],
+        "data": c["data_publicare"],
+        "tip": c["tip_procedura"],
+        "firma": c["castigator"],
+        "cui": c.get("castigator_cui", ""),
+        "ofertanti": c.get("nr_ofertanti", 0),
+    }
+    for scurt, lung in (("cod", "cod_seap"), ("url", "url_seap"), ("k", "cheie_seap"),
+                        ("tipc", "tip_contract")):
+        if c.get(lung):
+            out[scurt] = c[lung]
+    return out
 
 
 def _fmt_ron(valoare: float) -> str:
@@ -3639,14 +3711,23 @@ def _suma_seap_dedupata(contracte: list, an: int) -> tuple:
         data = c.get('data_publicare') or c.get('data') or ''
         if str(an) not in data:
             continue
-        titlu = c.get('titlu') or ''
-        titlu_canonic = _rev_re.sub('', titlu).strip().lower()
-        # Preferam CUI ca identificator firma (stabil); fallback la nume
-        firma = (c.get('castigator_cui') or c.get('cui') or
-                 c.get('castigator') or c.get('firma') or '').strip()
-        if not titlu_canonic or not firma:
-            continue  # skip date murdare
-        key = (titlu_canonic, firma)
+        if _este_acord_cadru(c):
+            continue  # plafon; banii sunt în contractele subsecvente
+        # Rânduri din API-ul SEAP: cheia contractului (membrii unei asocieri au
+        # aceeași cheie → contractul se numără o dată; achizițiile directe distincte
+        # rămân distincte). Rândurile vechi data.gov.ro: (titlu canonic, firmă), MAX.
+        cheie = c.get('cheie_seap') or c.get('k')
+        if cheie:
+            key = ('k', cheie)
+        else:
+            titlu = c.get('titlu') or ''
+            titlu_canonic = _rev_re.sub('', titlu).strip().lower()
+            # Preferam CUI ca identificator firma (stabil); fallback la nume
+            firma = (c.get('castigator_cui') or c.get('cui') or
+                     c.get('castigator') or c.get('firma') or '').strip()
+            if not titlu_canonic or not firma:
+                continue  # skip date murdare
+            key = (titlu_canonic, firma)
         valoare = float(c.get('valoare_ron') or c.get('valoare') or 0)
         if key not in seen or valoare > seen[key]:
             seen[key] = valoare
@@ -3721,7 +3802,8 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
     """Generează raportul HTML complet."""
 
     data_generare = datetime.now().strftime("%d %B %Y, %H:%M")
-    total_val = sum(c["valoare_ron"] for c in contracte)
+    total_val = valoare_totala(contracte)
+    val_acorduri = valoare_acorduri_cadru(contracte)
     directe = [c for c in contracte if "direct" in c["tip_procedura"].lower()
                or "negociere" in c["tip_procedura"].lower()]
     unic_ofertant = [c for c in contracte if c.get("nr_ofertanti", 0) == 1]
@@ -3774,8 +3856,8 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
     print(f"  [cui-index] CUI mapat pentru {len(_cui_by_supplier)} furnizori")
 
     # Construim raport_json pentru embed <script id="tp-data"> si raport.json
-    _n_contracte = len(contracte)
-    _val_totala = sum(c.get("valoare_ron", 0) for c in contracte)
+    _n_contracte = len(contracte_unice(contracte))
+    _val_totala = valoare_totala(contracte)
     raport_json_obj = {
         "schema_version": "1.1",
         "generated_at": datetime.now().isoformat(),
@@ -3784,7 +3866,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
             "flags": len(flags), "signals": len(flags),
             "contracts_analyzed": _n_contracte,
             "contracts_with_signals": n_contracte_semnale,
-            "total_value_ron": _val_totala,
+            "total_value_ron": _val_totala, "framework_agreements_value_ron": valoare_acorduri_cadru(contracte),
             "by_severity": {
                 "CRITIC": sum(1 for f in flags if f.get("severitate") == "CRITIC"),
                 "MAJOR":  sum(1 for f in flags if f.get("severitate") == "MAJOR"),
@@ -4117,7 +4199,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
             <span>🏢 {furnizor or '–'}</span>
             <span>📅 {f.get('data','')}</span>
             <span>⚙️ {f.get('tip_procedura') or '–'}</span>
-            {(f'<span style="background:#EBF5FB;border:1px solid #AED6F1;border-radius:4px;padding:1px 7px;color:#1A5276;font-weight:700;letter-spacing:.3px" title="Număr SEAP — copiază-l pentru căutare manuală">🔍 {_seap_nr(contract_id)}</span>') if _seap_nr(contract_id) else f'<span>📋 {contract_id or "–"}</span>'}
+            {(f'<span style="background:#EBF5FB;border:1px solid #AED6F1;border-radius:4px;padding:1px 7px;color:#1A5276;font-weight:700;letter-spacing:.3px" title="Cod SEAP — copiază-l pentru căutare manuală">🔍 {_seap_nr(contract_id)}</span>') if _seap_nr(contract_id) else f'<span>📋 {contract_id or "–"}</span>'}
           </div>
           <div class="flag-detail" style="display:none;margin-top:14px;padding-top:12px;border-top:1px solid #eee">
             <div style="font-size:12px;color:#555;margin-bottom:10px">
@@ -4605,12 +4687,13 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
         <div style="font-size:11px;opacity:.8">Contracte unice cu semnale</div>
       </div>
       <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
-        <div style="font-size:22px;font-weight:800">{len(contracte)}</div>
+        <div style="font-size:22px;font-weight:800">{len(contracte_unice(contracte))}</div>
         <div style="font-size:11px;opacity:.8">Contracte analizate</div>
       </div>
       <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
         <div style="font-size:22px;font-weight:800">{_fmt_ron(total_val)}</div>
         <div style="font-size:11px;opacity:.8">Valoare totală contracte</div>
+        {f'<div style="font-size:10px;opacity:.7;margin-top:2px">fără acordurile-cadru ({_fmt_ron(val_acorduri)}, plafon)</div>' if val_acorduri else ''}
       </div>
     </div>
   </div>
@@ -4815,7 +4898,9 @@ function showFirmaContracts(firma, evt) {{
     var cl = _nzFirma(c.firma || '');
     if (!cl || !_nfc) return false;
     if (!(cl === _nfc || cl.indexOf(_nfc) !== -1 || _nfc.indexOf(cl) !== -1)) return false;
-    var k = cl + '|' + (c.data || '') + '|' + Math.round(c.valoare || 0) + '|' + String(c.titlu || '').slice(0, 60);
+    // Rânduri SEAP API: cheia contractului (două achiziții identice în aceeași zi
+    // sunt două contracte). Rânduri vechi data.gov.ro: firmă|dată|valoare|titlu.
+    var k = c.k ? 'k|' + c.k : cl + '|' + (c.data || '') + '|' + Math.round(c.valoare || 0) + '|' + String(c.titlu || '').slice(0, 60);
     if (_vazuteC[k]) return false;
     _vazuteC[k] = 1;
     return true;
@@ -4834,28 +4919,15 @@ function showFirmaContracts(firma, evt) {{
       : Math.round(v/1000) + ' K RON';
   }}
 
-  // Extrage numărul SEAP din câmpul id (ex: "contract-2025-79964" → "79964")
-  function seapNr(id) {{
-    if (!id) return '';
-    var parts = id.split('-');
-    return parts[parts.length - 1];
-  }}
-
-  // Construiește URL SEAP din id
-  function seapUrl(id) {{
-    if (!id) return '#';
-    var nr = seapNr(id);
-    if (!nr) return '#';
-    if (id.indexOf('achizitie-directa') !== -1)
-      return 'https://e-licitatie.ro/pub/direct-acquisition/' + nr;
-    return 'https://e-licitatie.ro/pub/contract-notice/' + nr;
-  }}
-
   var rows = matches.map(function(c, i) {{
     var bg = i % 2 === 0 ? '#fff' : '#f8f9fa';
     var ofColor = c.ofertanti === 1 ? '#C0392B' : '#27AE60';
-    var nr = seapNr(c.id);
-    var url = seapUrl(c.id);
+    // cod + link real doar pentru rândurile din API-ul SEAP (câmpurile cod / url);
+    // id-urile vechi data.gov.ro erau numere de rând, nu numere SEAP.
+    var nr = c.cod || '';
+    var url = c.url || (String(c.id || '').indexOf('contract') === 0
+      ? 'https://e-licitatie.ro/pub/notices/ca-notices/list/1'
+      : 'https://e-licitatie.ro/pub/direct-acquisitions/list/1');
     var seapCell = nr
       ? '<a href="' + url + '" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" '
         + 'style="color:#0070C0;font-weight:700;text-decoration:none;white-space:nowrap" '
@@ -4896,9 +4968,9 @@ function showFirmaContracts(firma, evt) {{
         + '<th style="padding:6px 10px;font-size:11px;text-align:left">Valoare</th>'
         + '<th style="padding:6px 10px;font-size:11px;text-align:left">Tip procedură</th>'
         + '<th style="padding:6px 10px;font-size:11px;text-align:center">Ofertanți</th>'
-        + '<th style="padding:6px 10px;font-size:11px;text-align:center">Nr. SEAP</th>'
+        + '<th style="padding:6px 10px;font-size:11px;text-align:center">Cod SEAP</th>'
         + '</tr></thead><tbody>' + rows + '</tbody></table></div>')
-    + '<div style="margin-top:10px;font-size:11px;color:#777">Date: data.gov.ro · Perioadă analizată: ultimele 12 luni'
+    + '<div style="margin-top:10px;font-size:11px;color:#777">Date: SEAP (e-licitatie.ro) · Contracte publicate în SEAP de la 1 ianuarie anul trecut'
     + ' · <em>Al doilea ofertant — apasă „→ SEAP" pentru detalii complete</em></div>'
     + '</div>';
 
@@ -4956,7 +5028,7 @@ function openFirmaPanel(firma, evt) {{
     var cn = _nzFirma(c.firma||'');
     if (!cn || !_nf) return false;
     if (!(cn === _nf || cn.indexOf(_nf) !== -1 || _nf.indexOf(cn) !== -1)) return false;
-    var k = cn + '|' + (c.data||'') + '|' + Math.round(c.valoare||0) + '|' + String(c.titlu||'').slice(0,60);
+    var k = c.k ? 'k|' + c.k : cn + '|' + (c.data||'') + '|' + Math.round(c.valoare||0) + '|' + String(c.titlu||'').slice(0,60);
     if (_vazute[k]) return false;
     _vazute[k] = 1;
     return true;
@@ -5016,19 +5088,13 @@ function openFirmaPanel(firma, evt) {{
 
   var termeneUrl = cui ? 'https://termene.ro/firma/'+cui.replace(/^RO/i,'') : '#';
   var onrcUrl    = cui ? 'https://www.recom.ro/companies_ro_company_detail.aspx?id='+cui.replace(/^RO/i,'') : '#';
-  // SEAP: linkul generic /list/0/0 deschidea o pagină goală — pentru utilizator
-  // arăta ca un buton stricat. Mergem direct la anunțul contractului dacă avem
-  // un contract_id numeric; altfel la căutarea SEAP după numele firmei.
-  var seapId = '';
-  (rd.flags||[]).some(function(f) {{
-    var m = String(f.contract_id||'').match(/(\\d{{4,}})\\s*$/);
-    if (m) {{ seapId = m[1]; return true; }}
-    return false;
-  }});
-  var seapUrl = seapId
-    ? 'https://e-licitatie.ro/pub/notices/da-direct-acquisition/view/' + seapId
-    : 'https://e-licitatie.ro/pub/notices/contract-notices/list/0/0?text=' + encodeURIComponent(firma);
-  var seapLabel = seapId ? '📋 Anunț SEAP →' : '📋 Caută în SEAP →';
+  // SEAP: link direct la cel mai recent contract al firmei care are link real
+  // (sursa SEAP API, câmpul url din contracte.json); altfel lista publică SEAP.
+  // Id-urile vechi data.gov.ro erau numere de rând — /view/<nr> dădea pagină goală.
+  var cuLink = contracte.filter(function(c) {{ return c.url; }})
+    .sort(function(a, b) {{ return String(b.data||'').localeCompare(String(a.data||'')); }});
+  var seapUrl = cuLink.length ? cuLink[0].url : 'https://e-licitatie.ro/pub/direct-acquisitions/list/1';
+  var seapLabel = cuLink.length ? '📋 ' + (cuLink[0].cod || 'Anunț') + ' în SEAP →' : '📋 Caută în SEAP →';
 
   document.getElementById('tp-fp-body').innerHTML =
     '<div style="background:#FFF3E0;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">'
@@ -5122,7 +5188,7 @@ function openFirmaPanel(firma, evt) {{
       : '')
 
     + '<div style="margin-top:16px;padding:10px;background:#F4F6F8;border-radius:6px;font-size:11px;color:#777">'
-    + 'Date: ANAF · SEAP (data.gov.ro) · openapi.ro · ONRC data.gov.ro · Surse publice oficiale.<br>'
+    + 'Date: ANAF · SEAP (e-licitatie.ro) · openapi.ro · ONRC data.gov.ro · Surse publice oficiale.<br>'
     + 'Asociați/acționari: verifică manual la ONRC (recom.ro) — date actualizate lunar.'
     + '</div>';
 
@@ -5447,13 +5513,19 @@ def _categorizeaza_contracte_breakdown(contracte: list, an: int) -> dict:
         data = c.get('data_publicare') or c.get('data') or ''
         if str(an) not in data:
             continue
-        titlu_raw = c.get('titlu') or ''
-        titlu_can = rev_re.sub('', titlu_raw).strip().lower()
-        firma = (c.get('castigator_cui') or c.get('cui') or
-                 c.get('castigator') or c.get('firma') or '').strip()
-        if not titlu_can or not firma:
-            continue
-        key = (titlu_can, firma)
+        if _este_acord_cadru(c):
+            continue  # plafon; banii sunt în contractele subsecvente
+        cheie = c.get('cheie_seap') or c.get('k')
+        if cheie:
+            key = ('k', cheie)   # contract SEAP: o dată, chiar dacă are mai mulți câștigători
+        else:
+            titlu_raw = c.get('titlu') or ''
+            titlu_can = rev_re.sub('', titlu_raw).strip().lower()
+            firma = (c.get('castigator_cui') or c.get('cui') or
+                     c.get('castigator') or c.get('firma') or '').strip()
+            if not titlu_can or not firma:
+                continue
+            key = (titlu_can, firma)
         val = float(c.get('valoare_ron') or c.get('valoare') or 0)
         if _este_contract_lucrari(c):
             if key not in lucr or val > lucr[key]:
@@ -5641,7 +5713,7 @@ def actualizeaza_contoare_analiza(contracte_export: list) -> None:
     """
     import re as _re_ca
     an_curent = datetime.now().year
-    n_total = len(contracte_export)
+    n_total = len(contracte_unice(contracte_export))
 
     tp_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                            'transparenta_pantelimon.html')
@@ -5771,9 +5843,9 @@ def genereaza_press_kit(
     n_critic = sum(1 for f in nereguli if f.get("severitate") == "CRITIC")
     n_major  = sum(1 for f in nereguli if f.get("severitate") == "MAJOR")
     n_mediu  = sum(1 for f in nereguli if f.get("severitate") == "MEDIU")
-    val_total = sum(c.get("valoare_ron", 0) for c in contracte)
+    val_total = valoare_totala(contracte)
     val_mil = round(val_total / 1_000_000, 2)
-    n_contracte = len(contracte)
+    n_contracte = len(contracte_unice(contracte))
     n_contracte_semnale = numara_contracte_cu_semnale(nereguli, contracte)
     scor_val = scor.get("scor") if scor else None
 
@@ -6530,21 +6602,8 @@ def regenereaza_din_exporturile_existente() -> None:
         contracte_export = json.load(handle)
     # Fără asta, raport.json regenerat ieșea cu supplier_cif gol pe toate flagurile
     _index_cui = construieste_index_cui(contracte_export)
-    contracte = [{
-        "id": c.get("id", ""),
-        "numar": c.get("numar", "–"),
-        "titlu": c.get("titlu", ""),
-        "valoare_ron": float(c.get("valoare_ron", c.get("valoare", 0)) or 0),
-        "data_publicare": c.get("data_publicare", c.get("data", "")),
-        "tip_procedura": c.get("tip_procedura", c.get("tip", "")),
-        "castigator": c.get("castigator", c.get("firma", "")),
-        "castigator_cui": c.get("castigator_cui", c.get("cui", "")),
-        "nr_ofertanti": int(c.get("nr_ofertanti", c.get("ofertanti", 0)) or 0),
-        "data_start": c.get("data_start", ""),
-        "data_sfarsit": c.get("data_sfarsit", ""),
-        "autoritate": c.get("autoritate", ""),
-        "cpv": c.get("cpv", ""),
-    } for c in contracte_export]
+    contracte = [contract_din_export(c) for c in contracte_export]
+    inregistreaza_linkuri_seap(contracte)
 
     raport_vechi = {}
     try:
@@ -6605,7 +6664,7 @@ def regenereaza_din_exporturile_existente() -> None:
     with open(CONFIG["fisier_raport"], "w", encoding="utf-8") as handle:
         handle.write(raport_html)
 
-    total_valoare = sum(c["valoare_ron"] for c in contracte)
+    total_valoare = valoare_totala(contracte)
     raport_json = {
         "schema_version": "1.1",
         "generated_at": datetime.now().isoformat(),
@@ -6613,9 +6672,9 @@ def regenereaza_din_exporturile_existente() -> None:
         "totals": {
             "flags": len(toate_flags),
             "signals": len(toate_flags),
-            "contracts_analyzed": len(contracte),
+            "contracts_analyzed": len(contracte_unice(contracte)),
             "contracts_with_signals": numara_contracte_cu_semnale(toate_flags, contracte),
-            "total_value_ron": total_valoare,
+            "total_value_ron": total_valoare, "framework_agreements_value_ron": valoare_acorduri_cadru(contracte),
             "by_severity": {
                 sev: sum(1 for flag in toate_flags if flag.get("severitate") == sev)
                 for sev in ("CRITIC", "MAJOR", "MEDIU")
@@ -6671,7 +6730,7 @@ def regenereaza_din_exporturile_existente() -> None:
         sum(1 for flag in toate_flags if flag.get("severitate") == "CRITIC"),
         round(total_valoare / 1_000_000, 1),
         scor.get("scor"),
-        n_contracte=len(contracte),
+        n_contracte=len(contracte_unice(contracte)),
     )
     actualizeaza_tabel_contracte(contracte_export)
     actualizeaza_kpi_seap(contracte_export)
@@ -6764,46 +6823,60 @@ def main():
     print("\n[1/6] Fetchuiesc date bugetare...")
     budget = fetch_budget_transparenta(CONFIG["cui"])
 
-    # 2. Contracte din data.gov.ro
-    print("\n[2/6] Fetchuiesc contracte din data.gov.ro...")
-    contracte, seap_debug = fetch_contracts_seap(CONFIG["cui"], CONFIG["luni_analiza"])
+    # 2. Contracte — API-ul public SEAP (e-licitatie.ro)
+    # data.gov.ro blochează runnerele GitHub și rămâne cu luni în urmă; îl mai
+    # folosim doar la cerere (MONITOR_SURSA_CONTRACTE=datagov, rulare locală).
+    print("\n[2/6] Fetchuiesc contracte din SEAP (API public)...")
+    contracte_anterioare = []
+    _cale_anterioare = os.path.join(os.path.dirname(os.path.abspath(__file__)), "contracte.json")
+    if os.path.exists(_cale_anterioare):
+        try:
+            with open(_cale_anterioare, encoding="utf-8") as _f:
+                contracte_anterioare = [contract_din_export(c) for c in json.load(_f)]
+        except Exception as _fe:
+            print(f"  ⚠ contracte.json anterior ilizibil: {_fe}")
+    contracte, seap_debug = [], []
+    sursa_contracte = "seap-api"
+    if os.environ.get("MONITOR_SURSA_CONTRACTE", "").lower() == "datagov":
+        sursa_contracte = "data.gov.ro"
+        contracte, seap_debug = fetch_contracts_seap(CONFIG["cui"], CONFIG["luni_analiza"])
+    else:
+        try:
+            from sursa_seap_api import fetch_contracte_seap_api, verifica_plauzibil
+            contracte, seap_debug = fetch_contracte_seap_api(contracte_anterioare)
+            _azi = datetime.now().date()
+            _problema = verifica_plauzibil(contracte, contracte_anterioare,
+                                           _azi.replace(year=_azi.year - 1, month=1, day=1))
+            if _problema:
+                seap_debug.append(f"RESPINS: {_problema}")
+                print(f"  ⚠ {_problema}")
+                contracte = []
+            else:
+                print(f"  ✓ SEAP API: {len(contracte)} contracte")
+        except Exception as _se:
+            seap_debug.append(f"SEAP API eroare: {type(_se).__name__}: {_se}")
+            print(f"  ⚠ SEAP API indisponibil: {type(_se).__name__}: {_se}")
+            contracte = []
 
-    # Fallback: dacă data.gov.ro nu e accesibil (ex. GitHub Actions blochează IP-urile Azure),
-    # încărcăm contracte.json deja existent în repo (actualizat la ultima rulare locală).
+    # Fallback: nu publicăm date parțiale. Dacă sursa nu a dat un rezultat complet,
+    # refolosim contracte.json din rularea anterioară și o spunem în pagina rulării.
+    if not contracte and contracte_anterioare:
+        contracte = contracte_anterioare
+        sursa_contracte = "contracte.json (rularea anterioară)"
+        seap_debug.append(f"FALLBACK: loaded {len(contracte)} contracte din contracte.json")
+        print(f"  ↩ Fallback: {len(contracte)} contracte din contracte.json (sursa nu a răspuns complet)")
+        if os.environ.get("GITHUB_ACTIONS"):
+            # vizibil în pagina rulării: datele SEAP NU au fost reîmprospătate
+            print("::warning title=Date SEAP nereîmprospătate::API-ul SEAP nu a dat un rezultat "
+                  "complet; raportul folosește contracte.json din rularea anterioară.")
+    seap_debug.append(f"SURSA CONTRACTE: {sursa_contracte}")
     if not contracte:
-        fallback_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "contracte.json")
-        if os.path.exists(fallback_path):
-            try:
-                with open(fallback_path, encoding="utf-8") as _f:
-                    contracte = json.load(_f)
-                # contracte.json foloseşte chei scurtate (valoare, firma, tip, etc.)
-                # → normalizăm la formatul intern aşteptat de analizeaza_red_flags şi genereaza_raport_html
-                contracte = [
-                    {
-                        "id":             c.get("id", ""),
-                        "titlu":          c.get("titlu", ""),
-                        "valoare_ron":    float(c.get("valoare_ron", c.get("valoare", 0)) or 0),
-                        "data_publicare": c.get("data_publicare", c.get("data", "")),
-                        "tip_procedura":  c.get("tip_procedura", c.get("tip", "")),
-                        "castigator":     c.get("castigator", c.get("firma", "")),
-                        "castigator_cui": c.get("castigator_cui", c.get("cui", "")),
-                        "nr_ofertanti":   int(c.get("nr_ofertanti", c.get("ofertanti", 0)) or 0),
-                        "numar":          c.get("numar", "–"),
-                        "data_start":     c.get("data_start", ""),
-                        "data_sfarsit":   c.get("data_sfarsit", ""),
-                        "autoritate":     c.get("autoritate", ""),
-                        "cpv":            c.get("cpv", ""),
-                    }
-                    for c in contracte
-                ]
-                seap_debug.append(f"FALLBACK: loaded {len(contracte)} contracte din contracte.json")
-                print(f"  ↩ Fallback: {len(contracte)} contracte din contracte.json (data.gov.ro inaccesibil)")
-                if os.environ.get("GITHUB_ACTIONS"):
-                    # vizibil în pagina rulării: datele SEAP NU au fost reîmprospătate
-                    print("::warning title=Date SEAP nereîmprospătate::data.gov.ro nu a răspuns; "
-                          "raportul folosește contracte.json din rularea anterioară.")
-            except Exception as _fe:
-                seap_debug.append(f"FALLBACK FAIL: {_fe}")
+        # Nici sursa, nici rularea anterioară: nu publicăm un raport fără contracte
+        # (și nu suprascriem contracte.json cu o listă goală).
+        print("::error title=Fără contracte::Nici API-ul SEAP, nici contracte.json nu au dat "
+              "contracte; rularea se oprește fără să publice.")
+        sys.exit(1)
+    inregistreaza_linkuri_seap(contracte)
 
     # 3. Hotărâri Consiliu Local
     print("\n[3/6] Analizez hotărârile Consiliului Local...")
@@ -7061,13 +7134,13 @@ def main():
 
     # §5.7 Generare og-image.png cu statisticile curente (pentru share social media)
     _scor_val = CONFIG.get("_scor", {}).get("scor")
-    _val_mil = round(sum(c.get("valoare_ron", 0) for c in contracte) / 1_000_000, 1)
+    _val_mil = round(valoare_totala(contracte) / 1_000_000, 1)
     genereaza_og_image(
         n_flags=len(toate_flags),
         n_critic=sum(1 for f in toate_flags if f.get("severitate") == "CRITIC"),
         valoare_mil=_val_mil,
         scor=_scor_val,
-        n_contracte=len(contracte),
+        n_contracte=len(contracte_unice(contracte)),
     )
 
     # Export feed.xml (Atom) pentru cititori RSS / jurnaliști
@@ -7085,8 +7158,8 @@ def main():
     )
 
     # Export raport.json (endpoint public pentru jurnalisti / integari externe)
-    _n_main = len(contracte)
-    _val_main = sum(c.get("valoare_ron", 0) for c in contracte)
+    _n_main = len(contracte_unice(contracte))
+    _val_main = valoare_totala(contracte)
     _index_cui_main = construieste_index_cui(contracte)
     raport_json_main = {
         "schema_version": "1.0",
@@ -7095,7 +7168,7 @@ def main():
         "totals": {"flags": len(toate_flags), "signals": len(toate_flags),
                    "contracts_analyzed": _n_main,
                    "contracts_with_signals": numara_contracte_cu_semnale(toate_flags, contracte),
-                   "total_value_ron": _val_main,
+                   "total_value_ron": _val_main, "framework_agreements_value_ron": valoare_acorduri_cadru(contracte),
                    "by_severity": {"CRITIC": sum(1 for f in toate_flags if f.get("severitate") == "CRITIC"),
                                    "MAJOR": sum(1 for f in toate_flags if f.get("severitate") == "MAJOR"),
                                    "MEDIU": sum(1 for f in toate_flags if f.get("severitate") == "MEDIU")}},
@@ -7124,16 +7197,7 @@ def main():
         json.dump(raport_json_main, fout, ensure_ascii=False, indent=2)
     print(f"  ✓ Raport JSON salvat: raport.json ({len(toate_flags)} nereguli)")
     # Export contracte.json pentru acces extern
-    contracte_export = [{
-        "id": c["id"],
-        "titlu": c["titlu"][:80],
-        "valoare": c["valoare_ron"],
-        "data": c["data_publicare"],
-        "tip": c["tip_procedura"],
-        "firma": c["castigator"],
-        "cui": c.get("castigator_cui", ""),
-        "ofertanti": c.get("nr_ofertanti", 0),
-    } for c in contracte]
+    contracte_export = [contract_pentru_export(c) for c in contracte]
     with open("contracte.json", "w", encoding="utf-8") as f:
         json.dump(contracte_export, f, ensure_ascii=False, indent=2)
     print(f"  ✓ Contracte exportate: contracte.json ({len(contracte_export)} intrări)")

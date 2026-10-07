@@ -405,7 +405,19 @@ def deseneaza_furnizor(info: dict, output: str, data_seap: str = "") -> bool:
 # Pagini
 # ──────────────────────────────────────────────────────────────────────────────
 
-def pagina_semnal(semnal: dict, slug_furnizor: str = "", data_seap: str = "") -> str:
+def linkuri_seap_semnal(semnal: dict, linkuri: dict | None) -> list:
+    """[(cod, url)] pentru contractele semnalului care au link SEAP real (fără repetări)."""
+    out, vazute = [], set()
+    for cid in (semnal.get("contract_id") or "").split(","):
+        url, cod = (linkuri or {}).get(cid.strip(), ("", ""))
+        if url and url not in vazute:
+            vazute.add(url)
+            out.append((cod or "SEAP", url))
+    return out
+
+
+def pagina_semnal(semnal: dict, slug_furnizor: str = "", data_seap: str = "",
+                  linkuri: dict | None = None) -> str:
     """Permalink ușor pentru un semnal (meta og:* proprii + rezumat + link spre raport)."""
     e = html_mod.escape
     slug = semnal["slug"]
@@ -422,10 +434,25 @@ def pagina_semnal(semnal: dict, slug_furnizor: str = "", data_seap: str = "") ->
     img = f"{BASE_URL}/og/semnale/{slug}.png"
     culoare = CULORI_SEV.get(semnal.get("severitate"), "#64748b")
 
-    # Căutare în lista publică SEAP (numărul din export nu deschide direct anunțul)
-    linkuri_seap = ('<a class="btn sec" href="https://e-licitatie.ro/pub/direct-acquisitions/list/1" '
-                    'target="_blank" rel="noopener noreferrer">Caută în SEAP ↗</a>'
-                    if (semnal.get("contract_id") or "").startswith("achizitie-directa") else "")
+    # Linkuri directe la anunțurile SEAP (sursa SEAP API); altfel căutare în lista publică
+    # (id-urile vechi din data.gov.ro erau numere de rând, nu deschideau anunțul).
+    directe = linkuri_seap_semnal(semnal, linkuri)
+    cid0 = semnal.get("contract_id") or ""
+    if directe:
+        linkuri_seap = "".join(
+            f'<a class="btn sec" href="{e(url)}" target="_blank" rel="noopener noreferrer">'
+            f'{e(cod)} în SEAP ↗</a>' for cod, url in directe[:3])
+        if len(directe) > 3:
+            linkuri_seap += (f'<span class="lim" style="margin:0;align-self:center">'
+                             f'+ încă {len(directe) - 3} în SEAP</span>')
+    elif cid0.startswith("achizitie-directa"):
+        linkuri_seap = ('<a class="btn sec" href="https://e-licitatie.ro/pub/direct-acquisitions/list/1" '
+                        'target="_blank" rel="noopener noreferrer">Caută în SEAP ↗</a>')
+    elif cid0.startswith("contract"):
+        linkuri_seap = ('<a class="btn sec" href="https://e-licitatie.ro/pub/notices/ca-notices/list/1" '
+                        'target="_blank" rel="noopener noreferrer">Caută în SEAP ↗</a>')
+    else:
+        linkuri_seap = ""
     link_firma = (f'<a class="btn sec" href="../furnizori/{e(slug_furnizor)}.html">Toate contractele firmei →</a>'
                   if slug_furnizor else "")
     limita = (f'<p class="lim">Date SEAP până la {e(fmt_data(data_seap))}. Semnalul e generat automat; '
@@ -554,7 +581,11 @@ def genereaza_toate(root: str = ".", cu_imagini: bool = True) -> dict:
             contracte = json.load(fh)
     except (FileNotFoundError, json.JSONDecodeError):
         contracte = []
-    data_seap = data_maxima_contracte(contracte if isinstance(contracte, list) else [])
+    if not isinstance(contracte, list):
+        contracte = []
+    data_seap = data_maxima_contracte(contracte)
+    linkuri = {c["id"]: (c["url"], c.get("cod", "")) for c in contracte
+               if isinstance(c, dict) and c.get("id") and c.get("url")}
     actualizeaza_delta(data_seap, p("delta.json"))
 
     # Furnizori
@@ -591,7 +622,7 @@ def genereaza_toate(root: str = ".", cu_imagini: bool = True) -> dict:
             slug_f = ""
         if cu_imagini:
             deseneaza_semnal(s, p("og", "semnale", f"{s['slug']}.png"), data_seap)
-        _scrie_daca_difera(p("semnale", f"{s['slug']}.html"), pagina_semnal(s, slug_f, data_seap))
+        _scrie_daca_difera(p("semnale", f"{s['slug']}.html"), pagina_semnal(s, slug_f, data_seap, linkuri))
 
     # Paginile semnalelor dispărute rămân (linkurile deja distribuite nu dau 404), dar nu mai
     # trimit spre o ancoră care acum poate aparține altui semnal.
