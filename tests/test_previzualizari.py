@@ -278,3 +278,26 @@ def test_delta_are_limita_datelor():
 
 def test_workflow_comite_previzualizarile():
     assert "git add og/ semnale/" in _citeste(".github", "workflows", "update-report.yml")
+
+
+def test_pagina_semnal_linkuri_directe_seap():
+    """Cu sursa SEAP API, pagina de semnal duce direct la anunț (cod DA / CAN)."""
+    s = {"tip": "APROAPE_DE_PRAG", "severitate": "MAJOR", "titlu": "t", "firma": "F",
+         "contract_id": "achizitie-directa-2025-51666,achizitie-directa-2025-1", "slug": "x", "ancora": "nereguli-1"}
+    linkuri = {"achizitie-directa-2025-51666": ("https://e-licitatie.ro/pub/direct-acquisition/view/118853764",
+                                                "DA37312670")}
+    html = gp.pagina_semnal(s, "", "2026-10-06", linkuri)
+    assert 'href="https://e-licitatie.ro/pub/direct-acquisition/view/118853764"' in html
+    assert "DA37312670 în SEAP" in html
+    assert "direct-acquisitions/list/1" not in html
+
+
+def test_pagina_semnal_fara_link_cunoscut_cauta_in_lista():
+    s = {"tip": "X", "severitate": "MEDIU", "titlu": "t", "contract_id": "contract-2025-79964", "slug": "x", "ancora": "nereguli-2"}
+    assert "ca-notices/list/1" in gp.pagina_semnal(s, "", "", {})
+
+
+def test_linkuri_seap_semnal_fara_repetari():
+    s = {"contract_id": "a,b,c"}
+    l = {"a": ("u1", "CAN1"), "b": ("u1", "CAN1"), "c": ("u2", "DA2")}
+    assert gp.linkuri_seap_semnal(s, l) == [("CAN1", "u1"), ("DA2", "u2")]

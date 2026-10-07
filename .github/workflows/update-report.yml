@@ -6,7 +6,7 @@
     # ca să evităm aglomerarea de la ora fixă, când GitHub întârzie rulările).
     # Monitorul rulează DOAR aici, nu de pe PC (rularea programată de pe PC a făcut
     # un force-push pe 01.10.2026 care a șters din main modificări publicate).
-    # SEAP e sursă publică; rate limiting de 1.2s/req e respectat în cod
+    # Contractele vin din API-ul public SEAP (sursa_seap_api.py): o cerere la 2 s, ~45 de cereri
     - cron: '17 5 1,15 * *'
   workflow_dispatch:  # permite și pornire manuală din GitHub
 

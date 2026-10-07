@@ -38,39 +38,59 @@ from monitor_pantelimon import (
 # ===========================================================================
 
 class TestSeapUrl:
+    """_seap_url: link real dacă îl știm (sursa SEAP API), altfel lista publică SEAP.
 
-    def test_id_numeric_simplu(self):
-        """ID de forma 'achizitie-directa-2025-489392' → URL cu ID numeric."""
-        url = _seap_url("achizitie-directa-2025-489392")
-        assert "489392" in url
-        assert "e-licitatie.ro" in url
+    Id-urile vechi din data.gov.ro conțin numărul rândului din fișier, nu un
+    număr SEAP — /view/<nr> deschidea o pagină goală, deci nu mai construim
+    linkuri din ele.
+    """
 
-    def test_url_format_corect(self):
-        """URL-ul are structura corecta pentru anuntul SEAP."""
-        url = _seap_url("achizitie-directa-2025-489392")
-        assert url == "https://e-licitatie.ro/pub/notices/da-direct-acquisition/view/489392"
+    def setup_method(self):
+        from monitor_pantelimon import inregistreaza_linkuri_seap
+        inregistreaza_linkuri_seap([
+            {"id": "achizitie-directa-2025-118853764",
+             "url_seap": "https://e-licitatie.ro/pub/direct-acquisition/view/118853764",
+             "cod_seap": "DA37312670"},
+            {"id": "contract-2025-1",
+             "url_seap": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100566166",
+             "cod_seap": "CAN1151813"},
+        ])
 
-    def test_id_fara_numeric(self):
-        """ID fara parte numerica → URL lista generica."""
-        url = _seap_url("contract-special")
-        assert "list/0/0" in url
-        assert "e-licitatie.ro" in url
+    def teardown_method(self):
+        from monitor_pantelimon import inregistreaza_linkuri_seap
+        inregistreaza_linkuri_seap([])
+
+    def test_link_real_din_registru(self):
+        assert _seap_url("achizitie-directa-2025-118853764") == \
+            "https://e-licitatie.ro/pub/direct-acquisition/view/118853764"
+
+    def test_link_real_contract(self):
+        assert _seap_url("contract-2025-1", "Licitatie deschisa").endswith("/view-c/100566166")
 
     def test_id_cu_virgula_ia_primul(self):
-        """Daca sunt mai multi IDs separati prin virgula → ia primul."""
-        url = _seap_url("achizitie-directa-2025-111, achizitie-directa-2025-222")
-        assert "111" in url
-        assert "222" not in url
+        url = _seap_url("contract-2025-1, achizitie-directa-2025-118853764")
+        assert url.endswith("/view-c/100566166")
+
+    def test_id_vechi_da_duce_la_lista_publica(self):
+        """Id vechi (rând data.gov.ro) → lista publică de cumpărări directe, nu /view/<rând>."""
+        url = _seap_url("achizitie-directa-2025-489392")
+        assert url == "https://e-licitatie.ro/pub/direct-acquisitions/list/1"
+        assert "489392" not in url
+
+    def test_id_vechi_contract_duce_la_atribuiri(self):
+        assert _seap_url("contract-2025-79964") == "https://e-licitatie.ro/pub/notices/ca-notices/list/1"
 
     def test_id_gol_fallback(self):
-        """String gol → URL lista generica (fara crash)."""
-        url = _seap_url("")
-        assert "e-licitatie.ro" in url
+        assert "e-licitatie.ro" in _seap_url("")
 
-    def test_id_doar_litere(self):
-        """ID cu partii non-numerice → URL lista generica."""
-        url = _seap_url("contract-abc-xyz")
-        assert "list/0/0" in url
+    def test_seap_nr_coduri_reale(self):
+        from monitor_pantelimon import _seap_nr
+        assert _seap_nr("achizitie-directa-2025-118853764,contract-2025-1") == \
+            "Cod SEAP: DA37312670, CAN1151813"
+
+    def test_seap_nr_fara_cod_nu_afiseaza_numar_de_rand(self):
+        from monitor_pantelimon import _seap_nr
+        assert _seap_nr("achizitie-directa-2025-489392") == ""
 
 
 # ===========================================================================
