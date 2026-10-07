@@ -3048,9 +3048,22 @@ def contracte_unice(contracte: list) -> list:
     return out
 
 
+def _este_acord_cadru(c: dict) -> bool:
+    return (c.get("tip_contract") or c.get("tipc")) == "acord-cadru"
+
+
 def valoare_totala(contracte: list) -> float:
-    """Suma contractelor, cu fiecare contract numărat o singură dată (vezi contracte_unice)."""
-    return sum(float(c.get("valoare_ron", c.get("valoare", 0)) or 0) for c in contracte_unice(contracte))
+    """Banii contractați: fiecare contract o singură dată (vezi contracte_unice), fără
+    acordurile-cadru. Un acord-cadru e un plafon; banii se angajează prin contractele
+    subsecvente, care sunt incluse — altfel aceeași sumă ar fi numărată de două ori."""
+    return sum(float(c.get("valoare_ron", c.get("valoare", 0)) or 0)
+               for c in contracte_unice(contracte) if not _este_acord_cadru(c))
+
+
+def valoare_acorduri_cadru(contracte: list) -> float:
+    """Valoarea maximă a acordurilor-cadru (plafon), afișată separat de total."""
+    return sum(float(c.get("valoare_ron", c.get("valoare", 0)) or 0)
+               for c in contracte_unice(contracte) if _este_acord_cadru(c))
 
 
 def contract_din_export(c: dict) -> dict:
@@ -3698,6 +3711,8 @@ def _suma_seap_dedupata(contracte: list, an: int) -> tuple:
         data = c.get('data_publicare') or c.get('data') or ''
         if str(an) not in data:
             continue
+        if _este_acord_cadru(c):
+            continue  # plafon; banii sunt în contractele subsecvente
         # Rânduri din API-ul SEAP: cheia contractului (membrii unei asocieri au
         # aceeași cheie → contractul se numără o dată; achizițiile directe distincte
         # rămân distincte). Rândurile vechi data.gov.ro: (titlu canonic, firmă), MAX.
@@ -3788,6 +3803,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
 
     data_generare = datetime.now().strftime("%d %B %Y, %H:%M")
     total_val = valoare_totala(contracte)
+    val_acorduri = valoare_acorduri_cadru(contracte)
     directe = [c for c in contracte if "direct" in c["tip_procedura"].lower()
                or "negociere" in c["tip_procedura"].lower()]
     unic_ofertant = [c for c in contracte if c.get("nr_ofertanti", 0) == 1]
@@ -3850,7 +3866,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
             "flags": len(flags), "signals": len(flags),
             "contracts_analyzed": _n_contracte,
             "contracts_with_signals": n_contracte_semnale,
-            "total_value_ron": _val_totala,
+            "total_value_ron": _val_totala, "framework_agreements_value_ron": valoare_acorduri_cadru(contracte),
             "by_severity": {
                 "CRITIC": sum(1 for f in flags if f.get("severitate") == "CRITIC"),
                 "MAJOR":  sum(1 for f in flags if f.get("severitate") == "MAJOR"),
@@ -4671,12 +4687,13 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
         <div style="font-size:11px;opacity:.8">Contracte unice cu semnale</div>
       </div>
       <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
-        <div style="font-size:22px;font-weight:800">{len(contracte)}</div>
+        <div style="font-size:22px;font-weight:800">{len(contracte_unice(contracte))}</div>
         <div style="font-size:11px;opacity:.8">Contracte analizate</div>
       </div>
       <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
         <div style="font-size:22px;font-weight:800">{_fmt_ron(total_val)}</div>
         <div style="font-size:11px;opacity:.8">Valoare totală contracte</div>
+        {f'<div style="font-size:10px;opacity:.7;margin-top:2px">fără acordurile-cadru ({_fmt_ron(val_acorduri)}, plafon)</div>' if val_acorduri else ''}
       </div>
     </div>
   </div>
@@ -5496,6 +5513,8 @@ def _categorizeaza_contracte_breakdown(contracte: list, an: int) -> dict:
         data = c.get('data_publicare') or c.get('data') or ''
         if str(an) not in data:
             continue
+        if _este_acord_cadru(c):
+            continue  # plafon; banii sunt în contractele subsecvente
         cheie = c.get('cheie_seap') or c.get('k')
         if cheie:
             key = ('k', cheie)   # contract SEAP: o dată, chiar dacă are mai mulți câștigători
@@ -6655,7 +6674,7 @@ def regenereaza_din_exporturile_existente() -> None:
             "signals": len(toate_flags),
             "contracts_analyzed": len(contracte_unice(contracte)),
             "contracts_with_signals": numara_contracte_cu_semnale(toate_flags, contracte),
-            "total_value_ron": total_valoare,
+            "total_value_ron": total_valoare, "framework_agreements_value_ron": valoare_acorduri_cadru(contracte),
             "by_severity": {
                 sev: sum(1 for flag in toate_flags if flag.get("severitate") == sev)
                 for sev in ("CRITIC", "MAJOR", "MEDIU")
@@ -7149,7 +7168,7 @@ def main():
         "totals": {"flags": len(toate_flags), "signals": len(toate_flags),
                    "contracts_analyzed": _n_main,
                    "contracts_with_signals": numara_contracte_cu_semnale(toate_flags, contracte),
-                   "total_value_ron": _val_main,
+                   "total_value_ron": _val_main, "framework_agreements_value_ron": valoare_acorduri_cadru(contracte),
                    "by_severity": {"CRITIC": sum(1 for f in toate_flags if f.get("severitate") == "CRITIC"),
                                    "MAJOR": sum(1 for f in toate_flags if f.get("severitate") == "MAJOR"),
                                    "MEDIU": sum(1 for f in toate_flags if f.get("severitate") == "MEDIU")}},

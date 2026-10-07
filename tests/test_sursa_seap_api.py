@@ -393,3 +393,18 @@ class TestRobustete:
         d2 = S.normalizeaza_da(da(2, "DA2", "2025-05-19", 68000.0, "5 CULT"))
         total, n = _suma_seap_dedupata(r + [d1, d2], 2025)
         assert n == 3 and total == pytest.approx(29508940.74 + 136000.0)
+
+
+def test_acordul_cadru_nu_intra_in_total_dar_subsecventele_da():
+    from monitor_pantelimon import valoare_totala, valoare_acorduri_cadru, _suma_seap_dedupata
+    acord = S.normalizeaza_contracte_can(ANUNT_SCOLI, [dict(CONTRACT_ASOCIERE, contractType=2,
+                                                            caNoticeContractId=1, winners=[{"name": "A", "fiscalNumber": "1"}],
+                                                            defaultCurrencyContractValue=10_000_000.0)])
+    subs = S.normalizeaza_contracte_can(ANUNT_SCOLI, [dict(CONTRACT_ASOCIERE, contractType=3,
+                                                           caNoticeContractId=2, winners=[{"name": "A", "fiscalNumber": "1"}],
+                                                           defaultCurrencyContractValue=4_000_000.0)])
+    assert valoare_totala(acord + subs) == 4_000_000.0
+    assert valoare_acorduri_cadru(acord + subs) == 10_000_000.0
+    assert _suma_seap_dedupata(acord + subs, 2025) == (4_000_000.0, 1)
+    # rândurile vechi (fără tipc) se numără ca înainte
+    assert valoare_totala([{"id": "contract-2025-1", "valoare": 7.0}]) == 7.0
