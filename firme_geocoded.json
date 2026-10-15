@@ -3,10 +3,10 @@
     "name": "TOP A-Z CONCEPT S.R.L.",
     "cif": "45058860",
     "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, STR. MĂRULUI, NR.19, CAMERA 2, SC.A, ET.2, AP.16",
-    "lat": 44.457952,
-    "lng": 26.162859,
-    "valoare": 16728053.76,
-    "nr_contracte": 3,
+    "lat": 44.470278,
+    "lng": 26.176246,
+    "valoare": 19516062.72,
+    "nr_contracte": 4,
     "slug": "top-a-z-concept-srl"
   },
   {
@@ -425,8 +425,8 @@
     "adresa": "JUD. BACĂU, MUN. BACĂU, STR. ALEXEI TOLSTOI, NR.8",
     "lat": 46.556049,
     "lng": 26.915356,
-    "valoare": 49453.62,
-    "nr_contracte": 29,
+    "valoare": 51067.46,
+    "nr_contracte": 30,
     "slug": "dedeman-srl"
   },
   {
@@ -455,8 +455,8 @@
     "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 4, STR SOLD. IOAN CIOCODEICA, NR.1, DEMISOL SI ETAJ 1",
     "lat": 44.381903,
     "lng": 26.119018,
-    "valoare": 215927.0,
-    "nr_contracte": 6,
+    "valoare": 218322.0,
+    "nr_contracte": 7,
     "slug": "protect-fire-consulting-srl"
   },
   {
@@ -575,8 +575,8 @@
     "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, BLD DECEBAL, NR.1, BL.H2, SC.A, ET.6, AP.24",
     "lat": 44.418284,
     "lng": 26.165099,
-    "valoare": 84171.33,
-    "nr_contracte": 15,
+    "valoare": 93672.49,
+    "nr_contracte": 16,
     "slug": "zbk-balkan-sa-bulgaria-sucursala-romania"
   },
   {
@@ -815,8 +815,8 @@
     "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR AMINTIRII, NR.28, CAMERA 1",
     "lat": 44.487945,
     "lng": 26.050155,
-    "valoare": 265000.0,
-    "nr_contracte": 2,
+    "valoare": 365000.0,
+    "nr_contracte": 3,
     "slug": "pro-arhive-management-srl"
   },
   {
@@ -883,8 +883,8 @@
     "name": "STANGER DESIGN S.R.L.",
     "cif": "40412167",
     "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, PRL. BUCUREŞTI, NR.24, BL.M19, SC.2, ET.3, AP.6",
-    "lat": 44.189902,
-    "lng": 27.353423,
+    "lat": 44.207754,
+    "lng": 27.309634,
     "valoare": 115500.0,
     "nr_contracte": 1,
     "slug": "stanger-design-srl"
@@ -945,8 +945,8 @@
     "adresa": "JUD. ILFOV, SAT DOBROEŞTI COM. DOBROEŞTI, BLD. NICOLAE BĂLCESCU, NR.107, PARTER. CAMERA NR. 2",
     "lat": 44.450791,
     "lng": 26.182526,
-    "valoare": 15032039.41,
-    "nr_contracte": 2,
+    "valoare": 20055613.33,
+    "nr_contracte": 3,
     "slug": "sicuro-invest-srl"
   },
   {
@@ -1222,7 +1222,7 @@
   {
     "name": "RALEX PROIECT CONSTRUCT SRL",
     "cif": "29101593",
-    "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, STR. NUFĂRULUI, NR.4, BL.E 7, SC.B, ET.2, AP.6",
+    "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, STR. NUFĂRULUI, NR.4, BL.E7, SC.B, ET.2, AP.6",
     "lat": 44.196165,
     "lng": 27.331323,
     "valoare": 1137350.0,
@@ -1643,8 +1643,8 @@
     "name": "SELGROS CASH & CARRY SRL",
     "cif": "11805367",
     "adresa": "JUD. BRAŞOV, MUN. BRAŞOV, CAL. BUCUREŞTI, NR.231",
-    "lat": 45.631239,
-    "lng": 25.637768,
+    "lat": 45.625991,
+    "lng": 25.642979,
     "valoare": 9031.31,
     "nr_contracte": 2,
     "slug": "selgros-cash-carry-srl"
@@ -1993,8 +1993,8 @@
     "name": "BET AUTO SERVICE FUNDENI SRL",
     "cif": "27987613",
     "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, DRM. GĂRII, NR.8, TEREN IN SUPRAFATA DE 600 MP SI CONSTRUCTIE P+1E",
-    "lat": 44.457952,
-    "lng": 26.162859,
+    "lat": 44.470278,
+    "lng": 26.176246,
     "valoare": 3050.0,
     "nr_contracte": 1,
     "slug": "bet-auto-service-fundeni-srl"
@@ -2115,8 +2115,38 @@
     "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 6, STR VLĂDEASA, NR.11, CAMERA 2, BL.C33, SC.B, ET.6, AP.93",
     "lat": 44.447875,
     "lng": 26.032448,
-    "valoare": 100000.0,
-    "nr_contracte": 1,
+    "valoare": 200000.0,
+    "nr_contracte": 2,
     "slug": "a-fortiori-finance-srl"
+  },
+  {
+    "name": "SENETIC DISTRIBUTION SRL",
+    "cif": "35620943",
+    "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 5, CAL RAHOVEI, NR.266-268, CORP 60. AXELE A-B. STALPII 4½ - 5.  CAMERA 32D, ET.2",
+    "lat": 44.405054,
+    "lng": 26.071651,
+    "valoare": 30539.61,
+    "nr_contracte": 1,
+    "slug": "senetic-distribution-srl"
+  },
+  {
+    "name": "ATU TECH SRL",
+    "cif": "29104875",
+    "adresa": "JUD. SIBIU, MUN. SIBIU, STR. FABRICII, NR.2, BL.9, AP.14",
+    "lat": 45.797391,
+    "lng": 24.15192,
+    "valoare": 173.55,
+    "nr_contracte": 1,
+    "slug": "atu-tech-srl"
+  },
+  {
+    "name": "FIBER MARKET S.R.L.",
+    "cif": "37302733",
+    "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR NĂMĂEŞTI, NR.24BIS, CAMERA 2",
+    "lat": 44.487945,
+    "lng": 26.050155,
+    "valoare": 390.25,
+    "nr_contracte": 1,
+    "slug": "fiber-market-srl"
   }
 ]

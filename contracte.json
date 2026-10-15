@@ -9,8 +9,8 @@
     "cui": "45058860",
     "ofertanti": 2,
     "cod": "CAN1111306",
-    "url": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100537490",
-    "k": "can:106149404",
+    "url": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100660281",
+    "k": "can:108188121",
     "tipc": "subsecvent"
   },
   {
@@ -23,8 +23,8 @@
     "cui": "45058860",
     "ofertanti": 2,
     "cod": "CAN1111306",
-    "url": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100537490",
-    "k": "can:106149405",
+    "url": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100660281",
+    "k": "can:108188122",
     "tipc": "acord-cadru"
   },
   {
@@ -1129,8 +1129,8 @@
     "cui": "45058860",
     "ofertanti": 2,
     "cod": "CAN1111306",
-    "url": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100537490",
-    "k": "can:106149407",
+    "url": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100660281",
+    "k": "can:108188123",
     "tipc": "subsecvent"
   },
   {
@@ -2613,8 +2613,8 @@
     "cui": "6879473",
     "ofertanti": 2,
     "cod": "CAN1147866",
-    "url": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100655390",
-    "k": "can:108082766",
+    "url": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100660323",
+    "k": "can:108188322",
     "tipc": "subsecvent"
   },
   {
@@ -2627,8 +2627,8 @@
     "cui": "6879473",
     "ofertanti": 2,
     "cod": "CAN1147866",
-    "url": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100655390",
-    "k": "can:108082767",
+    "url": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100660323",
+    "k": "can:108188323",
     "tipc": "acord-cadru"
   },
   {
@@ -8694,6 +8694,20 @@
     "tipc": "achizitie-directa"
   },
   {
+    "id": "contract-2026-1081881240",
+    "titlu": "Servicii de curatenie (Rev.2)",
+    "valoare": 2788008.96,
+    "data": "2026-06-30",
+    "tip": "Licitatie deschisa",
+    "firma": "TOP A-Z CONCEPT S.R.L.",
+    "cui": "45058860",
+    "ofertanti": 2,
+    "cod": "CAN1111306",
+    "url": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100660281",
+    "k": "can:108188124",
+    "tipc": "subsecvent"
+  },
+  {
     "id": "achizitie-directa-2026-122532973",
     "titlu": "Diverse piese de schimb (Rev.2)",
     "valoare": 685.0,
@@ -9492,6 +9506,20 @@
     "tipc": "achizitie-directa"
   },
   {
+    "id": "contract-2026-1081883240",
+    "titlu": "Servicii de paza (Rev.2)",
+    "valoare": 5023573.92,
+    "data": "2026-08-28",
+    "tip": "Licitatie deschisa",
+    "firma": "Sicuro Invest",
+    "cui": "6879473",
+    "ofertanti": 2,
+    "cod": "CAN1147866",
+    "url": "https://e-licitatie.ro/pub/notices/ca-notices/view-c/100660323",
+    "k": "can:108188324",
+    "tipc": "subsecvent"
+  },
+  {
     "id": "achizitie-directa-2026-122920565",
     "titlu": "Stalp de steag (Rev.2)",
     "valoare": 75000.0,
@@ -10007,6 +10035,118 @@
     "cod": "DA41340778",
     "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123175263",
     "k": "da:123175263",
+    "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123186173",
+    "titlu": "Servicii de asigurare a autovehiculelor (Rev.2)",
+    "valoare": 9501.16,
+    "data": "2026-10-07",
+    "tip": "",
+    "firma": "ZBK BALKAN S.A. BULGARIA SUCURSALA ROMANIA",
+    "cui": "35779982",
+    "ofertanti": 1,
+    "cod": "DA41350999",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123186173",
+    "k": "da:123186173",
+    "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123195253",
+    "titlu": "Servicii de arhivare computerizata (Rev.2)",
+    "valoare": 100000.0,
+    "data": "2026-10-08",
+    "tip": "",
+    "firma": "PRO ARHIVE MANAGEMENT",
+    "cui": "35666380",
+    "ofertanti": 1,
+    "cod": "DA41359512",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123195253",
+    "k": "da:123195253",
+    "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123204703",
+    "titlu": "Asfalt (Rev.2)",
+    "valoare": 1613.84,
+    "data": "2026-10-09",
+    "tip": "",
+    "firma": "DEDEMAN S.R.L.",
+    "cui": "2816464",
+    "ofertanti": 1,
+    "cod": "DA41368390",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123204703",
+    "k": "da:123204703",
+    "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123215041",
+    "titlu": "Servicii generale de consultanta in management (Rev.2)",
+    "valoare": 100000.0,
+    "data": "2026-10-12",
+    "tip": "",
+    "firma": "A-FORTIORI FINANCE",
+    "cui": "34984059",
+    "ofertanti": 1,
+    "cod": "DA41378106",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123215041",
+    "k": "da:123215041",
+    "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123220580",
+    "titlu": "Surse de alimentare electrica continua (Rev.2)",
+    "valoare": 30539.61,
+    "data": "2026-10-12",
+    "tip": "",
+    "firma": "SENETIC DISTRIBUTION",
+    "cui": "35620943",
+    "ofertanti": 1,
+    "cod": "DA41383262",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123220580",
+    "k": "da:123220580",
+    "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123228924",
+    "titlu": "Sisteme de automatizare (Rev.2)",
+    "valoare": 173.55,
+    "data": "2026-10-13",
+    "tip": "",
+    "firma": "ATU TECH SRL",
+    "cui": "29104875",
+    "ofertanti": 1,
+    "cod": "DA41391041",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123228924",
+    "k": "da:123228924",
+    "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123236996",
+    "titlu": "Echipament de stingere a incendiilor (Rev.2)",
+    "valoare": 2395.0,
+    "data": "2026-10-14",
+    "tip": "",
+    "firma": "PROTECT FIRE CONSULTING",
+    "cui": "31145826",
+    "ofertanti": 1,
+    "cod": "DA41398668",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123236996",
+    "k": "da:123236996",
+    "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123249051",
+    "titlu": "Cabluri de retea (Rev.2)",
+    "valoare": 390.25,
+    "data": "2026-10-15",
+    "tip": "",
+    "firma": "Fiber Market",
+    "cui": "37302733",
+    "ofertanti": 1,
+    "cod": "DA41409973",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123249051",
+    "k": "da:123249051",
     "tipc": "achizitie-directa"
   }
 ]
