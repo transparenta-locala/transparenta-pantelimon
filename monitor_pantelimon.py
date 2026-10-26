@@ -6033,6 +6033,99 @@ def _contracte_distincte_firma(contracte_firma: list) -> list:
     return sorted(contracte_unice(contracte_firma), key=lambda c: c.get("data_publicare", ""), reverse=True)
 
 
+# Setul de date ANAF pe data.gov.ro, pe an (pentru alți ani: căutarea pe data.gov.ro)
+_SURSA_FINANCIAR_DATAGOV = {"2024": "https://data.gov.ro/dataset/situatii_financiare_2024"}
+
+
+def _cui_fara_ro(cui) -> str:
+    return re.sub(r"^RO", "", str(cui or "").strip(), flags=re.I).replace(" ", "")
+
+
+def incarca_financiar_firme(cale: str = "firme_financiar.json") -> dict:
+    """firme_financiar.json (import_financiar_datagov.py): CUI → {an, cifra_afaceri, nr_salariati}."""
+    try:
+        with open(cale, encoding="utf-8") as handle:
+            date = json.load(handle)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+    return {_cui_fara_ro(k): v for k, v in date.items() if isinstance(v, dict)} if isinstance(date, dict) else {}
+
+
+def _suma_ron_exacta(valoare: float) -> str:
+    return f"{valoare:,.0f}".replace(",", ".") + " RON"
+
+
+def genereaza_bloc_financiar_firma(fin: dict, contracte_d: list) -> str:
+    """Blocul „Date financiare ANAF {an}” de pe fișa firmei. Gol dacă nu sunt date.
+
+    Indicatorii vin din risc_firma.evaluate_shell_risk (aceiași ca în raport). Contractul de
+    referință: cel mai mare contract al firmei din cei doi ani de după anul datelor (acolo se
+    aplică funcția), fără acordurile-cadru, care sunt plafoane, nu bani contractați.
+    """
+    import html as html_mod
+    if not fin:
+        return ""
+    an = (re.sub(r"[^0-9]", "", str(fin.get("an") or "")) or "")[:4]
+    ca, sal = fin.get("cifra_afaceri"), fin.get("nr_salariati")
+    if not an or (ca is None and sal is None):
+        return ""
+
+    indicatori = []
+    if _RISC_FIRMA_OK:
+        profil = {"ani": {an: {"cifra_afaceri": ca, "salariati": sal}}}
+        ani_aplicabili = {str(int(an) + 1), str(int(an) + 2)}
+        candidati = [c for c in contracte_d if not _este_acord_cadru(c)
+                     and (c.get("data_publicare") or "")[:4] in ani_aplicabili]
+        ref = max(candidati, key=lambda c: float(c.get("valoare_ron", 0) or 0), default=None)
+        if ref:
+            data_ref, val_ref = ref.get("data_publicare", ""), float(ref.get("valoare_ron", 0) or 0)
+        else:  # fără contract comparabil rămân doar indicatorii care nu depind de contract
+            data_ref, val_ref = f"{int(an) + 1}-01-01", 0.0
+        try:
+            coduri = [f["cod"] for f in _evaluate_shell_risk(profil, data_ref, val_ref)]
+        except Exception:
+            coduri = []
+        contract_txt = ""
+        if ref:
+            contract_txt = (f"celui mai mare contract al firmei cu Primăria din {data_ref[:4]} "
+                            f"(„{html_mod.escape(str(ref.get('titlu') or '')[:90])}”, {_fmt_ron(val_ref)})")
+        texte = {
+            "CIFRA_AFACERI_ZERO": f"Cifra de afaceri declarată pentru {an} este 0 RON.",
+            "CIFRA_AFACERI_MULT_SUB_CONTRACT":
+                f"Cifra de afaceri din {an} este sub 10% din valoarea {contract_txt}.",
+            "CIFRA_AFACERI_SUB_CONTRACT":
+                f"Cifra de afaceri din {an} este sub jumătate din valoarea {contract_txt}.",
+            "ZERO_ANGAJATI": f"Numărul mediu de angajați declarat pentru {an} este 0.",
+            "FOARTE_PUTINI_ANGAJATI": f"Numărul mediu de angajați declarat pentru {an} este {sal}.",
+        }
+        indicatori = [(cod, texte[cod]) for cod in coduri if cod in texte]
+
+    def _rand(eticheta, valoare):
+        return f"<dt>{eticheta}</dt><dd>{valoare}</dd>"
+
+    rânduri = [
+        _rand("Cifra de afaceri netă", _suma_ron_exacta(float(ca)) if ca is not None else "nedeclarată"),
+        _rand("Număr mediu de angajați", f"{int(sal)}" if sal is not None else "nedeclarat"),
+    ]
+    sursa_url = _SURSA_FINANCIAR_DATAGOV.get(an, f"https://data.gov.ro/dataset?q=situatii+financiare+{an}")
+    indicatori_html = ""
+    if indicatori:
+        indicatori_html = (
+            '<h3>Indicatori de verificat</h3><ul class="tp-list">'
+            + "".join(f'<li data-cod="{cod}">{text}</li>' for cod, text in indicatori)
+            + '</ul><p class="tp-muted">Indicatorii sunt calculați automat din cifrele de mai sus, '
+            'la fel ca în raport. Sunt repere pentru verificare, nu concluzii: o firmă poate lucra cu '
+            'subcontractori, poate fi înființată de curând sau poate avea veniturile în alt an.</p>'
+        )
+    return (
+        f'<section class="tp-fin" id="date-financiare"><h2>Date financiare ANAF {an}</h2>'
+        f'<dl class="tp-fin-dl">{"".join(rânduri)}</dl>{indicatori_html}'
+        f'<p class="tp-sources">Sursa: situațiile financiare anuale depuse la ANAF pentru {an}, publicate de '
+        f'Ministerul Finanțelor pe <a href="{sursa_url}" target="_blank" rel="noopener">data.gov.ro ↗</a>. '
+        'Cifrele sunt cele declarate de firmă.</p></section>'
+    )
+
+
 def genereaza_pagina_furnizor(
         nume: str, slug: str,
         flags_firma: list, contracte_firma: list,
@@ -6041,11 +6134,13 @@ def genereaza_pagina_furnizor(
         firme_legate: list = None,
         sluguri_semnale: dict = None,
         ancore_semnale: dict = None,
-        slug_dupa_cui: dict = None) -> str:
+        slug_dupa_cui: dict = None,
+        financiar: dict = None) -> str:
     """Fișa unei firme: contractele cu Primăria și, lângă fiecare, semnalele lui.
 
     sluguri_semnale / ancore_semnale: {id(flag): slug | 'nereguli-N'} — legături spre
     pagina semnalului și spre cardul din raport (aceleași ca în raport).
+    financiar: rândul firmei din firme_financiar.json → blocul „Date financiare ANAF”.
     """
     import html as html_mod
     e = lambda s: html_mod.escape(str(s or ""), quote=True)  # noqa: E731
@@ -6181,6 +6276,7 @@ def genereaza_pagina_furnizor(
         f'semnalului, cu explicația completă. <a href="../raport_transparenta.html#supplier={q_firma}">Vezi-le în lista '
         'din raport →</a></p>'
     ) if flags_firma else '<p class="tp-muted">Niciun semnal automat pentru această firmă.</p>'
+    financiar_html = genereaza_bloc_financiar_firma(financiar, contracte_d)
 
     return f"""<!DOCTYPE html>
 <html lang="ro">
@@ -6221,6 +6317,7 @@ def genereaza_pagina_furnizor(
     <a href="../harta.html" class="ext-btn ext-btn-sec">Harta firmelor</a>
     <a href="index.html" class="ext-btn ext-btn-sec">Toate firmele</a>
   </div>
+  {financiar_html}
 
   <h2>Contracte cu Primăria ({len(contracte_d)})</h2>
   {sectiune_semnale}
@@ -6316,6 +6413,7 @@ def genereaza_pagini_furnizori(contracte: list, flags: list, mentiuni_media: dic
     from collections import defaultdict
     mentiuni_media = mentiuni_media or {}
     mentiuni_auto_by_cui = mentiuni_auto_by_cui or {}
+    financiar_by_cui = incarca_financiar_firme()
 
     flags_sortate = sorteaza_dupa_severitate(flags)
     sluguri = _sluguri_semnale_pentru(flags_sortate)
@@ -6359,6 +6457,7 @@ def genereaza_pagini_furnizori(contracte: list, flags: list, mentiuni_media: dic
             mentiuni_auto=auto_firma or None,
             firme_legate=legate or None,
             sluguri_semnale=sluguri_id, ancore_semnale=ancore_id, slug_dupa_cui=cui_slug,
+            financiar=financiar_by_cui.get(_cui_fara_ro(cui_firma)),
         )
         with open(f"furnizori/{slug}.html", "w", encoding="utf-8") as handle:
             handle.write(pagina_html)
@@ -6820,81 +6919,8 @@ def main():
         f.write(raport_html)
     print(f"  ✓ Raport salvat: {CONFIG['fisier_raport']}")
 
-    # Pagini per furnizor (≥3 contracte)
+    # Fișe de firmă pentru toate firmele cu contracte (semnale, presă, date financiare ANAF)
     print("  [Furnizori] Generez pagini per furnizor...")
-    from collections import defaultdict as _defaultdict
-    import os as _os
-
-    # risc_firma e construit în genereaza_raport_html; reconstruim minimal pentru pagini furnizori
-    risc_firma = {}
-
-    contracte_per_firma = _defaultdict(list)
-    for c in contracte:
-        if c.get("castigator"):
-            contracte_per_firma[c["castigator"]].append(c)
-
-    flags_per_firma = _defaultdict(list)
-    for f in toate_flags:
-        if f.get("furnizor") and f["furnizor"] != "Multiple":
-            flags_per_firma[f["furnizor"]].append(f)
-
-    # Adăugăm flaguri financiare din risc_firma (PUTINI_ANGAJATI, CIFRA_AFACERI etc.)
-    # Acestea nu sunt în toate_flags (vin din firme_financiar.json, nu din SEAP).
-    # Prin includerea lor în flags_per_firma, apar în paginile furnizori și
-    # sunt trackuite de stare_anterioara.json → badge-ul NOU va funcționa automat.
-    _FIN_TIPS_SET = {"ZERO ANGAJATI", "CIFRA AFACERI ZERO", "CIFRA AFACERI MULT SUB CONTRACT",
-                     "CIFRA AFACERI SUB CONTRACT", "FOARTE PUTINI ANGAJATI"}
-    for _furn_fin, _rd_fin in risc_firma.items():
-        _existing_keys = {(f.get("tip",""), f.get("data",""))
-                          for f in flags_per_firma.get(_furn_fin, [])}
-        for _ff in _rd_fin.get("flags", []):
-            if _ff.get("tip","") in _FIN_TIPS_SET:
-                _k = (_ff.get("tip",""), _ff.get("data",""))
-                if _k not in _existing_keys:
-                    flags_per_firma[_furn_fin].append({
-                        **_ff,
-                        "furnizor": _furn_fin,
-                        "titlu": _ff.get("titlu") or _ff.get("tip",""),
-                        "descriere": _ff.get("titlu",""),
-                    })
-                    _existing_keys.add(_k)
-
-    # B — Adăugăm flaguri MENTIUNI_PRESA_RISCANTE din mentiuni_presa_auto.json
-    try:
-        from monitorizare_presa import incarca_mentiuni_presa_auto, evalueaza_flag_presa
-        import re as _re_presa
-        _mentiuni_auto = incarca_mentiuni_presa_auto()
-        if _mentiuni_auto:
-            # Construim lookup CUI → furnizor (același mecanism ca pentru date financiare)
-            _cui_to_furn_p = {}
-            for _fp, _rdp in risc_firma.items():
-                _cp = _re_presa.sub(r'^[Rr][Oo]\s*', '', str(_rdp.get("cui","")).strip()).replace(' ', '')
-                if _cp and _cp.isdigit():
-                    _cui_to_furn_p[_cp] = _fp
-            _presa_added = 0
-            for _cui_p, _mp in _mentiuni_auto.items():
-                if not _mp.get('total'):
-                    continue
-                _furn_p = _cui_to_furn_p.get(str(_cui_p))
-                if not _furn_p:
-                    continue
-                _flag_p = evalueaza_flag_presa(_mp)
-                if not _flag_p:
-                    continue
-                _ex_tips_p = {f.get("tip","") for f in flags_per_firma.get(_furn_p, [])}
-                if 'MENTIUNI PRESA RISCANTE' not in _ex_tips_p:
-                    flags_per_firma[_furn_p].append({**_flag_p, "furnizor": _furn_p})
-                    # Adăugăm și în risc_firma pentru a apărea în raport + chip filter
-                    if _furn_p in risc_firma:
-                        _ex_rf_tips = {f.get("tip","") for f in risc_firma[_furn_p].get("flags",[])}
-                        if 'MENTIUNI PRESA RISCANTE' not in _ex_rf_tips:
-                            risc_firma[_furn_p].setdefault("flags", []).append(_flag_p)
-                    _presa_added += 1
-            if _presa_added:
-                print(f'  [OK] Presă: {_presa_added} firme cu flaguri MENTIUNI_PRESA_RISCANTE')
-    except ImportError:
-        pass  # monitorizare_presa.py opțional
-
     index_furnizori = genereaza_pagini_furnizori(
         contracte, toate_flags, _mentiuni_media, _mentiuni_presa_auto_by_cui, _retea_firme)
 
