@@ -212,9 +212,17 @@
   "427410": {
     "nume": "COMPANIA NATIONALA POSTA ROMANA S.A.",
     "cui": "427410",
-    "mentiuni": [],
-    "total": 0,
-    "fetched_at": "2026-06-03T10:54:44.719261"
+    "mentiuni": [
+      {
+        "title": "Dosarul Posta: Maricel Pacuraru, condamnat la 4 ani de inchisoare (Video) - Ziare.com",
+        "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOa3h4ZEdTVGVHYlZNa0NCNDhZeUNRYnVfWDdXaU54MGU4eVdwdEtseEpxcmp2clZKX3hra1oxYTZPYWJGZHExd0FNT0tYWEtNVmNkY3YtN0ljZDc4LVYzSmhTMnFjSTZwTXJlXzJndHVKX0NTS0FUNUpsbTlrV2hqZmswdi1DaF9MV2tZeVBoZnJYRHZ1SzJHb21xVWI3RWFBQ25zakUwRWR5d9IBowFBVV95cUxOcHFsaEJEcjBWcllTX1NDUm81NVhvbTRPdzJjdFlKV29lNlFIQ3JiM3NZaVNzZHFmTDVOYTF3N2w1OWlXaGZwT0M1UUNOdUNtLVdXc1R5UEdVSWd2OExmWXJLUm1FTjFLU1RDZVdTd0hQRkItdmJTRENHc3Z1SHZVT1A1ZkNPMnRmb2Z5Mk90d0NxNS1uNndQQS02SGI5TDhTbzJN?oc=5",
+        "source": "Ziare.com",
+        "pub_date": "Mon, 03 Nov 2014 08:00:00 GMT",
+        "matched_keyword": "condamna"
+      }
+    ],
+    "total": 1,
+    "fetched_at": "2026-10-26T11:48:59.181238"
   },
   "34772064": {
     "nume": "GENERAL UTIL CONS",
@@ -768,5 +776,26 @@
     "mentiuni": [],
     "total": 0,
     "fetched_at": "2026-10-15T10:18:40.840159"
+  },
+  "43421356": {
+    "nume": "ACM ANTREPRIZA PROIECT CONSULTING S.R.L.",
+    "cui": "43421356",
+    "mentiuni": [],
+    "total": 0,
+    "fetched_at": "2026-10-26T11:49:55.512359"
+  },
+  "25604720": {
+    "nume": "Ianina Deo Service",
+    "cui": "25604720",
+    "mentiuni": [],
+    "total": 0,
+    "fetched_at": "2026-10-26T11:49:59.113591"
+  },
+  "25329212": {
+    "nume": "SC Krenar Trading SRL",
+    "cui": "25329212",
+    "mentiuni": [],
+    "total": 0,
+    "fetched_at": "2026-10-26T11:50:02.737777"
   }
 }
