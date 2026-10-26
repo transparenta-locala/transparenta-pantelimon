@@ -12,7 +12,7 @@
   # Când se schimbă codul care generează paginile, site-ul se regenerează singur
   # (altfel noul aspect ar apărea abia la rularea programată din 1 sau 15).
   push:
-    branches: [main, feat/audit-26oct]
+    branches: [main]
     paths:
       - monitor_pantelimon.py
       - genereaza_previzualizari.py
