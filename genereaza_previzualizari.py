@@ -464,6 +464,11 @@ def pagina_semnal(semnal: dict, slug_furnizor: str = "", data_seap: str = "",
         linkuri_seap = ""
     link_firma = (f'<a class="btn sec" href="../furnizori/{e(slug_furnizor)}.html">Fișa firmei și toate contractele →</a>'
                   if slug_furnizor else "")
+    from site_shell import rand_distribuie_html
+    rand_distribuie = rand_distribuie_html(
+        url, titlu + (f" — {firma}" if firma else "")
+        + (f", {fmt_lei(semnal['suma'])}" if semnal.get("suma") else "")
+        + ". Verifică singur pe transparenta-pantelimon.eu:")
     limita = (f'<p class="lim">Date SEAP până la {e(fmt_data(data_seap))}. Semnalul e generat automat; '
               f'nu este o constatare juridică. Documentele procedurii trebuie verificate.</p>'
               if data_seap else
@@ -516,6 +521,7 @@ h1{{font-size:1.9rem;line-height:1.2;margin:14px 0 6px}}
       {link_firma}
       {linkuri_seap}
     </div>
+    {rand_distribuie}
     {limita}
   </article>
 </main>

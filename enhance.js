@@ -1579,14 +1579,20 @@
       '<a class="tp-sh-wa" href="' + wa + '" target="_blank" rel="noopener noreferrer" aria-label="Distribuie pe WhatsApp">WhatsApp</a>' +
       '<a class="tp-sh-fb" href="' + fb + '" target="_blank" rel="noopener noreferrer" aria-label="Distribuie pe Facebook">Facebook</a>' +
       '<button type="button" class="tp-sh-copy">Copiază link</button>';
+    leagaShareRow(row, url);
+    return row;
+  }
+
+  // Comportamentul rândului (și pentru cel scris static de site_shell.rand_distribuie_html)
+  function leagaShareRow(row, url) {
     // Clicurile nu trebuie să deschidă/închidă cardul din raport
     row.addEventListener('click', e => e.stopPropagation());
-    row.querySelector('.tp-sh-copy').addEventListener('click', () => {
+    const btn = row.querySelector('.tp-sh-copy');
+    if (btn) btn.addEventListener('click', () => {
       copyText(url).then(() => showToast('Link copiat')).catch(() => {
         window.prompt('Copiază linkul:', url);
       });
     });
-    return row;
   }
 
   function sumaScurta(n) {
@@ -1642,6 +1648,9 @@
   // Pagini de furnizor și pagini de semnal: un rând sub titlu
   function injectSharePage() {
     const path = location.pathname;
+    // Fișele de firmă și paginile de semnal au rândul scris static (fără salt de conținut)
+    const staticRow = $('.tp-share-page[data-url]');
+    if (staticRow) { leagaShareRow(staticRow, staticRow.dataset.url); return; }
     if ($('[data-tp-share]')) return;
     const h1 = $('h1');
     if (!h1) return;
