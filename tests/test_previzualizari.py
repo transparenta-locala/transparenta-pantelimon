@@ -262,7 +262,8 @@ def test_meniul_are_link_modele_si_merge_din_subdirectoare():
     assert "href: 'modele.html'" in js
     assert "function siteBase()" in js
     assert "(furnizori|semnale)" in js
-    assert 'href="modele.html"' in _citeste("index.html").split('id="static-nav-fallback"')[1].split("</nav>")[0]
+    # meniul e scris static în pagină de site_shell.py (înainte: nav de rezervă + meniu injectat de JS)
+    assert 'href="modele.html"' in _citeste("index.html").split('class="tp-nav"')[1].split("</nav>")[0]
 
 
 def test_banda_si_partajarea_sunt_in_enhance_si_in_min():
