@@ -1,34 +1,34 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-10-15",
+  "generated_at": "2026-10-26",
   "uat": {
     "name": "Orașul Pantelimon",
     "cif": "4420759",
     "judet": "Ilfov"
   },
   "statistici": {
-    "total_nereguli": 344,
-    "total_semnale": 344,
-    "contracte_cu_semnale": 244,
+    "total_nereguli": 349,
+    "total_semnale": 349,
+    "contracte_cu_semnale": 249,
     "critice": 26,
     "majore": 97,
-    "medii": 221,
-    "total_contracte": 714,
-    "valoare_totala_ron": 166629191.48000008,
-    "valoare_totala_mil": 166.63,
+    "medii": 226,
+    "total_contracte": 743,
+    "valoare_totala_ron": 169272518.33000004,
+    "valoare_totala_mil": 169.27,
     "scor_transparenta": 23
   },
   "top_nereguli": [
     {
       "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
       "severitate": "CRITIC",
-      "descriere": "<strong>BETIRA CONSTRUCT</strong> (CUI 30520358) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>6</strong>, în valoare de <strong>9.57 mil. RON</strong> (fiecare contrac",
+      "descriere": "<strong>BETIRA CONSTRUCT</strong> (CUI 30520358) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>7</strong>, în valoare de <strong>9.98 mil. RON</strong> (fiecare contrac",
       "furnizor": "BETIRA CONSTRUCT",
-      "valoare_ron": 9571900.58,
-      "data": "2026-10-15",
+      "valoare_ron": 9982300.58,
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-324"
+      "anchor": "#nereguli-13"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 5 categorii",
@@ -36,10 +36,10 @@
       "descriere": "<strong>Constopograf Expert</strong> (CUI 25145252) apare în <strong>5 categorii de indicatori</strong>: APROAPE_DE_PRAG, CONTRACTE_CONSECUTIVE, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>8</strong>, în valoare de <strong>2.16 mil. RON</strong> (f",
       "furnizor": "Constopograf Expert",
       "valoare_ron": 2160000.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-325"
+      "anchor": "#nereguli-14"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
@@ -47,10 +47,10 @@
       "descriere": "<strong>GEMCO TRADE</strong> (CUI 31335227) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>5</strong>, în valoare de <strong>1.22 mil. RON</strong> (fiecare contract numărat o singură dată). Cum",
       "furnizor": "GEMCO TRADE",
       "valoare_ron": 1216430.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-326"
+      "anchor": "#nereguli-15"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
@@ -58,10 +58,10 @@
       "descriere": "<strong>RALEX PROIECT CONSTRUCT</strong> (CUI 29101593) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>5</strong>, în valoare de <strong>1.12 mil. RON</strong> (fiecare contract num",
       "furnizor": "RALEX PROIECT CONSTRUCT",
       "valoare_ron": 1117350.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-328"
+      "anchor": "#nereguli-17"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
@@ -69,10 +69,10 @@
       "descriere": "<strong>FINANCE PUBLIC CONSULTING</strong> (CUI 47236831) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>7</strong>, în valoare de <strong>1.04 mil. RON</strong> (fiecare contract n",
       "furnizor": "FINANCE PUBLIC CONSULTING",
       "valoare_ron": 1045000.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-329"
+      "anchor": "#nereguli-18"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
@@ -80,10 +80,10 @@
       "descriere": "<strong>PERCONS EU</strong> (CUI 25535239) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>7</strong>, în valoare de <strong>891K RON</strong> (fiecare contract numărat o singură dată). Cumulul p",
       "furnizor": "PERCONS EU",
       "valoare_ron": 891000.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-327"
+      "anchor": "#nereguli-16"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
@@ -91,10 +91,10 @@
       "descriere": "<strong>UNITH2B</strong> (CUI 31279763) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>5</strong>, în valoare de <strong>755K RON</strong> (fiecare contract numărat o singură dată).",
       "furnizor": "UNITH2B",
       "valoare_ron": 755000.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-332"
+      "anchor": "#nereguli-21"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
@@ -102,10 +102,10 @@
       "descriere": "<strong>PANORAMIC CONCEPT CONS</strong> (CUI 37655409) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>3</strong>, în valoare de <strong>735K RON</strong> (fiecare contract numărat o singură dată",
       "furnizor": "PANORAMIC CONCEPT CONS",
       "valoare_ron": 735000.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-331"
+      "anchor": "#nereguli-20"
     },
     {
       "titlu": "Semnal de posibilă fragmentare a contractelor",
@@ -116,7 +116,7 @@
       "data": "2025-01-16",
       "contract_id": "achizitie-directa-2025-51666,achizitie-directa-2025-69059",
       "tip": "FRAGMENTARE",
-      "anchor": "#nereguli-250"
+      "anchor": "#nereguli-1"
     },
     {
       "titlu": "Semnal de posibilă fragmentare a contractelor",
@@ -127,20 +127,20 @@
       "data": "2025-01-21",
       "contract_id": "achizitie-directa-2025-69059,achizitie-directa-2025-79099",
       "tip": "FRAGMENTARE",
-      "anchor": "#nereguli-251"
+      "anchor": "#nereguli-2"
     }
   ],
   "top_semnale": [
     {
       "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
       "severitate": "CRITIC",
-      "descriere": "<strong>BETIRA CONSTRUCT</strong> (CUI 30520358) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>6</strong>, în valoare de <strong>9.57 mil. RON</strong> (fiecare contrac",
+      "descriere": "<strong>BETIRA CONSTRUCT</strong> (CUI 30520358) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, CRESTERE_BRUSCA_VALOARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>7</strong>, în valoare de <strong>9.98 mil. RON</strong> (fiecare contrac",
       "furnizor": "BETIRA CONSTRUCT",
-      "valoare_ron": 9571900.58,
-      "data": "2026-10-15",
+      "valoare_ron": 9982300.58,
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-324"
+      "anchor": "#nereguli-13"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 5 categorii",
@@ -148,10 +148,10 @@
       "descriere": "<strong>Constopograf Expert</strong> (CUI 25145252) apare în <strong>5 categorii de indicatori</strong>: APROAPE_DE_PRAG, CONTRACTE_CONSECUTIVE, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>8</strong>, în valoare de <strong>2.16 mil. RON</strong> (f",
       "furnizor": "Constopograf Expert",
       "valoare_ron": 2160000.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-325"
+      "anchor": "#nereguli-14"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
@@ -159,10 +159,10 @@
       "descriere": "<strong>GEMCO TRADE</strong> (CUI 31335227) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>5</strong>, în valoare de <strong>1.22 mil. RON</strong> (fiecare contract numărat o singură dată). Cum",
       "furnizor": "GEMCO TRADE",
       "valoare_ron": 1216430.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-326"
+      "anchor": "#nereguli-15"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
@@ -170,10 +170,10 @@
       "descriere": "<strong>RALEX PROIECT CONSTRUCT</strong> (CUI 29101593) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>5</strong>, în valoare de <strong>1.12 mil. RON</strong> (fiecare contract num",
       "furnizor": "RALEX PROIECT CONSTRUCT",
       "valoare_ron": 1117350.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-328"
+      "anchor": "#nereguli-17"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
@@ -181,10 +181,10 @@
       "descriere": "<strong>FINANCE PUBLIC CONSULTING</strong> (CUI 47236831) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>7</strong>, în valoare de <strong>1.04 mil. RON</strong> (fiecare contract n",
       "furnizor": "FINANCE PUBLIC CONSULTING",
       "valoare_ron": 1045000.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-329"
+      "anchor": "#nereguli-18"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
@@ -192,10 +192,10 @@
       "descriere": "<strong>PERCONS EU</strong> (CUI 25535239) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>7</strong>, în valoare de <strong>891K RON</strong> (fiecare contract numărat o singură dată). Cumulul p",
       "furnizor": "PERCONS EU",
       "valoare_ron": 891000.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-327"
+      "anchor": "#nereguli-16"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 4 categorii",
@@ -203,10 +203,10 @@
       "descriere": "<strong>UNITH2B</strong> (CUI 31279763) apare în <strong>4 categorii de indicatori</strong>: APROAPE_DE_PRAG, FRAGMENTARE, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>5</strong>, în valoare de <strong>755K RON</strong> (fiecare contract numărat o singură dată).",
       "furnizor": "UNITH2B",
       "valoare_ron": 755000.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-332"
+      "anchor": "#nereguli-21"
     },
     {
       "titlu": "Furnizor cu indicatori cumulați — 3 categorii",
@@ -214,10 +214,10 @@
       "descriere": "<strong>PANORAMIC CONCEPT CONS</strong> (CUI 37655409) apare în <strong>3 categorii de indicatori</strong>: APROAPE_DE_PRAG, OFERTANT_UNIC, VALOARE_ROTUNDA_SUSPECTA. Contractele distincte cu semnale: <strong>3</strong>, în valoare de <strong>735K RON</strong> (fiecare contract numărat o singură dată",
       "furnizor": "PANORAMIC CONCEPT CONS",
       "valoare_ron": 735000.0,
-      "data": "2026-10-15",
+      "data": "2026-10-26",
       "contract_id": "global",
       "tip": "RISC_SISTEMIC_FIRMA",
-      "anchor": "#nereguli-331"
+      "anchor": "#nereguli-20"
     },
     {
       "titlu": "Semnal de posibilă fragmentare a contractelor",
@@ -228,7 +228,7 @@
       "data": "2025-01-16",
       "contract_id": "achizitie-directa-2025-51666,achizitie-directa-2025-69059",
       "tip": "FRAGMENTARE",
-      "anchor": "#nereguli-250"
+      "anchor": "#nereguli-1"
     },
     {
       "titlu": "Semnal de posibilă fragmentare a contractelor",
@@ -239,7 +239,7 @@
       "data": "2025-01-21",
       "contract_id": "achizitie-directa-2025-69059,achizitie-directa-2025-79099",
       "tip": "FRAGMENTARE",
-      "anchor": "#nereguli-251"
+      "anchor": "#nereguli-2"
     }
   ],
   "top_firme": [

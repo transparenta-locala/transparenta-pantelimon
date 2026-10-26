@@ -3,8 +3,8 @@
     "name": "TOP A-Z CONCEPT S.R.L.",
     "cif": "45058860",
     "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, STR. MĂRULUI, NR.19, CAMERA 2, SC.A, ET.2, AP.16",
-    "lat": 44.470278,
-    "lng": 26.176246,
+    "lat": 44.457455,
+    "lng": 26.16276,
     "valoare": 19516062.72,
     "nr_contracte": 4,
     "slug": "top-a-z-concept-srl"
@@ -35,8 +35,8 @@
     "adresa": "JUD. ILFOV, SAT BRĂNEŞTI COM. BRĂNEŞTI, STR. INDUSTRIILOR, NR.26, CAMERA 3, ET.1",
     "lat": 44.457562,
     "lng": 26.33501,
-    "valoare": 9571900.58,
-    "nr_contracte": 6,
+    "valoare": 10187500.58,
+    "nr_contracte": 8,
     "slug": "betira-construct-srl"
   },
   {
@@ -55,8 +55,8 @@
     "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, STR. NICOLAE BĂLCESCU, NR.4A, CAM. 1",
     "lat": 44.451879,
     "lng": 26.203556,
-    "valoare": 1203674.0,
-    "nr_contracte": 3,
+    "valoare": 3072074.0,
+    "nr_contracte": 5,
     "slug": "avalon-utilaje-srl"
   },
   {
@@ -75,8 +75,8 @@
     "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR INTRAREA CIUCAŞ, NR.2 A",
     "lat": 44.451879,
     "lng": 26.203556,
-    "valoare": 299288.0,
-    "nr_contracte": 3,
+    "valoare": 914888.0,
+    "nr_contracte": 5,
     "slug": "niplicad-srl"
   },
   {
@@ -85,8 +85,8 @@
     "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, ŞOS. CERNICA, NR.7",
     "lat": 44.451879,
     "lng": 26.203556,
-    "valoare": 623321.0,
-    "nr_contracte": 3,
+    "valoare": 1156721.0,
+    "nr_contracte": 5,
     "slug": "societatea-agricola-orizont-pantelimon"
   },
   {
@@ -95,8 +95,8 @@
     "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, STR. LIVEZILOR, NR.15, BL.I, SC.2, ET.1, AP.13",
     "lat": 44.451879,
     "lng": 26.203556,
-    "valoare": 434403.0,
-    "nr_contracte": 3,
+    "valoare": 965703.0,
+    "nr_contracte": 5,
     "slug": "val-cristi-construct-auto-srl"
   },
   {
@@ -230,7 +230,7 @@
     "slug": "pan-net-srl"
   },
   {
-    "name": "OPAX PROTECTION SYSTEMS S.R.L.",
+    "name": "OPAX PROTECTION SYSTEMS SRL",
     "cif": "29587346",
     "adresa": "JUD. ILFOV, SAT VOLUNTARI ORŞ. VOLUNTARI, STR. DRUMUL POTCOAVEI, NR.63A, ET.P",
     "lat": 44.490278,
@@ -245,8 +245,8 @@
     "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 2, SOS. PANTELIMON, NR.450",
     "lat": 44.459585,
     "lng": 26.130345,
-    "valoare": 61308.86,
-    "nr_contracte": 34,
+    "valoare": 63259.7,
+    "nr_contracte": 36,
     "slug": "auto-marcus-grup-sa"
   },
   {
@@ -255,8 +255,8 @@
     "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. APUSULUI, NR.1, CAMERA 2",
     "lat": 44.451879,
     "lng": 26.203556,
-    "valoare": 209382.08,
-    "nr_contracte": 68,
+    "valoare": 213479.08,
+    "nr_contracte": 69,
     "slug": "ksa-road-services-srl"
   },
   {
@@ -355,8 +355,8 @@
     "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR. NEGOSTINA, NR.111A",
     "lat": 44.418284,
     "lng": 26.165099,
-    "valoare": 57114.94,
-    "nr_contracte": 31,
+    "valoare": 63419.67,
+    "nr_contracte": 32,
     "slug": "gi-euroservice-srl"
   },
   {
@@ -475,8 +475,8 @@
     "adresa": "JUD. GIURGIU, SAT MIHAI VODĂ COM. BOLINTIN-DEAL,  , NR.CADASTRAL 4093",
     "lat": 44.139987,
     "lng": 26.05847,
-    "valoare": 2767.98,
-    "nr_contracte": 9,
+    "valoare": 3017.98,
+    "nr_contracte": 10,
     "slug": "cardeems-srl"
   },
   {
@@ -515,8 +515,8 @@
     "adresa": "JUD. MARAMUREŞ, ORŞ. TĂUŢII-MĂGHERĂUŞ, STR. 66, NR.16",
     "lat": 47.665965,
     "lng": 23.467985,
-    "valoare": 4221.05,
-    "nr_contracte": 2,
+    "valoare": 5853.72,
+    "nr_contracte": 3,
     "slug": "arox-equipment-srl"
   },
   {
@@ -710,9 +710,9 @@
     "slug": "eurial-invest-srl"
   },
   {
-    "name": "ONEDIA CAR SERVICE S.R.L.",
+    "name": "ONEDIA CAR SERVICE SRL",
     "cif": "28521297",
-    "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, BLD. BIRUINŢEI, NR.227, ET.P",
+    "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, BLD. BIRUINŢEI, NR.227, CAMERA 2, ET.P",
     "lat": 44.451879,
     "lng": 26.203556,
     "valoare": 16980.44,
@@ -883,8 +883,8 @@
     "name": "STANGER DESIGN S.R.L.",
     "cif": "40412167",
     "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, PRL. BUCUREŞTI, NR.24, BL.M19, SC.2, ET.3, AP.6",
-    "lat": 44.207754,
-    "lng": 27.309634,
+    "lat": 44.210116,
+    "lng": 27.30713,
     "valoare": 115500.0,
     "nr_contracte": 1,
     "slug": "stanger-design-srl"
@@ -1130,7 +1130,7 @@
     "slug": "axico-grup-srl"
   },
   {
-    "name": "EPSILON S.R.L.",
+    "name": "EPSILON SRL",
     "cif": "8077425",
     "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, STR. CIREŞILOR, NR.13",
     "lat": 44.196165,
@@ -1225,8 +1225,8 @@
     "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, STR. NUFĂRULUI, NR.4, BL.E7, SC.B, ET.2, AP.6",
     "lat": 44.196165,
     "lng": 27.331323,
-    "valoare": 1137350.0,
-    "nr_contracte": 6,
+    "valoare": 1151850.0,
+    "nr_contracte": 7,
     "slug": "ralex-proiect-construct-srl"
   },
   {
@@ -1362,7 +1362,7 @@
   {
     "name": "FLEXABILITY MANAGEMENT SRL",
     "cif": "19179498",
-    "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR. BARBU DELAVRANCEA, NR.59, ET.1, AP.3",
+    "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR BARBU DELAVRANCEA, NR.59, ET.1, AP.3",
     "lat": 44.487945,
     "lng": 26.050155,
     "valoare": 503000.0,
@@ -1565,8 +1565,8 @@
     "adresa": "JUD. ILFOV, SAT BRĂNEŞTI COM. BRĂNEŞTI, STR. I.C. BRĂTIANU, NR.36, CAMERA NR. 1",
     "lat": 44.457562,
     "lng": 26.33501,
-    "valoare": 63520.0,
-    "nr_contracte": 1,
+    "valoare": 1069270.0,
+    "nr_contracte": 3,
     "slug": "green-space-art-srl"
   },
   {
@@ -1635,18 +1635,18 @@
     "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 6, STR PRECIZIEI, NR.11, CAMERA 1B",
     "lat": 44.447875,
     "lng": 26.032448,
-    "valoare": 5416.34,
-    "nr_contracte": 1,
+    "valoare": 5639.54,
+    "nr_contracte": 2,
     "slug": "ocono-romania-srl"
   },
   {
     "name": "SELGROS CASH & CARRY SRL",
     "cif": "11805367",
     "adresa": "JUD. BRAŞOV, MUN. BRAŞOV, CAL. BUCUREŞTI, NR.231",
-    "lat": 45.625991,
-    "lng": 25.642979,
-    "valoare": 9031.31,
-    "nr_contracte": 2,
+    "lat": 45.628021,
+    "lng": 25.640704,
+    "valoare": 9449.72,
+    "nr_contracte": 3,
     "slug": "selgros-cash-carry-srl"
   },
   {
@@ -1825,8 +1825,8 @@
     "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 4, BLD DIMITRIE CANTEMIR, NR.17, CAMERA NR.1, BL.10, SC.2, ET.5, AP.58",
     "lat": 44.381903,
     "lng": 26.119018,
-    "valoare": 105600.0,
-    "nr_contracte": 3,
+    "valoare": 142350.0,
+    "nr_contracte": 4,
     "slug": "a-z-instal-gaz-srl"
   },
   {
@@ -1993,8 +1993,8 @@
     "name": "BET AUTO SERVICE FUNDENI SRL",
     "cif": "27987613",
     "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, DRM. GĂRII, NR.8, TEREN IN SUPRAFATA DE 600 MP SI CONSTRUCTIE P+1E",
-    "lat": 44.470278,
-    "lng": 26.176246,
+    "lat": 44.457455,
+    "lng": 26.16276,
     "valoare": 3050.0,
     "nr_contracte": 1,
     "slug": "bet-auto-service-fundeni-srl"
@@ -2120,6 +2120,36 @@
     "slug": "a-fortiori-finance-srl"
   },
   {
+    "name": "ACM ANTREPRIZA PROIECT CONSULTING S.R.L.",
+    "cif": "43421356",
+    "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 4, STR. FĂGETULUI, NR.34, CAMERA 1",
+    "lat": 44.381903,
+    "lng": 26.119018,
+    "valoare": 613650.0,
+    "nr_contracte": 2,
+    "slug": "acm-antrepriza-proiect-consulting-srl"
+  },
+  {
+    "name": "IANINA DEO SERVICE SRL",
+    "cif": "25604720",
+    "adresa": "JUD. ILFOV, SAT PANTELIMON ORŞ. PANTELIMON, BLD. BIRUINŢEI, NR.56A, ET.1",
+    "lat": 44.451879,
+    "lng": 26.203556,
+    "valoare": 1001700.0,
+    "nr_contracte": 2,
+    "slug": "ianina-deo-service-srl"
+  },
+  {
+    "name": "KRENAR TRADING SRL",
+    "cif": "25329212",
+    "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR. SIMINOCULUI, NR.27",
+    "lat": 44.418284,
+    "lng": 26.165099,
+    "valoare": 934200.0,
+    "nr_contracte": 2,
+    "slug": "krenar-trading-srl"
+  },
+  {
     "name": "SENETIC DISTRIBUTION SRL",
     "cif": "35620943",
     "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 5, CAL RAHOVEI, NR.266-268, CORP 60. AXELE A-B. STALPII 4½ - 5.  CAMERA 32D, ET.2",
@@ -2148,5 +2178,15 @@
     "valoare": 390.25,
     "nr_contracte": 1,
     "slug": "fiber-market-srl"
+  },
+  {
+    "name": "EXPERT-MIND SRL",
+    "cif": "20767815",
+    "adresa": "JUD. IAŞI, MUN. IAŞI, ŞOS. NICOLINA, NR.10",
+    "lat": 47.16156,
+    "lng": 27.583781,
+    "valoare": 4000.0,
+    "nr_contracte": 1,
+    "slug": "expert-mind-srl"
   }
 ]

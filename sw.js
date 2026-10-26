@@ -2,12 +2,18 @@
  * sw.js — Service Worker §4.3
  * Transparența Pantelimon — https://transparenta-pantelimon.eu
  *
- * Strategie: Cache-First pentru resurse statice, Network-First pentru date JSON.
- * Permite consultare offline a raportului și paginii principale.
+ * Strategie:
+ *   - pagini HTML: Network-First (înainte erau Cache-First, așa că un vizitator care
+ *     revenea vedea la nesfârșit fișa unei firme sau prima pagină din vizita anterioară);
+ *   - date JSON/CSV: Network-First;
+ *   - CSS/JS/fonturi/imagini: Cache-First — CSS și JS au ?v=<hash> în URL (site_shell.py),
+ *     deci o versiune nouă are alt URL și e descărcată imediat.
+ * Permite consultare offline a paginilor deja vizitate.
  */
 
-const CACHE_VERSION = 'tp-v11';
-const CACHE_STATIC = 'tp-static-v11';
+const CACHE_VERSION = 'tp-v12';
+const CACHE_STATIC = 'tp-static-v12';
+const CACHE_PAGES  = 'tp-pages-v1';
 const CACHE_DATA   = 'tp-data-v2';
 
 // Resurse core — pre-cached la install (offline-first pentru navigare)
@@ -15,7 +21,8 @@ const CORE_URLS = [
   '/',
   '/index.html',
   '/transparenta_pantelimon.html',
-  '/enhance.min.js',
+  '/raport_transparenta.html',
+  '/furnizori/index.html',
   '/harta.html',
   '/retele.html',
   '/presa.html',
@@ -27,9 +34,8 @@ const CORE_URLS = [
 ];
 
 // Date care se schimbă frecvent — Network-First cu fallback cache
-// IMPORTANT: raport_transparenta.html e generat săptămânal → network-first
+// (paginile HTML, inclusiv raportul, au ramura lor Network-First mai jos)
 const DATA_URLS = [
-  '/raport_transparenta.html',
   '/raport.json',
   '/delta.json',
   '/contracte.json',
@@ -54,7 +60,7 @@ self.addEventListener('install', event => {
 
 // ── Activate: șterge cache-uri vechi ─────────────────────────────────────────
 self.addEventListener('activate', event => {
-  const KEEP = [CACHE_STATIC, CACHE_DATA];
+  const KEEP = [CACHE_STATIC, CACHE_PAGES, CACHE_DATA];
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
@@ -84,9 +90,36 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Pagini HTML și resurse statice — Cache-First
+  // Pagini HTML — Network-First (conținutul se schimbă la fiecare analiză)
+  const isPage = request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname.endsWith('/');
+  if (isPage) {
+    event.respondWith(networkFirstPage(request));
+    return;
+  }
+
+  // Resurse statice (enhance.min.js?v=…, assets/tp.css?v=…, fonturi, imagini) — Cache-First
   event.respondWith(cacheFirstStatic(request));
 });
+
+// ── Network-First pentru pagini (fallback: copia salvată, apoi pagina offline) ──
+async function networkFirstPage(request) {
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      const cache = await caches.open(CACHE_PAGES);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    const fallback = await caches.match('/offline.html');
+    return fallback || new Response('Offline — deschideți https://transparenta-pantelimon.eu pentru a accesa datele salvate.', {
+      status: 503,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+    });
+  }
+}
 
 // ── Cache-First pentru resurse statice ───────────────────────────────────────
 async function cacheFirstStatic(request) {

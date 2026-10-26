@@ -127,10 +127,12 @@ class TestProfilFirmaTemplate(unittest.TestCase):
         self.assertIn('"anchor": f"nereguli-{_i}"', self.sursa)
 
     def test_profilul_randeaza_descrierea(self):
-        self.assertIn('f.descriere', self.sursa)
+        """Profilul citește explicația din cardul raportului (aceeași sursă, nu o copie)."""
+        self.assertIn("card.querySelector('.flag-desc')", self.sursa)
+        self.assertIn('tp-fp-desc', self.sursa)
 
     def test_neregulile_din_profil_sunt_linkuri_catre_ancora(self):
-        self.assertIn("'<a href=\"#'+anchor+'\"", self.sursa)
+        self.assertIn("href=\"#' + f.anchor + '\"", self.sursa)
 
     def test_nu_mai_exista_linkul_seap_generic(self):
         """`/list/0/0` deschidea o pagină goală — arăta ca un buton stricat."""
@@ -141,7 +143,8 @@ class TestProfilFirmaTemplate(unittest.TestCase):
 
     def test_valoarea_afisata_e_suma_contractelor_nu_suma_semnalelor(self):
         """`rd.valoare_totala` numără același contract o dată per semnal."""
-        self.assertIn('Valoare contracte cu Primăria', self.sursa)
+        self.assertIn('Contracte cu Primăria: <strong>', self.sursa)
+        self.assertIn('fiecare numărat o dată', self.sursa)
         self.assertNotIn(
             "Valoare totală expusă: <strong>'+fmtV(rd.valoare_totala||0)", self.sursa
         )
@@ -151,7 +154,8 @@ class TestProfilFirmaTemplate(unittest.TestCase):
 
     def test_contractele_firmei_sunt_deduplicate(self):
         """Exporturile trimestriale repetă același contract cu id-uri diferite."""
-        self.assertIn('var _vazute = {{}};', self.sursa)
+        self.assertIn('function _contracteFirma(contracte, firma)', self.sursa)
+        self.assertIn('if (vazute[k]) return false;', self.sursa)
 
 
 class TestEnhanceJsSincronizat(unittest.TestCase):
@@ -259,14 +263,14 @@ class TestPlafonListaSemnale(unittest.TestCase):
         self.assertIn('"n_total": len(rd["flags"])', self.sursa)
 
     def test_panoul_anunta_semnalele_care_nu_incap(self):
-        self.assertIn('_nAscunse', self.sursa)
-        self.assertIn('nu încap în panou', self.sursa)
+        self.assertIn('nAscunse', self.sursa)
+        self.assertIn('Vezi toate în listă', self.sursa)
 
     def test_exista_scapare_catre_lista_completa(self):
         self.assertIn('function _filtreazaFurnizor', self.sursa)
 
     def test_plafonul_acopera_cea_mai_incarcata_firma(self):
-        m = re.search(r'"flags": rd\["flags"\]\[:(\d+)\]', self.sursa)
+        m = re.search(r'rd\["flags"\]\[:(\d+)\]', self.sursa)
         self.assertIsNotNone(m, 'nu am găsit plafonul listei de flaguri')
         self.assertGreaterEqual(int(m.group(1)), 30, 'plafonul e sub maximul real (29 semnale/firmă)')
 
@@ -443,10 +447,10 @@ class TestDedupContracteInPanou(unittest.TestCase):
         idx = self.sursa.find('function showFirmaContracts')
         self.assertGreater(idx, 0)
         bloc = self.sursa[idx:idx + 2000]
-        self.assertIn('_vazuteC', bloc, 'lipsește deduplicarea în showFirmaContracts')
+        self.assertIn('_contracteFirma(contracte, firma)', bloc, 'lipsește deduplicarea în showFirmaContracts')
 
     def test_showFirmaContracts_potriveste_normalizat(self):
-        idx = self.sursa.find('function showFirmaContracts')
+        idx = self.sursa.find('function _contracteFirma')
         bloc = self.sursa[idx:idx + 2000]
         self.assertIn('_nzFirma', bloc)
         self.assertNotIn('firmaLow.indexOf(cl.substring(0, 12))', bloc,
