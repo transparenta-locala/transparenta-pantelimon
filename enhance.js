@@ -1885,6 +1885,8 @@
   // STICKY CTA — bar fixat pe mobile cu acțiuni principale
   // ──────────────────────────────────────────────────────────────
   function injectStickyCTA() {
+    // doar pe prima pagină (înainte apărea și pe furnizori/index.html — tot „index.html”)
+    if (/\/(furnizori|semnale)\//.test(location.pathname)) return;
     var path = location.pathname.split('/').pop() || 'index.html';
     if (path !== 'index.html' && path !== '' && path !== '/') return;
 
