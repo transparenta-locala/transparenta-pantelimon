@@ -41,7 +41,11 @@ jobs:
           python-version: '3.11'
 
       - name: 🔧 Instalare Tesseract OCR + Poppler
-        run: sudo apt-get install -y tesseract-ocr tesseract-ocr-ron poppler-utils
+        # apt-get update: fără el, pe runnerele noi instalarea cădea (index de pachete vechi, 26.10.2026).
+        # OCR-ul e opțional pentru monitor — dacă tot nu se instalează, analiza merge mai departe.
+        run: |
+          sudo apt-get update -q || true
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-ron poppler-utils || echo "::warning::Tesseract/Poppler neinstalate — HCL fără OCR la această rulare"
 
       - name: 📦 Instalare dependențe Python
         run: pip install -r requirements.txt pdf2image
