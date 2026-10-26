@@ -6114,7 +6114,7 @@ def genereaza_bloc_financiar_firma(fin: dict, contracte_d: list) -> str:
             '<h3>Indicatori de verificat</h3><ul class="tp-list">'
             + "".join(f'<li data-cod="{cod}">{text}</li>' for cod, text in indicatori)
             + '</ul><p class="tp-muted">Indicatorii sunt calculați automat din cifrele de mai sus, '
-            'la fel ca în raport. Sunt repere pentru verificare, nu concluzii: o firmă poate lucra cu '
+            'cu aceleași praguri ca în raport. Sunt repere pentru verificare, nu concluzii: o firmă poate lucra cu '
             'subcontractori, poate fi înființată de curând sau poate avea veniturile în alt an.</p>'
         )
     return (
