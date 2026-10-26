@@ -18,6 +18,7 @@
       - genereaza_previzualizari.py
       - sursa_seap_api.py
       - risc_firma.py
+      - .github/workflows/update-report.yml
 
 # O singură rulare a monitorului odată (o pornire manuală peste cea programată așteaptă)
 concurrency:
