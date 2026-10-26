@@ -191,15 +191,14 @@ class TestGenereazaIndexFurnizori:
         assert "CLEAN SERV SRL" in result
 
     def test_flags_critic_colorat(self):
-        """Furnizorii cu flags CRITIC au culoare rosie in HTML."""
+        """Furnizorii cu flags CRITIC sunt marcați (clasa sig-hi, culoarea CRITIC din tp.css)."""
         result = genereaza_index_furnizori(INDEX_SAMPLE)
-        # Firma cu flags_critic=3 trebuie sa aiba culoarea rosie
-        assert "#C0392B" in result
+        assert 'class="num sig-hi"' in result
 
     def test_flags_zero_culoare_gri(self):
-        """Furnizor fara nicio neregula are culoare gri."""
+        """Furnizor fără semnale CRITIC/MAJOR e afișat fără evidențiere (sig-low / sig-none)."""
         result = genereaza_index_furnizori(INDEX_SAMPLE)
-        assert "#888" in result
+        assert 'class="num sig-low"' in result or 'class="num sig-none"' in result
 
     def test_canonical_url(self):
         """Pagina contine canonical URL spre transparenta-pantelimon.eu."""
@@ -207,9 +206,11 @@ class TestGenereazaIndexFurnizori:
         assert "transparenta-pantelimon.eu/furnizori/" in result
 
     def test_enhance_js_inclus(self):
-        """Sursa actualizată enhance.js este inclusă în pagină."""
-        result = genereaza_index_furnizori(INDEX_SAMPLE)
-        assert 'src="../enhance.js"' in result
+        """Scriptul și meniul vin din cadrul comun (site_shell.py), aplicat după generare."""
+        from site_shell import aplica_pe_text
+        result = aplica_pe_text(genereaza_index_furnizori(INDEX_SAMPLE), 'furnizori/index.html', {})
+        assert 'src="../enhance.min.js?v=' in result
+        assert 'class="tp-nav"' in result
 
     def test_back_link_la_raport(self):
         """Pagina contine link de inapoi la raportul principal."""

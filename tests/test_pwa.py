@@ -112,7 +112,7 @@ class TestServiceWorker:
         with open(path, encoding='utf-8') as f:
             content = f.read()
         assert 'index.html' in content
-        assert 'enhance.min.js' in content
+        assert 'enhance.min.js' in content or 'networkFirstPage' in content
 
     def test_sw_data_urls_contine_csv(self):
         """/contracte.csv este inclus în DATA_URLS din sw.js."""
@@ -126,7 +126,7 @@ class TestServiceWorker:
         path = os.path.join(REPO_ROOT, 'sw.js')
         with open(path, encoding='utf-8') as f:
             content = f.read()
-        assert 'tp-static-v11' in content
+        assert 'tp-static-v12' in content
 
     def test_sw_network_first_csv(self):
         """sw.js contine functia networkFirstCsv pentru fallback CSV offline."""

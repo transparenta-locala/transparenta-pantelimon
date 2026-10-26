@@ -1,0 +1,55 @@
+name: 🧱 Build assets (enhance.min.js + cadrul paginilor)
+
+# Când se modifică scriptul, stilurile sau cadrul comun al paginilor, GitHub:
+#   1. regenerează enhance.min.js (fișierul încărcat efectiv de pagini);
+#   2. rescrie în toate paginile meniul, banda de date, subsolul și linkurile
+#      CSS/JS cu ?v=<hash> nou (site_shell.py) — vizitatorii primesc imediat versiunea nouă.
+# Nu face cereri spre surse externe și nu atinge datele (raport, contracte).
+"on":
+  push:
+    branches: [main]
+    paths:
+      - enhance.js
+      - assets/tp.css
+      - site_shell.py
+      - '*.html'
+  workflow_dispatch:
+
+# Aceeași coadă ca monitorul: cele două nu scriu niciodată în paralel
+concurrency:
+  group: monitor-transparenta
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐍 Configurare Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 🧱 Minificare enhance.js
+        run: npx --yes terser@5.31.6 enhance.js --compress --mangle --comments '/^!/' -o enhance.min.js
+
+      - name: 🧩 Cadrul comun în toate paginile
+        run: python site_shell.py
+
+      - name: 💾 Commit (doar dacă s-a schimbat ceva)
+        run: |
+          git config --local user.email "transparenta-bot@cetatenipantelimon.ro"
+          git config --local user.name "Monitor Transparență Cetățenesc Pantelimon"
+          git add enhance.min.js ./*.html furnizori/ semnale/
+          if git diff --staged --quiet; then
+            echo "Nimic de actualizat"
+            exit 0
+          fi
+          git commit -m "🧱 Build: enhance.min.js și cadrul paginilor"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

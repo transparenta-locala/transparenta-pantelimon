@@ -142,8 +142,8 @@ def extrage_semnale(raport_html: str) -> list:
     semnale = []
     for card in soup.select("div.tp-flag[id]"):
         antet = card.find("div")
-        titlu = ""
-        if antet is not None:
+        titlu = (card.get("data-title") or "").strip()
+        if not titlu and antet is not None:
             for span in antet.find_all("span"):
                 t = span.get_text(" ", strip=True)
                 if t.startswith("—") and t.lstrip("—").strip():
@@ -168,12 +168,21 @@ def extrage_semnale(raport_html: str) -> list:
             "tip": (card.get("data-type") or "").strip(),
             "titlu": titlu or "Semnal automat",
             "explicatie": explicatie,
+            # slug-ul pus de monitor pe card (aceeași regulă ca atribuie_sluguri)
+            "slug_card": (card.get("data-slug") or "").strip(),
         })
     return semnale
 
 
 def atribuie_sluguri(semnale: list) -> list:
-    """Adaugă `slug` fiecărui semnal; coliziunile primesc sufix -2, -3 (determinist)."""
+    """Adaugă `slug` fiecărui semnal; coliziunile primesc sufix -2, -3 (determinist).
+
+    Dacă toate cardurile au deja slug-ul scris de monitor (data-slug), îl folosim —
+    linkul „Pagina semnalului” din raport și pagina generată aici sunt astfel aceleași."""
+    if semnale and all(s.get("slug_card") for s in semnale):
+        for s in semnale:
+            s["slug"] = s["slug_card"]
+        return semnale
     vazute: dict = {}
     for s in semnale:
         baza = slug_semnal(s)
@@ -453,7 +462,7 @@ def pagina_semnal(semnal: dict, slug_furnizor: str = "", data_seap: str = "",
                         'target="_blank" rel="noopener noreferrer">Caută în SEAP ↗</a>')
     else:
         linkuri_seap = ""
-    link_firma = (f'<a class="btn sec" href="../furnizori/{e(slug_furnizor)}.html">Toate contractele firmei →</a>'
+    link_firma = (f'<a class="btn sec" href="../furnizori/{e(slug_furnizor)}.html">Fișa firmei și toate contractele →</a>'
                   if slug_furnizor else "")
     limita = (f'<p class="lim">Date SEAP până la {e(fmt_data(data_seap))}. Semnalul e generat automat; '
               f'nu este o constatare juridică. Documentele procedurii trebuie verificate.</p>'
@@ -480,9 +489,7 @@ def pagina_semnal(semnal: dict, slug_furnizor: str = "", data_seap: str = "",
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="{img}">
 <link rel="canonical" href="{url}">
-<script src="../enhance.js" defer></script>
 <style>
-body{{font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;margin:0;background:#F4F6F9;color:#15243A}}
 main{{max-width:760px;margin:0 auto;padding:24px 16px 48px}}
 .card{{background:var(--tp-bg,#fff);border:1px solid var(--tp-border,#D7DEE8);border-left:4px solid {culoare};border-radius:6px;padding:24px 26px}}
 .sev{{display:inline-block;background:color-mix(in srgb,{culoare} 12%,transparent);color:{culoare};font-size:14px;font-weight:700;padding:3px 12px;border-radius:999px}}
@@ -501,7 +508,7 @@ h1{{font-size:1.9rem;line-height:1.2;margin:14px 0 6px}}
   <article class="card" data-tp-share-title="{e(titlu)}" data-tp-share-firma="{e(firma)}" data-tp-share-suma="{e(fmt_lei(semnal['suma']) if semnal.get('suma') else '')}">
     <span class="sev">{e(ETICHETE_SEV.get(semnal.get('severitate', ''), 'Semnal automat'))}</span>
     <h1>{e(titlu)}</h1>
-    {f'<p class="firma">{e(firma)}</p>' if firma else ''}
+    {(f'<p class="firma"><a href="../furnizori/{e(slug_furnizor)}.html">{e(firma)}</a></p>' if slug_furnizor else f'<p class="firma">{e(firma)}</p>') if firma else ''}
     <div class="fapte">{''.join(f'<span>{e(x)}</span>' for x in fapte)}</div>
     <p class="expl">{e(semnal.get('explicatie', ''))}</p>
     <div class="btns">

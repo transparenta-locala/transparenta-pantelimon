@@ -9,6 +9,15 @@
     # Contractele vin din API-ul public SEAP (sursa_seap_api.py): o cerere la 2 s, ~45 de cereri
     - cron: '17 5 1,15 * *'
   workflow_dispatch:  # permite și pornire manuală din GitHub
+  # Când se schimbă codul care generează paginile, site-ul se regenerează singur
+  # (altfel noul aspect ar apărea abia la rularea programată din 1 sau 15).
+  push:
+    branches: [main, feat/audit-26oct]
+    paths:
+      - monitor_pantelimon.py
+      - genereaza_previzualizari.py
+      - sursa_seap_api.py
+      - risc_firma.py
 
 # O singură rulare a monitorului odată (o pornire manuală peste cea programată așteaptă)
 concurrency:
@@ -36,6 +45,9 @@ jobs:
 
       - name: 📦 Instalare dependențe Python
         run: pip install -r requirements.txt pdf2image
+
+      - name: 🧱 Minificare enhance.js (enhance.min.js e cel încărcat de pagini)
+        run: npx --yes terser@5.31.6 enhance.js --compress --mangle --comments '/^!/' -o enhance.min.js
 
       - name: 🔍 Rulare monitor transparență
         # ANAF v9 e gratuit și fără cheie API; openapi.ro key e opțional (not required)
@@ -118,6 +130,8 @@ jobs:
           git add mol_primarie.json 2>/dev/null || true
           # Previzualizări de partajare (genereaza_previzualizari.py, apelat din monitor)
           git add og/ semnale/ 2>/dev/null || true
+          # Cadrul comun (meniu, bandă de date, subsol) e scris în TOATE paginile, și în cele statice
+          git add ./*.html enhance.min.js 2>/dev/null || true
           # Commit doar dacă există modificări
           git diff --staged --quiet || git commit -m "🚩 Raport actualizat $(date +'%d.%m.%Y')"
           # Curăță fișiere neadăugate (ex. __pycache__, tmp) care ar bloca rebase-ul

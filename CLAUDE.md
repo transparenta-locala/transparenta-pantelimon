@@ -237,6 +237,55 @@ Hooks integrate în `analizeaza_red_flags()` și `analizeaza_hcl()`.
 - `_seap_url` / `_seap_nr` folosesc doar linkurile reale (`inregistreaza_linkuri_seap`); pentru id-urile vechi trimit la lista publică SEAP.
 - data.gov.ro doar la cerere, local: `MONITOR_SURSA_CONTRACTE=datagov`.
 
+### Audit 26.10.2026 — cadru static, viteză, cifre consecvente, legături între pagini
+
+**Cadrul comun al paginilor (`site_shell.py`)** — meniul, banda de date, breadcrumb-ul, subsolul,
+legăturile spre `assets/tp.css` și `enhance.min.js` (cu `?v=<hash>`) sunt scrise DIRECT în HTML,
+între marcajele `<!--tp:head-->`, `<!--tp:header-->`, `<!--tp:footer-->`. Se aplică pe toate
+paginile (`*.html`, `furnizori/`, `semnale/`) la finalul monitorului (`aplica_cadrul_site()`)
+și în workflow-ul `build-assets.yml`. NU mai adăuga `<script src="enhance.js">`, favicon sau
+manifest în pagini: le pune cadrul. Pagini noi primesc cadrul automat la următoarea rulare.
+- Înainte le adăuga enhance.js după încărcare → conținutul „sărea” (CLS 0,29–0,38) și fără JS
+  paginile nu aveau legături între ele. `enhance.js` le construiește încă doar dacă lipsesc.
+- Tema vizuală e în `assets/tp.css` (scoasă din enhance.js). Fonturi cu `font-display: optional`.
+- `404.html` folosește căi absolute (GitHub Pages o servește la orice adresă greșită).
+
+**Raportul** (`genereaza_raport_html`):
+- carduri cu clase CSS (fără stiluri inline), cele de după primele 25 vin cu `tp-pre-hidden`;
+  butoanele din „detalii” se construiesc la deschidere (`_construiesteDetalii`, eveniment
+  `tp:detalii` pentru distribuire/ANAP din enhance.js). 2,45 MB → ~0,8 MB, TBT 3,4 s → ~0,1 s.
+- `contracte.json` și `raport.json` NU mai sunt copiate în pagină; profilul firmei le încarcă la cerere.
+- fiecare card: `data-slug` (pagina semnalului, aceeași regulă ca `genereaza_previzualizari`),
+  `data-supplier-slug` (fișa firmei), `data-contracts="cheie:valoare|…"` — totalurile din
+  bara de filtre, rezumat și profil numără fiecare contract O DATĂ, fără acorduri-cadru.
+- rezumatul (top firme) e generat static; „Consiliul Local” nu mai apare ca firmă (`_este_institutie`).
+- `#noi` în URL filtrează semnalele noi (link din banda de date).
+
+**Ordinea semnalelor**: `toate_flags = sorteaza_dupa_severitate(...)` imediat după detectare →
+`nereguli-N` din `raport.json` = cardul `#nereguli-N` din HTML (înainte nu se potriveau deloc).
+
+**Bugetul**: anul vine din pagina transparenta.eu („… pentru 2025”), nu din data rulării
+(site-ul eticheta execuția 2025 drept „2026”); YoY citit și cu comentariile React `<!-- -->`.
+
+**Fișe de firmă**: `genereaza_pagini_furnizori()` (o singură funcție, folosită de rularea normală
+și de cea offline) — pentru TOATE firmele cu contracte (înainte doar ≥3 rânduri: 71 din 215),
+contracte distincte, semnalele lângă contractul lor, linkuri SEAP. Scrie și `furnizori/cui.json`
+(CUI → slug), folosit de hartă și rețele (numele ANAF diferă de cele SEAP). Sitemap-ul include
+și paginile `semnale/`.
+
+**Viteză**: Chart.js, Leaflet, Cytoscape găzduite local în `assets/vendor/` (fișiere identice
+cu cele de pe CDN, verificate cu hash-urile SRI). Prima pagină desenează istoricul indicelui în
+SVG, fără Chart.js. `sw.js` (tp-v12): paginile HTML sunt Network-First (înainte Cache-First →
+vizitatorii vedeau pagini vechi).
+
+**Automat, fără laptop**:
+- `update-report.yml` rulează și la push pe `main` când se schimbă codul generatorului
+  (`monitor_pantelimon.py`, `genereaza_previzualizari.py`, `sursa_seap_api.py`, `risc_firma.py`);
+  minifică `enhance.js` înainte de monitor și comite și paginile statice.
+- `build-assets.yml` — la push cu `enhance.js`, `assets/tp.css`, `site_shell.py` sau `*.html`:
+  `enhance.min.js` + cadrul în toate paginile. Aceeași coadă (`concurrency`) ca monitorul.
+- Teste noi: `tests/test_site_shell.py`, `tests/test_audit_26oct.py`.
+
 ## Praguri legale folosite (Legea 98/2016)
 
 ```python

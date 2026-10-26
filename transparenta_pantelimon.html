@@ -28,8 +28,8 @@
 <meta name="twitter:description" content="Grafice interactive: execuție bugetară pe capitole, evoluție 2020–2025, structura cheltuielilor.">
 <meta name="twitter:image" content="https://transparenta-pantelimon.eu/og-image.png">
 
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" integrity="sha384-9nhczxUqK87bcKHh20fSQcTGD4qq5GhayNYSYWqwBkINBhOfQLg/P5HG5lF1urn4" crossorigin="anonymous"></script>
+<!-- Chart.js 4.4.1 găzduit local (același fișier ca pe jsDelivr, verificat SRI) -->
+<script defer src="assets/vendor/chart.umd.min.js"></script>
 <style>
   :root {
     --albastru: #1D3F63;
@@ -54,101 +54,32 @@
     line-height: 1.6;
   }
 
-  /* HEADER */
-  header {
-    background: #14263D;
-    color: var(--alb);
-    padding: 0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  header::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .header-top {
-    background: var(--albastru);
-    padding: 8px 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 12px;
-    opacity: 0.85;
-  }
-
+  /* HEADER — aceeași temă ca restul site-ului (până în oct. 2026 era un antet închis
+     la culoare, cu alt slogan și încă două rânduri de navigare deasupra tab-urilor) */
+  header.tp-bhero { background: var(--tp-bg, #fff); color: var(--tp-fg, #15243A); border-bottom: 1px solid var(--tp-border, #D7DEE8); }
   .badge-civic {
-    background: #E6EDF5;
-    color: #00427A;
-    font-weight: 800;
-    padding: 3px 12px;
-    border-radius: 12px;
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    background: #E6EDF5; color: #00427A; font-weight: 800; padding: 3px 12px; border-radius: 12px;
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
   }
-
-  .header-main {
-    padding: 32px 24px 28px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .header-main h1 {
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    margin-bottom: 6px;
-  }
-
-  .header-main h1 span { color: var(--galben); }
-
-  .header-main p {
-    font-size: 15px;
-    opacity: 0.85;
-    max-width: 600px;
-  }
-
-  .header-stats {
-    display: flex;
-    gap: 32px;
-    margin-top: 24px;
-    flex-wrap: wrap;
-  }
-
-  .stat-pill {
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 8px;
-    padding: 10px 18px;
-    text-align: center;
-  }
-
-  .stat-pill .val {
-    font-size: 22px;
-    font-weight: 800;
-    display: block;
-    color: var(--galben);
-  }
-
-  .stat-pill .lbl {
-    font-size: 11px;
-    opacity: 0.8;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
+  .header-main { padding: 36px 24px 26px; max-width: 1100px; margin: 0 auto; }
+  .header-main h1 { font-size: 2.2rem; line-height: 1.12; margin-bottom: 8px; }
+  .header-main h1 span { color: var(--tp-link, #2A5C8F); }
+  .header-main p { font-size: 16px; color: var(--tp-muted, #55627A); max-width: 640px; }
+  .header-stats { display: flex; flex-wrap: wrap; margin-top: 22px; border-top: 3px solid var(--tp-line, #4D86C2); }
+  .stat-pill { padding: 12px 26px 4px 0; margin-right: 22px; }
+  .stat-pill .val { font: 600 1.5rem/1.15 var(--tp-serif, Georgia, serif); display: block; color: var(--tp-fg, #15243A); }
+  .stat-pill .lbl { font-size: .85rem; color: var(--tp-muted, #55627A); }
+  .header-actions { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .header-actions a, .header-actions button { font: 600 .95rem var(--tp-sans, sans-serif); border-radius: 8px; padding: 10px 16px;
+    border: 1px solid var(--tp-border, #D7DEE8); background: var(--tp-bg, #fff); color: var(--tp-fg, #15243A) !important; text-decoration: none; cursor: pointer; }
+  .header-actions a.primary { background: var(--tp-accent, #2A5C8F); border-color: var(--tp-accent, #2A5C8F); color: #fff !important; }
 
   /* NAV TABS */
   nav.tabs {
-    background: var(--alb);
-    border-bottom: 2px solid var(--gri-mediu);
+    background: var(--tp-bg, var(--alb));
+    border-bottom: 1px solid var(--tp-border, var(--gri-mediu));
     position: sticky;
-    top: 0;
+    top: var(--tp-nav-h, 0px);
     z-index: 100;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
@@ -564,7 +495,7 @@
     nav.tabs, .no-print, #scroll-top-btn, #progress-bar, footer, .filter-bar, .action-chips, #load-more-container { display: none !important; }
     .section { display: block !important; opacity: 1 !important; }
     .card { box-shadow: none !important; border: 1px solid #ddd !important; }
-    header { background: #00427A !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    header.tp-bhero { background: #fff !important; }
     main { padding: 0 !important; }
     .chart-box { page-break-inside: avoid; }
     @page { margin: 1.5cm; size: A4; }
@@ -773,9 +704,23 @@
   }
 </style>
 <link rel="alternate" type="application/atom+xml" title="Semnale noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
-<script src="enhance.js" defer></script>
+<!--tp:head-->
+<link rel="preload" href="assets/fonts/source-sans-3-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/source-serif-4-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/tp.css?v=7f4b61b1">
+<link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" href="icon-192.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#14263D">
+<script>(function(d){d.classList.add('tp-theme');try{var t=localStorage.getItem('tp-theme');if(t)d.dataset.tpTheme=t;else if(matchMedia('(prefers-color-scheme: dark)').matches)d.dataset.tpTheme='dark'}catch(e){}})(document.documentElement)</script>
+<script src="enhance.min.js?v=9e62192b" defer></script>
+<!--/tp:head-->
 </head>
 <body>
+<!--tp:header-->
+<a class="tp-skip-link" href="#main-content">Salt la conținut</a>
+<nav class="tp-nav" aria-label="Navigare principală"><div class="tp-nav-inner"><a href="index.html" class="tp-nav-brand">Transparența Pantelimon<small>Inițiativă civică</small></a><button class="tp-hamburger" id="tp-hamburger" type="button" aria-label="Meniu" aria-expanded="false" aria-controls="tp-nav-links"><span></span><span></span><span></span></button><div class="tp-nav-links" id="tp-nav-links"><a href="index.html">Acasă</a><a href="raport_transparenta.html">Semnale</a><a href="furnizori/index.html">Firme</a><a href="transparenta_pantelimon.html" class="active" aria-current="page">Buget</a><a href="modele.html">Modele de cereri</a><a href="despre.html">Despre</a><details class="tp-more"><summary>Mai mult</summary><div class="tp-more-list"><a href="petitie.html">Petiție</a><a href="harta.html">Harta firmelor</a><a href="retele.html">Rețele de firme</a><a href="presa.html">Pentru presă</a><a href="https://transparenta.eu/entities/4420759" target="_blank" rel="noopener">Date ANAF (transparenta.eu)</a><a href="https://github.com/transparenta-locala/transparenta-pantelimon" target="_blank" rel="noopener">Codul sursă (GitHub)</a></div></details></div><button class="tp-theme-toggle" id="tp-theme-btn" type="button" aria-label="Comută tema luminoasă/întunecată" title="Temă luminoasă / întunecată"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 2a8 8 0 0 1 0 16z" fill="currentColor"/></svg></button></div></nav>
+<div class="tp-data-band" role="note"><div class="tp-data-band-in"><strong>Date SEAP până la 15.10.2026</strong> <span aria-hidden="true">·</span> analiză automată din 15.10.2026 <span aria-hidden="true">·</span> <a href="raport_transparenta.html#noi">5 semnale noi față de analiza anterioară</a> <span aria-hidden="true">·</span> <a href="despre.html#schimbare-surse">Despre date</a></div></div>
+
+<!--/tp:header-->
+
 <div id="progress-bar" style="position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#4D86C2,#9CC0E6);z-index:9999;transition:width .1s"></div>
 <script>
 document.addEventListener('scroll', function() {
@@ -788,16 +733,11 @@ document.addEventListener('scroll', function() {
 </script>
 
 <!-- HEADER -->
-<header>
-  <div class="header-top">
-    <a href="index.html" style="color:rgba(255,255,255,.8);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:4px;font-size:12px">← Acasă</a>
-    <span>Monitorizare cetățenească · Pantelimon, jud. Ilfov</span>
-    <span style="margin-left:auto">Date bugetare: 2025 · contracte: actualizare automată lunară</span>
-  </div>
+<header class="tp-bhero" id="main-content">
   <div class="header-main">
-    <h1>Transparența Banului Public<br><span>Primăria Pantelimon</span></h1>
-    <div class="slogan">💡 <em>Aprindem lumina în Pantelimon</em></div>
-    <p>Urmărim cheltuielile administrației locale și publicăm indicatori automați care necesită verificare.</p>
+    <h1>Bugetul orașului<br><span>Primăria Pantelimon</span></h1>
+    <p>Execuția bugetară 2025 raportată la ANAF, bugetul aprobat pe capitole și investițiile planificate.
+      Cifrele marcate „estimat” sunt calculate de noi din documentele publice.</p>
     <div class="header-stats">
       <div class="stat-pill">
         <span class="val">146,43M RON</span>
@@ -812,42 +752,31 @@ document.addEventListener('scroll', function() {
         <span class="lbl">Cheltuieli / locuitor / an</span>
       </div>
       <div class="stat-pill">
-        <span class="val" id="budget-signal-count" style="color:#FF6B6B"><span aria-hidden="true">— ⚑</span><span class="sr-only">Semnale automate în curs de încărcare</span></span>
-        <span class="lbl">Semnale în raportul live</span>
+        <span class="val" id="budget-signal-count"><span aria-hidden="true">—</span><span class="sr-only">Semnale automate în curs de încărcare</span></span>
+        <span class="lbl">Semnale în raport</span>
       </div>
       <div class="stat-pill" id="stat-last-update" style="display:none">
-        <span class="val" id="stat-last-update-val" style="font-size:15px">—</span>
+        <span class="val" id="stat-last-update-val">—</span>
         <span class="lbl">Ultima actualizare</span>
       </div>
     </div>
-    <div id="active-tab-hint">Tab activ: <strong id="active-tab-name">Buget vs Realizat</strong></div>
-    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-      <a href="raport_transparenta.html"
-         title="Deschide raportul complet cu semnalele automate din achizițiile publice"
-         style="background:#C0392B;color:#fff;padding:9px 18px;border-radius:8px;
-                text-decoration:none;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px">
-        <span aria-hidden="true">🚩</span> Raport semnale →
-      </a>
-      <button type="button" onclick="window.print()"
-              aria-label="Salvează pagina ca fișier PDF prin dialogul de imprimare"
-              style="background:#4D86C2;color:#00427A;border:none;padding:9px 18px;border-radius:8px;
-                     font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
-        <span aria-hidden="true">🖨️</span> Salvează ca PDF
-      </button>
+    <div class="header-actions no-print">
+      <a class="primary" href="raport_transparenta.html">Semnalele din achiziții →</a>
+      <button type="button" onclick="window.print()" aria-label="Salvează pagina ca fișier PDF prin dialogul de imprimare">Salvează ca PDF</button>
     </div>
   </div>
 </header>
 
 <!-- NAV TABS -->
-<nav class="tabs" role="navigation" aria-label="Navigare principală">
+<nav class="tabs" aria-label="Secțiunile paginii Buget">
   <ul>
-    <li><a href="#tab-buget" class="active" aria-current="page" onclick="return showTab('buget', this)"><span aria-hidden="true">📊</span> Buget vs Realizat</a></li>
-    <li><a href="#tab-flags" onclick="return showTab('flags', this)"><span aria-hidden="true">🚩</span> Semnale <span class="cnt" id="budget-signal-tab-count" aria-label="Semnale în curs de încărcare">—</span></a></li>
-    <li><a href="#tab-achizitii" onclick="return showTab('achizitii', this)"><span aria-hidden="true">📋</span> Achiziții Publice <span class="cnt" style="background:#C0392B;color:#fff" aria-label="Contracte cu semnale euristice">— 🚩</span></a></li>
-    <li><a href="#tab-surse" onclick="return showTab('surse', this)"><span aria-hidden="true">🔗</span> Surse & Documente</a></li>
-    <li><a href="#tab-actiune" onclick="return showTab('actiune', this)"><span aria-hidden="true">⚖️</span> Ce poți face</a></li>
-    <li><a href="#tab-tendinte" onclick="return showTab('tendinte', this)"><span aria-hidden="true">📈</span> Tendințe</a></li>
-    <li><a href="#tab-ue" onclick="return showTab('ue', this)"><span aria-hidden="true">🇪🇺</span> Finanțări UE</a></li>
+    <li><a href="#tab-buget" class="active" aria-current="page" onclick="return showTab('buget', this)">Buget vs Realizat</a></li>
+    <li><a href="#tab-flags" onclick="return showTab('flags', this)">Semnale <span class="cnt" id="budget-signal-tab-count" aria-label="Semnale în curs de încărcare">—</span></a></li>
+    <li><a href="#tab-achizitii" onclick="return showTab('achizitii', this)">Achiziții publice <span class="cnt" style="background:#C0392B;color:#fff" aria-label="Contracte din anul curent">—</span></a></li>
+    <li><a href="#tab-surse" onclick="return showTab('surse', this)">Surse & Documente</a></li>
+    <li><a href="#tab-actiune" onclick="return showTab('actiune', this)">Ce poți face</a></li>
+    <li><a href="#tab-tendinte" onclick="return showTab('tendinte', this)">Tendințe</a></li>
+    <li><a href="#tab-ue" onclick="return showTab('ue', this)">Finanțări UE</a></li>
   </ul>
 </nav>
 
@@ -2182,42 +2111,7 @@ document.addEventListener('scroll', function() {
 </main>
 
 <!-- FOOTER -->
-<footer style="background:var(--albastru);color:rgba(255,255,255,0.85);padding:36px 24px 24px;margin-top:48px">
-  <div style="max-width:1100px;margin:0 auto">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px;margin-bottom:28px">
-      <div>
-        <div style="font-size:18px;font-weight:800;color:#9CC0E6;margin-bottom:8px">💡 Aprindem lumina în Pantelimon</div>
-        <div style="font-size:13px;line-height:1.7;opacity:0.85">Inițiativă civică pentru transparența cheltuielilor publice ale Primăriei Pantelimon.</div>
-      </div>
-      <div>
-        <div style="font-weight:700;color:#fff;margin-bottom:10px;font-size:14px">📋 Resurse rapide</div>
-        <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
-          <a href="raport_transparenta.html" style="color:rgba(255,255,255,0.8);text-decoration:none">🚩 Raport complet de semnale</a>
-          <a href="petitie.html" style="color:rgba(255,255,255,0.8);text-decoration:none">✍️ Petiție cetățenească</a>
-          <a href="https://e-licitatie.ro/pub/notices/da-direct-acquisition/list/0/0" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:none" rel="noopener noreferrer">🔍 SEAP — e-licitatie.ro</a>
-          <a href="https://transparenta.eu/entities/4420759" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:none" rel="noopener noreferrer">🌐 Transparenta.eu — Pantelimon</a>
-          <a href="https://www.primariapantelimon.ro" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:none" rel="noopener noreferrer">🏛️ Site Primărie</a>
-        </div>
-      </div>
-      <div>
-        <div style="font-weight:700;color:#fff;margin-bottom:10px;font-size:14px">⚖️ Sesizări</div>
-        <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
-          <a href="https://anap.gov.ro/ro/contact/" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:none" rel="noopener noreferrer">📧 ANAP — achiziții publice</a>
-          <a href="https://www.curteadeconturi.ro" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:none" rel="noopener noreferrer">🏛️ Curtea de Conturi</a>
-          <a href="https://www.integritate.eu" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:none" rel="noopener noreferrer">⚖️ ANI — integritate</a>
-          <a href="https://if.prefectura.mai.gov.ro/petitii/" target="_blank" style="color:rgba(255,255,255,0.8);text-decoration:none" rel="noopener noreferrer">🏢 Prefectura Ilfov</a>
-        </div>
-      </div>
-    </div>
-    <div style="border-top:1px solid rgba(255,255,255,0.15);padding-top:16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;opacity:0.65">
-      <span>© 2026 · Transparența Pantelimon · Date publice ANAP / data.gov.ro / ANAF</span>
-      <span>
-        Actualizat automat săptămânal · Cod sursă public pe GitHub &nbsp;·&nbsp;
-        <a href="gdpr.html" style="color:rgba(255,255,255,0.7);text-decoration:none">🔒 GDPR</a>
-      </span>
-    </div>
-  </div>
-</footer>
+
 
 <!-- Scroll to top -->
 <button type="button" id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})"
@@ -3011,5 +2905,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!--tp:footer-->
+<footer class="tp-site-footer"><div class="tp-site-footer-in"><div><strong>Transparența Pantelimon</strong><p>Inițiativă civică. Inițiatorul este membru USR Pantelimon; proiectul nu este un proiect oficial al partidului. Monitorizare bazată exclusiv pe date publice oficiale (SEAP, ANAF/MF, Consiliul Local). Semnalele sunt indicatori automați, nu concluzii juridice.</p></div><nav aria-label="Paginile site-ului"><ul><li><a href="raport_transparenta.html">Semnale</a></li><li><a href="furnizori/index.html">Firme</a></li><li><a href="transparenta_pantelimon.html">Buget</a></li><li><a href="harta.html">Harta firmelor</a></li><li><a href="retele.html">Rețele de firme</a></li><li><a href="modele.html">Modele de cereri</a></li><li><a href="petitie.html">Petiție</a></li><li><a href="presa.html">Pentru presă</a></li><li><a href="despre.html">Despre și metodologie</a></li><li><a href="gdpr.html">Date personale</a></li></ul></nav><nav aria-label="Date deschise"><ul><li><a href="raport.json">raport.json</a></li><li><a href="contracte.csv">contracte.csv</a></li><li><a href="contracte.json">contracte.json</a></li><li><a href="feed.xml">Flux RSS</a></li><li><a href="https://github.com/transparenta-locala/transparenta-pantelimon" target="_blank" rel="noopener">Cod sursă</a></li></ul></nav></div></footer>
+<!--/tp:footer-->
 </body>
 </html>

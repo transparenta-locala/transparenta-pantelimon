@@ -164,11 +164,15 @@ def fetch_budget_transparenta(cui: str) -> dict:
                 break
 
         # Parse simplu din description
+        # Anul execuției vine din pagină („… pentru 2025.”), NU din data rulării:
+        # în oct. 2026 transparenta.eu arăta execuția 2025, iar site-ul o eticheta „2026”.
+        import re
+        _m_an = re.search(r"pentru\s+(\d{4})", meta_desc) or re.search(r"Buget\s+(\d{4})", r.text)
         result = {
             "sursa": "transparenta.eu / ANAF",
             "url": url,
             "descriere_bruta": meta_desc,
-            "an": datetime.now().year,
+            "an": int(_m_an.group(1)) if _m_an else datetime.now().year - 1,
             "venituri_mil_ron": None,
             "cheltuieli_mil_ron": None,
             "balanta_mil_ron": None,
@@ -187,8 +191,11 @@ def fetch_budget_transparenta(cui: str) -> dict:
             if len(numere) >= 3:
                 result["balanta_mil_ron"] = parse_ron(numere[2])
 
-        # Extragem și YoY din pagina HTML
-        yoy_patterns = re.findall(r"([+-][\d,\.]+%)\s*YoY", r.text)
+        # Extragem și YoY din pagina HTML (pagina scrie „- 8,19 % YoY”, cu spații)
+        _txt_yoy = re.sub(r"<!--.*?-->", "", r.text)   # React pune <!-- --> între semn și număr
+        yoy_patterns = [f"{semn}{val}%" for semn, val in
+                        re.findall(r"([+\-−])\s*([\d.,]+)\s*%\s*(?:<[^>]*>\s*)*YoY", _txt_yoy)]
+        yoy_patterns = [y.replace("−", "-") for y in yoy_patterns]
         result["yoy_venituri"] = yoy_patterns[0] if len(yoy_patterns) > 0 else "N/A"
         result["yoy_cheltuieli"] = yoy_patterns[1] if len(yoy_patterns) > 1 else "N/A"
 
@@ -3797,11 +3804,313 @@ def reconciliere_buget_seap(buget_anaf: dict, contracte_seap: list, an: int = 20
     }
 
 
+
+def sorteaza_dupa_severitate(flags: list) -> list:
+    """CRITIC → MAJOR → MEDIU, stabil (în cadrul aceleiași severități: ordinea detectorilor)."""
+    ordine = {"CRITIC": 0, "MAJOR": 1, "MEDIU": 2}
+    return sorted(flags, key=lambda f: ordine.get(f.get("severitate", "MEDIU"), 2))
+
+
+def _data_generare_ro(dt) -> str:
+    """datetime → '15 octombrie 2026, 10:06' (strftime('%B') dădea luna în engleză pe runner)."""
+    luni = ("ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie",
+            "august", "septembrie", "octombrie", "noiembrie", "decembrie")
+    return f"{dt.day} {luni[dt.month - 1]} {dt.year}, {dt.strftime('%H:%M')}"
+
+
+def _data_ro_scurta(iso: str) -> str:
+    """'2025-01-16' → '16.01.2025'; lasă neschimbat ce nu e dată ISO."""
+    m = re.match(r"^(\d{4})-(\d{2})-(\d{2})", str(iso or ""))
+    return f"{m.group(3)}.{m.group(2)}.{m.group(1)}" if m else str(iso or "")
+
+
+# Entități care apar în câmpul „furnizor” dar nu sunt firme (semnalele HCL).
+# Nu intră în listele de firme, în rezumat sau în fișele de furnizor.
+_INSTITUTII = ("consiliul local", "primaria", "primăria", "multiple")
+
+
+def _este_institutie(nume: str) -> bool:
+    n = (nume or "").strip().lower()
+    return bool(n) and any(n.startswith(x) for x in _INSTITUTII)
+
+
+def _sluguri_semnale_pentru(flags_sortate: list) -> dict:
+    """{index card (1..n): slug semnale/<slug>.html} — aceeași regulă ca genereaza_previzualizari,
+    aplicată pe aceleași câmpuri, ca linkul din card să ducă exact la pagina semnalului."""
+    try:
+        from genereaza_previzualizari import slug_semnal, atribuie_sluguri
+    except ImportError:
+        return {}
+    semnale = [{
+        "tip": (f.get("tip") or "").strip(),
+        "contract_id": (f.get("contract_id") or f.get("contract_numar") or "").strip(),
+        "firma": (f.get("furnizor") or "").strip().strip("—").strip(),
+        "data": (f.get("data") or "").strip(),
+    } for f in flags_sortate]
+    atribuie_sluguri(semnale)
+    return {i: s["slug"] for i, s in enumerate(semnale, 1)}
+
+
+# ==============================================================================
+# Scriptul paginii de raport (profil firmă, contractele firmei, detalii card).
+# Constantă obișnuită, nu f-string: acoladele JS rămân neescapate.
+# Contractele se încarcă din contracte.json la prima cerere — înainte erau
+# copiate în pagină (~160 KB în plus la fiecare vizită).
+# ==============================================================================
+_SCRIPT_RAPORT = r"""
+var _contractePromise = null;
+function _loadContracte() {
+  if (!_contractePromise) {
+    _contractePromise = fetch('contracte.json').then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (c) { return Array.isArray(c) ? c : []; })
+      .catch(function () { return []; });
+  }
+  return _contractePromise;
+}
+
+// Butoanele din „detalii” se construiesc la prima deschidere a cardului, din data-*
+// (pentru ~340 de carduri, asta ține pagina mică și rapidă). enhance.js ascultă
+// evenimentul tp:detalii și adaugă rândul de distribuire și sesizarea ANAP.
+function _construiesteDetalii(el) {
+  var d = el.querySelector('.flag-detail');
+  if (!d || d.dataset.gata) return d;
+  d.dataset.gata = '1';
+  var firma = el.dataset.supplier || '';
+  var inst = el.dataset.entity === 'institutie';
+  var act = document.createElement('div');
+  act.className = 'flag-actions';
+  var html = '';
+  if (el.dataset.seap) html += '<a class="tp-act tp-act-primary" href="' + _esc(el.dataset.seap) + '" target="_blank" rel="noopener noreferrer">Deschide în SEAP</a>';
+  if (el.dataset.slug) html += '<a class="tp-act" href="semnale/' + _esc(el.dataset.slug) + '.html">Pagina semnalului</a>';
+  if (el.dataset.supplierSlug) html += '<a class="tp-act" href="furnizori/' + _esc(el.dataset.supplierSlug) + '.html">Fișa firmei</a>';
+  act.innerHTML = html;
+  if (firma && !inst) {
+    var b1 = document.createElement('button');
+    b1.type = 'button'; b1.className = 'tp-act';
+    b1.textContent = 'Toate contractele firmei' + (el.dataset.nctr ? ' (' + el.dataset.nctr + ')' : '');
+    b1.addEventListener('click', function (e) { showFirmaContracts(firma, e); });
+    var b2 = document.createElement('button');
+    b2.type = 'button'; b2.className = 'tp-act'; b2.textContent = 'Profil firmă';
+    b2.addEventListener('click', function (e) { openFirmaPanel(firma, e); });
+    act.appendChild(b1); act.appendChild(b2);
+  }
+  var share = document.createElement('div');
+  share.className = 'flag-share';
+  var cod = el.querySelector('.flag-code');
+  var help = document.createElement('p');
+  help.className = 'flag-help';
+  help.innerHTML = 'Dacă anunțul SEAP nu se deschide, caută pe <a href="https://e-licitatie.ro/pub/" target="_blank" rel="noopener noreferrer">e-licitatie.ro</a> după <strong>'
+    + _esc(cod ? cod.textContent.replace(/\s*↗\s*$/, '') : (el.dataset.contractId || 'firmă și dată')) + '</strong>.';
+  d.insertBefore(share, d.firstChild);
+  d.insertBefore(act, d.firstChild);
+  d.appendChild(help);
+  // un click în zona deschisă (tabel, text, butoane) nu mai închide cardul
+  d.addEventListener('click', function (e) { e.stopPropagation(); });
+  el.dispatchEvent(new CustomEvent('tp:detalii', {bubbles: true}));
+  return d;
+}
+window._construiesteDetalii = _construiesteDetalii;
+
+function printRaport() {
+  document.querySelectorAll('.tp-flag').forEach(_construiesteDetalii);
+  document.querySelectorAll('.flag-detail').forEach(function (el) { el.style.display = 'block'; });
+  window.print();
+}
+
+function toggleFlag(el) {
+  var detail = _construiesteDetalii(el);
+  var arrow = el.querySelector('.flag-arrow');
+  if (!detail) return;
+  var deschis = detail.style.display !== 'none';
+  detail.style.display = deschis ? 'none' : 'block';
+  el.classList.toggle('open', !deschis);
+  if (arrow) arrow.textContent = deschis ? 'detalii' : 'ascunde';
+}
+
+function _esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c];
+  });
+}
+// Normalizare pentru potrivirea numelor de firme (SEAP livrează nume „murdare")
+function _nzFirma(s) {
+  var t = String(s == null ? '' : s).toLowerCase();
+  if (t.normalize) t = t.normalize('NFD').replace(/[̀-ͯ]/g, '');
+  return t.replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim();
+}
+function _fmtV(v) {
+  v = Number(v) || 0;
+  if (!v) return '–';
+  return v >= 1000000 ? (v / 1000000).toFixed(2) + ' mil. RON' : Math.round(v / 1000) + 'K RON';
+}
+function _dataRo(s) {
+  var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || '');
+  return m ? m[3] + '.' + m[2] + '.' + m[1] : (s || '–');
+}
+// Contractele unei firme, o singură dată fiecare (asocierile au aceeași cheie k)
+function _contracteFirma(contracte, firma) {
+  var nf = _nzFirma(firma), vazute = {};
+  return contracte.filter(function (c) {
+    var cn = _nzFirma(c.firma || '');
+    if (!cn || !nf) return false;
+    if (!(cn === nf || cn.indexOf(nf) !== -1 || nf.indexOf(cn) !== -1)) return false;
+    var k = c.k ? 'k|' + c.k : cn + '|' + (c.data || '') + '|' + Math.round(c.valoare || 0) + '|' + String(c.titlu || '').slice(0, 60);
+    if (vazute[k]) return false;
+    vazute[k] = 1;
+    return true;
+  }).sort(function (a, b) { return String(b.data || '').localeCompare(String(a.data || '')); });
+}
+function _celulaSeap(c) {
+  return c.cod && c.url
+    ? '<a href="' + _esc(c.url) + '" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">' + _esc(c.cod) + ' ↗</a>'
+    : '–';
+}
+function _totalFaraAcorduri(lista) {
+  return lista.reduce(function (s, c) { return s + (c.tipc === 'acord-cadru' ? 0 : (c.valoare || 0)); }, 0);
+}
+
+// ── Toate contractele unei firme, sub card ─────────────────────────────────
+function showFirmaContracts(firma, evt) {
+  if (evt) evt.stopPropagation();
+  var flagDiv = evt && evt.target.closest('.tp-flag');
+  if (!flagDiv) return;
+  var existing = flagDiv.querySelector('.firma-contracts-panel');
+  if (existing) { existing.hidden = !existing.hidden; return; }
+  var panel = document.createElement('div');
+  panel.className = 'firma-contracts-panel';
+  panel.textContent = 'Se încarcă contractele…';
+  panel.addEventListener('click', function (e) { e.stopPropagation(); });
+  flagDiv.querySelector('.flag-detail').appendChild(panel);
+  _loadContracte().then(function (contracte) {
+    var lista = _contracteFirma(contracte, firma);
+    var rows = lista.map(function (c) {
+      return '<tr><td>' + _dataRo(c.data) + '</td><td>' + _esc(String(c.titlu || '').slice(0, 80)) + '</td>'
+        + '<td class="num">' + _fmtV(c.valoare) + (c.tipc === 'acord-cadru' ? ' <small>(plafon)</small>' : '') + '</td>'
+        + '<td>' + _esc(c.tip || '–') + '</td><td class="num' + (c.ofertanti === 1 ? ' tp-hi' : '') + '">' + (c.ofertanti || '–') + '</td>'
+        + '<td>' + _celulaSeap(c) + '</td></tr>';
+    }).join('');
+    panel.innerHTML = '<div class="flag-sub-h">Contractele cu Primăria Pantelimon — ' + _esc(firma) + ' · '
+      + lista.length + ' contracte · ' + _fmtV(_totalFaraAcorduri(lista)) + '</div>'
+      + (lista.length
+        ? '<div class="tp-scroll"><table class="tp-table tp-table-sm"><thead><tr><th>Data</th><th>Obiect</th>'
+          + '<th class="num">Valoare</th><th>Procedură</th><th class="num">Ofertanți</th><th>SEAP</th></tr></thead><tbody>'
+          + rows + '</tbody></table></div>'
+        : '<p class="tp-muted">Niciun contract găsit în datele descărcate.</p>');
+  });
+}
+
+// ── Profil complet firmă (panou lateral) ───────────────────────────────────
+var _riscData = null;
+function _getRisc() {
+  if (!_riscData) {
+    try { _riscData = JSON.parse(document.getElementById('risc-firma-data').textContent); }
+    catch (e) { _riscData = {}; }
+  }
+  return _riscData;
+}
+function _filtreazaFurnizor(firma) {
+  var sel = document.getElementById('tp-supplier');
+  if (sel && Array.from(sel.options).some(function (o) { return o.value === firma; })) {
+    sel.value = firma;
+    sel.dispatchEvent(new Event('change', {bubbles: true}));
+    var toolbar = document.querySelector('.tp-toolbar');
+    if (toolbar) toolbar.scrollIntoView({behavior: 'smooth', block: 'start'});
+    return;
+  }
+  location.hash = 'supplier=' + encodeURIComponent(firma);
+  location.reload();
+}
+function _slugFirma(s) {
+  s = String(s || '').trim().toLowerCase().replace(/[șş]/g, 's').replace(/[țţ]/g, 't').replace(/[ăâ]/g, 'a').replace(/î/g, 'i')
+    .replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+  return s.slice(0, 60) || 'furnizor';
+}
+
+function openFirmaPanel(firma, evt) {
+  if (evt) evt.stopPropagation();
+  var rd = _getRisc()[firma] || {};
+  var cui = rd.cui || '';
+  var cuiCurat = String(cui).replace(/^RO/i, '');
+  document.getElementById('tp-fp-name').textContent = firma;
+  document.getElementById('tp-fp-cui').textContent = 'CUI: ' + (cui || '—');
+  document.getElementById('tp-firma-overlay').style.display = 'block';
+  document.getElementById('tp-firma-panel').classList.add('open');
+  var body = document.getElementById('tp-fp-body');
+  body.innerHTML = '<p class="tp-muted">Se încarcă…</p>';
+
+  // Semnalele: din cardurile raportului (aceeași explicație, aceeași ancoră)
+  var flagsHtml = (rd.flags || []).map(function (f) {
+    var card = f.anchor && document.getElementById(f.anchor);
+    if (card) {
+      var desc = card.querySelector('.flag-desc');
+      return '<a class="tp-fp-flag" data-sev="' + _esc(card.dataset.severity) + '" href="#' + f.anchor + '" onclick="closeFirmaPanel()">'
+        + '<span class="tp-sevpill">' + _esc(card.dataset.severity) + '</span> <strong>' + _esc(card.dataset.title) + '</strong>'
+        + (desc ? '<span class="tp-fp-desc">' + _esc(desc.textContent) + '</span>' : '')
+        + '<span class="tp-fp-meta">' + _fmtV(card.dataset.sumRon) + ' · ' + _dataRo(card.dataset.date) + ' · vezi semnalul →</span></a>';
+    }
+    return '<div class="tp-fp-flag" data-sev="' + _esc(f.severitate) + '"><span class="tp-sevpill">' + _esc(f.severitate) + '</span> '
+      + '<strong>' + _esc(f.titlu || f.tip) + '</strong></div>';
+  }).join('');
+  var nTotal = rd.n_total || (rd.flags || []).length;
+  var nAscunse = Math.max(0, nTotal - (rd.flags || []).length);
+
+  var onrcHtml = '';
+  if (rd.onrc && rd.onrc.reprezentanti && rd.onrc.reprezentanti.length) {
+    onrcHtml = '<h4>Reprezentanți legali (ONRC)</h4><div class="tp-scroll"><table class="tp-table tp-table-sm"><thead><tr><th>Calitate</th><th>Nume</th></tr></thead><tbody>'
+      + rd.onrc.reprezentanti.map(function (r) {
+        return '<tr><td>' + _esc(r.calitate) + '</td><td><strong>' + _esc(r.nume) + '</strong>' + (r.localitate ? ' <small>(' + _esc(r.localitate) + ')</small>' : '') + '</td></tr>';
+      }).join('') + '</tbody></table></div>';
+  } else if (rd.openapi && (rd.openapi.stare || rd.openapi.numar_reg_com)) {
+    onrcHtml = '<h4>Date firmă (ANAF/ONRC)</h4><p>' + (rd.openapi.stare ? 'Stare: <strong>' + _esc(rd.openapi.stare) + '</strong><br>' : '')
+      + (rd.openapi.numar_reg_com ? 'Nr. reg. com.: <strong>' + _esc(rd.openapi.numar_reg_com) + '</strong>' : '') + '</p>';
+  }
+
+  _loadContracte().then(function (toate) {
+    var contracte = _contracteFirma(toate, firma);
+    var total = _totalFaraAcorduri(contracte);
+    var cuLink = contracte.filter(function (c) { return c.url; });
+    var linkuri = '<div class="tp-fp-links">'
+      + '<a class="tp-act tp-act-primary" href="furnizori/' + _slugFirma(firma) + '.html">Fișa firmei</a>'
+      + (cuiCurat ? '<a class="tp-act" href="https://termene.ro/firma/' + _esc(cuiCurat) + '" target="_blank" rel="noopener noreferrer">termene.ro ↗</a>'
+        + '<a class="tp-act" href="https://www.recom.ro/companies_ro_company_detail.aspx?id=' + _esc(cuiCurat) + '" target="_blank" rel="noopener noreferrer">ONRC ↗</a>' : '')
+      + (cuLink.length ? '<a class="tp-act" href="' + _esc(cuLink[0].url) + '" target="_blank" rel="noopener noreferrer">' + _esc(cuLink[0].cod || 'SEAP') + ' ↗</a>' : '')
+      + '</div>';
+    body.innerHTML =
+      '<div class="tp-fp-score"><div><span>' + (rd.scor || 0) + '</span><small>scor risc</small></div><div>'
+      + '<span class="tp-sevpill" data-sev="CRITIC">' + (rd.n_critic || 0) + ' CRITIC</span> '
+      + '<span class="tp-sevpill" data-sev="MAJOR">' + (rd.n_major || 0) + ' MAJOR</span> '
+      + '<span class="tp-sevpill" data-sev="MEDIU">' + (rd.n_mediu || 0) + ' MEDIU</span>'
+      + '<p>Contracte cu Primăria: <strong>' + (contracte.length ? _fmtV(total) : '—') + '</strong>'
+      + (contracte.length ? ' (' + contracte.length + ' contracte, fiecare numărat o dată)' : '') + '</p></div></div>'
+      + linkuri + onrcHtml
+      + (flagsHtml ? '<h4>Semnale de risc (' + nTotal + ')</h4>' + flagsHtml
+        + (nAscunse > 0 ? '<p class="tp-muted">Încă ' + nAscunse + ' semnale. <a href="#" onclick="closeFirmaPanel();_filtreazaFurnizor('
+          + JSON.stringify(firma).replace(/"/g, '&quot;') + ');return false;">Vezi toate în listă →</a></p>' : '') : '')
+      + (contracte.length
+        ? '<h4>Contracte cu Primăria</h4><div class="tp-scroll"><table class="tp-table tp-table-sm"><thead><tr><th>Data</th><th>Obiect</th><th class="num">Valoare</th><th>SEAP</th></tr></thead><tbody>'
+          + contracte.slice(0, 12).map(function (c) {
+            return '<tr><td>' + _dataRo(c.data) + '</td><td>' + _esc(String(c.titlu || '').slice(0, 60)) + '</td><td class="num">' + _fmtV(c.valoare) + '</td><td>' + _celulaSeap(c) + '</td></tr>';
+          }).join('') + '</tbody></table></div>'
+          + (contracte.length > 12 ? '<p class="tp-muted">Primele 12 din ' + contracte.length + '. Lista completă: <a href="furnizori/' + _slugFirma(firma) + '.html">fișa firmei</a>.</p>' : '')
+        : '')
+      + '<p class="tp-fp-src">Date: SEAP (e-licitatie.ro) · ANAF · ONRC — surse publice oficiale.</p>';
+  });
+}
+
+function closeFirmaPanel() {
+  document.getElementById('tp-firma-overlay').style.display = 'none';
+  document.getElementById('tp-firma-panel').classList.remove('open');
+}
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeFirmaPanel(); });
+"""
+
+
 def genereaza_raport_html(budget: dict, contracte: list, flags: list,
                            flags_noi: list, config: dict) -> str:
     """Generează raportul HTML complet."""
+    import html as html_mod
 
-    data_generare = datetime.now().strftime("%d %B %Y, %H:%M")
+    data_generare = _data_generare_ro(datetime.now())
     total_val = valoare_totala(contracte)
     val_acorduri = valoare_acorduri_cadru(contracte)
     directe = [c for c in contracte if "direct" in c["tip_procedura"].lower()
@@ -3833,17 +4142,6 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
         f"juridice. Date din SEAP și ANAF, analizate prin 19 detectori."
     )
 
-    # Serializăm contractele ca JSON pentru embed în HTML (folosit de JS pentru "toate contractele firmei")
-    contracte_json_embed = json.dumps([{
-        "id": c["id"],
-        "titlu": c["titlu"][:80],
-        "valoare": c["valoare_ron"],
-        "data": c["data_publicare"],
-        "tip": c["tip_procedura"],
-        "firma": c["castigator"],
-        "cui": c.get("castigator_cui", ""),
-        "ofertanti": c.get("nr_ofertanti", 0),
-    } for c in contracte], ensure_ascii=False)
     # ── Index CUI per furnizor ──────────────────────────────────────────────
     # Exportul SEAP nu pune CUI-ul pe flag-uri (0/304 aveau `cif_furnizor`),
     # deci căutarea după CUI în raport nu returna nimic. Îl recuperăm din
@@ -3897,7 +4195,6 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
             "source": PRAGURI_LEGALE_SURSA,
         },
     }
-    raport_json_embedded = json.dumps(raport_json_obj, ensure_ascii=False)
 
     # Index: câte contracte are fiecare firmă
     nr_contracte_firma_map = {}
@@ -4070,171 +4367,194 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
     except Exception:
         pass
 
-    flags_html = ""
+    # ── Legături între pagini: fișa firmei + pagina semnalului ──────────────
+    # Fișe există pentru TOATE firmele cu contracte (vezi genereaza_pagini_furnizori).
+    _firme_cu_fisa = {c.get("castigator", "") for c in contracte if c.get("castigator")}
+    _sluguri_semnale = _sluguri_semnale_pentru(flags_sortate)
+    # Valoarea fiecărui contract (cheie = cheia SEAP, ca o asociere să se numere o dată).
+    # Acordurile-cadru sunt plafoane, nu bani contractați → 0 (ca în totalul raportului).
+    _val_contract: dict = {}
+    _cheie_contract: dict = {}
+    for _c in contracte:
+        _k = _c.get("cheie_seap") or _c.get("id") or ""
+        if not _c.get("id"):
+            continue
+        _cheie_contract[_c["id"]] = _k
+        _val_contract[_k] = 0.0 if _este_acord_cadru(_c) else float(_c.get("valoare_ron", 0) or 0)
+
+    flags_html_parts = []
+    _rezumat: dict = {}   # firmă → {n, contracte{cheie: valoare}, slug}
     for idx, f in enumerate(flags_sortate, 1):
-        culoare = culori.get(f["severitate"], "#999")
-        emoji = emoji_sev.get(f["severitate"], "⚪")
-        nou_badge = ' <span style="background:#E8F5E9;color:#2E7D32;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700">NOU</span>' if f in flags_noi else ""
-
-        # Extragem furnizor ÎNAINTE de a-l folosi în risc_badge
+        sev = f.get("severitate", "MEDIU") or "MEDIU"
         contract_id = (f.get('contract_id') or f.get('contract_numar') or '').strip()
-        contract_numar_display = (f.get('contract_numar') or '').strip()
         furnizor = (f.get('furnizor') or '').strip()
-        firma_scurta = furnizor[:35] + ('…' if len(furnizor) > 35 else '')
+        titlu = f.get('titlu', '') or ''
+        descriere = f.get('descriere', '') or ''
+        este_nou = f in flags_noi
+        este_institutie = _este_institutie(furnizor)
         nr_firma = nr_contracte_firma_map.get(furnizor, 0)
+        furnizor_js = furnizor.replace("\\", "\\\\").replace("'", "\\'").replace('"', '&quot;')
+        e = lambda s: html_mod.escape(str(s or ""), quote=True)
 
-        # Escaping pentru JS (ghilimele simple în numele firmei)
-        furnizor_js = furnizor.replace("'", "\\'").replace('"', '&quot;')
+        # Contractele semnalului → data-contracts="cheie:valoare|…" (total pe contracte distincte)
+        _ids = [x.strip() for x in contract_id.split(",") if x.strip()]
+        _ids += [str(_c.get("id")) for _c in (f.get("contracte") or []) if _c.get("id")]
+        _perechi = []
+        for _cid in dict.fromkeys(_ids):
+            _k = _cheie_contract.get(_cid)
+            if _k is not None:
+                _perechi.append(f"{_k}:{_val_contract.get(_k, 0):.0f}")
+        data_contracts = "|".join(dict.fromkeys(_perechi))
+        if furnizor and not este_institutie:
+            _r = _rezumat.setdefault(furnizor, {"n": 0, "contracte": {}})
+            _r["n"] += 1
+            for _p in _perechi:
+                _kk, _vv = _p.rsplit(":", 1)
+                _r["contracte"][_kk] = float(_vv)
 
-        # Risk score badge for this company (furnizor definit deja mai sus)
         rd_firma = risc_firma.get(furnizor, {})
         scor_firma = rd_firma.get("scor", 0)
-        if scor_firma >= 50:
-            risc_badge = f' <span style="background:#C0392B;color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700;cursor:pointer" onclick="openFirmaPanel(\'{furnizor_js}\', event)">🔥 RISC {scor_firma}</span>'
-        elif scor_firma >= 20:
-            risc_badge = f' <span style="background:#E67E22;color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700;cursor:pointer" onclick="openFirmaPanel(\'{furnizor_js}\', event)">⚠️ RISC {scor_firma}</span>'
-        elif scor_firma >= 5:
-            risc_badge = f' <span style="background:#F39C12;color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700;cursor:pointer" onclick="openFirmaPanel(\'{furnizor_js}\', event)">🟡 RISC {scor_firma}</span>'
-        else:
-            risc_badge = ""
+        risc_badge = (
+            f'<button type="button" class="tp-riskpill" onclick="openFirmaPanel(\'{furnizor_js}\', event)" '
+            f'title="Scor de risc al firmei (din toate semnalele ei) — deschide profilul">Scor firmă {scor_firma}</button>'
+        ) if scor_firma >= 5 and not este_institutie else ""
 
-        # Pre-compute atribute data-* pentru markup semantic
-        valoare_num = int(f.get('valoare', 0) or 0)
-        furnizor_attr = furnizor.replace('"', '&quot;')
-        tip_attr = (f.get('tip') or '').replace('"', '&quot;')
-        procedura_attr = (f.get('tip_procedura') or '').replace('"', '&quot;')
-
-        # Pre-compute butonul firmei (evităm nested f-string cu același tip de ghilimele)
-        if furnizor:
-            btn_firma = (
-                f'<button onclick="showFirmaContracts(\'{furnizor_js}\', event)"'
-                f' style="background:#EBF5FB;color:#0070C0;padding:6px 14px;border-radius:6px;'
-                f'font-size:12px;font-weight:600;border:1px solid #AED6F1;cursor:pointer">'
-                f'📊 Toate contractele cu {firma_scurta} ({nr_firma} contracte)'
-                f'</button> '
-            f'<button onclick="openFirmaPanel(\'{furnizor_js}\', event)"'
-                f' style="background:#FDEDEC;color:#C0392B;padding:6px 14px;border-radius:6px;'
-                f'font-size:12px;font-weight:600;border:1px solid #F1948A;cursor:pointer">'
-                f'🔍 Profil complet firmă'
-                f'</button>'
-            )
+        slug_firma = _slugify(furnizor) if furnizor in _firme_cu_fisa else ""
+        if slug_firma:
+            firma_html = (f'<strong class="flag-firm"><a href="furnizori/{slug_firma}.html" '
+                          f'onclick="event.stopPropagation()">{e(furnizor)}</a></strong>')
         else:
-            btn_firma = ''
+            firma_html = f'<strong class="flag-firm">{e(furnizor) or "—"}</strong>'
+
+        cod_seap = _seap_nr(contract_id).replace("Cod SEAP: ", "")
+        url_seap = _seap_url(contract_id, f.get('tip_procedura', ''))
+        if cod_seap:
+            cod_html = (f'<a class="flag-code" href="{e(url_seap)}" target="_blank" rel="noopener noreferrer" '
+                        f'onclick="event.stopPropagation()" title="Deschide anunțul în SEAP">{e(cod_seap)} ↗</a>')
+        elif contract_id and contract_id not in ("global", "hcl-meta"):
+            cod_html = f'<span class="flag-code-old">{e(contract_id)}</span>'
+        else:
+            cod_html = ""
+
+        data_afis = _data_ro_scurta(f.get('data', ''))
+        fapte = [f'<span>{_fmt_ron(f.get("valoare", 0) or 0)}</span>'] if (f.get("valoare") or 0) else []
+        if data_afis:
+            fapte.append(f'<span>{data_afis}</span>')
+        if f.get('tip_procedura'):
+            fapte.append(f'<span>{e(f.get("tip_procedura"))}</span>')
+        if cod_html:
+            fapte.append(cod_html)
+
+        slug_semnal = _sluguri_semnale.get(idx, "")
+        # Butoanele din „detalii” (SEAP, pagina semnalului, fișa firmei, profil) sunt
+        # construite de scriptul paginii când cardul e deschis, din atributele data-*.
+        # Înainte erau ~1,3 KB de HTML în fiecare din cele ~340 de carduri.
+        are_seap = bool(_seap_nr(contract_id) or (contract_id and contract_id not in ("global", "hcl-meta")))
 
         # Panel date financiare firmă (risc_firma.py — opțional)
         _cif_f = f.get('cif_furnizor', '')
         if _RISC_FIRMA_OK and _cif_f and _cif_f in _firma_profile:
             _firma_panel_html = _get_risk_panel_html(
-                _cif_f, _firma_profile[_cif_f],
-                f.get('data', ''), f.get('valoare', 0) or 0,
-            )
+                _cif_f, _firma_profile[_cif_f], f.get('data', ''), f.get('valoare', 0) or 0)
         else:
             _firma_panel_html = ''
 
-        # Sublistă contracte componente (ex. flag BURST_CONTRACTE — „9 contracte într-o zi")
+        # Sublistă contracte componente (ex. „9 contracte într-o zi", fragmentare)
         _contracte_comp = f.get('contracte') or []
+        _contracte_lista_html = ''
         if _contracte_comp:
-            _rows = ""
+            _rows = []
             for _c in _contracte_comp:
                 _cid = _c.get('id') or ''
-                _seap_txt = _seap_nr(_cid) or (f"Nr. SEAP: {_c.get('nr_seap')}" if _c.get('nr_seap') else '')
-                _seap_cell = (
-                    f'<a href="{_seap_url(_cid, _c.get("procedura",""))}" target="_blank" '
-                    f'rel="noopener noreferrer" onclick="event.stopPropagation()" style="color:#0070C0;text-decoration:none">'
-                    f'🔍 {_seap_txt or "deschide"} ↗</a>'
-                ) if (_cid or _c.get('nr_seap')) else '–'
-                _rows += (
-                    '<tr>'
-                    f'<td style="padding:5px 8px;border-bottom:1px solid #eee">{_c.get("firma") or "–"}</td>'
-                    f'<td style="padding:5px 8px;border-bottom:1px solid #eee;text-align:right;white-space:nowrap">{_fmt_ron(_c.get("valoare",0) or 0)}</td>'
-                    f'<td style="padding:5px 8px;border-bottom:1px solid #eee">{_c.get("procedura") or "–"}</td>'
-                    f'<td style="padding:5px 8px;border-bottom:1px solid #eee">{_seap_cell}</td>'
-                    '</tr>'
-                )
+                _cod = _seap_nr(_cid).replace("Cod SEAP: ", "") or (_c.get('nr_seap') or '')
+                _cell = (f'<a href="{e(_seap_url(_cid, _c.get("procedura", "")))}" target="_blank" '
+                         f'rel="noopener noreferrer">{e(_cod or "deschide")} ↗</a>') if (_cid or _c.get('nr_seap')) else '–'
+                _rows.append(f'<tr><td>{e(_c.get("firma") or "–")}</td><td class="num">{_fmt_ron(_c.get("valoare", 0) or 0)}</td>'
+                             f'<td>{e(_c.get("procedura") or "–")}</td><td>{_cell}</td></tr>')
             _contracte_lista_html = (
-                '<div style="margin-top:12px">'
-                f'<div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">'
-                f'📑 Cele {len(_contracte_comp)} contracte componente:</div>'
-                '<table style="width:100%;border-collapse:collapse;font-size:12px">'
-                '<thead><tr style="text-align:left;color:#888">'
-                '<th style="padding:5px 8px;border-bottom:2px solid #ddd">Firmă</th>'
-                '<th style="padding:5px 8px;border-bottom:2px solid #ddd;text-align:right">Valoare</th>'
-                '<th style="padding:5px 8px;border-bottom:2px solid #ddd">Procedură</th>'
-                '<th style="padding:5px 8px;border-bottom:2px solid #ddd">SEAP</th>'
-                '</tr></thead>'
-                f'<tbody>{_rows}</tbody>'
-                '</table></div>'
+                f'<div class="flag-sub"><div class="flag-sub-h">Cele {len(_contracte_comp)} contracte componente</div>'
+                '<div class="tp-scroll"><table class="tp-table tp-table-sm"><thead><tr><th>Firmă</th>'
+                '<th class="num">Valoare</th><th>Procedură</th><th>SEAP</th></tr></thead>'
+                f'<tbody>{"".join(_rows)}</tbody></table></div></div>'
             )
-        else:
-            _contracte_lista_html = ''
 
-        flags_html += f"""
-        <div class="tp-flag"
-             onclick="toggleFlag(this)"
-             id="nereguli-{idx}"
-             data-severity="{f.get('severitate','MEDIU')}"
-             data-supplier="{furnizor_attr}"
-             data-sum-ron="{valoare_num}"
-             data-date="{f.get('data', '')}"
-             data-contract-id="{contract_id}"
-             data-type="{tip_attr}"
-             data-procedure="{procedura_attr}"
-             data-supplier-cif="{_cif_f}"
-             style="border-left:4px solid {culoare};background:#fff;padding:14px 18px;
-                    border-radius:0 8px 8px 0;margin-bottom:10px;
-                    box-shadow:0 1px 3px rgba(0,0,0,0.08);cursor:pointer"
-             onmouseenter="this.style.boxShadow='0 4px 14px rgba(0,0,0,0.14)'"
-             onmouseleave="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.08)'">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-            <span style="font-size:12px;font-weight:700;color:#bbb;min-width:32px">#{idx}</span>
-            <span style="font-size:16px">{emoji}</span>
-            <strong style="color:{culoare}">[{f.get('severitate','MEDIU')}]</strong>
-                     <span style="font-weight:700;font-size:14px">{furnizor or "—"}</span>
-                     <span style="font-size:11px;color:#888;font-weight:400"> — {f.get('titlu','')}</span>
-            {nou_badge}{risc_badge}<span class="flag-arrow" style="margin-left:auto;font-size:11px;color:#aaa">▼ detalii</span>
-          </div>
-          <p style="font-size:13px;color:#444;margin:0 0 8px">{f.get('descriere','')}</p>
-          <div style="font-size:12px;color:#777;display:flex;gap:16px;flex-wrap:wrap">
-            <span>💰 {_fmt_ron(f.get('valoare',0) or 0)}</span>
-            <span>🏢 {furnizor or '–'}</span>
-            <span>📅 {f.get('data','')}</span>
-            <span>⚙️ {f.get('tip_procedura') or '–'}</span>
-            {(f'<span style="background:#EBF5FB;border:1px solid #AED6F1;border-radius:4px;padding:1px 7px;color:#1A5276;font-weight:700;letter-spacing:.3px" title="Cod SEAP — copiază-l pentru căutare manuală">🔍 {_seap_nr(contract_id)}</span>') if _seap_nr(contract_id) else f'<span>📋 {contract_id or "–"}</span>'}
-          </div>
-          <div class="flag-detail" style="display:none;margin-top:14px;padding-top:12px;border-top:1px solid #eee">
-            <div style="font-size:12px;color:#555;margin-bottom:10px">
-              <strong>Firmă:</strong> {furnizor or '–'} &nbsp;|&nbsp;
-              <strong>Sumă:</strong> {_fmt_ron(f.get('valoare',0) or 0)} &nbsp;|&nbsp;
-              <strong>Data:</strong> {f.get('data','')} &nbsp;|&nbsp;
-              <strong>Procedură:</strong> {f.get('tip_procedura') or '–'}
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-              <a href="{_seap_url(contract_id, f.get('tip_procedura',''))}"
-                 target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
-                 style="background:#0070C0;color:#fff;padding:6px 14px;border-radius:6px;
-                        text-decoration:none;font-size:12px;font-weight:600">
-                🔍 Deschide în SEAP →
-              </a>
-              <a href="https://transparenta.eu/entities/{config['cui']}#achizitii"
-                 target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
-                 style="background:#1E8449;color:#fff;padding:6px 14px;border-radius:6px;
-                        text-decoration:none;font-size:12px;font-weight:600">
-                🌐 transparenta.eu →
-              </a>
-              {btn_firma}</div>
-            {_contracte_lista_html}
-            {_firma_panel_html}
-            <div style="margin-top:10px;padding:8px 12px;background:#F4F6F8;border-radius:6px;
-                        font-size:11px;color:#666;line-height:1.6">
-              ℹ️ <strong>Cum verifici în SEAP:</strong> apasă „Deschide în SEAP" de mai sus.
-              Dacă pagina apare goală, caută manual pe
-              <a href="https://e-licitatie.ro/pub/" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
-                 style="color:#0070C0">e-licitatie.ro</a>
-              după <strong>{_seap_nr(contract_id) or contract_id}</strong>
-              (data: <strong>{f.get('data','')}</strong>, autoritate: <strong>Pantelimon</strong>).
-            </div>
-          </div>
-        </div>"""
+        atribute = [
+            f'id="nereguli-{idx}"',
+            f'data-severity="{e(sev)}"',
+            f'data-supplier="{e(furnizor)}"',
+            f'data-sum-ron="{int(f.get("valoare", 0) or 0)}"',
+            f'data-date="{e(f.get("data", ""))}"',
+            f'data-contract-id="{e(contract_id)}"',
+            f'data-type="{e(f.get("tip", ""))}"',
+            f'data-procedure="{e(f.get("tip_procedura", ""))}"',
+            f'data-supplier-cif="{e(_cif_f)}"',
+            f'data-title="{e(titlu)}"',
+        ]
+        if slug_semnal:
+            atribute.append(f'data-slug="{e(slug_semnal)}"')
+        if are_seap:
+            atribute.append(f'data-seap="{e(url_seap)}"')
+        if furnizor and not este_institutie:
+            atribute.append(f'data-nctr="{nr_firma}"')
+        if slug_firma:
+            atribute.append(f'data-supplier-slug="{e(slug_firma)}"')
+        if data_contracts:
+            atribute.append(f'data-contracts="{e(data_contracts)}"')
+        if este_nou:
+            atribute.append('data-new="1"')
+        if este_institutie:
+            atribute.append('data-entity="institutie"')
+        clase = "tp-flag" + (" tp-pre-hidden" if idx > 25 else "")
+
+        flags_html_parts.append(
+            f'<div class="{clase}" onclick="toggleFlag(this)" {" ".join(atribute)}>'
+            f'<div class="flag-head"><span class="tp-sevpill">{e(sev)}</span>{firma_html}'
+            + (f'<a class="flag-title" href="semnale/{slug_semnal}.html" onclick="event.stopPropagation()" '
+               f'title="Pagina semnalului (link de distribuit)">{e(titlu)}</a>' if slug_semnal
+               else f'<span class="flag-title">{e(titlu)}</span>') +
+            f'{"<span class=flag-new>NOU</span>" if este_nou else ""}{risc_badge}'
+            '<span class="flag-arrow">detalii</span></div>'
+            f'<p class="flag-desc">{descriere}</p>'
+            f'<div class="flag-facts">{"".join(fapte)}</div>'
+            '<div class="flag-detail" style="display:none">'
+            f'{_contracte_lista_html}{_firma_panel_html}'
+            '</div></div>'
+        )
+    flags_html = "\n".join(flags_html_parts)
+
+    # ── Rezumat static (înainte îl construia enhance.js după încărcare) ──────
+    def _rand_rezumat(_nume: str, _info: dict, _dupa_valoare: bool) -> str:
+        _sl = _slugify(_nume) if _nume in _firme_cu_fisa else ""
+        _link = (f'<a href="furnizori/{_sl}.html">{html_mod.escape(_nume)}</a>' if _sl
+                 else html_mod.escape(_nume))
+        _val = sum(_info["contracte"].values())
+        _nc = len(_info["contracte"])
+        _dr = (f'<strong>{_fmt_ron(_val)}</strong> <span class="tp-muted">{_nc} contr.</span>' if _dupa_valoare
+               else f'<strong>{_info["n"]}</strong> <span class="tp-muted">semnale · {_fmt_ron(_val)}</span>')
+        _attr = html_mod.escape(_nume, quote=True)
+        return (f'<div class="tp-summary-li"><span>{_link} <button type="button" class="tp-linkbtn" '
+                f'data-filter-supplier="{_attr}" title="Arată semnalele firmei în listă">filtrează</button></span>'
+                f'<span>{_dr}</span></div>')
+
+    _top_n = sorted(_rezumat.items(), key=lambda kv: (-kv[1]["n"], kv[0]))[:10]
+    _top_v = sorted(_rezumat.items(), key=lambda kv: (-sum(kv[1]["contracte"].values()), kv[0]))[:10]
+    _nsev = {s_: sum(1 for x in flags_sortate if x.get("severitate") == s_) for s_ in ("CRITIC", "MAJOR", "MEDIU")}
+    _tot = max(1, len(flags_sortate))
+    _bar = "".join(
+        f'<span class="tp-sevbar-{s_.lower()}" style="width:{_nsev[s_] / _tot * 100:.1f}%">{_nsev[s_] if _nsev[s_] > 5 else ""}</span>'
+        for s_ in ("CRITIC", "MAJOR", "MEDIU")
+    )
+    rezumat_html = (
+        f'<section class="tp-summary" aria-label="Rezumat statistici"><h3>Rezumat: {len(flags_sortate)} semnale automate</h3>'
+        f'<div class="tp-summary-bar" aria-label="Distribuție pe severități">{_bar}</div>'
+        '<div class="tp-summary-grid"><div><strong class="tp-summary-h">Firmele cu cele mai multe semnale</strong>'
+        f'<div class="tp-summary-list">{"".join(_rand_rezumat(n_, i_, False) for n_, i_ in _top_n)}</div></div>'
+        '<div><strong class="tp-summary-h">Cea mai mare valoare a contractelor cu semnale</strong>'
+        f'<div class="tp-summary-list">{"".join(_rand_rezumat(n_, i_, True) for n_, i_ in _top_v)}</div></div></div>'
+        '<p class="tp-summary-note">Valorile adună contractele distincte ale firmei care au cel puțin un semnal; '
+        'un contract cu mai multe semnale e numărat o singură dată. Acordurile-cadru (plafoane) nu sunt incluse.</p>'
+        '</section>'
+    ) if _rezumat else ""
 
     # ── HTML: Analiză pe categorie ───────────────────────────────────────────
     analiza_per_tip_html = ""
@@ -4340,9 +4660,17 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
     }}
     </script>"""
 
-    # Includem și datele ONRC/openapi.ro per firmă dacă sunt disponibile
+    # Includem și datele ONRC/openapi.ro per firmă dacă sunt disponibile.
+    # Lista de semnale din profil NU mai repetă explicațiile (erau ~200 KB dublate
+    # în pagină): profilul le citește din cardurile raportului, după ancoră.
     firme_onrc    = config.get("_firme_onrc", {})
     firme_openapi = config.get("_firme_openapi", {})
+
+    def _flag_profil(_x: dict) -> dict:
+        if _x.get("anchor"):
+            return {"anchor": _x["anchor"], "severitate": _x.get("severitate", "")}
+        return {"tip": _x.get("tip", ""), "titlu": _x.get("titlu", ""), "severitate": _x.get("severitate", "")}
+
     risc_firma_json = json.dumps({
         furn: {
             "cui": rd["cui"],
@@ -4350,11 +4678,7 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
             "n_critic": rd["n_critic"],
             "n_major": rd["n_major"],
             "n_mediu": rd["n_mediu"],
-            "valoare_totala": rd["valoare_totala"],
-            # Plafon 50 (max. real: 29 semnale/firmă). `n_total` e expus explicit
-            # ca panoul să poată spune când lista e trunchiată — înainte badge-urile
-            # numărau tot, iar lista era tăiată la 20, fără niciun indiciu.
-            "flags": rd["flags"][:50],
+            "flags": [_flag_profil(_x) for _x in rd["flags"][:50]],
             "n_total": len(rd["flags"]),
             "onrc": {
                 "reprezentanti": firme_onrc.get(rd["cui"], {}).get("reprezentanti", [])[:8],
@@ -4369,52 +4693,44 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
                 "recom_url":        firme_openapi.get(rd["cui"], {}).get("recom_url", ""),
                 "radiata":          firme_openapi.get(rd["cui"], {}).get("radiata", False),
             },
-        } for furn, rd in risc_firma.items()
-    }, ensure_ascii=False)
+        } for furn, rd in risc_firma.items() if not _este_institutie(furn)
+    }, ensure_ascii=False, separators=(",", ":"))
 
-    contracte_html = ""
-    for c in contracte[:20]:  # primele 20
-        badge_tip = ("🔴" if "direct" in c["tip_procedura"].lower() or "negociere" in c["tip_procedura"].lower()
-                     else "🟢" if "deschis" in c["tip_procedura"].lower() else "🟡")
+    # Cele mai recente 20 de contracte (înainte: „primele 20” din lista nesortată)
+    _recente = sorted(contracte_unice(contracte), key=lambda c: c.get("data_publicare", ""), reverse=True)[:20]
+    _rows_c = []
+    for c in _recente:
         _nro = c.get("nr_ofertanti", 0)
-        _nro_color = "#C0392B" if _nro == 1 else "#27AE60"
-        badge_ofertanti = f'<span style="color:{_nro_color};font-weight:700">{_nro}</span>'
-        nota_demo = ' <em style="color:#aaa;font-size:10px">(demo)</em>' if c.get("sursa") == "DEMO" else ""
-        contracte_html += f"""
-        <tr>
-          <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5;font-size:13px">
-            {c['titlu'][:55]}{'…' if len(c['titlu'])>55 else ''}{nota_demo}
-          </td>
-          <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5;font-size:13px;font-weight:700">{_fmt_ron(c['valoare_ron'])}</td>
-          <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5;font-size:12px">{badge_tip} {c['tip_procedura']}</td>
-          <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5;font-size:12px;text-align:center">{badge_ofertanti}</td>
-          <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5;font-size:12px">{c['castigator'][:30]}</td>
-          <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5;font-size:12px">{c['data_publicare']}</td>
-        </tr>"""
+        _firma_c = c.get("castigator", "")
+        _firma_cell = (f'<a href="furnizori/{_slugify(_firma_c)}.html">{html_mod.escape(_firma_c[:40])}</a>'
+                       if _firma_c in _firme_cu_fisa else html_mod.escape(_firma_c[:40]))
+        _cod_c = c.get("cod_seap") or ""
+        _cod_cell = (f'<a href="{html_mod.escape(c.get("url_seap", ""), quote=True)}" target="_blank" '
+                     f'rel="noopener noreferrer">{html_mod.escape(_cod_c)} ↗</a>') if _cod_c and c.get("url_seap") else "–"
+        _rows_c.append(
+            f'<tr><td>{html_mod.escape(c["titlu"][:70])}{"…" if len(c["titlu"]) > 70 else ""}</td>'
+            f'<td class="num">{_fmt_ron(c["valoare_ron"])}</td>'
+            f'<td>{html_mod.escape(c["tip_procedura"] or "–")}</td>'
+            f'<td class="num{" tp-hi" if _nro == 1 else ""}">{_nro or "–"}</td>'
+            f'<td>{_firma_cell}</td><td>{_data_ro_scurta(c["data_publicare"])}</td><td>{_cod_cell}</td></tr>'
+        )
+    contracte_html = "".join(_rows_c)
 
     budget_html = ""
     if budget.get("venituri_mil_ron"):
+        _an_b = budget.get("an")
         yoy_v = budget.get("yoy_venituri", "N/A")
         yoy_c = budget.get("yoy_cheltuieli", "N/A")
-        yoy_v_color = "#C0392B" if "-" in str(yoy_v) else "#27AE60"
-        yoy_c_color = "#C0392B" if "+" in str(yoy_c) else "#27AE60"
+        _yoy = lambda v: f"{v} față de {_an_b - 1}" if v and v != "N/A" and _an_b else "comparație indisponibilă"
+        _bal = budget.get('balanta_mil_ron')
         budget_html = f"""
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:24px">
-          <div style="background:#fff;border-radius:10px;padding:20px;border-top:4px solid #0070C0;box-shadow:0 1px 4px rgba(0,0,0,0.08)">
-            <span style="font-size:24px;font-weight:800;color:#0070C0">{budget['venituri_mil_ron']} mil. RON</span><br>
-            <span style="font-size:11px;color:#777;text-transform:uppercase">Venituri {budget['an']}</span><br>
-            <span style="font-size:12px;color:{yoy_v_color}">{yoy_v} față de {budget['an']-1}</span>
-          </div>
-          <div style="background:#fff;border-radius:10px;padding:20px;border-top:4px solid #E67E22;box-shadow:0 1px 4px rgba(0,0,0,0.08)">
-            <span style="font-size:24px;font-weight:800;color:#E67E22">{budget['cheltuieli_mil_ron']} mil. RON</span><br>
-            <span style="font-size:11px;color:#777;text-transform:uppercase">Cheltuieli {budget['an']}</span><br>
-            <span style="font-size:12px;color:{yoy_c_color}">{yoy_c} față de {budget['an']-1}</span>
-          </div>
-          <div style="background:#fff;border-radius:10px;padding:20px;border-top:4px solid {'#27AE60' if (budget.get('balanta_mil_ron') or 0)>0 else '#C0392B'};box-shadow:0 1px 4px rgba(0,0,0,0.08)">
-            <span style="font-size:24px;font-weight:800;color:{'#27AE60' if (budget.get('balanta_mil_ron') or 0)>0 else '#C0392B'}">{budget.get('balanta_mil_ron','N/A')} mil. RON</span><br>
-            <span style="font-size:11px;color:#777;text-transform:uppercase">Balanță {budget['an']}</span><br>
-            <span style="font-size:12px;color:#777">Sursa: {budget['sursa']}</span>
-          </div>
+        <div class="tp-kpis">
+          <div class="tp-kpi"><div class="tp-kpi-v">{budget['venituri_mil_ron']} mil. RON</div>
+            <div class="tp-kpi-l">Venituri {_an_b} (execuție)</div><div class="tp-kpi-n">{_yoy(yoy_v)}</div></div>
+          <div class="tp-kpi"><div class="tp-kpi-v">{budget['cheltuieli_mil_ron']} mil. RON</div>
+            <div class="tp-kpi-l">Cheltuieli {_an_b} (execuție)</div><div class="tp-kpi-n">{_yoy(yoy_c)}</div></div>
+          <div class="tp-kpi"><div class="tp-kpi-v">{_bal if _bal is not None else 'N/A'} mil. RON</div>
+            <div class="tp-kpi-l">Balanță {_an_b}</div><div class="tp-kpi-n">Sursa: {html_mod.escape(str(budget.get('sursa', '')))}</div></div>
         </div>"""
 
     nota_demo_msg = ""
@@ -4511,16 +4827,27 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
     </p>
   </section>"""
 
+    _contracte_u = contracte_unice(contracte)
+    _directe_u = [c for c in _contracte_u if "direct" in (c.get("tip_procedura") or "").lower()
+                  or "negociere" in (c.get("tip_procedura") or "").lower()
+                  or (c.get("tip_contract") == "achizitie-directa")]
+    _unic_u = [c for c in _contracte_u if c.get("nr_ofertanti", 0) == 1]
+    _n_sev = {s_: sum(1 for x in flags if x.get("severitate") == s_) for s_ in ("CRITIC", "MAJOR", "MEDIU")}
+    _hcl_pct = config.get('_hcl_pct', 0) or 0
+    _chei_cu_semnale: dict = {}
+    for _r in _rezumat.values():
+        _chei_cu_semnale.update(_r["contracte"])   # o asociere (aceeași cheie) se numără o dată
+    _val_cu_semnale = sum(_chei_cu_semnale.values())
+
     html = f"""<!DOCTYPE html>
 <html lang="ro">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{seo_title} — {config['nume_entitate']} — {data_generare}</title>
+<title>{seo_title} — {config['nume_entitate']}</title>
 
 <!-- SEO -->
 <meta name="description" content="{seo_description}">
-<meta name="keywords" content="transparență, Pantelimon, primărie, achiziții publice, SEAP, ANAF, monitorizare cetățenească, Ilfov, semnale de risc, raport">
 <meta name="author" content="Inițiativă civică">
 <link rel="canonical" href="https://transparenta-pantelimon.eu/raport_transparenta.html">
 
@@ -4540,684 +4867,115 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
 <meta name="twitter:title" content="{seo_title}">
 <meta name="twitter:description" content="{seo_description}">
 <meta name="twitter:image" content="https://transparenta-pantelimon.eu/og-image.png">
-<style>
-  body{{font-family:'Segoe UI',Arial,sans-serif;background:#F4F6F9;color:#1A1A2E;margin:0;padding:0}}
-  .wrap{{max-width:960px;margin:0 auto;padding:24px 16px 60px}}
-  h1,h2,h3{{margin:0 0 8px}}
-  table{{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;
-         overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08)}}
-  thead{{background:#00427A;color:#fff}}
-  th{{padding:10px 12px;font-size:12px;text-align:left;text-transform:uppercase;letter-spacing:.5px}}
-  @media (max-width:640px) {{
-    html,body {{ max-width:100%; overflow-x:hidden; }}
-    .wrap {{ padding:16px 10px 48px; }}
-    table {{ display:block; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }}
-    .tp-reco-grid {{ grid-template-columns:1fr; }}
-    .tp-flag {{ overflow:hidden; padding:12px !important; }}
-    .tp-flag > div:first-child {{ flex-wrap:wrap; min-width:0; }}
-    .tp-flag > div:first-child > span {{ overflow-wrap:anywhere; max-width:100%; }}
-    .tp-flag .flag-arrow {{ margin-left:0 !important; }}
-  }}
-
-  /* ---- PRINT / PDF ---- */
-  @media print {{
-    body {{ background:#fff !important; font-size:11pt; }}
-    .wrap {{ max-width:100%; padding:0; }}
-    .no-print {{ display:none !important; }}
-    .flag-detail {{ display:block !important; }}
-    .flag-arrow {{ display:none !important; }}
-    .firma-contracts-panel {{ display:none !important; }}
-    [onmouseenter] {{ box-shadow:none !important; cursor:default !important; }}
-    h2 {{ color:#00427A !important; page-break-after:avoid; }}
-    h2, h3 {{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }}
-    table {{ page-break-inside:avoid; }}
-    div[style*="border-left"] {{ page-break-inside:avoid;
-      -webkit-print-color-adjust:exact; print-color-adjust:exact; }}
-    thead {{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }}
-    @page {{ margin:1.5cm; size:A4; }}
-  }}
-
-  /* ---- §4.1 RECONCILIERE WIDGET ---- */
-  .tp-reconciliation {{
-    margin: 1.5rem 0;
-    padding: 1rem;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-  }}
-  .tp-reconciliation h3 {{ margin: 0 0 .75rem; font-size: 1.05rem; color: #00427A; }}
-  .tp-reco-grid {{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: .75rem;
-    margin: 1rem 0;
-  }}
-  .tp-reco-cell {{
-    padding: 1rem;
-    border-radius: 8px;
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    text-align: center;
-  }}
-  .tp-reco-cell span {{
-    display: block;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #111;
-    line-height: 1.2;
-    word-break: break-word;
-  }}
-  .tp-reco-cell small {{
-    color: #6b7280;
-    font-size: .78rem;
-    display: block;
-    margin-top: .25rem;
-  }}
-  .tp-reco-total  {{ border-color: #94a3b8; }}
-  .tp-reco-known  {{ background: #f0fdf4; border-color: #bbf7d0; }}
-  .tp-reco-visible{{ background: #dbeafe; border-color: #93c5fd; }}
-  .tp-reco-gap    {{ background: #fee2e2; border-color: #fca5a5; }}
-  .tp-reco-gap span {{ color: #b91c1c; }}
-  .tp-reco-note {{
-    font-size: .9rem;
-    padding: .75rem 1rem;
-    background: #fef9c3;
-    border-left: 3px solid #ca8a04;
-    border-radius: 4px;
-    margin: 0;
-    line-height: 1.5;
-  }}
-  /* Dark mode */
-  [data-tp-theme="dark"] .tp-reconciliation {{
-    background: #1e293b; border-color: #334155;
-  }}
-  [data-tp-theme="dark"] .tp-reco-cell {{
-    background: #1e293b; border-color: #334155;
-  }}
-  [data-tp-theme="dark"] .tp-reco-cell span {{ color: #f1f5f9; }}
-  [data-tp-theme="dark"] .tp-reco-cell small {{ color: #94a3b8; }}
-  [data-tp-theme="dark"] .tp-reco-known  {{ background: #14532d; border-color: #166534; }}
-  [data-tp-theme="dark"] .tp-reco-visible{{ background: #1e3a8a; border-color: #1d4ed8; }}
-  [data-tp-theme="dark"] .tp-reco-gap    {{ background: #7f1d1d; border-color: #991b1b; }}
-  [data-tp-theme="dark"] .tp-reco-gap span {{ color: #fca5a5; }}
-  [data-tp-theme="dark"] .tp-reco-note   {{ background: #422006; border-left-color: #ca8a04; color: #fef3c7; }}
-</style>
 <link rel="alternate" type="application/atom+xml" title="Semnale noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
-<script src="enhance.js" defer></script>
 </head>
-<body>
-<div style="background:linear-gradient(135deg,#00427A,#0070C0);color:#fff;padding:24px 32px">
-  <div style="max-width:960px;margin:0 auto">
-    <div style="font-size:11px;opacity:.7;margin-bottom:8px">
-      Monitorizare cetățenească · {config['judet']}
-    </div>
-    <h1 style="font-size:26px;font-weight:800;margin:0 0 6px">
-      Raport Transparență Bugetară<br>
-      <span style="color:#4D86C2">{config['nume_entitate']}</span>
-    </h1>
-    <p style="opacity:.85;margin:0">Generat automat la {data_generare} · CUI: {config['cui']}</p>
-    <div style="margin-top:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap" class="no-print">
-      <a href="index.html"
-         style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.4);
-                padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;
-                display:inline-flex;align-items:center;gap:6px">
-        ← Pagina Principală
-      </a>
-      <button onclick="printRaport()"
-              style="background:#4D86C2;color:#00427A;border:none;padding:9px 20px;
-                     border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;
-                     display:inline-flex;align-items:center;gap:8px">
-        🖨️ Salvează ca PDF / Tipărește
-      </button>
-      <span style="font-size:11px;opacity:.65">
-        → în dialogul de tipărire alege „Salvare ca PDF"
-      </span>
-    </div>
-    <div style="display:flex;gap:24px;margin-top:16px;flex-wrap:wrap">
-      <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
-        <div style="font-size:22px;font-weight:800;color:#{"C0392B" if flags else "27AE60"}">{len(flags)}</div>
-        <div style="font-size:11px;opacity:.8">Semnale automate</div>
-      </div>
-      <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
-        <div style="font-size:22px;font-weight:800;color:{"#4D86C2" if flags_noi else "#27AE60"}">{len(flags_noi)}</div>
-        <div style="font-size:11px;opacity:.8">Semnale noi (față de ultima rulare)</div>
-      </div>
-      <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
-        <div style="font-size:22px;font-weight:800">{n_contracte_semnale}</div>
-        <div style="font-size:11px;opacity:.8">Contracte unice cu semnale</div>
-      </div>
-      <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
-        <div style="font-size:22px;font-weight:800">{len(contracte_unice(contracte))}</div>
-        <div style="font-size:11px;opacity:.8">Contracte analizate</div>
-      </div>
-      <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px 16px;text-align:center">
-        <div style="font-size:22px;font-weight:800">{_fmt_ron(total_val)}</div>
-        <div style="font-size:11px;opacity:.8">Valoare totală contracte</div>
-        {f'<div style="font-size:10px;opacity:.7;margin-top:2px">fără acordurile-cadru ({_fmt_ron(val_acorduri)}, plafon)</div>' if val_acorduri else ''}
-      </div>
-    </div>
+<body class="tp-page-raport">
+<header class="tp-rhero" id="main-content"><div>
+  <h1>Raport Transparență Bugetară<br><span>{config['nume_entitate']}</span></h1>
+  <p>Generat automat la {data_generare} · CUI: {config['cui']}</p>
+  <div class="no-print tp-rhero-actions">
+    <a href="index.html">Pagina principală</a>
+    <button type="button" onclick="printRaport()">Salvează ca PDF / Tipărește</button>
+    <span>în dialogul de tipărire alege „Salvare ca PDF”</span>
   </div>
-</div>
+  <div class="tp-rhero-stats">
+    <div><div>{len(flags)}</div><div>Semnale automate</div></div>
+    <div><div>{len(flags_noi)}</div><div>Semnale noi (față de analiza anterioară)</div></div>
+    <div><div>{n_contracte_semnale}</div><div>Contracte unice cu semnale<small>valoare: {_fmt_ron(_val_cu_semnale)}</small></div></div>
+    <div><div>{len(_contracte_u)}</div><div>Contracte analizate</div></div>
+    <div><div>{_fmt_ron(total_val)}</div><div>Valoare totală contracte{f'<small>fără acordurile-cadru ({_fmt_ron(val_acorduri)}, plafon)</small>' if val_acorduri else ''}</div></div>
+  </div>
+</div></header>
 
-<div class="wrap">
+<main class="wrap">
 
-  <div role="note" style="margin:24px 0 18px;background:#EBF5FB;border-left:4px solid #0070C0;
-       border-radius:0 8px 8px 0;padding:14px 18px;color:#1F3B53;font-size:13px;line-height:1.6">
+  <div role="note" class="tp-note">
     <strong>Indicatori, nu verdicte.</strong> Semnalele sunt euristice și trebuie verificate în
-    documentele-sursă. Același contract poate genera mai multe semnale, deci sumele asociate
-    se pot suprapune și nu reprezintă prejudicii. Pragurile pentru achiziția directă sunt
-    <strong>{prag_servicii_fmt} RON</strong>
-    fără TVA pentru produse/servicii și
-    <strong>{prag_lucrari_fmt} RON</strong>
-    fără TVA pentru lucrări.
-    <a href="despre.html#metodologie" style="color:#005A9C;font-weight:700">Metodologie</a> ·
-    <a href="{PRAGURI_LEGALE_SURSA}" target="_blank" rel="noopener noreferrer"
-       style="color:#005A9C;font-weight:700">Legea 98/2016</a>
+    documentele-sursă. Același contract poate genera mai multe semnale; de aceea, totalurile de mai jos
+    numără fiecare contract o singură dată. Pragurile pentru achiziția directă sunt
+    <strong>{prag_servicii_fmt} RON</strong> fără TVA pentru produse/servicii și
+    <strong>{prag_lucrari_fmt} RON</strong> fără TVA pentru lucrări.
+    <a href="despre.html#metodologie">Metodologie</a> ·
+    <a href="{PRAGURI_LEGALE_SURSA}" target="_blank" rel="noopener noreferrer">Legea 98/2016</a>
   </div>
 
-  <!-- BUGET -->
-  <h2 style="color:#00427A;margin:28px 0 16px">📊 Date Bugetare (ANAF/MF)</h2>
-  {budget_html if budget_html else '<p style="color:#777;font-size:13px">Date buget indisponibile.</p>'}
+  <h2>Date bugetare (ANAF/MF)</h2>
+  {budget_html if budget_html else '<p class="tp-muted">Date buget indisponibile.</p>'}
+  <p class="tp-more-link"><a href="transparenta_pantelimon.html">Bugetul pe capitole, buget aprobat vs. realizat →</a></p>
 
-  <!-- RED FLAGS -->
-  <h2 style="color:#00427A;margin:28px 0 8px">🚩 Semnale de risc automate ({len(flags)})</h2>
-  <p style="font-size:13px;color:#777;margin:0 0 16px">
-    {sum(1 for f in flags if f['severitate']=='CRITIC')} CRITIC · {sum(1 for f in flags if f['severitate']=='MAJOR')} MAJOR · {sum(1 for f in flags if f['severitate']=='MEDIU')} MEDIU</p>
+  <h2 id="semnale">Semnale de risc automate ({len(flags)})</h2>
+  <p class="tp-muted">{_n_sev['CRITIC']} CRITIC · {_n_sev['MAJOR']} MAJOR · {_n_sev['MEDIU']} MEDIU ·
+    <a href="furnizori/index.html">toate firmele</a> · <a href="harta.html">harta firmelor</a></p>
   {nota_demo_msg}
 
-  <!-- ANALIZĂ PE CATEGORIE -->
-  <details style="margin-bottom:20px;background:#F4F6F8;border-radius:10px;padding:14px 18px;border:1px solid #DDE1E7">
-    <summary style="cursor:pointer;font-size:14px;font-weight:700;color:#00427A;list-style:none;display:flex;align-items:center;gap:8px">
-      <span style="font-size:18px">📊</span>
-      Analiză pe categorii de semnale
-      <span style="margin-left:auto;font-size:12px;color:#999;font-weight:400">▼ extinde</span>
-    </summary>
-    <p style="font-size:12px;color:#777;margin:10px 0 14px">
-      Apasă pe o categorie pentru statistici descriptive. Sumele asociate flagurilor pot
-      include același contract de mai multe ori și nu reprezintă prejudicii sau cheltuieli nelegale.
-    </p>
+  <details class="tp-atp">
+    <summary>Analiză pe categorii de semnale <span>extinde</span></summary>
+    <p class="tp-muted">Apasă pe o categorie pentru statistici descriptive. Sumele asociate semnalelor pot
+      include același contract de mai multe ori și nu reprezintă prejudicii sau cheltuieli nelegale.</p>
     {analiza_per_tip_html}
   </details>
 
-  {flags_html if flags_html else '<div style="background:#E8F5E9;border-left:4px solid #27AE60;padding:14px 18px;border-radius:0 8px 8px 0"><span style="color:#27AE60;font-weight:700">✅ Niciun semnal automat detectat în această perioadă.</span></div>'}
+  {rezumat_html}
+  <div id="tp-toolbar-slot" class="tp-toolbar-slot" aria-hidden="true"></div>
 
-  <!-- HCL STATISTICI -->
-  <h2 style="color:#00427A;margin:28px 0 8px">📋 Hotărâri Consiliu Local</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px">
-    <div style="background:#fff;border-radius:10px;padding:16px;border-top:4px solid #0070C0;box-shadow:0 1px 4px rgba(0,0,0,.08)">
-      <div style="font-size:28px;font-weight:800;color:#0070C0">{config.get('_hcl_total',0)}</div>
-      <div style="font-size:11px;color:#777;text-transform:uppercase">HCL Total analizate</div>
-    </div>
-    <div style="background:#fff;border-radius:10px;padding:16px;border-top:4px solid #27AE60;box-shadow:0 1px 4px rgba(0,0,0,.08)">
-      <div style="font-size:28px;font-weight:800;color:#27AE60">{config.get('_hcl_ordinare',0)}</div>
-      <div style="font-size:11px;color:#777;text-transform:uppercase">Ședințe ordinare</div>
-    </div>
-    <div style="background:#fff;border-radius:10px;padding:16px;border-top:4px solid {'#C0392B' if config.get('_hcl_pct',0)>25 else '#E67E22'};box-shadow:0 1px 4px rgba(0,0,0,.08)">
-      <div style="font-size:28px;font-weight:800;color:{'#C0392B' if config.get('_hcl_pct',0)>25 else '#E67E22'}">{config.get('_hcl_extraordinare',0)}</div>
-      <div style="font-size:11px;color:#777;text-transform:uppercase">Extraordinare cu convocare de îndată ({config.get('_hcl_pct',0)}%)</div>
-    </div>
-    <div style="background:#fff;border-radius:10px;padding:16px;border-top:4px solid #8E44AD;box-shadow:0 1px 4px rgba(0,0,0,.08)">
-      <div style="font-size:12px;font-weight:700;color:#8E44AD">{'✅ OCR activ' if config.get('_hcl_ocr') else '⚠️ Doar metadata'}</div>
-      <div style="font-size:11px;color:#777;text-transform:uppercase;margin-top:4px">Mod analiză HCL</div>
-    </div>
+  {flags_html if flags_html else '<div class="tp-note tp-note-ok">Niciun semnal automat detectat în această perioadă.</div>'}
+
+  <h2>Hotărâri Consiliu Local</h2>
+  <div class="tp-kpis">
+    <div class="tp-kpi"><div class="tp-kpi-v">{config.get('_hcl_total', 0)}</div><div class="tp-kpi-l">HCL analizate</div></div>
+    <div class="tp-kpi"><div class="tp-kpi-v">{config.get('_hcl_ordinare', 0)}</div><div class="tp-kpi-l">Ședințe ordinare</div></div>
+    <div class="tp-kpi{' tp-kpi-hi' if _hcl_pct > 25 else ''}"><div class="tp-kpi-v">{config.get('_hcl_extraordinare', 0)}</div><div class="tp-kpi-l">Extraordinare cu convocare de îndată ({_hcl_pct}%)</div></div>
+    <div class="tp-kpi"><div class="tp-kpi-v tp-kpi-v-sm">{'OCR activ' if config.get('_hcl_ocr') else 'Doar metadate'}</div><div class="tp-kpi-l">Mod analiză HCL</div></div>
   </div>
 
-  <!-- STATISTICI ACHIZITII -->
-  <h2 style="color:#00427A;margin:28px 0 8px">📊 Statistici Achiziții</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px">
-    <div style="background:#fff;border-radius:10px;padding:16px;border-top:4px solid #0070C0;box-shadow:0 1px 4px rgba(0,0,0,.08)">
-      <div style="font-size:28px;font-weight:800;color:#0070C0">{len(contracte)}</div>
-      <div style="font-size:11px;color:#777;text-transform:uppercase">Contracte totale</div>
-    </div>
-    <div style="background:#fff;border-radius:10px;padding:16px;border-top:4px solid #C0392B;box-shadow:0 1px 4px rgba(0,0,0,.08)">
-      <div style="font-size:28px;font-weight:800;color:#C0392B">{len(directe)}</div>
-      <div style="font-size:11px;color:#777;text-transform:uppercase">Cumpărare directă / negociere</div>
-    </div>
-    <div style="background:#fff;border-radius:10px;padding:16px;border-top:4px solid #E67E22;box-shadow:0 1px 4px rgba(0,0,0,.08)">
-      <div style="font-size:28px;font-weight:800;color:#E67E22">{len(unic_ofertant)}</div>
-      <div style="font-size:11px;color:#777;text-transform:uppercase">Un singur ofertant</div>
-    </div>
-    <div style="background:#fff;border-radius:10px;padding:16px;border-top:4px solid #27AE60;box-shadow:0 1px 4px rgba(0,0,0,.08)">
-      <div style="font-size:28px;font-weight:800;color:#27AE60">{_fmt_ron(total_val)}</div>
-      <div style="font-size:11px;color:#777;text-transform:uppercase">Valoare totală</div>
-    </div>
+  <h2>Statistici achiziții</h2>
+  <div class="tp-kpis">
+    <div class="tp-kpi"><div class="tp-kpi-v">{len(_contracte_u)}</div><div class="tp-kpi-l">Contracte unice</div></div>
+    <div class="tp-kpi"><div class="tp-kpi-v">{len(_directe_u)}</div><div class="tp-kpi-l">Cumpărare directă / negociere</div></div>
+    <div class="tp-kpi"><div class="tp-kpi-v">{len(_unic_u)}</div><div class="tp-kpi-l">Un singur ofertant</div></div>
+    <div class="tp-kpi"><div class="tp-kpi-v">{_fmt_ron(total_val)}</div><div class="tp-kpi-l">Valoare totală (fără acorduri-cadru)</div></div>
   </div>
 
-  <!-- §4.1 RECONCILIERE WIDGET -->
   {reco_html}
 
-  <!-- LISTA CONTRACTE -->
-  <h2 style="color:#00427A;margin:28px 0 8px">📄 Lista contracte analizate (primele 20)</h2>
-  <div style="overflow-x:auto">
-  <table>
-    <thead><tr>
-      <th>Titlu contract</th><th>Valoare</th><th>Tip procedură</th>
-      <th>Ofertanți</th><th>Câștigător</th><th>Data</th>
-    </tr></thead>
-    <tbody>{contracte_html if contracte_html else '<tr><td colspan="6" style="text-align:center;padding:20px;color:#777">Nu există contracte de afișat</td></tr>'}</tbody>
+  <h2>Cele mai recente 20 de contracte</h2>
+  <p class="tp-muted">Lista completă: <a href="contracte.csv">contracte.csv</a> · <a href="contracte.json">contracte.json</a> ·
+    căutare după firmă sau obiect pe <a href="index.html#cauta">prima pagină</a>.</p>
+  <div class="tp-scroll">
+  <table class="tp-table">
+    <thead><tr><th>Obiectul contractului</th><th class="num">Valoare</th><th>Procedură</th>
+      <th class="num">Ofertanți</th><th>Câștigător</th><th>Data</th><th>SEAP</th></tr></thead>
+    <tbody>{contracte_html if contracte_html else '<tr><td colspan="7">Nu există contracte de afișat</td></tr>'}</tbody>
   </table>
   </div>
 
-</div>
+  <p class="tp-sources">Surse: <a href="https://transparenta.eu/entities/{config['cui']}#achizitii" target="_blank" rel="noopener noreferrer">transparenta.eu</a> (ANAF/MF) ·
+     <a href="https://www.e-licitatie.ro/pub" target="_blank" rel="noopener noreferrer">e-licitatie.ro (SEAP)</a> ·
+     <a href="https://www.primariapantelimon.ro" target="_blank" rel="noopener noreferrer">primariapantelimon.ro</a> ·
+     date deschise: <a href="raport.json">raport.json</a></p>
+</main>
 
-<script id="contracte-data" type="application/json">{contracte_json_embed}</script>
 <script id="risc-firma-data" type="application/json">{risc_firma_json}</script>
-
-<style>
-/* ── Profil firmă panou lateral ──────────────────────────────────── */
-#tp-firma-overlay {{
-  display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9000;
-  backdrop-filter:blur(2px);
-}}
-#tp-firma-panel {{
-  position:fixed;top:0;right:0;width:min(520px,100vw);height:100vh;
-  background:#fff;box-shadow:-4px 0 24px rgba(0,0,0,.18);z-index:9001;
-  overflow-y:auto;transform:translateX(100%);
-  transition:transform .25s cubic-bezier(.4,0,.2,1);
-}}
-#tp-firma-panel.open {{ transform:translateX(0); }}
-.tp-risc-badge {{
-  display:inline-block;padding:2px 8px;border-radius:10px;
-  font-size:11px;font-weight:700;color:#fff;
-}}
-</style>
 
 <!-- PANOU PROFIL FIRMĂ -->
 <div id="tp-firma-overlay" onclick="closeFirmaPanel()"></div>
-<div id="tp-firma-panel">
-  <div style="background:#00427A;color:#fff;padding:16px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:1">
-    <span style="font-size:20px">🏢</span>
-    <div style="flex:1">
-      <div id="tp-fp-name" style="font-size:15px;font-weight:700">—</div>
-      <div id="tp-fp-cui"  style="font-size:11px;opacity:.7">CUI: —</div>
+<div id="tp-firma-panel" role="dialog" aria-modal="true" aria-labelledby="tp-fp-name">
+  <div class="tp-fp-head">
+    <div class="tp-fp-title">
+      <div id="tp-fp-name">—</div>
+      <div id="tp-fp-cui">CUI: —</div>
     </div>
-    <button onclick="closeFirmaPanel()"
-            style="background:rgba(255,255,255,.15);border:none;color:#fff;
-                   padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px">✕</button>
+    <button type="button" onclick="closeFirmaPanel()" aria-label="Închide profilul">✕</button>
   </div>
-  <div id="tp-fp-body" style="padding:16px 20px;font-size:13px"></div>
+  <div id="tp-fp-body"></div>
 </div>
 <script>
-// ── Date contracte ──────────────────────────────────────────────
-var _contracteData = null;
-function _getContracte() {{
-  if (!_contracteData) {{
-    try {{
-      _contracteData = JSON.parse(document.getElementById('contracte-data').textContent);
-    }} catch(e) {{ _contracteData = []; }}
-  }}
-  return _contracteData;
-}}
-
-// ── Export PDF / Print ──────────────────────────────────────────
-function printRaport() {{
-  // Deschidem toate flag-urile înainte de print
-  document.querySelectorAll('.flag-detail').forEach(function(el) {{
-    el.style.display = 'block';
-  }});
-  document.querySelectorAll('.flag-arrow').forEach(function(el) {{
-    el.style.display = 'none';
-  }});
-  // Închidem toate panourile de contracte (prea verbose pentru PDF)
-  document.querySelectorAll('.firma-contracts-panel').forEach(function(el) {{
-    el.style.display = 'none';
-  }});
-  window.print();
-}}
-
-// ── Toggle detalii flag ─────────────────────────────────────────
-function toggleFlag(el) {{
-  var detail = el.querySelector('.flag-detail');
-  var arrow = el.querySelector('.flag-arrow');
-  if (detail.style.display === 'none') {{
-    detail.style.display = 'block';
-    if (arrow) arrow.textContent = '▲ ascunde';
-  }} else {{
-    detail.style.display = 'none';
-    if (arrow) arrow.textContent = '▼ detalii';
-  }}
-}}
-
-// ── Toate contractele unei firme ────────────────────────────────
-function showFirmaContracts(firma, evt) {{
-  evt.stopPropagation();
-  var flagDiv = evt.target.closest('[onclick="toggleFlag(this)"]');
-  var existing = flagDiv.querySelector('.firma-contracts-panel');
-  if (existing) {{
-    existing.style.display = existing.style.display === 'none' ? 'block' : 'none';
-    return;
-  }}
-
-  var contracte = _getContracte();
-  var _nfc = _nzFirma(firma);
-  // Exporturile trimestriale data.gov.ro republica acelasi contract cu id-uri
-  // diferite. Fara dedup, DAV GARDEN aparea cu „3 contracte · 10.39 mil. RON",
-  // desi doua randuri erau acelasi contract de 4.62 mil. (real: 2 / 5.77 mil.).
-  var _vazuteC = {{}};
-  var matches = contracte.filter(function(c) {{
-    var cl = _nzFirma(c.firma || '');
-    if (!cl || !_nfc) return false;
-    if (!(cl === _nfc || cl.indexOf(_nfc) !== -1 || _nfc.indexOf(cl) !== -1)) return false;
-    // Rânduri SEAP API: cheia contractului (două achiziții identice în aceeași zi
-    // sunt două contracte). Rânduri vechi data.gov.ro: firmă|dată|valoare|titlu.
-    var k = c.k ? 'k|' + c.k : cl + '|' + (c.data || '') + '|' + Math.round(c.valoare || 0) + '|' + String(c.titlu || '').slice(0, 60);
-    if (_vazuteC[k]) return false;
-    _vazuteC[k] = 1;
-    return true;
-  }});
-  matches.sort(function(a, b) {{ return b.data.localeCompare(a.data); }});
-
-  var totalVal = matches.reduce(function(s, c) {{ return s + (c.valoare || 0); }}, 0);
-  var totalFmt = totalVal >= 1000000
-    ? (totalVal / 1000000).toFixed(2) + ' mil. RON'
-    : Math.round(totalVal / 1000) + ' K RON';
-
-  function fmtVal(v) {{
-    if (!v) return '–';
-    return v >= 1000000
-      ? (v/1000000).toFixed(2) + ' mil.'
-      : Math.round(v/1000) + ' K RON';
-  }}
-
-  var rows = matches.map(function(c, i) {{
-    var bg = i % 2 === 0 ? '#fff' : '#f8f9fa';
-    var ofColor = c.ofertanti === 1 ? '#C0392B' : '#27AE60';
-    // cod + link real doar pentru rândurile din API-ul SEAP (câmpurile cod / url);
-    // id-urile vechi data.gov.ro erau numere de rând, nu numere SEAP.
-    var nr = c.cod || '';
-    var url = c.url || (String(c.id || '').indexOf('contract') === 0
-      ? 'https://e-licitatie.ro/pub/notices/ca-notices/list/1'
-      : 'https://e-licitatie.ro/pub/direct-acquisitions/list/1');
-    var seapCell = nr
-      ? '<a href="' + url + '" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" '
-        + 'style="color:#0070C0;font-weight:700;text-decoration:none;white-space:nowrap" '
-        + 'title="Deschide în SEAP">' + nr + ' ↗</a>'
-      : '–';
-    var ofCell = '<span style="color:' + ofColor + ';font-weight:700">' + (c.ofertanti || '?') + '</span>';
-    if (c.ofertanti === 2) {{
-      ofCell += ' <a href="' + url + '" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" '
-        + 'style="font-size:10px;color:#0070C0;text-decoration:none" '
-        + 'title="Cel de-al doilea ofertant — vizualizează în SEAP">→ SEAP</a>';
-    }}
-    return '<tr style="background:' + bg + '">'
-      + '<td style="padding:6px 10px;font-size:12px;white-space:nowrap">' + (c.data || '–') + '</td>'
-      + '<td style="padding:6px 10px;font-size:12px;max-width:260px">' + (c.titlu || '').substring(0, 70) + '</td>'
-      + '<td style="padding:6px 10px;font-size:12px;font-weight:700;white-space:nowrap">' + fmtVal(c.valoare) + '</td>'
-      + '<td style="padding:6px 10px;font-size:12px">' + (c.tip || '–') + '</td>'
-      + '<td style="padding:6px 10px;font-size:12px;text-align:center">' + ofCell + '</td>'
-      + '<td style="padding:6px 10px;font-size:12px;text-align:center">' + seapCell + '</td>'
-      + '</tr>';
-  }}).join('');
-
-  var panel = document.createElement('div');
-  panel.className = 'firma-contracts-panel';
-  panel.style.cssText = 'margin-top:16px;';
-  panel.innerHTML =
-    '<div style="background:#EBF5FB;border-radius:8px;padding:14px 16px;border:1px solid #AED6F1">'
-    + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">'
-    + '<strong style="color:#0070C0;font-size:14px">📊 Contracte cu Primăria Pantelimon – ' + firma + '</strong>'
-    + '<span style="font-size:12px;color:#555;background:#fff;padding:4px 10px;border-radius:12px;border:1px solid #AED6F1">'
-    + matches.length + ' contracte · Total: ' + totalFmt
-    + '</span></div>'
-    + (matches.length === 0
-      ? '<p style="text-align:center;color:#888;font-size:13px">Niciun contract găsit în datele descărcate.</p>'
-      : '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse">'
-        + '<thead><tr style="background:#0070C0;color:#fff">'
-        + '<th style="padding:6px 10px;font-size:11px;text-align:left">Data</th>'
-        + '<th style="padding:6px 10px;font-size:11px;text-align:left">Obiect contract</th>'
-        + '<th style="padding:6px 10px;font-size:11px;text-align:left">Valoare</th>'
-        + '<th style="padding:6px 10px;font-size:11px;text-align:left">Tip procedură</th>'
-        + '<th style="padding:6px 10px;font-size:11px;text-align:center">Ofertanți</th>'
-        + '<th style="padding:6px 10px;font-size:11px;text-align:center">Cod SEAP</th>'
-        + '</tr></thead><tbody>' + rows + '</tbody></table></div>')
-    + '<div style="margin-top:10px;font-size:11px;color:#777">Date: SEAP (e-licitatie.ro) · Contracte publicate în SEAP de la 1 ianuarie anul trecut'
-    + ' · <em>Al doilea ofertant — apasă „→ SEAP" pentru detalii complete</em></div>'
-    + '</div>';
-
-  flagDiv.appendChild(panel);
-}}
-
-// ── Profil complet firmă ─────────────────────────────────────────────────────
-function _esc(s) {{
-  return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {{
-    return {{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[c];
-  }});
-}}
-// Normalizare pentru potrivirea numelor de firme (SEAP livrează nume „murdare":
-// spații duble, diacritice, „&" vs „and", sufixe SRL/S.A. inconsistente).
-function _nzFirma(s) {{
-  var t = String(s == null ? '' : s).toLowerCase();
-  if (t.normalize) t = t.normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
-  return t.replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, ' ').replace(/\\s+/g, ' ').trim();
-}}
-var _riscData = null;
-function _getRisc() {{
-  if (!_riscData) {{
-    try {{ _riscData = JSON.parse(document.getElementById('risc-firma-data').textContent); }}
-    catch(e) {{ _riscData = {{}}; }}
-  }}
-  return _riscData;
-}}
-
-// Trimite utilizatorul in lista principala, filtrata pe firma respectiva.
-function _filtreazaFurnizor(firma) {{
-  var sel = document.getElementById('tp-supplier');
-  if (sel) {{
-    var optiune = Array.from(sel.options).find(function(o) {{ return o.value === firma; }});
-    if (optiune) {{
-      sel.value = firma;
-      sel.dispatchEvent(new Event('change', {{bubbles: true}}));
-      var toolbar = document.querySelector('.tp-toolbar');
-      if (toolbar) toolbar.scrollIntoView({{behavior: 'smooth', block: 'start'}});
-      return;
-    }}
-  }}
-  // fallback fara enhance.js: cautare prin hash
-  location.hash = 'supplier=' + encodeURIComponent(firma);
-  location.reload();
-}}
-
-function openFirmaPanel(firma, evt) {{
-  if (evt) evt.stopPropagation();
-  var rd   = _getRisc()[firma] || {{}};
-  var _nf  = _nzFirma(firma);
-  // Exporturile trimestriale data.gov.ro repetă același contract în mai multe
-  // trimestre cu id-uri diferite. Fără deduplicare, valoarea firmei se dubla.
-  var _vazute = {{}};
-  var contracte = _getContracte().filter(function(c) {{
-    var cn = _nzFirma(c.firma||'');
-    if (!cn || !_nf) return false;
-    if (!(cn === _nf || cn.indexOf(_nf) !== -1 || _nf.indexOf(cn) !== -1)) return false;
-    var k = c.k ? 'k|' + c.k : cn + '|' + (c.data||'') + '|' + Math.round(c.valoare||0) + '|' + String(c.titlu||'').slice(0,60);
-    if (_vazute[k]) return false;
-    _vazute[k] = 1;
-    return true;
-  }});
-  var cui  = rd.cui || '';
-  var scor = rd.scor || 0;
-  var scorColor = scor >= 50 ? '#C0392B' : scor >= 20 ? '#E67E22' : '#F39C12';
-  var scorLabel = scor >= 50 ? 'CRITIC' : scor >= 20 ? 'MAJOR' : 'MEDIU';
-
-  document.getElementById('tp-fp-name').textContent = firma;
-  document.getElementById('tp-fp-cui').textContent  = 'CUI: ' + (cui || '—');
-
-  var totalVal = contracte.reduce(function(s,c){{return s+(c.valoare||0);}},0);
-  function fmtV(v) {{ return v>=1000000?(v/1000000).toFixed(2)+' mil. RON':Math.round(v/1000)+'K RON'; }}
-
-  // Lista din panou e plafonata server-side; badge-urile numara toate semnalele.
-  // Expunem diferenta explicit, altfel „29 CRITIC/MAJOR/MEDIU" langa o lista de 20
-  // arata ca o contradictie (vezi AUDIT 01.07.2026).
-  var _nTotal   = rd.n_total || (rd.flags||[]).length;
-  var _nAscunse = Math.max(0, _nTotal - (rd.flags||[]).length);
-
-  var flagsHtml = '';
-  (rd.flags||[]).forEach(function(f) {{
-    var fColor = f.severitate==='CRITIC'?'#C0392B':f.severitate==='MAJOR'?'#E67E22':'#F39C12';
-    var anchor = f.anchor || '';
-    // Rândurile sunt acum <a> reale spre neregula detaliată din lista principală.
-    // Înainte erau <div>-uri fără handler: arătau ca butoane, dar nu făceau nimic.
-    var openTag = anchor
-      ? '<a href="#'+anchor+'" onclick="closeFirmaPanel()" '
-        + 'style="display:block;text-decoration:none;color:inherit;cursor:pointer;'
-      : '<div style="';
-    var closeTag = anchor ? '</a>' : '</div>';
-    flagsHtml += openTag
-      + 'border-left:3px solid '+fColor+';padding:8px 10px;margin-bottom:6px;background:#fafafa;border-radius:0 6px 6px 0">'
-      + '<span style="font-size:10px;font-weight:700;color:'+fColor+'">'+f.severitate+'</span>'
-      + ' <span style="font-size:12px;font-weight:600">'+_esc(f.titlu)+'</span>'
-      + (f.descriere
-          ? '<div style="font-size:11.5px;color:#444;margin-top:4px;line-height:1.45">'+_esc(f.descriere)+'</div>'
-          : '')
-      + '<div style="font-size:11px;color:#777;margin-top:4px">'
-        + fmtV(f.valoare||0) + ' · ' + (f.data||'—')
-        + (f.contract_id ? ' · <span style="font-family:monospace">'+_esc(f.contract_id)+'</span>' : '')
-        + (anchor ? ' · <span style="color:#0070C0;font-weight:600">vezi neregula →</span>' : '')
-      + '</div>'
-      + closeTag;
-  }});
-
-  var contracteHtml = '';
-  contracte.slice(0,10).forEach(function(c,i) {{
-    var bg = i%2===0?'#fff':'#f8f9fa';
-    contracteHtml += '<tr style="background:'+bg+'">'
-      + '<td style="padding:5px 8px;font-size:11px;white-space:nowrap">'+c.data+'</td>'
-      + '<td style="padding:5px 8px;font-size:11px;max-width:200px">'+c.titlu.substring(0,50)+'</td>'
-      + '<td style="padding:5px 8px;font-size:11px;font-weight:700;white-space:nowrap">'+fmtV(c.valoare)+'</td>'
-      + '</tr>';
-  }});
-
-  var termeneUrl = cui ? 'https://termene.ro/firma/'+cui.replace(/^RO/i,'') : '#';
-  var onrcUrl    = cui ? 'https://www.recom.ro/companies_ro_company_detail.aspx?id='+cui.replace(/^RO/i,'') : '#';
-  // SEAP: link direct la cel mai recent contract al firmei care are link real
-  // (sursa SEAP API, câmpul url din contracte.json); altfel lista publică SEAP.
-  // Id-urile vechi data.gov.ro erau numere de rând — /view/<nr> dădea pagină goală.
-  var cuLink = contracte.filter(function(c) {{ return c.url; }})
-    .sort(function(a, b) {{ return String(b.data||'').localeCompare(String(a.data||'')); }});
-  var seapUrl = cuLink.length ? cuLink[0].url : 'https://e-licitatie.ro/pub/direct-acquisitions/list/1';
-  var seapLabel = cuLink.length ? '📋 ' + (cuLink[0].cod || 'Anunț') + ' în SEAP →' : '📋 Caută în SEAP →';
-
-  document.getElementById('tp-fp-body').innerHTML =
-    '<div style="background:#FFF3E0;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">'
-    + '<div style="text-align:center">'
-    + '<div style="font-size:32px;font-weight:800;color:'+scorColor+'">'+scor+'</div>'
-    + '<div style="font-size:10px;font-weight:700;color:'+scorColor+'">SCOR RISC</div>'
-    + '</div>'
-    + '<div style="flex:1">'
-    + '<span class="tp-risc-badge" style="background:#C0392B">'+( rd.n_critic||0)+' CRITIC</span> '
-    + '<span class="tp-risc-badge" style="background:#E67E22">'+( rd.n_major||0)+' MAJOR</span> '
-    + '<span class="tp-risc-badge" style="background:#F39C12">'+( rd.n_mediu||0)+' MEDIU</span>'
-    // Valoarea afișată este suma contractelor DISTINCTE ale firmei cu Primăria.
-    // Înainte se afișa rd.valoare_totala = suma valorilor tuturor flag-urilor,
-    // în care același contract era numărat de 3-4 ori (o dată per semnal) —
-    // rezulta o cifră de câteva ori mai mare decât realitatea.
-    + '<div style="font-size:11px;color:#555;margin-top:6px">Valoare contracte cu Primăria: <strong>'
-      + (contracte.length ? fmtV(totalVal) : '—')
-      + '</strong>' + (contracte.length ? ' <span style="color:#888">('+contracte.length+' contracte)</span>' : '')
-    + '</div>'
-    + '<div style="font-size:10.5px;color:#888;margin-top:2px" '
-      + 'title="Suma valorilor tuturor semnalelor. Un contract poate genera mai multe semnale, deci aceeași sumă poate fi numărată de mai multe ori.">'
-      + 'Sumă cumulată a semnalelor: '+fmtV(rd.valoare_totala||0)+' <span style="cursor:help">ⓘ</span></div>'
-    + '</div></div>'
-
-    + '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">'
-    + '<a href="'+termeneUrl+'" target="_blank" rel="noopener noreferrer" style="background:#0070C0;color:#fff;padding:6px 12px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">🔍 termene.ro →</a>'
-    + '<a href="'+onrcUrl+'" target="_blank" rel="noopener noreferrer" style="background:#1E8449;color:#fff;padding:6px 12px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">🏛 ONRC →</a>'
-    + '<a href="'+seapUrl+'" target="_blank" rel="noopener noreferrer" style="background:#8E44AD;color:#fff;padding:6px 12px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600">'+seapLabel+'</a>'
-    + '</div>'
-
-    + (rd.onrc && rd.onrc.reprezentanti && rd.onrc.reprezentanti.length > 0
-      ? (function() {{
-          var rows = rd.onrc.reprezentanti.map(function(r) {{
-            return '<tr><td style="padding:5px 8px;font-size:12px;font-weight:600">' + r.calitate + '</td>'
-              + '<td style="padding:5px 8px;font-size:12px"><strong>' + r.nume + '</strong>'
-              + (r.localitate ? ' <span style="color:#888;font-size:11px">(' + r.localitate + ')</span>' : '')
-              + '</td></tr>';
-          }}).join('');
-          var cod = rd.onrc.cod_inmatriculare || '';
-          var onrcLink = cod
-            ? '<a href="https://www.recom.ro/companies_ro_company_detail.aspx?id='+encodeURIComponent(cod)+'" target="_blank" rel="noopener noreferrer" style="color:#0070C0;font-size:11px">recom.ro →</a>'
-            : '';
-          return '<h4 style="margin:16px 0 8px;font-size:13px;color:#1E8449">🏛 Reprezentanți legali (ONRC)</h4>'
-            + '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse">'
-            + '<thead><tr style="background:#1E8449;color:#fff"><th style="padding:5px 8px;font-size:11px">Calitate</th><th style="padding:5px 8px;font-size:11px">Nume</th></tr></thead>'
-            + '<tbody>' + rows + '</tbody></table></div>'
-            + '<div style="font-size:11px;color:#777;margin-top:4px">Sursă: ONRC data.gov.ro (date oficiale) · ' + onrcLink + '</div>';
-        }})()
-      : (function() {{
-          var op = rd.openapi || {{}};
-          var hasOp = op.numar_reg_com || op.stare;
-          if (hasOp) {{
-            var cuiClean = cui.replace(/^RO/i, '');
-            return '<h4 style="margin:16px 0 8px;font-size:13px;color:#1E8449">🏛 Date firmă (ANAF/ONRC)</h4>'
-              + '<div style="background:#F4F6F8;border-radius:8px;padding:12px 14px;font-size:12px">'
-              + (op.stare ? '<div style="margin-bottom:4px">Stare: <strong' + (op.radiata ? ' style="color:#C0392B"' : '') + '>' + op.stare + (op.radiata ? ' ⚠️' : '') + '</strong></div>' : '')
-              + (op.numar_reg_com ? '<div style="margin-bottom:4px">Nr. reg. com.: <strong>' + op.numar_reg_com + '</strong></div>' : '')
-              + (op.ultima_declaratie ? '<div style="margin-bottom:8px;color:#777">Ultima declarație fiscală: ' + op.ultima_declaratie + '</div>' : '')
-              + '<div style="margin-top:6px">'
-              + '<a href="https://termene.ro/firma/' + cuiClean + '" target="_blank" rel="noopener noreferrer" style="color:#0070C0;font-weight:600;font-size:12px">📋 Administratori pe termene.ro →</a>'
-              + ' &nbsp;·&nbsp; '
-              + '<a href="https://www.recom.ro/companies_ro_company_detail.aspx?id=' + cuiClean + '" target="_blank" rel="noopener noreferrer" style="color:#1E8449;font-size:12px">🏛 recom.ro →</a>'
-              + '</div>'
-              + '<div style="font-size:10px;color:#aaa;margin-top:6px">Date ONRC complete: disponibile după procesare locală</div>'
-              + '</div>';
-          }} else {{
-            return '<div style="margin:12px 0;padding:8px 12px;background:#F4F6F8;border-radius:6px;font-size:11px;color:#777">'
-              + '🏛 Reprezentanți legali: <a href="' + onrcUrl + '" target="_blank" rel="noopener noreferrer" style="color:#0070C0">verifică pe recom.ro →</a>'
-              + ' sau <a href="https://termene.ro/firma/' + cui.replace(/^RO/i,'') + '" target="_blank" rel="noopener noreferrer" style="color:#0070C0">termene.ro →</a>'
-              + '</div>';
-          }}
-        }})())
-
-    + (flagsHtml
-      ? '<h4 style="margin:16px 0 8px;font-size:13px;color:#C0392B">🚩 Semnale de risc ('+_nTotal+')</h4>'
-        + '<div style="font-size:11px;color:#777;margin:-4px 0 8px">Apasă pe un semnal pentru a vedea analiza completă în raport.</div>'
-        + flagsHtml
-        + (_nAscunse > 0
-            ? '<div style="font-size:11.5px;color:#555;padding:8px 10px;background:#F4F6F8;border-radius:6px">'
-              + 'Încă <strong>'+_nAscunse+'</strong> semnale pentru această firmă nu încap în panou. '
-              + '<a href="#" onclick="closeFirmaPanel();_filtreazaFurnizor('+JSON.stringify(firma).replace(/"/g,'&quot;')+');return false;" style="color:#0070C0;font-weight:600">Vezi toate în raport →</a>'
-              + '</div>'
-            : '')
-      : '')
-
-    + (contracteHtml
-      ? '<h4 style="margin:16px 0 8px;font-size:13px;color:#00427A">📄 Contracte cu Primăria</h4>'
-        + '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse">'
-        + '<thead><tr style="background:#00427A;color:#fff"><th style="padding:5px 8px;font-size:11px">Data</th><th style="padding:5px 8px;font-size:11px">Obiect</th><th style="padding:5px 8px;font-size:11px">Valoare</th></tr></thead>'
-        + '<tbody>' + contracteHtml + '</tbody></table></div>'
-      : '')
-
-    + '<div style="margin-top:16px;padding:10px;background:#F4F6F8;border-radius:6px;font-size:11px;color:#777">'
-    + 'Date: ANAF · SEAP (e-licitatie.ro) · openapi.ro · ONRC data.gov.ro · Surse publice oficiale.<br>'
-    + 'Asociați/acționari: verifică manual la ONRC (recom.ro) — date actualizate lunar.'
-    + '</div>';
-
-  document.getElementById('tp-firma-overlay').style.display = 'block';
-  document.getElementById('tp-firma-panel').classList.add('open');
-}}
-
-function closeFirmaPanel() {{
-  document.getElementById('tp-firma-overlay').style.display = 'none';
-  document.getElementById('tp-firma-panel').classList.remove('open');
-}}
-
-// Keyboard ESC closes panel
-document.addEventListener('keydown', function(e) {{ if (e.key==='Escape') closeFirmaPanel(); }});
+{_SCRIPT_RAPORT}
 </script>
-<footer style="background:#00427A;color:rgba(255,255,255,.7);text-align:center;padding:16px;font-size:12px;margin-top:40px">
-  <p>Surse date: <a href="https://transparenta.eu/entities/{config['cui']}#achizitii" target="_blank" rel="noopener noreferrer" style="color:#4D86C2">transparenta.eu</a> (ANAF/MF) &nbsp;·&nbsp;
-     <a href="https://www.e-licitatie.ro/pub" target="_blank" rel="noopener noreferrer" style="color:#4D86C2">e-licitatie.ro (SEAP)</a> &nbsp;·&nbsp;
-     <a href="https://www.primariapantelimon.ro" target="_blank" rel="noopener noreferrer" style="color:#4D86C2">primariapantelimon.ro</a></p>
-  <p style="margin-top:6px;font-size:11px;opacity:.7">
-    Raport generat automat de <strong>monitor_pantelimon.py</strong> &nbsp;·&nbsp;
-    Inițiativă civică &nbsp;·&nbsp;
-    Datele sunt extrase exclusiv din surse publice oficiale.
-  </p>
-<script type="application/json" id="tp-data">{raport_json_embedded}</script>
-</footer>
 <script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>"""
+    config["_raport_json_obj"] = raport_json_obj
     return html
 
 
@@ -5694,12 +5452,47 @@ def actualizeaza_semnale_index(n_semnale: int, n_critic: int, index_path: str = 
                       ("idx-banner-critic", n_critic)):
         nou = _re_idx.sub(rf'(<span[^>]*id="{_id}"[^>]*>)[^<]*(</span>)',
                           rf'\g<1>{int(_val)}\2', nou, count=1)
+    nou = _re_idx.sub(r'(<a [^>]*id="idx-see-all"[^>]*>)[^<]*(</a>)',
+                      rf'\g<1>Vezi toate cele {int(n_semnale)} de semnale\2', nou, count=1)
     if nou == content:
         return False
     with open(index_path, "w", encoding="utf-8") as handle:
         handle.write(nou)
     print(f"  [OK] index.html: {n_semnale} semnale / {n_critic} critice sincronizate")
     return True
+
+
+def actualizeaza_contoare_index(contracte_export: list, index_path: str = None) -> bool:
+    """Scrie în index.html (fără JS) numărul de contracte unice și de firme.
+
+    Înainte, cifrele statice erau vechi (506 / 181), iar JS-ul le înlocuia după încărcare
+    cu 714 / 215 — textul „sărea”, iar crawlerele vedeau cifrele vechi."""
+    if index_path is None:
+        index_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
+    if not os.path.exists(index_path):
+        return False
+    n_contracte = len(contracte_unice(contracte_export))
+    n_firme = len({str(c.get("cui") or c.get("firma") or "").strip()
+                   for c in contracte_export if (c.get("cui") or c.get("firma"))})
+    with open(index_path, encoding="utf-8") as handle:
+        content = handle.read()
+    nou = re.sub(r'(<span class="v" id="idx-contracte">)[^<]*(</span>)', rf"\g<1>{n_contracte}\2", content, count=1)
+    nou = re.sub(r'(<b id="idx-firme">)[^<]*(</b>)', rf"\g<1>{n_firme}\2", nou, count=1)
+    if nou == content:
+        return False
+    with open(index_path, "w", encoding="utf-8") as handle:
+        handle.write(nou)
+    print(f"  [OK] index.html: {n_contracte} contracte unice / {n_firme} firme sincronizate")
+    return True
+
+
+def aplica_cadrul_site() -> None:
+    """Meniul, banda de date și subsolul, scrise static în toate paginile (site_shell.py)."""
+    try:
+        from site_shell import aplica_pe_site
+        aplica_pe_site(os.path.dirname(os.path.abspath(__file__)))
+    except Exception as exc:  # nu blocăm publicarea raportului
+        print(f"  [WARN] Cadrul comun al paginilor neaplicat: {exc}")
 
 
 def actualizeaza_contoare_analiza(contracte_export: list) -> None:
@@ -5994,8 +5787,8 @@ Semnalele sunt indicatori euristici și nu reprezintă constatări juridice sau 
     return press_kit
 
 
-def genereaza_sitemap(index_furnizori: list) -> str:
-    """Regenerează sitemap.xml cu paginile statice + toate paginile furnizori."""
+def genereaza_sitemap(index_furnizori: list, sluguri_semnale: list = None) -> str:
+    """Regenerează sitemap.xml: paginile statice, fișele firmelor și paginile de semnal."""
     BASE = "https://transparenta-pantelimon.eu"
     azi = datetime.now().strftime("%Y-%m-%d")
     statice = [
@@ -6008,6 +5801,7 @@ def genereaza_sitemap(index_furnizori: list) -> str:
         ("/petitie.html",                 "0.6", "monthly"),
         ("/modele.html",                 "0.6", "monthly"),
         ("/harta.html",                   "0.6", "weekly"),
+        ("/retele.html",                  "0.5", "monthly"),
         ("/furnizori/index.html",         "0.6", "weekly"),
     ]
     urls = ""
@@ -6027,6 +5821,15 @@ def genereaza_sitemap(index_furnizori: list) -> str:
             f"    <lastmod>{azi}</lastmod>\n"
             f"    <changefreq>monthly</changefreq>\n"
             f"    <priority>0.5</priority>\n"
+            f"  </url>\n"
+        )
+    for sl in sorted(set(sluguri_semnale or [])):
+        urls += (
+            f"  <url>\n"
+            f"    <loc>{BASE}/semnale/{sl}.html</loc>\n"
+            f"    <lastmod>{azi}</lastmod>\n"
+            f"    <changefreq>monthly</changefreq>\n"
+            f"    <priority>0.4</priority>\n"
             f"  </url>\n"
         )
     return (
@@ -6225,143 +6028,159 @@ def geocodeaza_firme(
     return rezultate
 
 
+def _contracte_distincte_firma(contracte_firma: list) -> list:
+    """Contractele unei firme, fiecare o dată (asocierile au aceeași cheie SEAP), recente primele."""
+    return sorted(contracte_unice(contracte_firma), key=lambda c: c.get("data_publicare", ""), reverse=True)
+
+
 def genereaza_pagina_furnizor(
         nume: str, slug: str,
         flags_firma: list, contracte_firma: list,
         config: dict, mentiuni: list = None,
         mentiuni_auto: list = None,
-        firme_legate: list = None) -> str:
-    """Generează pagina HTML dedicată unui furnizor."""
+        firme_legate: list = None,
+        sluguri_semnale: dict = None,
+        ancore_semnale: dict = None,
+        slug_dupa_cui: dict = None) -> str:
+    """Fișa unei firme: contractele cu Primăria și, lângă fiecare, semnalele lui.
+
+    sluguri_semnale / ancore_semnale: {id(flag): slug | 'nereguli-N'} — legături spre
+    pagina semnalului și spre cardul din raport (aceleași ca în raport).
+    """
     import html as html_mod
-    import re
+    e = lambda s: html_mod.escape(str(s or ""), quote=True)  # noqa: E731
+    sluguri_semnale = sluguri_semnale or {}
+    ancore_semnale = ancore_semnale or {}
 
-    valoare_totala = sum(c.get("valoare_ron", 0) for c in contracte_firma)
-    n_critic = sum(1 for f in flags_firma if f.get("severitate") == "CRITIC")
-    n_major  = sum(1 for f in flags_firma if f.get("severitate") == "MAJOR")
-    n_mediu  = sum(1 for f in flags_firma if f.get("severitate") == "MEDIU")
-    cui_f    = (contracte_firma[0].get("castigator_cui", "") or "") if contracte_firma else ""
+    contracte_d = _contracte_distincte_firma(contracte_firma)
+    valoare = sum(float(c.get("valoare_ron", 0) or 0) for c in contracte_d if not _este_acord_cadru(c))
+    acorduri = [c for c in contracte_d if _este_acord_cadru(c)]
+    n_sev = {s_: sum(1 for f in flags_firma if f.get("severitate") == s_) for s_ in ("CRITIC", "MAJOR", "MEDIU")}
+    cui_f = (contracte_firma[0].get("castigator_cui", "") or "") if contracte_firma else ""
     base_url = "https://transparenta-pantelimon.eu"
-    safe_name = html_mod.escape(nume)
+    safe_name = e(nume)
+    ani = sorted({(c.get("data_publicare") or "")[:4] for c in contracte_d if c.get("data_publicare")})
+    perioada = (f"{ani[0]}–{ani[-1]}" if len(ani) > 1 else ani[0]) if ani else ""
 
-    culori = {"CRITIC": "#C0392B", "MAJOR": "#E67E22", "MEDIU": "#F39C12"}
-    emoji_sev = {"CRITIC": "🔴", "MAJOR": "🟠", "MEDIU": "🟡"}
+    # Indexăm semnalele pe contracte (după id-urile din contract_id și din lista de componente)
+    id_la_cheie = {c.get("id"): (c.get("cheie_seap") or c.get("id")) for c in contracte_firma if c.get("id")}
+    semnale_pe_contract: dict = {}
+    semnale_multi = []
+    for f in flags_firma:
+        ids = [x.strip() for x in str(f.get("contract_id") or "").split(",") if x.strip()]
+        ids += [str(c.get("id")) for c in (f.get("contracte") or []) if c.get("id")]
+        chei = list(dict.fromkeys(id_la_cheie[i] for i in ids if i in id_la_cheie))
+        for k in chei:
+            semnale_pe_contract.setdefault(k, []).append(f)
+        if len(chei) != 1:
+            semnale_multi.append(f)
 
-    flags_html = ""
-    for idx, f in enumerate(flags_firma, 1):
-        culoare = culori.get(f.get("severitate", ""), "#999")
-        emoji = emoji_sev.get(f.get("severitate", ""), "⚪")
-        descriere_text = re.sub(r"<[^>]+>", "", str(f.get("descriere", "")))
-        descriere_safe = html_mod.escape(descriere_text[:400])
-        flags_html += f"""
-      <div style="border-left:4px solid {culoare};background:#fff;padding:12px 16px;
-                  border-radius:0 6px 6px 0;margin-bottom:8px;
-                  box-shadow:0 1px 3px rgba(0,0,0,0.08)">
-        <div style="font-weight:700;color:{culoare}">{emoji} [{html_mod.escape(str(f.get("severitate","")))}] {html_mod.escape(str(f.get("titlu",""))[:120])}</div>
-        <div style="font-size:13px;color:#555;margin-top:4px">{descriere_safe}</div>
-        <div style="font-size:12px;color:#888;margin-top:4px">
-          📋 {html_mod.escape(str(f.get("contract_id","") or "–"))} &nbsp;|&nbsp;
-          💰 {_fmt_ron(float(f.get("valoare",0) or 0))} &nbsp;|&nbsp;
-          📅 {html_mod.escape(str(f.get("data","")))}
-        </div>
-      </div>"""
+    def pastila(f) -> str:
+        sev = f.get("severitate", "MEDIU")
+        slug_s = sluguri_semnale.get(id(f), "")
+        href = f"../semnale/{slug_s}.html" if slug_s else (
+            f"../raport_transparenta.html#{ancore_semnale[id(f)]}" if id(f) in ancore_semnale else "")
+        text = e(str(f.get("titlu", ""))[:90])
+        if href:
+            return f'<a class="tp-sig" data-sev="{e(sev)}" href="{href}"><span class="tp-sevpill">{e(sev)}</span> {text}</a>'
+        return f'<span class="tp-sig" data-sev="{e(sev)}"><span class="tp-sevpill">{e(sev)}</span> {text}</span>'
 
-    contracte_rows = ""
-    for c in sorted(contracte_firma, key=lambda x: x.get("data_publicare",""), reverse=True):
-        contracte_rows += f"""
-        <tr>
-          <td style="padding:7px 10px;border-bottom:1px solid #f0f2f5;font-size:13px">{html_mod.escape(c.get("titlu","")[:55])}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #f0f2f5;font-size:13px;font-weight:700">{_fmt_ron(c.get("valoare_ron",0))}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #f0f2f5;font-size:12px">{html_mod.escape(c.get("tip_procedura",""))}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #f0f2f5;font-size:12px">{html_mod.escape(c.get("data_publicare",""))}</td>
-        </tr>"""
+    rows = []
+    for c in contracte_d:
+        k = c.get("cheie_seap") or c.get("id")
+        sem = semnale_pe_contract.get(k, [])
+        nro = c.get("nr_ofertanti", 0)
+        cod = c.get("cod_seap") or ""
+        cod_cell = (f'<a href="{e(c.get("url_seap"))}" target="_blank" rel="noopener noreferrer">{e(cod)} ↗</a>'
+                    if cod and c.get("url_seap") else "–")
+        plafon = ' <small class="tp-muted">(acord-cadru, plafon)</small>' if _este_acord_cadru(c) else ""
+        rows.append(
+            f'<tr{" class=has-sig" if sem else ""}><td class="nowrap">{_data_ro_scurta(c.get("data_publicare", ""))}</td>'
+            f'<td>{e(c.get("titlu", ""))}'
+            + (f'<div class="tp-sigs">{"".join(pastila(f) for f in sem)}</div>' if sem else "")
+            + f'</td><td class="num nowrap">{_fmt_ron(float(c.get("valoare_ron", 0) or 0))}{plafon}</td>'
+            f'<td>{e(c.get("tip_procedura") or "–")}</td>'
+            f'<td class="num{" tp-hi" if nro == 1 else ""}">{nro or "–"}</td><td class="nowrap">{cod_cell}</td></tr>'
+        )
 
-    onrc_link = f'https://termene.ro/firma/{cui_f}' if cui_f else '#'
+    multi_html = ""
+    if semnale_multi:
+        carduri = []
+        for f in semnale_multi:
+            desc = re.sub(r"<[^>]+>", "", str(f.get("descriere", "")))
+            carduri.append(
+                f'<div class="tp-sigcard" data-sev="{e(f.get("severitate", ""))}">{pastila(f)}'
+                f'<p>{e(desc[:500])}</p></div>'
+            )
+        multi_html = (f'<h2>Semnale care privesc mai multe contracte ({len(semnale_multi)})</h2>'
+                      f'<p class="tp-muted">De exemplu, contracte asemănătoare la câteva zile distanță.</p>'
+                      f'{"".join(carduri)}')
 
     # Secțiune mențiuni media (din mentiuni_media.json, curatorial)
     mentiuni_html = ""
     if mentiuni:
         rands_m = ""
         for m in mentiuni:
-            rezumat_row = (
-                f'<div style="font-size:13px;color:#555;margin-top:4px">'
-                f'{html_mod.escape(str(m.get("rezumat",""))[:300])}</div>'
-            ) if m.get("rezumat") else ""
-            rands_m += f"""
-      <div style="border-left:3px solid #2874A6;padding:8px 14px;margin-bottom:8px;
-                  background:#fff;border-radius:0 6px 6px 0;
-                  box-shadow:0 1px 3px rgba(0,0,0,.06)">
-        <div style="font-weight:600;font-size:14px">
-          <a href="{html_mod.escape(str(m.get('url','#')))}" target="_blank" rel="noopener"
-             style="color:#2874A6;text-decoration:none">
-            {html_mod.escape(str(m.get('titlu',''))[:120])}
-          </a>
-        </div>
-        <div style="font-size:12px;color:#888;margin-top:3px">
-          🗞️ {html_mod.escape(str(m.get('outlet','')))} &nbsp;·&nbsp;
-          📅 {html_mod.escape(str(m.get('data','')))}
-        </div>
-        {rezumat_row}
-      </div>"""
-        mentiuni_html = f"""
-  <h2>📰 Mențiuni în presă ({len(mentiuni)})</h2>
-  {rands_m}"""
+            rezumat_row = (f'<div class="tp-ment-rez">{html_mod.escape(str(m.get("rezumat", ""))[:300])}</div>'
+                           if m.get("rezumat") else "")
+            rands_m += (
+                f'<div class="tp-ment"><a href="{e(m.get("url", "#"))}" target="_blank" rel="noopener">'
+                f'{html_mod.escape(str(m.get("titlu", ""))[:120])}</a>'
+                f'<div class="tp-ment-meta">{html_mod.escape(str(m.get("outlet", "")))} · {html_mod.escape(str(m.get("data", "")))}</div>'
+                f'{rezumat_row}</div>'
+            )
+        mentiuni_html = f'<h2>📰 Mențiuni în presă ({len(mentiuni)})</h2>{rands_m}'
 
-    # Secțiune mențiuni automate de presă (din mentiuni_presa_auto.json)
     mentiuni_auto_html = ""
     if mentiuni_auto:
         rands_auto = ""
         for m in mentiuni_auto[:10]:
-            kw = m.get('matched_keyword', '')
-            rands_auto += f"""
-      <div style="border-left:3px solid #7C3AED;padding:8px 14px;margin-bottom:8px;
-                  background:#fff;border-radius:0 6px 6px 0;
-                  box-shadow:0 1px 3px rgba(0,0,0,.06)">
-        <div style="font-weight:600;font-size:14px">
-          <a href="{html_mod.escape(str(m.get('link','#')))}" target="_blank" rel="noopener noreferrer"
-             style="color:#7C3AED;text-decoration:none">
-            {html_mod.escape(str(m.get('title',''))[:120])}
-          </a>
-        </div>
-        <div style="font-size:12px;color:#888;margin-top:3px">
-          🗞️ {html_mod.escape(str(m.get('source','')))} &nbsp;·&nbsp;
-          📅 {html_mod.escape(str(m.get('pub_date',''))[:16])}
-          {(' &nbsp;·&nbsp; 🔑 <strong>' + html_mod.escape(kw) + '</strong>') if kw else ''}
-        </div>
-      </div>"""
-        mentiuni_auto_html = f"""
-  <h2>🔍 Mențiuni detectate automat în presă ({len(mentiuni_auto)})</h2>
-  <div style="background:#FDF4FF;border:1px solid #E9D5FF;border-radius:8px;
-              padding:10px 14px;font-size:12px;color:#6B21A8;margin-bottom:12px">
-    ⚠️ <strong>Detecție automată</strong> — articolele de mai jos conțin cuvinte-cheie
-    asociate cu numele firmei. Pot exista rezultate nerelevante. Verificare manuală recomandată.
-  </div>
-  {rands_auto}"""
+            kw = m.get("matched_keyword", "")
+            rands_auto += (
+                f'<div class="tp-ment"><a href="{e(m.get("link", "#"))}" target="_blank" rel="noopener noreferrer">'
+                f'{html_mod.escape(str(m.get("title", ""))[:120])}</a>'
+                f'<div class="tp-ment-meta">{html_mod.escape(str(m.get("source", "")))} · '
+                f'{html_mod.escape(str(m.get("pub_date", ""))[:16])}'
+                + (f' · cuvânt-cheie: <strong>{html_mod.escape(kw)}</strong>' if kw else "")
+                + '</div></div>'
+            )
+        mentiuni_auto_html = (
+            f'<h2>Mențiuni detectate automat în presă ({len(mentiuni_auto)})</h2>'
+            '<p class="tp-note">Detecție automată după numele firmei; pot exista rezultate nerelevante. '
+            'Verificare manuală recomandată.</p>' + rands_auto
+        )
 
-    # Secțiune firme legate (din retele_firme.json)
     firme_legate_html = ""
     if firme_legate:
-        tip_friendly = {
-            'ADRESA_COMUNA': 'aceeași adresă fiscală',
-            'ACTIONAR_COMUN': 'acționar comun',
-        }
-        rows_legate = ""
-        for leg in firme_legate:
-            tip_f = tip_friendly.get(leg.get('tip', ''), leg.get('tip', ''))
-            slug_l = re.sub(r'[^\w-]', '-', leg.get('nume_legat', '').lower()).strip('-')
-            slug_l = re.sub(r'-+', '-', slug_l)
-            link_l = f'<a href="{slug_l}.html" style="color:#5b21b6">{html_mod.escape(leg.get("nume_legat",""))}</a>'
-            rows_legate += f"""
-      <li style="margin:.3rem 0">{link_l} — <em style="color:#6b7280">{html_mod.escape(tip_f)}</em></li>"""
-        firme_legate_html = f"""
-  <h2 style="margin-top:2rem">🔗 Firme legate (detectare automată)</h2>
-  <div style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:8px;
-              padding:.6rem 1rem;font-size:.82rem;color:#6b21a8;margin:.5rem 0 .75rem">
-    Relații detectate pe baza adresei fiscale ANAF. Pot fi coincidențe geografice
-    (sedii de comoditate, clădiri de birouri). Verificare manuală recomandată.
-    <a href="../retele.html" style="color:#5b21b6;font-weight:600">→ Grafic rețele</a>
-  </div>
-  <ul style="margin:.2rem 0 .5rem 1.3rem;color:#374151;font-size:.9rem">{rows_legate}
-  </ul>"""
+        tip_friendly = {"ADRESA_COMUNA": "aceeași adresă fiscală", "ACTIONAR_COMUN": "acționar comun"}
+        def _leg(leg):
+            # după CUI: numele din ANAF („… S.R.L.”) nu dă același slug ca numele din SEAP
+            cui_l = re.sub(r"^RO", "", str(leg.get("cui_legat") or ""), flags=re.I).strip()
+            sl = (slug_dupa_cui or {}).get(cui_l, "")
+            nume_l = e(leg.get("nume_legat", ""))
+            return (f'<li>{f"<a href={chr(34)}{sl}.html{chr(34)}>{nume_l}</a>" if sl else nume_l} — '
+                    f'<em>{e(tip_friendly.get(leg.get("tip", ""), leg.get("tip", "")))}</em></li>')
+        rows_legate = "".join(_leg(leg) for leg in firme_legate)
+        firme_legate_html = (
+            '<h2>Firme legate (detectare automată)</h2>'
+            '<p class="tp-note">Relații detectate pe baza adresei fiscale ANAF. Pot fi coincidențe '
+            '(sedii de comoditate, clădiri de birouri). <a href="../retele.html">Graficul rețelelor →</a></p>'
+            f'<ul class="tp-list">{rows_legate}</ul>'
+        )
+
+    q_firma = html_mod.escape(urllib.parse.quote(nume), quote=True)
+    descriere_meta = (f"Contractele {safe_name} cu Primăria Pantelimon: {len(contracte_d)} contracte, "
+                      f"{_fmt_ron(valoare)}, {len(flags_firma)} semnale automate.")
+    nota_acorduri = (
+        f'<p class="tp-muted">Valoarea nu include {len(acorduri)} acord(uri)-cadru '
+        f'({_fmt_ron(sum(float(c.get("valoare_ron", 0) or 0) for c in acorduri))}, plafon); banii se angajează '
+        'prin contractele subsecvente, care sunt incluse.</p>'
+    ) if acorduri else ""
+    sectiune_semnale = (
+        f'<p class="tp-muted">{len(flags_firma)} semnale automate pentru această firmă. Fiecare duce la pagina '
+        f'semnalului, cu explicația completă. <a href="../raport_transparenta.html#supplier={q_firma}">Vezi-le în lista '
+        'din raport →</a></p>'
+    ) if flags_firma else '<p class="tp-muted">Niciun semnal automat pentru această firmă.</p>'
 
     return f"""<!DOCTYPE html>
 <html lang="ro">
@@ -6369,9 +6188,9 @@ def genereaza_pagina_furnizor(
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{safe_name} — Transparența Pantelimon</title>
-<meta name="description" content="Dosarul de transparență al {safe_name}: {len(contracte_firma)} contracte cu Primăria Pantelimon, valoare {_fmt_ron(valoare_totala)}, {len(flags_firma)} semnale automate.">
+  <meta name="description" content="{descriere_meta}">
   <meta property="og:title" content="{safe_name} — Transparența Pantelimon">
-<meta property="og:description" content="{len(contracte_firma)} contracte, {_fmt_ron(valoare_totala)}, {len(flags_firma)} semnale detectate automat.">
+  <meta property="og:description" content="{len(contracte_d)} contracte, {_fmt_ron(valoare)}, {len(flags_firma)} semnale detectate automat.">
   <meta property="og:url" content="{base_url}/furnizori/{slug}.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="{base_url}/og-image.png">
@@ -6380,126 +6199,188 @@ def genereaza_pagina_furnizor(
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="{base_url}/og-image.png">
   <link rel="canonical" href="{base_url}/furnizori/{slug}.html">
-  <script src="../enhance.js" defer></script>
-  <style>
-    body{{font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;margin:0;background:#f5f7fa;color:#1a1a1a}}
-    .container{{max-width:900px;margin:0 auto;padding:24px 16px}}
-    .back-link{{color:#0070C0;text-decoration:none;font-size:14px}}
-    .back-link:hover{{text-decoration:underline}}
-    h1{{font-size:1.6rem;margin:16px 0 4px}}
-    .meta{{color:#666;font-size:14px;margin-bottom:20px}}
-    .stats{{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:20px 0}}
-    .stat{{background:#fff;border-radius:8px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.08);text-align:center}}
-    .stat-val{{font-size:1.5rem;font-weight:700;color:#00244A}}
-    .stat-lbl{{font-size:11px;color:#888;margin-top:4px}}
-    table{{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)}}
-    th{{padding:10px 12px;text-align:left;background:#00244A;color:#fff;font-size:12px}}
-    h2{{font-size:1.1rem;margin:28px 0 12px;color:#00244A}}
-    .ext-btn{{display:inline-block;padding:8px 16px;background:#0070C0;color:#fff;
-              border-radius:6px;text-decoration:none;font-size:13px;margin-right:8px;margin-bottom:8px}}
-    .ext-btn:hover{{opacity:.85}}
-    footer{{text-align:center;color:#aaa;font-size:12px;padding:32px 0 16px}}
-  </style>
 </head>
-<body>
-<div class="container">
-  <a href="../raport_transparenta.html" class="back-link">← înapoi la raport</a>
+<body class="tp-page-firma">
+<main class="container" id="main-content">
   <h1>{safe_name}</h1>
-  <div class="meta">
-    CUI: {html_mod.escape(cui_f) if cui_f else "—"} &nbsp;·&nbsp;
-    Furnizor în relație contractuală cu Primăria Pantelimon
-  </div>
+  <div class="meta">CUI: {e(cui_f) if cui_f else "—"} · Furnizor al Primăriei Pantelimon{f" · contracte din {perioada}" if perioada else ""}</div>
 
   <div class="stats">
-    <div class="stat"><div class="stat-val">{len(contracte_firma)}</div><div class="stat-lbl">Contracte</div></div>
-    <div class="stat"><div class="stat-val">{_fmt_ron(valoare_totala)}</div><div class="stat-lbl">Valoare totală</div></div>
-    <div class="stat"><div class="stat-val" style="color:#C0392B">{n_critic}</div><div class="stat-lbl">Semnale CRITIC</div></div>
-    <div class="stat"><div class="stat-val" style="color:#E67E22">{n_major}</div><div class="stat-lbl">Semnale MAJOR</div></div>
-    <div class="stat"><div class="stat-val" style="color:#F39C12">{n_mediu}</div><div class="stat-lbl">Semnale MEDIU</div></div>
+    <div class="stat"><div class="stat-val">{len(contracte_d)}</div><div class="stat-lbl">Contracte</div></div>
+    <div class="stat"><div class="stat-val">{_fmt_ron(valoare)}</div><div class="stat-lbl">Valoare contracte</div></div>
+    <div class="stat" data-sev="CRITIC"><div class="stat-val">{n_sev["CRITIC"]}</div><div class="stat-lbl">Semnale CRITIC</div></div>
+    <div class="stat" data-sev="MAJOR"><div class="stat-val">{n_sev["MAJOR"]}</div><div class="stat-lbl">Semnale MAJOR</div></div>
+    <div class="stat" data-sev="MEDIU"><div class="stat-val">{n_sev["MEDIU"]}</div><div class="stat-lbl">Semnale MEDIU</div></div>
+  </div>
+  {nota_acorduri}
+
+  <div class="tp-firm-links">
+    {f'<a href="../raport_transparenta.html#supplier={q_firma}" class="ext-btn">Semnalele firmei în raport</a>' if flags_firma else ''}
+    <a href="{f"https://termene.ro/firma/{e(cui_f)}" if cui_f else "https://termene.ro/"}" target="_blank" rel="noopener" class="ext-btn ext-btn-sec">Dosar firmă (termene.ro) ↗</a>
+    <a href="https://listafirme.ro/search/?q={e(cui_f or nume)}" target="_blank" rel="noopener" class="ext-btn ext-btn-sec">Listafirme.ro ↗</a>
+    <a href="../harta.html" class="ext-btn ext-btn-sec">Harta firmelor</a>
+    <a href="index.html" class="ext-btn ext-btn-sec">Toate firmele</a>
   </div>
 
-  <div style="margin-bottom:16px">
-    <a href="{onrc_link}" target="_blank" rel="noopener" class="ext-btn">🔍 Dosar ONRC (termene.ro)</a>
-    <a href="https://listafirme.ro/search/?q={html_mod.escape(cui_f or nume)}" target="_blank" rel="noopener" class="ext-btn">📋 Listafirme.ro</a>
-    <a href="../raport_transparenta.html" class="ext-btn" style="background:#1E8449">📊 Raport complet</a>
-  </div>
-
-  <h2>⚠️ Semnale automate ({len(flags_firma)})</h2>
-  {flags_html if flags_firma else '<p style="color:#888;font-size:14px">Niciun semnal automat pentru acest furnizor.</p>'}
-
-  <h2>📄 Contracte ({len(contracte_firma)})</h2>
-  <div style="overflow-x:auto">
-  <table>
-    <thead><tr><th>Titlu</th><th>Valoare</th><th>Procedură</th><th>Dată</th></tr></thead>
-    <tbody>{contracte_rows}</tbody>
+  <h2>Contracte cu Primăria ({len(contracte_d)})</h2>
+  {sectiune_semnale}
+  <div class="tp-scroll">
+  <table class="tp-table">
+    <thead><tr><th>Data</th><th>Obiect și semnale</th><th class="num">Valoare</th><th>Procedură</th><th class="num">Ofertanți</th><th>SEAP</th></tr></thead>
+    <tbody>{"".join(rows)}</tbody>
   </table>
   </div>
 
+  {multi_html}
   {mentiuni_html}
   {mentiuni_auto_html}
   {firme_legate_html}
-  <footer>
-    Date extrase din surse publice oficiale (SEAP / data.gov.ro) · Inițiativă civică
-  </footer>
-</div>
+  <p class="tp-sources">Date: SEAP (e-licitatie.ro), contracte publicate de Primăria Pantelimon. Fiecare contract e numărat o dată.
+    Semnalele sunt indicatori automați, nu constatări juridice.</p>
+</main>
 <script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>"""
 
 
 def genereaza_index_furnizori(index: list) -> str:
-    """Generează furnizori/index.html cu lista A-Z a furnizorilor."""
+    """furnizori/index.html — toate firmele cu contracte, cu căutare și sortare."""
     import html as html_mod
-    rânduri = ""
-    for f in sorted(index, key=lambda x: x["nume"]):
-        safe_nume = html_mod.escape(str(f["nume"]))
-        safe_slug = html_mod.escape(str(f["slug"]), quote=True)
-        rânduri += f"""
-      <tr>
-        <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5">
-          <a href="{safe_slug}.html" style="color:#0070C0;font-weight:600">{safe_nume}</a>
-        </td>
-        <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5;font-weight:700">{_fmt_ron(f['valoare'])}</td>
-        <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5">{f['count']}</td>
-        <td style="padding:8px 12px;border-bottom:1px solid #f0f2f5;color:{'#C0392B' if f['flags_critic']>0 else '#E67E22' if f['flags_major']>0 else '#888'}">{f['flags_critic']}C / {f['flags_major']}M / {f['flags_mediu']}m</td>
-      </tr>"""
-
+    e = lambda s: html_mod.escape(str(s or ""), quote=True)  # noqa: E731
+    rânduri = []
+    for f in sorted(index, key=lambda x: str(x["nume"]).upper()):
+        n_c, n_m, n_l = f.get("flags_critic", 0), f.get("flags_major", 0), f.get("flags_mediu", 0)
+        clasa = "sig-hi" if n_c else ("sig-mid" if n_m else ("sig-low" if n_l else "sig-none"))
+        rânduri.append(
+            f'<tr data-nume="{e(str(f["nume"]).lower())}" data-cui="{e(f.get("cui", ""))}" data-val="{float(f.get("valoare", 0) or 0):.0f}" '
+            f'data-sem="{n_c * 10000 + n_m * 100 + n_l}">'
+            f'<td><a href="{e(f["slug"])}.html">{html_mod.escape(str(f["nume"]))}</a></td>'
+            f'<td class="num">{_fmt_ron(f.get("valoare", 0) or 0)}</td>'
+            f'<td class="num">{f.get("count", 0)}</td>'
+            f'<td class="num {clasa}">{n_c} / {n_m} / {n_l}</td></tr>'
+        )
+    n_cu_semnale = sum(1 for f in index if f.get("flags_critic") or f.get("flags_major") or f.get("flags_mediu"))
+    script = """
+(function(){
+  var q=document.getElementById('f-q'), s=document.getElementById('f-sort'), tb=document.getElementById('f-body');
+  if(!q||!s||!tb) return;
+  var rows=Array.prototype.slice.call(tb.rows);
+  function nz(x){return String(x||'').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'');}
+  function apply(){
+    var t=nz(q.value).trim(), mod=s.value;
+    rows.sort(function(a,b){
+      if(mod==='val') return b.dataset.val-a.dataset.val;
+      if(mod==='sem') return b.dataset.sem-a.dataset.sem || b.dataset.val-a.dataset.val;
+      return a.dataset.nume.localeCompare(b.dataset.nume,'ro');
+    }).forEach(function(r){ tb.appendChild(r); r.hidden = !!t && nz(r.dataset.nume).indexOf(t)===-1 && r.dataset.cui.indexOf(t)===-1; });
+  }
+  q.addEventListener('input',apply); s.addEventListener('change',apply);
+})();"""
     return f"""<!DOCTYPE html>
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Furnizori Primăria Pantelimon — Transparența</title>
-<meta name="description" content="Index A-Z al furnizorilor Primăriei Pantelimon cu semnale de risc detectate automat.">
+  <title>Firmele care au contracte cu Primăria Pantelimon — Transparența</title>
+  <meta name="description" content="Toate cele {len(index)} firme cu contracte publicate în SEAP de Primăria Pantelimon: valoare, număr de contracte și semnale automate.">
   <link rel="canonical" href="https://transparenta-pantelimon.eu/furnizori/">
-  <script src="../enhance.js" defer></script>
-  <style>
-    body{{font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;margin:0;background:#f5f7fa;color:#1a1a1a}}
-    .container{{max-width:900px;margin:0 auto;padding:24px 16px}}
-    h1{{font-size:1.5rem;margin-bottom:4px}}
-    .sub{{color:#666;font-size:14px;margin-bottom:20px}}
-    table{{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)}}
-    th{{padding:10px 12px;text-align:left;background:#00244A;color:#fff;font-size:12px}}
-    .back-link{{color:#0070C0;text-decoration:none;font-size:14px}}
-    footer{{text-align:center;color:#aaa;font-size:12px;padding:32px 0 16px}}
-  </style>
 </head>
-<body>
-<div class="container">
-  <a href="../raport_transparenta.html" class="back-link">← înapoi la raport</a>
-  <h1>🏢 Furnizori monitorizați</h1>
-  <div class="sub">Furnizori cu ≥3 contracte cu Primăria Pantelimon (sortare A-Z)</div>
-  <div style="overflow-x:auto">
-  <table>
-    <thead><tr><th>Firmă</th><th>Valoare totală</th><th>Contracte</th><th>Semnale (C/M/m)</th></tr></thead>
-    <tbody>{rânduri}</tbody>
+<body class="tp-page-firme">
+<main class="container" id="main-content">
+  <h1>Firmele cu contracte la Primăria Pantelimon</h1>
+  <div class="sub">{len(index)} firme, dintre care {n_cu_semnale} cu cel puțin un semnal automat. Valorile numără fiecare contract o dată,
+    fără acordurile-cadru (plafoane). Semnalele de verificat sunt în <a href="../raport_transparenta.html">raport</a>.</div>
+  <div class="tp-filterbar">
+    <label class="sr-only" for="f-q">Caută o firmă</label>
+    <input id="f-q" type="search" placeholder="Caută după nume sau CUI" autocomplete="off">
+    <label class="sr-only" for="f-sort">Sortare</label>
+    <select id="f-sort"><option value="az">A → Z</option><option value="val">Valoare (mare → mic)</option><option value="sem">Semnale (CRITIC întâi)</option></select>
+  </div>
+  <div class="tp-scroll">
+  <table class="tp-table">
+    <thead><tr><th>Firmă</th><th class="num">Valoare contracte</th><th class="num">Contracte</th><th class="num">Semnale (CRITIC / MAJOR / MEDIU)</th></tr></thead>
+    <tbody id="f-body">{"".join(rânduri)}</tbody>
   </table>
   </div>
-  <footer>Date extrase din surse publice oficiale · Inițiativă civică</footer>
-</div>
+</main>
+<script>{script}</script>
 <script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>"""
+
+
+def genereaza_pagini_furnizori(contracte: list, flags: list, mentiuni_media: dict = None,
+                               mentiuni_auto_by_cui: dict = None, retea_firme: dict = None) -> list:
+    """Fișe pentru TOATE firmele cu contracte (înainte: doar cele cu ≥3 rânduri, adică ~70 din 215;
+    linkurile din căutare și din raport spre restul dădeau 404). Scrie și index-ul și sitemap-ul."""
+    from collections import defaultdict
+    mentiuni_media = mentiuni_media or {}
+    mentiuni_auto_by_cui = mentiuni_auto_by_cui or {}
+
+    flags_sortate = sorteaza_dupa_severitate(flags)
+    sluguri = _sluguri_semnale_pentru(flags_sortate)
+    sluguri_id = {id(f): sluguri.get(i, "") for i, f in enumerate(flags_sortate, 1)}
+    ancore_id = {id(f): f"nereguli-{i}" for i, f in enumerate(flags_sortate, 1)}
+
+    contracte_per_firma = defaultdict(list)
+    for c in contracte:
+        if c.get("castigator") and not _este_institutie(c["castigator"]):
+            contracte_per_firma[c["castigator"]].append(c)
+    flags_per_firma = defaultdict(list)
+    for f in flags_sortate:
+        if f.get("furnizor") and not _este_institutie(f["furnizor"]):
+            flags_per_firma[f["furnizor"]].append(f)
+
+    os.makedirs("furnizori", exist_ok=True)
+    cui_slug: dict = {}
+    for firma, contracte_firma in contracte_per_firma.items():
+        cui = re.sub(r"^RO", "", str(contracte_firma[0].get("castigator_cui", "") or ""), flags=re.I).strip()
+        if cui and cui not in cui_slug and _slugify(firma):
+            cui_slug[cui] = _slugify(firma)
+    index_furnizori, sluguri_folosite = [], set()
+    for firma, contracte_firma in contracte_per_firma.items():
+        slug = _slugify(firma)
+        if not slug or slug in sluguri_folosite:
+            continue
+        sluguri_folosite.add(slug)
+        flags_firma = flags_per_firma.get(firma, [])
+        cui_firma = str(contracte_firma[0].get("castigator_cui", "") or "")
+        auto_firma = (mentiuni_auto_by_cui.get(cui_firma, {}) or {}).get("mentiuni", [])
+        legate = []
+        if retea_firme and cui_firma:
+            try:
+                from analizeaza_retele import gaseste_firme_legate as _gfl
+                legate = _gfl(cui_firma, retea_firme)
+            except ImportError:
+                pass
+        pagina_html = genereaza_pagina_furnizor(
+            firma, slug, flags_firma, contracte_firma, CONFIG,
+            mentiuni=mentiuni_media.get(firma, []),
+            mentiuni_auto=auto_firma or None,
+            firme_legate=legate or None,
+            sluguri_semnale=sluguri_id, ancore_semnale=ancore_id, slug_dupa_cui=cui_slug,
+        )
+        with open(f"furnizori/{slug}.html", "w", encoding="utf-8") as handle:
+            handle.write(pagina_html)
+        distincte = _contracte_distincte_firma(contracte_firma)
+        index_furnizori.append({
+            "nume": firma, "slug": slug, "cui": cui_firma,
+            "count": len(distincte),
+            "valoare": sum(float(c.get("valoare_ron", 0) or 0) for c in distincte if not _este_acord_cadru(c)),
+            "flags_critic": sum(1 for f in flags_firma if f.get("severitate") == "CRITIC"),
+            "flags_major": sum(1 for f in flags_firma if f.get("severitate") == "MAJOR"),
+            "flags_mediu": sum(1 for f in flags_firma if f.get("severitate") == "MEDIU"),
+        })
+
+    with open("furnizori/index.html", "w", encoding="utf-8") as handle:
+        handle.write(genereaza_index_furnizori(index_furnizori))
+    # CUI → fișa firmei, pentru hartă și rețele (acolo numele vin din ANAF, nu din SEAP)
+    with open("furnizori/cui.json", "w", encoding="utf-8") as handle:
+        json.dump(cui_slug, handle, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    with open("sitemap.xml", "w", encoding="utf-8") as handle:
+        handle.write(genereaza_sitemap(index_furnizori, sluguri_semnale=[s for s in sluguri.values() if s]))
+    print(f"  [OK] {len(index_furnizori)} fișe de firmă, index și sitemap regenerate")
+    return index_furnizori
 
 
 # ==============================================================================
@@ -6508,19 +6389,6 @@ def genereaza_index_furnizori(index: list) -> str:
 
 def genereaza_pagini_furnizori_locale(contracte: list, flags: list) -> list:
     """Regenerează fișele furnizorilor fără acces la servicii externe."""
-    from collections import defaultdict
-
-    contracte_per_firma = defaultdict(list)
-    for contract in contracte:
-        if contract.get("castigator"):
-            contracte_per_firma[contract["castigator"]].append(contract)
-
-    flags_per_firma = defaultdict(list)
-    for flag in flags:
-        furnizor = flag.get("furnizor")
-        if furnizor and furnizor != "Multiple":
-            flags_per_firma[furnizor].append(flag)
-
     mentiuni_media = {}
     try:
         with open("mentiuni_media.json", encoding="utf-8") as handle:
@@ -6528,52 +6396,19 @@ def genereaza_pagini_furnizori_locale(contracte: list, flags: list) -> list:
         mentiuni_media = {key: value for key, value in raw.items() if not key.startswith("_")}
     except (FileNotFoundError, json.JSONDecodeError):
         pass
-
     mentiuni_auto = {}
     try:
         with open("mentiuni_presa_auto.json", encoding="utf-8") as handle:
             mentiuni_auto = json.load(handle)
     except (FileNotFoundError, json.JSONDecodeError):
         pass
-
-    os.makedirs("furnizori", exist_ok=True)
-    index_furnizori = []
-    for firma, contracte_firma in contracte_per_firma.items():
-        if len(contracte_firma) < 3:
-            continue
-        slug = _slugify(firma)
-        if not slug:
-            continue
-        flags_firma = flags_per_firma.get(firma, [])
-        cui_firma = str(contracte_firma[0].get("castigator_cui", "") or "")
-        auto_firma = mentiuni_auto.get(cui_firma, {}).get("mentiuni", [])
-        pagina_html = genereaza_pagina_furnizor(
-            firma,
-            slug,
-            flags_firma,
-            contracte_firma,
-            CONFIG,
-            mentiuni=mentiuni_media.get(firma, []),
-            mentiuni_auto=auto_firma or None,
-        )
-        with open(f"furnizori/{slug}.html", "w", encoding="utf-8") as handle:
-            handle.write(pagina_html)
-        index_furnizori.append({
-            "nume": firma,
-            "slug": slug,
-            "count": len(contracte_firma),
-            "valoare": sum(c.get("valoare_ron", 0) for c in contracte_firma),
-            "flags_critic": sum(1 for f in flags_firma if f.get("severitate") == "CRITIC"),
-            "flags_major": sum(1 for f in flags_firma if f.get("severitate") == "MAJOR"),
-            "flags_mediu": sum(1 for f in flags_firma if f.get("severitate") == "MEDIU"),
-        })
-
-    with open("furnizori/index.html", "w", encoding="utf-8") as handle:
-        handle.write(genereaza_index_furnizori(index_furnizori))
-    with open("sitemap.xml", "w", encoding="utf-8") as handle:
-        handle.write(genereaza_sitemap(index_furnizori))
-    print(f"  [OK] {len(index_furnizori)} fișe de furnizor și sitemap regenerate local")
-    return index_furnizori
+    retea = {}
+    try:
+        from analizeaza_retele import incarca_retea as _incarca_retea
+        retea = _incarca_retea()
+    except Exception:
+        pass
+    return genereaza_pagini_furnizori(contracte, flags, mentiuni_media, mentiuni_auto, retea)
 
 
 def genereaza_previzualizari_partajare() -> bool:
@@ -6645,7 +6480,7 @@ def regenereaza_din_exporturile_existente() -> None:
     CONFIG["_hcl_ocr"] = "Date păstrate din ultima analiză completă"
 
     flags_contracte = analizeaza_red_flags(contracte, CONFIG)
-    toate_flags = flags_contracte + detect_sedinte_extraordinare(statistici_hcl)
+    toate_flags = sorteaza_dupa_severitate(flags_contracte + detect_sedinte_extraordinare(statistici_hcl))
     scor = calculeaza_scor_transparenta(toate_flags, contracte, statistici_hcl)
     CONFIG["_scor"] = scor
 
@@ -6655,8 +6490,9 @@ def regenereaza_din_exporturile_existente() -> None:
         "an": 2025,
         "venituri_mil_ron": 147.97,
         "cheltuieli_mil_ron": 146.43,
-        "yoy_venituri": "N/A",
-        "yoy_cheltuieli": "N/A",
+        "yoy_venituri": "-8,19%",
+        "yoy_cheltuieli": "+5,93%",
+        "balanta_mil_ron": 1.54,
         "sursa": "ultima execuție bugetară validată (rulare offline)",
     }
     flags_noi = []
@@ -6748,6 +6584,8 @@ def regenereaza_din_exporturile_existente() -> None:
         }, handle, ensure_ascii=False, indent=2)
     salveaza_stare(CONFIG["fisier_stare"], toate_flags, contracte, [])
     genereaza_previzualizari_partajare()
+    actualizeaza_contoare_index(contracte_export)
+    aplica_cadrul_site()
     print(
         f"  [OK] Regenerare offline completă: {len(toate_flags)} semnale, "
         f"{numara_contracte_cu_semnale(toate_flags, contracte)} contracte unice cu semnale."
@@ -6923,7 +6761,10 @@ def main():
     # 4. Red flags
     print("\n[4/6] Analizez red flags...")
     flags_contracte = analizeaza_red_flags(contracte, CONFIG)
-    toate_flags = flags_contracte + flags_hcl
+    # Ordinea CRITIC → MAJOR → MEDIU (stabilă) e aceeași în raport.json, în HTML și în
+    # paginile de semnal; înainte raport.json păstra ordinea detectorilor, așa că
+    # „nereguli-N” din raport.json indica alt semnal decât cardul #nereguli-N din HTML.
+    toate_flags = sorteaza_dupa_severitate(flags_contracte + flags_hcl)
     # firme_openapi e construit în analizeaza_red_flags și pus în CONFIG["_firme_openapi"]
     firme_openapi = CONFIG.get("_firme_openapi", {})
     # Calculam scorul de transparenta
@@ -7054,53 +6895,8 @@ def main():
     except ImportError:
         pass  # monitorizare_presa.py opțional
 
-    _os.makedirs("furnizori", exist_ok=True)
-    index_furnizori = []
-    for firma, contracte_firma in contracte_per_firma.items():
-        if len(contracte_firma) < 3:
-            continue
-        slug = _slugify(firma)
-        if not slug:
-            continue
-        flags_firma = flags_per_firma.get(firma, [])
-        # Lookup mențiuni automate de presă pentru această firmă (prin CUI)
-        _cui_firma = (contracte_firma[0].get("castigator_cui", "") or "") if contracte_firma else ""
-        _mentiuni_auto_firma = []
-        if _cui_firma and _mentiuni_presa_auto_by_cui:
-            _mp_entry = _mentiuni_presa_auto_by_cui.get(str(_cui_firma), {})
-            _mentiuni_auto_firma = _mp_entry.get('mentiuni', [])
-        # Firme legate (rețele) — lookup prin CUI
-        _firme_legate_r = []
-        if _retea_firme and _cui_firma:
-            try:
-                from analizeaza_retele import gaseste_firme_legate as _gfl
-                _firme_legate_r = _gfl(_cui_firma, _retea_firme)
-            except ImportError:
-                pass
-        pagina_html = genereaza_pagina_furnizor(
-            firma, slug, flags_firma, contracte_firma, CONFIG,
-            mentiuni=_mentiuni_media.get(firma, []),
-            mentiuni_auto=_mentiuni_auto_firma if _mentiuni_auto_firma else None,
-            firme_legate=_firme_legate_r if _firme_legate_r else None,
-        )
-        with open(f"furnizori/{slug}.html", "w", encoding="utf-8") as fh:
-            fh.write(pagina_html)
-        index_furnizori.append({
-            "nume": firma, "slug": slug,
-            "count": len(contracte_firma),
-            "valoare": sum(c.get("valoare_ron", 0) for c in contracte_firma),
-            "flags_critic": sum(1 for f in flags_firma if f.get("severitate") == "CRITIC"),
-            "flags_major":  sum(1 for f in flags_firma if f.get("severitate") == "MAJOR"),
-            "flags_mediu":  sum(1 for f in flags_firma if f.get("severitate") == "MEDIU"),
-        })
-
-    if index_furnizori:
-        index_html = genereaza_index_furnizori(index_furnizori)
-        with open("furnizori/index.html", "w", encoding="utf-8") as fh:
-            fh.write(index_html)
-        print(f"  ✓ {len(index_furnizori)} pagini furnizori generate în furnizori/")
-    else:
-        print("  ℹ️  Niciun furnizor cu ≥3 contracte găsit.")
+    index_furnizori = genereaza_pagini_furnizori(
+        contracte, toate_flags, _mentiuni_media, _mentiuni_presa_auto_by_cui, _retea_firme)
 
     # §3.6 Geocodare firme furnizoare → firme_geocoded.json (folosit de harta.html)
     if firme_openapi:
@@ -7126,11 +6922,7 @@ def main():
                 _json_geo.dump([], _fg)
             print("  ℹ️  firme_geocoded.json placeholder gol (lipsă openapi.ro key)")
 
-    # Regenerare sitemap.xml cu toate paginile (statice + furnizori)
-    sitemap_xml = genereaza_sitemap(index_furnizori)
-    with open("sitemap.xml", "w", encoding="utf-8") as fh:
-        fh.write(sitemap_xml)
-    print(f"  ✓ sitemap.xml actualizat ({len(index_furnizori)} pagini furnizori + 9 statice)")
+    # sitemap.xml e scris de genereaza_pagini_furnizori (statice + firme + semnale)
 
     # §5.7 Generare og-image.png cu statisticile curente (pentru share social media)
     _scor_val = CONFIG.get("_scor", {}).get("scor")
@@ -7224,6 +7016,9 @@ def main():
     print(f"  ✓ Stare salvata: {CONFIG['fisier_stare']}")
     # Previzualizări de partajare + permalinkuri semnale (după raport și fișele de furnizor)
     genereaza_previzualizari_partajare()
+    actualizeaza_contoare_index(contracte_export)
+    # La final: meniul, banda de date și subsolul în TOATE paginile (statice și generate)
+    aplica_cadrul_site()
 
     if trimite_email and toate_flags:
         flags_noi = [f for f in toate_flags
