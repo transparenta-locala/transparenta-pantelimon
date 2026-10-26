@@ -1,25 +1,9 @@
 {
-  "data_curenta": "2026-10-26T11:37:07.078448",
-  "data_anterioara": "2026-10-15T10:06:47.629701",
-  "nereguli_noi": 5,
+  "data_curenta": "2026-10-26T12:19:32.333642",
+  "data_anterioara": "2026-10-26T11:37:36.402763",
+  "nereguli_noi": 0,
   "nereguli_rezolvate": 0,
   "scor_transparenta": 23,
-  "top_noi": [
-    {
-      "titlu": "Un singur ofertant raportat în date",
-      "severitate": "MEDIU",
-      "index": 1
-    },
-    {
-      "titlu": "Două înregistrări cu același obiect și aceeași dată, valori diferite",
-      "severitate": "MEDIU",
-      "index": 2
-    },
-    {
-      "titlu": "Două înregistrări cu același obiect și aceeași dată, valori diferite",
-      "severitate": "MEDIU",
-      "index": 3
-    }
-  ],
+  "top_noi": [],
   "date_seap_pana_la": "2026-10-23"
 }
