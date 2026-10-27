@@ -5476,7 +5476,7 @@ def aplica_cadrul_site() -> None:
         print(f"  [WARN] Cadrul comun al paginilor neaplicat: {exc}")
 
 
-def actualizeaza_contoare_analiza(contracte_export: list) -> None:
+def actualizeaza_contoare_analiza(contracte_export: list, tp_path: str = None) -> None:
     """
     BUG-10: Actualizează contoarele „N contracte · YYYY" din secțiunile de analiză
     ale transparenta_pantelimon.html. Aceste referințe devin stale la fiecare an nou
@@ -5484,13 +5484,15 @@ def actualizeaza_contoare_analiza(contracte_export: list) -> None:
 
     Actualizează elementele cu ID: tp-nr-contracte, tp-nr-analiza, tp-an-analiza,
     tp-nr-top10, tp-an-top10, tp-nr-directe, tp-nr-stat-card, tp-an-stat-card.
+    Elementul poate fi orice tag inline (span/strong/b) — tp-nr-contracte e <strong>.
     """
     import re as _re_ca
     an_curent = datetime.now().year
     n_total = len(contracte_unice(contracte_export))
 
-    tp_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                           'transparenta_pantelimon.html')
+    if tp_path is None:
+        tp_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               'transparenta_pantelimon.html')
     if not os.path.exists(tp_path):
         return
 
@@ -5502,16 +5504,16 @@ def actualizeaza_contoare_analiza(contracte_export: list) -> None:
     for elem_id in ('tp-nr-contracte', 'tp-nr-analiza', 'tp-nr-top10',
                     'tp-nr-directe', 'tp-nr-stat-card'):
         content = _re_ca.sub(
-            rf'(<span[^>]*id="{elem_id}"[^>]*>)\d+(</span>)',
-            rf'\g<1>{n_total}\2',
+            rf'(<(span|strong|b)\b[^>]*id="{elem_id}"[^>]*>)\d+(</\2>)',
+            rf'\g<1>{n_total}\3',
             content,
         )
 
     # An curent (tp-an-*)
     for elem_id in ('tp-an-analiza', 'tp-an-top10', 'tp-an-stat-card'):
         content = _re_ca.sub(
-            rf'(<span[^>]*id="{elem_id}"[^>]*>)\d{{4}}(</span>)',
-            rf'\g<1>{an_curent}\2',
+            rf'(<(span|strong|b)\b[^>]*id="{elem_id}"[^>]*>)\d{{4}}(</\2>)',
+            rf'\g<1>{an_curent}\3',
             content,
         )
 
