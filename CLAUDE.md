@@ -298,6 +298,14 @@ vizitatorii vedeau pagini vechi).
   (`site_shell.rand_distribuie_html`); `enhance.js` doar leagă „Copiază link” (`leagaShareRow`).
 - `furnizori/index.html` sub 640px: rândurile devin carduri (doar CSS, etichetele din `::before`).
 
+**Date financiare ANAF automate (27.10.2026)** — `import_financiar_datagov.py --auto` (pasul dinaintea
+monitorului în `update-report.yml`): găsește prin API-ul CKAN data.gov.ro cel mai recent set
+`situatii_financiare_{an}` (404 = an nepublicat), importă BL + UU doar dacă anul e mai nou decât cel din
+`firme_financiar.json`, cu descărcare reluată (data.gov.ro întrerupe fișierele mari). CUI-urile vin din
+`contracte.json` (toate firmele, nu doar cele cu semnale). Fișierul ONG e exclus: indicatorii lui au altă
+numerotare. Portal indisponibil din runner → `::warning::`, rularea continuă. Anul 2025 importat pe 27.10.2026.
+Teste: `tests/test_import_financiar_auto.py`.
+
 ## Praguri legale folosite (Legea 98/2016)
 
 ```python

@@ -68,6 +68,12 @@ COL_CA_VARIANTS    = {'i13', 'cifra de afaceri neta', 'cifra_de_afaceri_neta', '
 COL_SAL_VARIANTS   = {'i20', 'numar mediu de salariati', 'numar_mediu_de_salariati', 'salariati', 'nr salariati'}
 
 HTML_FILE        = 'raport_transparenta.html'
+CONTRACTE_JSON   = 'contracte.json'
+CKAN_API         = 'https://data.gov.ro/api/3/action/package_show?id=situatii_financiare_{an}'
+# Fișierele de date (.txt) căutate în setul anual, în ordinea importului.
+# BL = entități mari/mijlocii/mici, UU = microîntreprinderi. Fișierul ONG (WEB_ONG_AN) NU e
+# inclus: indicatorii lui au altă numerotare (pe poziția „salariați” apăreau valori de mii).
+FISIERE_AN = (('', 'WEB_BL_BS_SL_AN{an}.TXT'), ('-uu', 'WEB_UU_AN{an}.TXT'))
 OUTPUT_JSON      = 'firme_financiar.json'
 
 
@@ -90,6 +96,144 @@ def _find_col(headers_norm, variants):
             if v in h or h in v:
                 return i
     return None
+
+
+def descopera_resurse_an(an, timeout=30):
+    """{'': url, '-uu': url, '-ong': url} pentru setul situatii_financiare_{an}, sau {} dacă nu există.
+
+    Adresele resurselor de pe data.gov.ro conțin id-uri aleatoare, diferite în fiecare an,
+    deci nu se pot ghici — le citim din API-ul CKAN al portalului."""
+    import urllib.request
+    req = urllib.request.Request(CKAN_API.format(an=an), headers={'User-Agent': 'transparenta-pantelimon'})
+    import urllib.error
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            data = json.load(resp)
+    except urllib.error.HTTPError as e:
+        if e.code == 404:          # setul pe acest an nu e (încă) publicat
+            return {}
+        raise
+    if not data.get('success'):
+        return {}
+    pe_nume = {}
+    for r in data['result'].get('resources', []):
+        nume = (r.get('name') or r.get('url', '').rsplit('/', 1)[-1]).upper()
+        pe_nume[nume] = r.get('url')
+    out = {}
+    for sufix, model in FISIERE_AN:
+        url = pe_nume.get(model.format(an=an))
+        if url:
+            out[sufix] = url
+    return out
+
+
+def an_in_date(output_json=OUTPUT_JSON):
+    """Cel mai recent an din firme_financiar.json (câmpul 'an' poate fi '2024-uu')."""
+    try:
+        data = json.load(open(output_json, encoding='utf-8'))
+    except (OSError, ValueError):
+        return 0
+    ani = [int(m.group(0)) for v in data.values() for m in [re.match(r'\d{4}', str(v.get('an', '')))] if m]
+    return max(ani, default=0)
+
+
+def get_cui_set_from_contracte(path=CONTRACTE_JSON):
+    """CUI-urile tuturor firmelor cu contracte (fișele de firmă există pentru toate)."""
+    try:
+        contracte = json.load(open(path, encoding='utf-8'))
+    except (OSError, ValueError):
+        return set()
+    cuis = set()
+    for c in contracte if isinstance(contracte, list) else []:
+        cui = re.sub(r'^[Rr][Oo]\s*', '', str(c.get('cui', '')).strip()).replace(' ', '')
+        if cui.isdigit():
+            cuis.add(int(cui))
+    return cuis
+
+
+def descarca_cu_reluare(url, incercari=3, timeout=120):
+    """Descarcă un fișier mare într-un fișier temporar; reia de la capăt dacă se întrerupe.
+
+    data.gov.ro închide des conexiunea la fișierele de ~100 MB (IncompleteRead)."""
+    import tempfile
+    import time
+    import urllib.request
+    ultima = None
+    for i in range(1, incercari + 1):
+        fd, cale = tempfile.mkstemp(suffix='.txt', prefix='anaf_')
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': 'transparenta-pantelimon'})
+            with urllib.request.urlopen(req, timeout=timeout) as resp, os.fdopen(fd, 'wb') as out:
+                while True:
+                    bucata = resp.read(1 << 20)
+                    if not bucata:
+                        break
+                    out.write(bucata)
+            print(f'      descărcat {os.path.getsize(cale) / 1e6:.0f} MB (încercarea {i})')
+            return cale
+        except Exception as e:  # noqa: BLE001 — orice întrerupere: reîncercăm
+            ultima = e
+            try:
+                os.remove(cale)
+            except OSError:
+                pass
+            print(f'      încercarea {i} eșuată: {e}')
+            time.sleep(5 * i)
+    raise RuntimeError(f'descărcare eșuată după {incercari} încercări: {ultima}')
+
+
+def import_automat(forteaza=False, encoding='utf-8'):
+    """Importă cel mai recent an publicat, dacă e mai nou decât cel din firme_financiar.json.
+
+    Folosit de GitHub Actions la fiecare rulare: costă o cerere la API când nu e nimic nou.
+    Firmele care lipsesc din anul nou își păstrează datele din anul anterior."""
+    from datetime import date
+    an_curent = an_in_date()
+    gasit, resurse = None, {}
+    for an in range(date.today().year, date.today().year - 3, -1):
+        try:
+            resurse = descopera_resurse_an(an)
+        except Exception as e:
+            print(f'::warning::data.gov.ro indisponibil ({e}) — datele financiare rămân pe {an_curent or "anul existent"}')
+            return 0
+        if resurse.get(''):
+            gasit = an
+            break
+    if not gasit:
+        print('[INFO] Niciun set de situații financiare găsit pe data.gov.ro.')
+        return 0
+    if gasit <= an_curent and not forteaza:
+        print(f'[INFO] firme_financiar.json are deja anul {an_curent} (cel mai recent publicat: {gasit}).')
+        return 0
+    print(f'[INFO] An nou disponibil: {gasit} (în date: {an_curent or "—"}). Import {", ".join("BL" + s for s in resurse)}…')
+    cui_tinta = get_cui_set_from_contracte() | get_cui_set_from_html()
+    nou = {}
+    for sufix, _model in FISIERE_AN:
+        url = resurse.get(sufix)
+        if not url:
+            continue
+        try:
+            cale = descarca_cu_reluare(url)
+        except Exception as e:  # noqa: BLE001
+            print(f'::warning::Import ANAF {gasit}{sufix}: {e}')
+            continue
+        try:
+            rezultate = stream_parse_csv(cale, cui_tinta, f'{gasit}{sufix}', encoding)
+        finally:
+            os.remove(cale)
+        for cui, d in rezultate.items():
+            nou.setdefault(str(cui), d)       # BL are prioritate față de UU/ONG
+    if not nou:
+        print('::warning::Import ANAF: niciun CUI găsit în fișierele noi — datele rămân neschimbate')
+        return 0
+    try:
+        existing = json.load(open(OUTPUT_JSON, encoding='utf-8'))
+    except (OSError, ValueError):
+        existing = {}
+    existing.update(nou)
+    json.dump(existing, open(OUTPUT_JSON, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+    print(f'[OK] {len(nou)} firme cu date ANAF {gasit}; {len(existing)} în total în {OUTPUT_JSON}.')
+    return len(nou)
 
 
 def get_cui_set_from_html(html_file=HTML_FILE):
@@ -255,7 +399,14 @@ def main():
                         help='Encoding fișier CSV (implicit: cp1250)')
     parser.add_argument('--merge', action='store_true',
                         help=f'Merge în {OUTPUT_JSON} existent (nu suprascrie)')
+    parser.add_argument('--auto', action='store_true',
+                        help='Cel mai recent an publicat pe data.gov.ro, dacă e mai nou decât datele existente')
+    parser.add_argument('--forteaza', action='store_true', help='Cu --auto: reimportă chiar dacă anul e același')
     args = parser.parse_args()
+
+    if args.auto:
+        import_automat(forteaza=args.forteaza)
+        return
 
     # 1. Extragem CUI-urile țintă
     print(f'[1/3] Extrag CUI-uri din {HTML_FILE}...')
