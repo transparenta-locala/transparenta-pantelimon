@@ -12,10 +12,10 @@ jobs:
 
     steps:
       - name: 📥 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: 🐍 Configurare Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
@@ -26,7 +26,7 @@ jobs:
         run: pytest tests/ -v --tb=short --cov=monitor_pantelimon --cov=monitor_uat --cov=risc_firma --cov-report=term-missing --cov-report=xml:coverage.xml
 
       - name: 📊 Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: coverage-report

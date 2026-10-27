@@ -839,6 +839,11 @@ a.tp-sig:hover { border-color: var(--tp-link); color: var(--tp-link) !important;
 .tp-ment > a { font-weight: 600; }
 .tp-ment-meta, .tp-ment-rez { font-size: .85rem; color: var(--tp-muted); margin-top: 3px; }
 .tp-list { margin: .3rem 0 .5rem 1.2rem; }
+.tp-fin h3 { font-size: 1rem; margin: 14px 0 4px; }
+.tp-fin-dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin: 6px 0 0; }
+.tp-fin-dl dt { color: var(--tp-muted); }
+.tp-fin-dl dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tp-fin .tp-sources { margin-top: 10px; }
 .tp-filterbar { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 12px; }
 .tp-filterbar input { flex: 1 1 260px; min-height: 44px; padding: 0 12px; border: 2px solid var(--tp-fg); border-radius: 10px; background: var(--tp-bg); color: var(--tp-fg); font-size: 1rem; }
 .tp-filterbar select { min-height: 44px; padding: 0 10px; border: 1px solid var(--tp-border); border-radius: 8px; background: var(--tp-bg); color: var(--tp-fg); }
