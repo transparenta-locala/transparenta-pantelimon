@@ -3,8 +3,8 @@
     "name": "TOP A-Z CONCEPT S.R.L.",
     "cif": "45058860",
     "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, STR. MĂRULUI, NR.19, CAMERA 2, SC.A, ET.2, AP.16",
-    "lat": 44.457455,
-    "lng": 26.16276,
+    "lat": 44.457952,
+    "lng": 26.162859,
     "valoare": 19516062.72,
     "nr_contracte": 4,
     "slug": "top-a-z-concept-srl"
@@ -1993,8 +1993,8 @@
     "name": "BET AUTO SERVICE FUNDENI SRL",
     "cif": "27987613",
     "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, DRM. GĂRII, NR.8, TEREN IN SUPRAFATA DE 600 MP SI CONSTRUCTIE P+1E",
-    "lat": 44.457455,
-    "lng": 26.16276,
+    "lat": 44.470278,
+    "lng": 26.176246,
     "valoare": 3050.0,
     "nr_contracte": 1,
     "slug": "bet-auto-service-fundeni-srl"
@@ -2188,5 +2188,15 @@
     "valoare": 4000.0,
     "nr_contracte": 1,
     "slug": "expert-mind-srl"
+  },
+  {
+    "name": "AUTOPRO MOTORS S.R.L.",
+    "cif": "50157444",
+    "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 4, ŞOS VITAN BÂRZEŞTI, NR.7D, BL.3, SC.A, ET.9, AP.335",
+    "lat": 44.381903,
+    "lng": 26.119018,
+    "valoare": 8375.0,
+    "nr_contracte": 1,
+    "slug": "autopro-motors-srl"
   }
 ]

@@ -10554,5 +10554,19 @@
     "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123315433",
     "k": "da:123315433",
     "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123337019",
+    "titlu": "Servicii de reparare si de intretinere a automobilelor (Rev.2)",
+    "valoare": 8375.0,
+    "data": "2026-10-27",
+    "tip": "",
+    "firma": "AUTOPRO MOTORS",
+    "cui": "50157444",
+    "ofertanti": 1,
+    "cod": "DA41492195",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123337019",
+    "k": "da:123337019",
+    "tipc": "achizitie-directa"
   }
 ]
