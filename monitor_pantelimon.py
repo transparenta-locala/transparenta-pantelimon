@@ -4557,106 +4557,87 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
     ) if _rezumat else ""
 
     # ── HTML: Analiză pe categorie ───────────────────────────────────────────
+    # Fără stiluri inline: clasele .tp-atp-* sunt în assets/tp.css. Bordura cardului
+    # ia culoarea celei mai grave severități din categorie (aceeași paletă ca la carduri).
+    # Singurul style rămas e lățimea barelor (procentul, care ține de date).
     analiza_per_tip_html = ""
     if analiza_per_tip:
         cards_html = ""
         panels_html = ""
         for d in analiza_per_tip:
             tip_id = d["tip"].lower().replace("_", "-")
-            sev_badges = ""
-            if d["n_critic"]: sev_badges += f'<span style="background:#C0392B;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:700">{d["n_critic"]} CRITIC</span> '
-            if d["n_major"]:  sev_badges += f'<span style="background:#E67E22;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:700">{d["n_major"]} MAJOR</span> '
-            if d["n_mediu"]:  sev_badges += f'<span style="background:#F39C12;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:700">{d["n_mediu"]} MEDIU</span>'
+            sev_max = "CRITIC" if d["n_critic"] else "MAJOR" if d["n_major"] else "MEDIU"
+            sev_badges = "".join(
+                f'<span class="tp-sevpill" data-sev="{s}">{n} {s}</span>'
+                for s, n in (("CRITIC", d["n_critic"]), ("MAJOR", d["n_major"]), ("MEDIU", d["n_mediu"])) if n
+            )
+            eticheta = f'{d["emoji"]} {html_mod.escape(d["label"])}'
             cards_html += f"""
-            <div class="atp-card" data-tip="{tip_id}"
-                 onclick="showAtp('{tip_id}', this)"
-                 style="background:#fff;border-radius:10px;padding:16px;cursor:pointer;
-                        border-top:4px solid {d["culoare"]};box-shadow:0 1px 4px rgba(0,0,0,.08);
-                        transition:box-shadow .15s"
-                 onmouseenter="this.style.boxShadow='0 4px 14px rgba(0,0,0,.15)'"
-                 onmouseleave="this.style.boxShadow='0 1px 4px rgba(0,0,0,.08)'">
-              <div style="font-size:22px;font-weight:800;color:{d["culoare"]}">{d["total"]}</div>
-              <div style="font-size:12px;font-weight:700;color:#333;margin:4px 0">{d["emoji"]} {d["label"]}</div>
-              <div style="font-size:11px;color:#777">{_fmt_ron(d["valoare_totala"])}</div>
-              <div style="margin-top:6px">{sev_badges}</div>
-            </div>"""
+        <button type="button" class="tp-atp-card" data-tip="{tip_id}" data-sev="{sev_max}"
+                aria-expanded="false" aria-controls="atp-panel-{tip_id}" onclick="showAtp('{tip_id}', this)">
+          <span class="tp-atp-n">{d["total"]}</span>
+          <span class="tp-atp-l">{eticheta}</span>
+          <span class="tp-atp-v">{_fmt_ron(d["valoare_totala"])}</span>
+          <span class="tp-atp-sev">{sev_badges}</span>
+        </button>"""
 
-            # Build top suppliers rows
+            # Top furnizori
             furnizori_rows = ""
             for rank, (furn, val) in enumerate(d["top_furnizori"], 1):
                 pct = (val / d["valoare_totala"] * 100) if d["valoare_totala"] else 0
                 furnizori_rows += f"""
-                <tr style="background:{"#fff" if rank%2==0 else "#f8f9fa"}">
-                  <td style="padding:6px 10px;font-size:12px;font-weight:700;color:#555">{rank}</td>
-                  <td style="padding:6px 10px;font-size:12px">{furn[:55]}</td>
-                  <td style="padding:6px 10px;font-size:12px;font-weight:700">{_fmt_ron(val)}</td>
-                  <td style="padding:6px 10px;font-size:12px">
-                    <div style="background:#e0e0e0;border-radius:4px;height:8px;width:120px">
-                      <div style="background:{d["culoare"]};height:8px;border-radius:4px;width:{min(pct,100):.0f}%"></div>
-                    </div>
-                    <span style="font-size:10px;color:#777">{pct:.0f}%</span>
-                  </td>
-                </tr>"""
+              <tr><td class="num">{rank}</td><td>{html_mod.escape(furn[:55])}</td><td class="num">{_fmt_ron(val)}</td>
+                <td><span class="tp-atp-bar"><span style="width:{min(pct, 100):.0f}%"></span></span> <span class="tp-atp-pct">{pct:.0f}%</span></td></tr>"""
 
-            # Build monthly timeline
+            # Evoluție lunară
             luna_rows = ""
             max_luna = max((v for _, v in d["luni"]), default=1) or 1
             for luna_key, cnt in d["luni"]:
-                bar_w = int(cnt / max_luna * 120)
                 luna_rows += f"""
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                  <span style="font-size:11px;color:#555;min-width:56px">{luna_key}</span>
-                  <div style="background:#e0e0e0;border-radius:3px;height:14px;width:120px">
-                    <div style="background:{d["culoare"]};height:14px;border-radius:3px;width:{bar_w}px"></div>
-                  </div>
-                  <span style="font-size:11px;font-weight:700;color:#333">{cnt}</span>
-                </div>"""
+              <div class="tp-atp-luna"><span>{luna_key}</span><span class="tp-atp-bar"><span style="width:{cnt / max_luna * 100:.0f}%"></span></span><strong>{cnt}</strong></div>"""
+
+            tabel_furnizori = (
+                '<h4>Top furnizori implicați</h4><div class="tp-scroll"><table class="tp-table tp-table-sm">'
+                '<thead><tr><th class="num">#</th><th>Firmă</th><th class="num">Valoare</th><th>Pondere</th></tr></thead>'
+                f'<tbody>{furnizori_rows}</tbody></table></div>'
+            ) if furnizori_rows else ""
+            evolutie = f'<h4>Evoluție lunară</h4>{luna_rows}' if luna_rows else ""
 
             panels_html += f"""
-            <div id="atp-panel-{tip_id}" style="display:none;margin-top:20px;
-                 background:#fff;border-radius:10px;border-left:4px solid {d["culoare"]};
-                 padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-                <h3 style="margin:0;color:{d["culoare"]};font-size:16px">{d["emoji"]} {d["label"]}</h3>
-                <span onclick="hideAtp()" style="cursor:pointer;font-size:13px;color:#999;
-                       background:#f5f5f5;padding:4px 10px;border-radius:6px">✕ închide</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-                <div style="background:#f8f9fa;border-radius:8px;padding:12px">
-                  <div style="font-size:22px;font-weight:800;color:{d["culoare"]}">{d["total"]}</div>
-                  <div style="font-size:11px;color:#777;text-transform:uppercase">Semnale detectate</div>
-                </div>
-                <div style="background:#f8f9fa;border-radius:8px;padding:12px">
-                  <div style="font-size:22px;font-weight:800;color:{d["culoare"]}">{_fmt_ron(d["valoare_totala"])}</div>
-                  <div style="font-size:11px;color:#777;text-transform:uppercase">Sumă asociată flagurilor*</div>
-                </div>
-              </div>
-              {"<h4 style='margin:12px 0 8px;font-size:13px;color:#555'>🏆 Top furnizori implicați</h4><div style='overflow-x:auto'><table style='width:100%;border-collapse:collapse;font-size:12px'><thead><tr style='background:" + d["culoare"] + ";color:#fff'><th style='padding:6px 10px'>#</th><th style='padding:6px 10px'>Firmă</th><th style='padding:6px 10px'>Valoare</th><th style='padding:6px 10px'>Pondere</th></tr></thead><tbody>" + furnizori_rows + "</tbody></table></div>" if furnizori_rows else ""}
-              {"<h4 style='margin:16px 0 8px;font-size:13px;color:#555'>📅 Evoluție lunară</h4>" + luna_rows if luna_rows else ""}
-            </div>"""
+        <div id="atp-panel-{tip_id}" class="tp-atp-panel" data-sev="{sev_max}" hidden>
+          <div class="tp-atp-panel-h">
+            <h3>{eticheta}</h3>
+            <button type="button" class="tp-atp-close" onclick="hideAtp()">✕ închide</button>
+          </div>
+          <div class="tp-kpis">
+            <div class="tp-kpi"><div class="tp-kpi-v">{d["total"]}</div><div class="tp-kpi-l">Semnale detectate</div></div>
+            <div class="tp-kpi"><div class="tp-kpi-v">{_fmt_ron(d["valoare_totala"])}</div><div class="tp-kpi-l">Sumă asociată semnalelor*</div></div>
+          </div>
+          {tabel_furnizori}
+          {evolutie}
+        </div>"""
 
         analiza_per_tip_html = f"""
-    <div style="margin-bottom:12px">
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:8px">
-        {cards_html}
-      </div>
-      <div id="atp-panels">{panels_html}</div>
+    <div class="tp-atp-grid">{cards_html}
+    </div>
+    <div id="atp-panels">{panels_html}
     </div>
     <script>
     function showAtp(tipId, cardEl) {{
-      document.querySelectorAll('.atp-card').forEach(function(c) {{ c.style.opacity='0.6'; c.style.transform=''; }});
-      if (cardEl) {{ cardEl.style.opacity='1'; cardEl.style.transform='translateY(-2px)'; }}
-      var panelId = 'atp-panel-' + tipId;
-      document.querySelectorAll('[id^="atp-panel-"]').forEach(function(p) {{
-        p.style.display = p.id === panelId && p.style.display === 'none' ? 'block' : 'none';
-      }});
-      var panel = document.getElementById(panelId);
-      if (panel && panel.style.display === 'block') {{ panel.scrollIntoView({{behavior:'smooth',block:'nearest'}}); }}
-      else {{ document.querySelectorAll('.atp-card').forEach(function(c) {{ c.style.opacity='1'; c.style.transform=''; }}); }}
+      var panel = document.getElementById('atp-panel-' + tipId);
+      var deschide = panel && panel.hidden;
+      hideAtp();
+      if (!deschide) return;
+      panel.hidden = false;
+      document.querySelector('.tp-atp-grid').classList.add('tp-atp-ales');
+      if (cardEl) cardEl.setAttribute('aria-expanded', 'true');
+      panel.scrollIntoView({{behavior: 'smooth', block: 'nearest'}});
     }}
     function hideAtp() {{
-      document.querySelectorAll('[id^="atp-panel-"]').forEach(function(p) {{ p.style.display='none'; }});
-      document.querySelectorAll('.atp-card').forEach(function(c) {{ c.style.opacity='1'; c.style.transform=''; }});
+      document.querySelectorAll('.tp-atp-panel').forEach(function(p) {{ p.hidden = true; }});
+      document.querySelectorAll('.tp-atp-card').forEach(function(c) {{ c.setAttribute('aria-expanded', 'false'); }});
+      var g = document.querySelector('.tp-atp-grid');
+      if (g) g.classList.remove('tp-atp-ales');
     }}
     </script>"""
 
@@ -6182,6 +6163,12 @@ def genereaza_pagina_furnizor(
         'din raport →</a></p>'
     ) if flags_firma else '<p class="tp-muted">Niciun semnal automat pentru această firmă.</p>'
 
+    from site_shell import rand_distribuie_html
+    rand_distribuie = rand_distribuie_html(
+        f"{base_url}/furnizori/{slug}.html",
+        f"Contractele {nume} cu Primăria Pantelimon, într-un singur loc. "
+        "Verifică singur pe transparenta-pantelimon.eu:")
+
     return f"""<!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -6212,6 +6199,7 @@ def genereaza_pagina_furnizor(
     <div class="stat" data-sev="MAJOR"><div class="stat-val">{n_sev["MAJOR"]}</div><div class="stat-lbl">Semnale MAJOR</div></div>
     <div class="stat" data-sev="MEDIU"><div class="stat-val">{n_sev["MEDIU"]}</div><div class="stat-lbl">Semnale MEDIU</div></div>
   </div>
+  {rand_distribuie}
   {nota_acorduri}
 
   <div class="tp-firm-links">

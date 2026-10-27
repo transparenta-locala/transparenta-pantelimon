@@ -28,8 +28,8 @@
 <meta name="twitter:description" content="Grafice interactive: execuție bugetară pe capitole, evoluție 2020–2025, structura cheltuielilor.">
 <meta name="twitter:image" content="https://transparenta-pantelimon.eu/og-image.png">
 
-<!-- Chart.js 4.4.1 găzduit local (același fișier ca pe jsDelivr, verificat SRI) -->
-<script defer src="assets/vendor/chart.umd.min.js"></script>
+<!-- Chart.js 4.4.1 găzduit local (assets/vendor/chart.umd.min.js) se încarcă la cerere,
+     când primul grafic intră în ecran — vezi „GRAFICE” la finalul paginii. -->
 <style>
   :root {
     --albastru: #1D3F63;
@@ -706,11 +706,11 @@
 <link rel="alternate" type="application/atom+xml" title="Semnale noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
 <!--tp:head-->
 <link rel="preload" href="assets/fonts/source-sans-3-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/source-serif-4-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/tp.css?v=7f4b61b1">
+<link rel="stylesheet" href="assets/tp.css?v=b27b31dd">
 <link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" href="icon-192.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#14263D">
 <script>(function(d){d.classList.add('tp-theme');try{var t=localStorage.getItem('tp-theme');if(t)d.dataset.tpTheme=t;else if(matchMedia('(prefers-color-scheme: dark)').matches)d.dataset.tpTheme='dark'}catch(e){}})(document.documentElement)</script>
-<script src="enhance.min.js?v=078da901" defer></script>
+<script src="enhance.min.js?v=c8a90a9d" defer></script>
 <!--/tp:head-->
 </head>
 <body>
@@ -2708,7 +2708,191 @@ function printCitizenReport() {
   openReport(html);
 }
 
-// ---- CHART.JS INITIALIZATION ----
+// ---- GRAFICE (Chart.js) ----
+// Un grafic se desenează abia când canvas-ul lui intră în ecran (IntersectionObserver):
+// tab-urile ascunse au display:none, deci graficele lor așteaptă până se deschide tab-ul.
+// Chart.js (~200 KB) se încarcă la primul grafic vizibil, nu odată cu pagina.
+var _GRAFICE = {};
+
+// Chart 1: Buget vs Cheltuieli pe categorii
+_GRAFICE.chartBugetCateg = {
+  type: 'bar',
+  data: {
+    labels: ['Autorități publice', 'Ordine publică', 'Învățământ', 'Sănătate', 'Cultură & Sport', 'Asistență socială', 'Servicii publice', 'Mediu', 'Transport', 'Acțiuni economice'],
+    datasets: [
+      {
+        label: 'Buget aprobat (mil. RON)',
+        data: [18.2, 9.4, 22.1, 5.6, 8.3, 14.7, 11.2, 6.8, 28.4, 7.9],
+        backgroundColor: 'rgba(0, 112, 192, 0.7)',
+        borderColor: 'rgba(0, 66, 122, 1)',
+        borderWidth: 1
+      },
+      {
+        label: 'Cheltuieli realizate (mil. RON)',
+        data: [16.7, 8.3, 18.6, 4.3, 7.9, 13.1, 8.7, 4.9, 15.3, 4.8],
+        backgroundColor: 'rgba(231, 76, 60, 0.7)',
+        borderColor: 'rgba(192, 57, 43, 1)',
+        borderWidth: 1
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: 'mil. RON' } } }
+  }
+};
+
+// Chart 2: Evoluție buget 2020-2025
+_GRAFICE.chartEvolutie = {
+  type: 'line',
+  data: {
+    labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+    datasets: [
+      {
+        label: 'Venituri (mil. RON)',
+        data: [98.4, 108.2, 124.6, 143.1, 161.2, 147.97],
+        borderColor: 'rgba(0, 112, 192, 1)',
+        backgroundColor: 'rgba(0, 112, 192, 0.1)',
+        fill: true, tension: 0.3
+      },
+      {
+        label: 'Cheltuieli (mil. RON)',
+        data: [95.1, 104.7, 119.3, 131.8, 138.2, 146.43],
+        borderColor: 'rgba(231, 76, 60, 1)',
+        backgroundColor: 'rgba(231, 76, 60, 0.1)',
+        fill: true, tension: 0.3
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' } },
+    scales: { y: { beginAtZero: false, title: { display: true, text: 'mil. RON' } } }
+  }
+};
+
+// Chart 3: Structura cheltuieli (pie)
+_GRAFICE.chartPie = {
+  type: 'doughnut',
+  data: {
+    labels: ['Autorități publice', 'Ordine publică', 'Învățământ', 'Sănătate', 'Cultură & Sport', 'Asistență socială', 'Servicii & Transport', 'Altele'],
+    datasets: [{
+      data: [16.7, 8.3, 18.6, 4.3, 7.9, 13.1, 24.0, 4.8],
+      backgroundColor: [
+        '#00427A','#0070C0','#4D86C2','#C0392B',
+        '#27AE60','#E67E22','#8E44AD','#BDC3C7'
+      ]
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right' },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed + ' mil. RON' } }
+    }
+  }
+};
+
+// Chart 4: Distribuție proceduri achiziții
+_GRAFICE.chartProceduri = {
+  type: 'bar',
+  data: {
+    labels: ['Cumpărare directă', 'Licitație deschisă', 'Procedură simplificată', 'Negociere fără publicare', 'Altele'],
+    datasets: [{
+      label: 'Nr. contracte 2025',
+      data: [38, 12, 3, 5, 8],
+      backgroundColor: ['#C0392B','#27AE60','#F39C12','#E67E22','#BDC3C7'],
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ctx.parsed.y + ' contracte' } }
+    },
+    scales: { y: { beginAtZero: true, title: { display: true, text: 'Nr. contracte' } } }
+  }
+};
+
+// Chart Lunar distribution
+_GRAFICE.chartLunar = {
+  type: 'bar',
+  data: {
+    labels: ['Sep 23','Dec 24','Ian 25','Feb 25','Mar 25','Apr 25','Mai 25','Iun 25','Iul 25','Aug 25','Sep 25','Oct 25','Nov 25','Dec 25','Ian 26','Feb 26','Mar 26'],
+    datasets: [{
+      label: 'Nr. contracte',
+      data: [2, 2, 28, 45, 41, 28, 38, 35, 38, 29, 31, 32, 34, 38, 23, 29, 33],
+      backgroundColor: function(ctx) {
+        const v = ctx.raw;
+        if (v >= 40) return '#C0392B';
+        if (v >= 35) return '#E67E22';
+        return 'rgba(0,112,192,0.7)';
+      },
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ctx.parsed.y + ' contracte' } },
+      annotation: {}
+    },
+    scales: { y: { beginAtZero: true, title: { display: true, text: 'Nr. contracte' } } }
+  }
+};
+
+// Afișează mesaj „Date indisponibile" dacă Chart.js lipsește sau aruncă eroare
+function _chartFallback(canvas) {
+  try {
+    const fb = document.createElement('div');
+    fb.className = 'tp-chart-fallback';
+    fb.setAttribute('role', 'img');
+    fb.setAttribute('aria-label', 'Grafic indisponibil');
+    fb.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Date indisponibile';
+    canvas.parentNode.insertBefore(fb, canvas);
+    canvas.style.display = 'none';
+  } catch(ex) {}
+}
+
+var _chartJsIncarcat = null;
+function _incarcaChartJs() {
+  if (!_chartJsIncarcat) _chartJsIncarcat = new Promise(function(ok, eroare) {
+    if (typeof Chart !== 'undefined') return ok();
+    var sc = document.createElement('script');
+    sc.src = 'assets/vendor/chart.umd.min.js';
+    sc.onload = ok;
+    sc.onerror = eroare;
+    document.head.appendChild(sc);
+  });
+  return _chartJsIncarcat;
+}
+
+function _deseneazaGrafic(canvas, faraAnimatie) {
+  if (canvas.dataset.desenat) return;
+  canvas.dataset.desenat = '1';
+  var cfg = _GRAFICE[canvas.id];
+  if (faraAnimatie) cfg.options.animation = false;
+  _incarcaChartJs().then(function() {
+    try { new Chart(canvas, cfg); } catch(e) { _chartFallback(canvas); }
+  }, function() { _chartFallback(canvas); });
+}
+
+// La tipărire se văd toate tab-urile (vezi @media print), deci și graficele lor
+window.addEventListener('beforeprint', function() {
+  Object.keys(_GRAFICE).forEach(function(id) {
+    var c = document.getElementById(id);
+    if (c) _deseneazaGrafic(c, true);
+  });
+});
+
 document.addEventListener('DOMContentLoaded', function() {
 
   // Restore accordion state from localStorage
@@ -2730,177 +2914,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   } catch(e) {}
 
-  // Helper: afișează mesaj „Date indisponibile" dacă Chart.js lipsește sau aruncă eroare
-  function _chartFallback(canvas) {
-    try {
-      const fb = document.createElement('div');
-      fb.className = 'tp-chart-fallback';
-      fb.setAttribute('role', 'img');
-      fb.setAttribute('aria-label', 'Grafic indisponibil');
-      fb.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Date indisponibile';
-      canvas.parentNode.insertBefore(fb, canvas);
-      canvas.style.display = 'none';
-    } catch(ex) {}
-  }
-
-  // Dacă Chart.js nu a fost încărcat (CDN down etc.), afișăm fallback pentru toate canvas-urile
-  if (typeof Chart === 'undefined') {
-    document.querySelectorAll('.chart-box canvas').forEach(_chartFallback);
+  var canvase = Object.keys(_GRAFICE).map(function(id) { return document.getElementById(id); }).filter(Boolean);
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(intrari) {
+      intrari.forEach(function(intr) {
+        if (!intr.isIntersecting) return;
+        obs.unobserve(intr.target);
+        _deseneazaGrafic(intr.target);
+      });
+    }, { rootMargin: '200px 0px' });
+    canvase.forEach(function(c) { obs.observe(c); });
   } else {
-
-  // Chart 1: Buget vs Cheltuieli pe categorii
-  const ctxCateg = document.getElementById('chartBugetCateg');
-  if (ctxCateg) {
-    try { new Chart(ctxCateg, {
-      type: 'bar',
-      data: {
-        labels: ['Autorități publice', 'Ordine publică', 'Învățământ', 'Sănătate', 'Cultură & Sport', 'Asistență socială', 'Servicii publice', 'Mediu', 'Transport', 'Acțiuni economice'],
-        datasets: [
-          {
-            label: 'Buget aprobat (mil. RON)',
-            data: [18.2, 9.4, 22.1, 5.6, 8.3, 14.7, 11.2, 6.8, 28.4, 7.9],
-            backgroundColor: 'rgba(0, 112, 192, 0.7)',
-            borderColor: 'rgba(0, 66, 122, 1)',
-            borderWidth: 1
-          },
-          {
-            label: 'Cheltuieli realizate (mil. RON)',
-            data: [16.7, 8.3, 18.6, 4.3, 7.9, 13.1, 8.7, 4.9, 15.3, 4.8],
-            backgroundColor: 'rgba(231, 76, 60, 0.7)',
-            borderColor: 'rgba(192, 57, 43, 1)',
-            borderWidth: 1
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { position: 'top' } },
-        scales: { y: { beginAtZero: true, title: { display: true, text: 'mil. RON' } } }
-      }
-    }); } catch(e) { _chartFallback(ctxCateg); }
-  }
-
-  // Chart 2: Evoluție buget 2020-2025
-  const ctxEvol = document.getElementById('chartEvolutie');
-  if (ctxEvol) {
-    try { new Chart(ctxEvol, {
-      type: 'line',
-      data: {
-        labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
-        datasets: [
-          {
-            label: 'Venituri (mil. RON)',
-            data: [98.4, 108.2, 124.6, 143.1, 161.2, 147.97],
-            borderColor: 'rgba(0, 112, 192, 1)',
-            backgroundColor: 'rgba(0, 112, 192, 0.1)',
-            fill: true, tension: 0.3
-          },
-          {
-            label: 'Cheltuieli (mil. RON)',
-            data: [95.1, 104.7, 119.3, 131.8, 138.2, 146.43],
-            borderColor: 'rgba(231, 76, 60, 1)',
-            backgroundColor: 'rgba(231, 76, 60, 0.1)',
-            fill: true, tension: 0.3
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { position: 'top' } },
-        scales: { y: { beginAtZero: false, title: { display: true, text: 'mil. RON' } } }
-      }
-    }); } catch(e) { _chartFallback(ctxEvol); }
-  }
-
-  // Chart 3: Structura cheltuieli (pie)
-  const ctxPie = document.getElementById('chartPie');
-  if (ctxPie) {
-    try { new Chart(ctxPie, {
-      type: 'doughnut',
-      data: {
-        labels: ['Autorități publice', 'Ordine publică', 'Învățământ', 'Sănătate', 'Cultură & Sport', 'Asistență socială', 'Servicii & Transport', 'Altele'],
-        datasets: [{
-          data: [16.7, 8.3, 18.6, 4.3, 7.9, 13.1, 24.0, 4.8],
-          backgroundColor: [
-            '#00427A','#0070C0','#4D86C2','#C0392B',
-            '#27AE60','#E67E22','#8E44AD','#BDC3C7'
-          ]
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { position: 'right' },
-          tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed + ' mil. RON' } }
-        }
-      }
-    }); } catch(e) { _chartFallback(ctxPie); }
-  }
-
-  // Chart 4: Distribuție proceduri achiziții
-  const ctxProc = document.getElementById('chartProceduri');
-  if (ctxProc) {
-    try { new Chart(ctxProc, {
-      type: 'bar',
-      data: {
-        labels: ['Cumpărare directă', 'Licitație deschisă', 'Procedură simplificată', 'Negociere fără publicare', 'Altele'],
-        datasets: [{
-          label: 'Nr. contracte 2025',
-          data: [38, 12, 3, 5, 8],
-          backgroundColor: ['#C0392B','#27AE60','#F39C12','#E67E22','#BDC3C7'],
-          borderRadius: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: ctx => ctx.parsed.y + ' contracte' } }
-        },
-        scales: { y: { beginAtZero: true, title: { display: true, text: 'Nr. contracte' } } }
-      }
-    }); } catch(e) { _chartFallback(ctxProc); }
+    canvase.forEach(_deseneazaGrafic);
   }
 
   _loadContracte();
-
-  // Chart Lunar distribution
-  const ctxLunar = document.getElementById('chartLunar');
-  if (ctxLunar) {
-    try { new Chart(ctxLunar, {
-      type: 'bar',
-      data: {
-        labels: ['Sep 23','Dec 24','Ian 25','Feb 25','Mar 25','Apr 25','Mai 25','Iun 25','Iul 25','Aug 25','Sep 25','Oct 25','Nov 25','Dec 25','Ian 26','Feb 26','Mar 26'],
-        datasets: [{
-          label: 'Nr. contracte',
-          data: [2, 2, 28, 45, 41, 28, 38, 35, 38, 29, 31, 32, 34, 38, 23, 29, 33],
-          backgroundColor: function(ctx) {
-            const v = ctx.raw;
-            if (v >= 40) return '#C0392B';
-            if (v >= 35) return '#E67E22';
-            return 'rgba(0,112,192,0.7)';
-          },
-          borderRadius: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: ctx => ctx.parsed.y + ' contracte' } },
-          annotation: {}
-        },
-        scales: { y: { beginAtZero: true, title: { display: true, text: 'Nr. contracte' } } }
-      }
-    }); } catch(e) { _chartFallback(ctxLunar); }
-  }
-
-  } // end if (typeof Chart !== 'undefined')
 
 });
 </script>
