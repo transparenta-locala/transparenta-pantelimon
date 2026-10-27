@@ -4557,106 +4557,87 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
     ) if _rezumat else ""
 
     # ── HTML: Analiză pe categorie ───────────────────────────────────────────
+    # Fără stiluri inline: clasele .tp-atp-* sunt în assets/tp.css. Bordura cardului
+    # ia culoarea celei mai grave severități din categorie (aceeași paletă ca la carduri).
+    # Singurul style rămas e lățimea barelor (procentul, care ține de date).
     analiza_per_tip_html = ""
     if analiza_per_tip:
         cards_html = ""
         panels_html = ""
         for d in analiza_per_tip:
             tip_id = d["tip"].lower().replace("_", "-")
-            sev_badges = ""
-            if d["n_critic"]: sev_badges += f'<span style="background:#C0392B;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:700">{d["n_critic"]} CRITIC</span> '
-            if d["n_major"]:  sev_badges += f'<span style="background:#E67E22;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:700">{d["n_major"]} MAJOR</span> '
-            if d["n_mediu"]:  sev_badges += f'<span style="background:#F39C12;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:700">{d["n_mediu"]} MEDIU</span>'
+            sev_max = "CRITIC" if d["n_critic"] else "MAJOR" if d["n_major"] else "MEDIU"
+            sev_badges = "".join(
+                f'<span class="tp-sevpill" data-sev="{s}">{n} {s}</span>'
+                for s, n in (("CRITIC", d["n_critic"]), ("MAJOR", d["n_major"]), ("MEDIU", d["n_mediu"])) if n
+            )
+            eticheta = f'{d["emoji"]} {html_mod.escape(d["label"])}'
             cards_html += f"""
-            <div class="atp-card" data-tip="{tip_id}"
-                 onclick="showAtp('{tip_id}', this)"
-                 style="background:#fff;border-radius:10px;padding:16px;cursor:pointer;
-                        border-top:4px solid {d["culoare"]};box-shadow:0 1px 4px rgba(0,0,0,.08);
-                        transition:box-shadow .15s"
-                 onmouseenter="this.style.boxShadow='0 4px 14px rgba(0,0,0,.15)'"
-                 onmouseleave="this.style.boxShadow='0 1px 4px rgba(0,0,0,.08)'">
-              <div style="font-size:22px;font-weight:800;color:{d["culoare"]}">{d["total"]}</div>
-              <div style="font-size:12px;font-weight:700;color:#333;margin:4px 0">{d["emoji"]} {d["label"]}</div>
-              <div style="font-size:11px;color:#777">{_fmt_ron(d["valoare_totala"])}</div>
-              <div style="margin-top:6px">{sev_badges}</div>
-            </div>"""
+        <button type="button" class="tp-atp-card" data-tip="{tip_id}" data-sev="{sev_max}"
+                aria-expanded="false" aria-controls="atp-panel-{tip_id}" onclick="showAtp('{tip_id}', this)">
+          <span class="tp-atp-n">{d["total"]}</span>
+          <span class="tp-atp-l">{eticheta}</span>
+          <span class="tp-atp-v">{_fmt_ron(d["valoare_totala"])}</span>
+          <span class="tp-atp-sev">{sev_badges}</span>
+        </button>"""
 
-            # Build top suppliers rows
+            # Top furnizori
             furnizori_rows = ""
             for rank, (furn, val) in enumerate(d["top_furnizori"], 1):
                 pct = (val / d["valoare_totala"] * 100) if d["valoare_totala"] else 0
                 furnizori_rows += f"""
-                <tr style="background:{"#fff" if rank%2==0 else "#f8f9fa"}">
-                  <td style="padding:6px 10px;font-size:12px;font-weight:700;color:#555">{rank}</td>
-                  <td style="padding:6px 10px;font-size:12px">{furn[:55]}</td>
-                  <td style="padding:6px 10px;font-size:12px;font-weight:700">{_fmt_ron(val)}</td>
-                  <td style="padding:6px 10px;font-size:12px">
-                    <div style="background:#e0e0e0;border-radius:4px;height:8px;width:120px">
-                      <div style="background:{d["culoare"]};height:8px;border-radius:4px;width:{min(pct,100):.0f}%"></div>
-                    </div>
-                    <span style="font-size:10px;color:#777">{pct:.0f}%</span>
-                  </td>
-                </tr>"""
+              <tr><td class="num">{rank}</td><td>{html_mod.escape(furn[:55])}</td><td class="num">{_fmt_ron(val)}</td>
+                <td><span class="tp-atp-bar"><span style="width:{min(pct, 100):.0f}%"></span></span> <span class="tp-atp-pct">{pct:.0f}%</span></td></tr>"""
 
-            # Build monthly timeline
+            # Evoluție lunară
             luna_rows = ""
             max_luna = max((v for _, v in d["luni"]), default=1) or 1
             for luna_key, cnt in d["luni"]:
-                bar_w = int(cnt / max_luna * 120)
                 luna_rows += f"""
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-                  <span style="font-size:11px;color:#555;min-width:56px">{luna_key}</span>
-                  <div style="background:#e0e0e0;border-radius:3px;height:14px;width:120px">
-                    <div style="background:{d["culoare"]};height:14px;border-radius:3px;width:{bar_w}px"></div>
-                  </div>
-                  <span style="font-size:11px;font-weight:700;color:#333">{cnt}</span>
-                </div>"""
+              <div class="tp-atp-luna"><span>{luna_key}</span><span class="tp-atp-bar"><span style="width:{cnt / max_luna * 100:.0f}%"></span></span><strong>{cnt}</strong></div>"""
+
+            tabel_furnizori = (
+                '<h4>Top furnizori implicați</h4><div class="tp-scroll"><table class="tp-table tp-table-sm">'
+                '<thead><tr><th class="num">#</th><th>Firmă</th><th class="num">Valoare</th><th>Pondere</th></tr></thead>'
+                f'<tbody>{furnizori_rows}</tbody></table></div>'
+            ) if furnizori_rows else ""
+            evolutie = f'<h4>Evoluție lunară</h4>{luna_rows}' if luna_rows else ""
 
             panels_html += f"""
-            <div id="atp-panel-{tip_id}" style="display:none;margin-top:20px;
-                 background:#fff;border-radius:10px;border-left:4px solid {d["culoare"]};
-                 padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-                <h3 style="margin:0;color:{d["culoare"]};font-size:16px">{d["emoji"]} {d["label"]}</h3>
-                <span onclick="hideAtp()" style="cursor:pointer;font-size:13px;color:#999;
-                       background:#f5f5f5;padding:4px 10px;border-radius:6px">✕ închide</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-                <div style="background:#f8f9fa;border-radius:8px;padding:12px">
-                  <div style="font-size:22px;font-weight:800;color:{d["culoare"]}">{d["total"]}</div>
-                  <div style="font-size:11px;color:#777;text-transform:uppercase">Semnale detectate</div>
-                </div>
-                <div style="background:#f8f9fa;border-radius:8px;padding:12px">
-                  <div style="font-size:22px;font-weight:800;color:{d["culoare"]}">{_fmt_ron(d["valoare_totala"])}</div>
-                  <div style="font-size:11px;color:#777;text-transform:uppercase">Sumă asociată flagurilor*</div>
-                </div>
-              </div>
-              {"<h4 style='margin:12px 0 8px;font-size:13px;color:#555'>🏆 Top furnizori implicați</h4><div style='overflow-x:auto'><table style='width:100%;border-collapse:collapse;font-size:12px'><thead><tr style='background:" + d["culoare"] + ";color:#fff'><th style='padding:6px 10px'>#</th><th style='padding:6px 10px'>Firmă</th><th style='padding:6px 10px'>Valoare</th><th style='padding:6px 10px'>Pondere</th></tr></thead><tbody>" + furnizori_rows + "</tbody></table></div>" if furnizori_rows else ""}
-              {"<h4 style='margin:16px 0 8px;font-size:13px;color:#555'>📅 Evoluție lunară</h4>" + luna_rows if luna_rows else ""}
-            </div>"""
+        <div id="atp-panel-{tip_id}" class="tp-atp-panel" data-sev="{sev_max}" hidden>
+          <div class="tp-atp-panel-h">
+            <h3>{eticheta}</h3>
+            <button type="button" class="tp-atp-close" onclick="hideAtp()">✕ închide</button>
+          </div>
+          <div class="tp-kpis">
+            <div class="tp-kpi"><div class="tp-kpi-v">{d["total"]}</div><div class="tp-kpi-l">Semnale detectate</div></div>
+            <div class="tp-kpi"><div class="tp-kpi-v">{_fmt_ron(d["valoare_totala"])}</div><div class="tp-kpi-l">Sumă asociată semnalelor*</div></div>
+          </div>
+          {tabel_furnizori}
+          {evolutie}
+        </div>"""
 
         analiza_per_tip_html = f"""
-    <div style="margin-bottom:12px">
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:8px">
-        {cards_html}
-      </div>
-      <div id="atp-panels">{panels_html}</div>
+    <div class="tp-atp-grid">{cards_html}
+    </div>
+    <div id="atp-panels">{panels_html}
     </div>
     <script>
     function showAtp(tipId, cardEl) {{
-      document.querySelectorAll('.atp-card').forEach(function(c) {{ c.style.opacity='0.6'; c.style.transform=''; }});
-      if (cardEl) {{ cardEl.style.opacity='1'; cardEl.style.transform='translateY(-2px)'; }}
-      var panelId = 'atp-panel-' + tipId;
-      document.querySelectorAll('[id^="atp-panel-"]').forEach(function(p) {{
-        p.style.display = p.id === panelId && p.style.display === 'none' ? 'block' : 'none';
-      }});
-      var panel = document.getElementById(panelId);
-      if (panel && panel.style.display === 'block') {{ panel.scrollIntoView({{behavior:'smooth',block:'nearest'}}); }}
-      else {{ document.querySelectorAll('.atp-card').forEach(function(c) {{ c.style.opacity='1'; c.style.transform=''; }}); }}
+      var panel = document.getElementById('atp-panel-' + tipId);
+      var deschide = panel && panel.hidden;
+      hideAtp();
+      if (!deschide) return;
+      panel.hidden = false;
+      document.querySelector('.tp-atp-grid').classList.add('tp-atp-ales');
+      if (cardEl) cardEl.setAttribute('aria-expanded', 'true');
+      panel.scrollIntoView({{behavior: 'smooth', block: 'nearest'}});
     }}
     function hideAtp() {{
-      document.querySelectorAll('[id^="atp-panel-"]').forEach(function(p) {{ p.style.display='none'; }});
-      document.querySelectorAll('.atp-card').forEach(function(c) {{ c.style.opacity='1'; c.style.transform=''; }});
+      document.querySelectorAll('.tp-atp-panel').forEach(function(p) {{ p.hidden = true; }});
+      document.querySelectorAll('.tp-atp-card').forEach(function(c) {{ c.setAttribute('aria-expanded', 'false'); }});
+      var g = document.querySelector('.tp-atp-grid');
+      if (g) g.classList.remove('tp-atp-ales');
     }}
     </script>"""
 
@@ -5495,7 +5476,7 @@ def aplica_cadrul_site() -> None:
         print(f"  [WARN] Cadrul comun al paginilor neaplicat: {exc}")
 
 
-def actualizeaza_contoare_analiza(contracte_export: list) -> None:
+def actualizeaza_contoare_analiza(contracte_export: list, tp_path: str = None) -> None:
     """
     BUG-10: Actualizează contoarele „N contracte · YYYY" din secțiunile de analiză
     ale transparenta_pantelimon.html. Aceste referințe devin stale la fiecare an nou
@@ -5503,13 +5484,15 @@ def actualizeaza_contoare_analiza(contracte_export: list) -> None:
 
     Actualizează elementele cu ID: tp-nr-contracte, tp-nr-analiza, tp-an-analiza,
     tp-nr-top10, tp-an-top10, tp-nr-directe, tp-nr-stat-card, tp-an-stat-card.
+    Elementul poate fi orice tag inline (span/strong/b) — tp-nr-contracte e <strong>.
     """
     import re as _re_ca
     an_curent = datetime.now().year
     n_total = len(contracte_unice(contracte_export))
 
-    tp_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                           'transparenta_pantelimon.html')
+    if tp_path is None:
+        tp_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               'transparenta_pantelimon.html')
     if not os.path.exists(tp_path):
         return
 
@@ -5521,16 +5504,16 @@ def actualizeaza_contoare_analiza(contracte_export: list) -> None:
     for elem_id in ('tp-nr-contracte', 'tp-nr-analiza', 'tp-nr-top10',
                     'tp-nr-directe', 'tp-nr-stat-card'):
         content = _re_ca.sub(
-            rf'(<span[^>]*id="{elem_id}"[^>]*>)\d+(</span>)',
-            rf'\g<1>{n_total}\2',
+            rf'(<(span|strong|b)\b[^>]*id="{elem_id}"[^>]*>)\d+(</\2>)',
+            rf'\g<1>{n_total}\3',
             content,
         )
 
     # An curent (tp-an-*)
     for elem_id in ('tp-an-analiza', 'tp-an-top10', 'tp-an-stat-card'):
         content = _re_ca.sub(
-            rf'(<span[^>]*id="{elem_id}"[^>]*>)\d{{4}}(</span>)',
-            rf'\g<1>{an_curent}\2',
+            rf'(<(span|strong|b)\b[^>]*id="{elem_id}"[^>]*>)\d{{4}}(</\2>)',
+            rf'\g<1>{an_curent}\3',
             content,
         )
 
@@ -6033,6 +6016,99 @@ def _contracte_distincte_firma(contracte_firma: list) -> list:
     return sorted(contracte_unice(contracte_firma), key=lambda c: c.get("data_publicare", ""), reverse=True)
 
 
+# Setul de date ANAF pe data.gov.ro, pe an (pentru alți ani: căutarea pe data.gov.ro)
+_SURSA_FINANCIAR_DATAGOV = {"2024": "https://data.gov.ro/dataset/situatii_financiare_2024"}
+
+
+def _cui_fara_ro(cui) -> str:
+    return re.sub(r"^RO", "", str(cui or "").strip(), flags=re.I).replace(" ", "")
+
+
+def incarca_financiar_firme(cale: str = "firme_financiar.json") -> dict:
+    """firme_financiar.json (import_financiar_datagov.py): CUI → {an, cifra_afaceri, nr_salariati}."""
+    try:
+        with open(cale, encoding="utf-8") as handle:
+            date = json.load(handle)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+    return {_cui_fara_ro(k): v for k, v in date.items() if isinstance(v, dict)} if isinstance(date, dict) else {}
+
+
+def _suma_ron_exacta(valoare: float) -> str:
+    return f"{valoare:,.0f}".replace(",", ".") + " RON"
+
+
+def genereaza_bloc_financiar_firma(fin: dict, contracte_d: list) -> str:
+    """Blocul „Date financiare ANAF {an}” de pe fișa firmei. Gol dacă nu sunt date.
+
+    Indicatorii vin din risc_firma.evaluate_shell_risk (aceiași ca în raport). Contractul de
+    referință: cel mai mare contract al firmei din cei doi ani de după anul datelor (acolo se
+    aplică funcția), fără acordurile-cadru, care sunt plafoane, nu bani contractați.
+    """
+    import html as html_mod
+    if not fin:
+        return ""
+    an = (re.sub(r"[^0-9]", "", str(fin.get("an") or "")) or "")[:4]
+    ca, sal = fin.get("cifra_afaceri"), fin.get("nr_salariati")
+    if not an or (ca is None and sal is None):
+        return ""
+
+    indicatori = []
+    if _RISC_FIRMA_OK:
+        profil = {"ani": {an: {"cifra_afaceri": ca, "salariati": sal}}}
+        ani_aplicabili = {str(int(an) + 1), str(int(an) + 2)}
+        candidati = [c for c in contracte_d if not _este_acord_cadru(c)
+                     and (c.get("data_publicare") or "")[:4] in ani_aplicabili]
+        ref = max(candidati, key=lambda c: float(c.get("valoare_ron", 0) or 0), default=None)
+        if ref:
+            data_ref, val_ref = ref.get("data_publicare", ""), float(ref.get("valoare_ron", 0) or 0)
+        else:  # fără contract comparabil rămân doar indicatorii care nu depind de contract
+            data_ref, val_ref = f"{int(an) + 1}-01-01", 0.0
+        try:
+            coduri = [f["cod"] for f in _evaluate_shell_risk(profil, data_ref, val_ref)]
+        except Exception:
+            coduri = []
+        contract_txt = ""
+        if ref:
+            contract_txt = (f"celui mai mare contract al firmei cu Primăria din {data_ref[:4]} "
+                            f"(„{html_mod.escape(str(ref.get('titlu') or '')[:90])}”, {_fmt_ron(val_ref)})")
+        texte = {
+            "CIFRA_AFACERI_ZERO": f"Cifra de afaceri declarată pentru {an} este 0 RON.",
+            "CIFRA_AFACERI_MULT_SUB_CONTRACT":
+                f"Cifra de afaceri din {an} este sub 10% din valoarea {contract_txt}.",
+            "CIFRA_AFACERI_SUB_CONTRACT":
+                f"Cifra de afaceri din {an} este sub jumătate din valoarea {contract_txt}.",
+            "ZERO_ANGAJATI": f"Numărul mediu de angajați declarat pentru {an} este 0.",
+            "FOARTE_PUTINI_ANGAJATI": f"Numărul mediu de angajați declarat pentru {an} este {sal}.",
+        }
+        indicatori = [(cod, texte[cod]) for cod in coduri if cod in texte]
+
+    def _rand(eticheta, valoare):
+        return f"<dt>{eticheta}</dt><dd>{valoare}</dd>"
+
+    rânduri = [
+        _rand("Cifra de afaceri netă", _suma_ron_exacta(float(ca)) if ca is not None else "nedeclarată"),
+        _rand("Număr mediu de angajați", f"{int(sal)}" if sal is not None else "nedeclarat"),
+    ]
+    sursa_url = _SURSA_FINANCIAR_DATAGOV.get(an, f"https://data.gov.ro/dataset?q=situatii+financiare+{an}")
+    indicatori_html = ""
+    if indicatori:
+        indicatori_html = (
+            '<h3>Indicatori de verificat</h3><ul class="tp-list">'
+            + "".join(f'<li data-cod="{cod}">{text}</li>' for cod, text in indicatori)
+            + '</ul><p class="tp-muted">Indicatorii sunt calculați automat din cifrele de mai sus, '
+            'cu aceleași praguri ca în raport. Sunt repere pentru verificare, nu concluzii: o firmă poate lucra cu '
+            'subcontractori, poate fi înființată de curând sau poate avea veniturile în alt an.</p>'
+        )
+    return (
+        f'<section class="tp-fin" id="date-financiare"><h2>Date financiare ANAF {an}</h2>'
+        f'<dl class="tp-fin-dl">{"".join(rânduri)}</dl>{indicatori_html}'
+        f'<p class="tp-sources">Sursa: situațiile financiare anuale depuse la ANAF pentru {an}, publicate de '
+        f'Ministerul Finanțelor pe <a href="{sursa_url}" target="_blank" rel="noopener">data.gov.ro ↗</a>. '
+        'Cifrele sunt cele declarate de firmă.</p></section>'
+    )
+
+
 def genereaza_pagina_furnizor(
         nume: str, slug: str,
         flags_firma: list, contracte_firma: list,
@@ -6041,11 +6117,13 @@ def genereaza_pagina_furnizor(
         firme_legate: list = None,
         sluguri_semnale: dict = None,
         ancore_semnale: dict = None,
-        slug_dupa_cui: dict = None) -> str:
+        slug_dupa_cui: dict = None,
+        financiar: dict = None) -> str:
     """Fișa unei firme: contractele cu Primăria și, lângă fiecare, semnalele lui.
 
     sluguri_semnale / ancore_semnale: {id(flag): slug | 'nereguli-N'} — legături spre
     pagina semnalului și spre cardul din raport (aceleași ca în raport).
+    financiar: rândul firmei din firme_financiar.json → blocul „Date financiare ANAF”.
     """
     import html as html_mod
     e = lambda s: html_mod.escape(str(s or ""), quote=True)  # noqa: E731
@@ -6181,6 +6259,13 @@ def genereaza_pagina_furnizor(
         f'semnalului, cu explicația completă. <a href="../raport_transparenta.html#supplier={q_firma}">Vezi-le în lista '
         'din raport →</a></p>'
     ) if flags_firma else '<p class="tp-muted">Niciun semnal automat pentru această firmă.</p>'
+    financiar_html = genereaza_bloc_financiar_firma(financiar, contracte_d)
+
+    from site_shell import rand_distribuie_html
+    rand_distribuie = rand_distribuie_html(
+        f"{base_url}/furnizori/{slug}.html",
+        f"Contractele {nume} cu Primăria Pantelimon, într-un singur loc. "
+        "Verifică singur pe transparenta-pantelimon.eu:")
 
     return f"""<!DOCTYPE html>
 <html lang="ro">
@@ -6212,6 +6297,7 @@ def genereaza_pagina_furnizor(
     <div class="stat" data-sev="MAJOR"><div class="stat-val">{n_sev["MAJOR"]}</div><div class="stat-lbl">Semnale MAJOR</div></div>
     <div class="stat" data-sev="MEDIU"><div class="stat-val">{n_sev["MEDIU"]}</div><div class="stat-lbl">Semnale MEDIU</div></div>
   </div>
+  {rand_distribuie}
   {nota_acorduri}
 
   <div class="tp-firm-links">
@@ -6221,6 +6307,7 @@ def genereaza_pagina_furnizor(
     <a href="../harta.html" class="ext-btn ext-btn-sec">Harta firmelor</a>
     <a href="index.html" class="ext-btn ext-btn-sec">Toate firmele</a>
   </div>
+  {financiar_html}
 
   <h2>Contracte cu Primăria ({len(contracte_d)})</h2>
   {sectiune_semnale}
@@ -6316,6 +6403,7 @@ def genereaza_pagini_furnizori(contracte: list, flags: list, mentiuni_media: dic
     from collections import defaultdict
     mentiuni_media = mentiuni_media or {}
     mentiuni_auto_by_cui = mentiuni_auto_by_cui or {}
+    financiar_by_cui = incarca_financiar_firme()
 
     flags_sortate = sorteaza_dupa_severitate(flags)
     sluguri = _sluguri_semnale_pentru(flags_sortate)
@@ -6359,6 +6447,7 @@ def genereaza_pagini_furnizori(contracte: list, flags: list, mentiuni_media: dic
             mentiuni_auto=auto_firma or None,
             firme_legate=legate or None,
             sluguri_semnale=sluguri_id, ancore_semnale=ancore_id, slug_dupa_cui=cui_slug,
+            financiar=financiar_by_cui.get(_cui_fara_ro(cui_firma)),
         )
         with open(f"furnizori/{slug}.html", "w", encoding="utf-8") as handle:
             handle.write(pagina_html)
@@ -6820,81 +6909,8 @@ def main():
         f.write(raport_html)
     print(f"  ✓ Raport salvat: {CONFIG['fisier_raport']}")
 
-    # Pagini per furnizor (≥3 contracte)
+    # Fișe de firmă pentru toate firmele cu contracte (semnale, presă, date financiare ANAF)
     print("  [Furnizori] Generez pagini per furnizor...")
-    from collections import defaultdict as _defaultdict
-    import os as _os
-
-    # risc_firma e construit în genereaza_raport_html; reconstruim minimal pentru pagini furnizori
-    risc_firma = {}
-
-    contracte_per_firma = _defaultdict(list)
-    for c in contracte:
-        if c.get("castigator"):
-            contracte_per_firma[c["castigator"]].append(c)
-
-    flags_per_firma = _defaultdict(list)
-    for f in toate_flags:
-        if f.get("furnizor") and f["furnizor"] != "Multiple":
-            flags_per_firma[f["furnizor"]].append(f)
-
-    # Adăugăm flaguri financiare din risc_firma (PUTINI_ANGAJATI, CIFRA_AFACERI etc.)
-    # Acestea nu sunt în toate_flags (vin din firme_financiar.json, nu din SEAP).
-    # Prin includerea lor în flags_per_firma, apar în paginile furnizori și
-    # sunt trackuite de stare_anterioara.json → badge-ul NOU va funcționa automat.
-    _FIN_TIPS_SET = {"ZERO ANGAJATI", "CIFRA AFACERI ZERO", "CIFRA AFACERI MULT SUB CONTRACT",
-                     "CIFRA AFACERI SUB CONTRACT", "FOARTE PUTINI ANGAJATI"}
-    for _furn_fin, _rd_fin in risc_firma.items():
-        _existing_keys = {(f.get("tip",""), f.get("data",""))
-                          for f in flags_per_firma.get(_furn_fin, [])}
-        for _ff in _rd_fin.get("flags", []):
-            if _ff.get("tip","") in _FIN_TIPS_SET:
-                _k = (_ff.get("tip",""), _ff.get("data",""))
-                if _k not in _existing_keys:
-                    flags_per_firma[_furn_fin].append({
-                        **_ff,
-                        "furnizor": _furn_fin,
-                        "titlu": _ff.get("titlu") or _ff.get("tip",""),
-                        "descriere": _ff.get("titlu",""),
-                    })
-                    _existing_keys.add(_k)
-
-    # B — Adăugăm flaguri MENTIUNI_PRESA_RISCANTE din mentiuni_presa_auto.json
-    try:
-        from monitorizare_presa import incarca_mentiuni_presa_auto, evalueaza_flag_presa
-        import re as _re_presa
-        _mentiuni_auto = incarca_mentiuni_presa_auto()
-        if _mentiuni_auto:
-            # Construim lookup CUI → furnizor (același mecanism ca pentru date financiare)
-            _cui_to_furn_p = {}
-            for _fp, _rdp in risc_firma.items():
-                _cp = _re_presa.sub(r'^[Rr][Oo]\s*', '', str(_rdp.get("cui","")).strip()).replace(' ', '')
-                if _cp and _cp.isdigit():
-                    _cui_to_furn_p[_cp] = _fp
-            _presa_added = 0
-            for _cui_p, _mp in _mentiuni_auto.items():
-                if not _mp.get('total'):
-                    continue
-                _furn_p = _cui_to_furn_p.get(str(_cui_p))
-                if not _furn_p:
-                    continue
-                _flag_p = evalueaza_flag_presa(_mp)
-                if not _flag_p:
-                    continue
-                _ex_tips_p = {f.get("tip","") for f in flags_per_firma.get(_furn_p, [])}
-                if 'MENTIUNI PRESA RISCANTE' not in _ex_tips_p:
-                    flags_per_firma[_furn_p].append({**_flag_p, "furnizor": _furn_p})
-                    # Adăugăm și în risc_firma pentru a apărea în raport + chip filter
-                    if _furn_p in risc_firma:
-                        _ex_rf_tips = {f.get("tip","") for f in risc_firma[_furn_p].get("flags",[])}
-                        if 'MENTIUNI PRESA RISCANTE' not in _ex_rf_tips:
-                            risc_firma[_furn_p].setdefault("flags", []).append(_flag_p)
-                    _presa_added += 1
-            if _presa_added:
-                print(f'  [OK] Presă: {_presa_added} firme cu flaguri MENTIUNI_PRESA_RISCANTE')
-    except ImportError:
-        pass  # monitorizare_presa.py opțional
-
     index_furnizori = genereaza_pagini_furnizori(
         contracte, toate_flags, _mentiuni_media, _mentiuni_presa_auto_by_cui, _retea_firme)
 

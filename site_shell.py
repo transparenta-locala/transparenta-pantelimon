@@ -272,6 +272,25 @@ _DE_SCOS_HEAD = [
     re.compile(r'[ \t]*<meta\s+name="theme-color"[^>]*>[ \t]*\n?', re.I),
     re.compile(r'[ \t]*<link\s+rel="preload"\s+href="/?assets/fonts/[^"]+"[^>]*>[ \t]*\n?', re.I),
 ]
+def rand_distribuie_html(url: str, text: str) -> str:
+    """Rândul „Distribuie” al fișelor de firmă și al paginilor de semnal, scris static.
+
+    Înainte îl insera enhance.js după încărcare (mic CLS, ~0,02). Markup-ul e același
+    ca în buildShareRow() din enhance.js; acolo se leagă doar butonul „Copiază link”
+    (data-url), iar rândul se mai construiește din JS numai dacă lipsește din pagină.
+    """
+    from urllib.parse import quote
+    wa = "https://wa.me/?text=" + quote(f"{text} {url}", safe="")
+    fb = "https://www.facebook.com/sharer/sharer.php?u=" + quote(url, safe="")
+    return (
+        f'<div class="tp-share no-print tp-share-page" data-tp-share="1" data-url="{_e(url)}">'
+        '<span class="tp-share-lbl">Distribuie:</span>'
+        f'<a class="tp-sh-wa" href="{_e(wa)}" target="_blank" rel="noopener noreferrer" aria-label="Distribuie pe WhatsApp">WhatsApp</a>'
+        f'<a class="tp-sh-fb" href="{_e(fb)}" target="_blank" rel="noopener noreferrer" aria-label="Distribuie pe Facebook">Facebook</a>'
+        '<button type="button" class="tp-sh-copy">Copiază link</button></div>'
+    )
+
+
 # Navigarea de rezervă scrisă de mână (index.html) — înlocuită de meniul static
 _NAV_REZERVA = re.compile(
     r'[ \t]*<a href="#main-content" class="skip-link">[^<]*</a>\s*'

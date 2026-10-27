@@ -34,10 +34,10 @@ jobs:
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: 🐍 Configurare Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
@@ -54,30 +54,19 @@ jobs:
       - name: 🧱 Minificare enhance.js (enhance.min.js e cel încărcat de pagini)
         run: npx --yes terser@5.31.6 enhance.js --compress --mangle --comments '/^!/' -o enhance.min.js
 
+      - name: 🏦 Date financiare ANAF (cel mai recent an publicat pe data.gov.ro)
+        # Anul se găsește singur prin API-ul data.gov.ro (înainte era scris fix „2024”, așa că
+        # situațiile pe 2025, publicate în oct. 2026, n-ar fi fost preluate niciodată).
+        # O cerere la API când nu e nimic nou; descărcare (~90 MB, cu reluare) doar la an nou.
+        # Rulează ÎNAINTE de monitor, ca raportul și fișele să folosească datele noi chiar acum.
+        run: python import_financiar_datagov.py --auto || echo "::warning::Import ANAF eșuat — datele financiare rămân cele existente"
+
       - name: 🔍 Rulare monitor transparență
         # ANAF v9 e gratuit și fără cheie API; openapi.ro key e opțional (not required)
         run: python monitor_pantelimon.py
 
       - name: 🗺️ Geocodare firme furnizoare (ANAF v9 + Nominatim)
         run: python geocodeaza_acum.py 2>/dev/null || echo "geocodare skipped"
-
-      - name: 🏦 Refresh date financiare ANAF (cadență centralizată în config.py)
-        # firme_financiar.json e comis în repo; re-descărcăm din data.gov.ro dacă
-        # e mai vechi de TTL_FIRME_FINANCIAR_REFRESH_DAYS (vezi config.py)
-        # Fișierele: WEB_BL (~8MB, entități mari) + WEB_UU (~73MB, entități mici/micro)
-        run: |
-          THRESHOLD=$(python -c "from config import TTL_FIRME_FINANCIAR_REFRESH_DAYS; print(TTL_FIRME_FINANCIAR_REFRESH_DAYS)")
-          LAST_COMMIT=$(git log -1 --format="%at" -- firme_financiar.json 2>/dev/null || echo "0")
-          NOW=$(date +%s)
-          DAYS=$(( (NOW - LAST_COMMIT) / 86400 ))
-          echo "firme_financiar.json: $DAYS zile de la ultimul commit (prag: $THRESHOLD zile)"
-          if [ "$DAYS" -gt "$THRESHOLD" ] || [ ! -f firme_financiar.json ]; then
-            echo "Re-descărcare ANAF data.gov.ro..."
-            python import_financiar_datagov.py --an 2024 2>/dev/null || echo "BL import skipped"
-            python import_financiar_datagov.py --an 2024-uu --merge 2>/dev/null || echo "UU import skipped"
-          else
-            echo "firme_financiar.json e recent, skip import ANAF"
-          fi
 
       - name: 🔗 Analiză rețele firme (adrese comune)
         # Detectează firme cu adresă fiscală comună din firme_geocoded.json

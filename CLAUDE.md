@@ -286,6 +286,26 @@ vizitatorii vedeau pagini vechi).
   `enhance.min.js` + cadrul în toate paginile. Aceeași coadă (`concurrency`) ca monitorul.
 - Teste noi: `tests/test_site_shell.py`, `tests/test_audit_26oct.py`.
 
+**Retușuri după audit** (`tests/test_retusuri_audit.py`):
+- Buget: graficele sunt configurații în `_GRAFICE`; fiecare se desenează când canvas-ul intră în
+  ecran (IntersectionObserver; tab-urile ascunse au `display:none`), iar Chart.js se încarcă la
+  primul grafic vizibil, nu în `<head>`. La `beforeprint` se desenează toate (tipărirea arată toate tab-urile).
+- Raport: „Analiză pe categorii” folosește clasele `.tp-atp-*` din `tp.css` (carduri = butoane cu
+  `aria-expanded`, culoarea = cea mai gravă severitate); rămâne inline doar lățimea barelor.
+  Cardurile de semnal nu mai au `content-visibility` (axe raporta ținte „acoperite”); linkul firmei,
+  titlul, codul SEAP și „Scor firmă” au minim 28 px înălțime (target-size).
+- Rândul „Distribuie” al fișelor și al paginilor de semnal e scris static
+  (`site_shell.rand_distribuie_html`); `enhance.js` doar leagă „Copiază link” (`leagaShareRow`).
+- `furnizori/index.html` sub 640px: rândurile devin carduri (doar CSS, etichetele din `::before`).
+
+**Date financiare ANAF automate (27.10.2026)** — `import_financiar_datagov.py --auto` (pasul dinaintea
+monitorului în `update-report.yml`): găsește prin API-ul CKAN data.gov.ro cel mai recent set
+`situatii_financiare_{an}` (404 = an nepublicat), importă BL + UU doar dacă anul e mai nou decât cel din
+`firme_financiar.json`, cu descărcare reluată (data.gov.ro întrerupe fișierele mari). CUI-urile vin din
+`contracte.json` (toate firmele, nu doar cele cu semnale). Fișierul ONG e exclus: indicatorii lui au altă
+numerotare. Portal indisponibil din runner → `::warning::`, rularea continuă. Anul 2025 importat pe 27.10.2026.
+Teste: `tests/test_import_financiar_auto.py`.
+
 ## Praguri legale folosite (Legea 98/2016)
 
 ```python
