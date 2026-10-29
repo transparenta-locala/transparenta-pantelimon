@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-29T13:26:22.954771",
+  "generated_at": "2026-10-29T15:55:46.766323",
   "entity": {
     "name": "Orașul Pantelimon",
     "cif": "4420759",
@@ -4983,7 +4983,7 @@
     "CAN1146327: 0 contracte",
     "SCNA1119917: 0 contracte",
     "CAN1143030: 2 contracte",
-    "SEAP API: 690 DA acceptate, 67 randuri din atribuiri, 757 dupa deduplicare; 755 id-uri pastrate, 24 nume de firma pastrate; 43 cereri in 85s",
+    "SEAP API: 690 DA acceptate, 67 randuri din atribuiri, 757 dupa deduplicare; 757 id-uri pastrate, 24 nume de firma pastrate; 43 cereri in 85s",
     "SURSA CONTRACTE: seap-api"
   ]
 }
