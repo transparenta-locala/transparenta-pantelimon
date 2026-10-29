@@ -705,12 +705,12 @@
 </style>
 <link rel="alternate" type="application/atom+xml" title="Semnale noi — Transparența Pantelimon" href="https://transparenta-pantelimon.eu/feed.xml">
 <!--tp:head-->
-<link rel="preload" href="assets/fonts/source-sans-3-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/source-serif-4-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/tp.css?v=907ce3e4">
+<link rel="preload" href="assets/fonts/archivo-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/archivo-black-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/tp.css?v=8b580eb7">
 <link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" href="assets/logo.svg" type="image/svg+xml"><link rel="icon" href="icon-192.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#14263D">
 <script>(function(d){d.classList.add('tp-theme');try{var t=localStorage.getItem('tp-theme');if(t)d.dataset.tpTheme=t;else if(matchMedia('(prefers-color-scheme: dark)').matches)d.dataset.tpTheme='dark'}catch(e){}})(document.documentElement)</script>
-<script src="enhance.min.js?v=68d8f444" defer></script>
+<script src="enhance.min.js?v=28074204" defer></script>
 <!--/tp:head-->
 </head>
 <body>
@@ -2723,15 +2723,15 @@ _GRAFICE.chartBugetCateg = {
       {
         label: 'Buget aprobat (mil. RON)',
         data: [18.2, 9.4, 22.1, 5.6, 8.3, 14.7, 11.2, 6.8, 28.4, 7.9],
-        backgroundColor: 'rgba(0, 112, 192, 0.7)',
-        borderColor: 'rgba(0, 66, 122, 1)',
+        backgroundColor: '#002A59',
+        borderColor: '#002A59',
         borderWidth: 1
       },
       {
         label: 'Cheltuieli realizate (mil. RON)',
         data: [16.7, 8.3, 18.6, 4.3, 7.9, 13.1, 8.7, 4.9, 15.3, 4.8],
-        backgroundColor: 'rgba(231, 76, 60, 0.7)',
-        borderColor: 'rgba(192, 57, 43, 1)',
+        backgroundColor: '#6C8CC7',
+        borderColor: '#6C8CC7',
         borderWidth: 1
       }
     ]
@@ -2753,15 +2753,15 @@ _GRAFICE.chartEvolutie = {
       {
         label: 'Venituri (mil. RON)',
         data: [98.4, 108.2, 124.6, 143.1, 161.2, 147.97],
-        borderColor: 'rgba(0, 112, 192, 1)',
-        backgroundColor: 'rgba(0, 112, 192, 0.1)',
+        borderColor: '#002A59',
+        backgroundColor: 'rgba(0, 42, 89, 0.08)',
         fill: true, tension: 0.3
       },
       {
         label: 'Cheltuieli (mil. RON)',
         data: [95.1, 104.7, 119.3, 131.8, 138.2, 146.43],
-        borderColor: 'rgba(231, 76, 60, 1)',
-        backgroundColor: 'rgba(231, 76, 60, 0.1)',
+        borderColor: '#E3001E',
+        backgroundColor: 'rgba(227, 0, 30, 0.06)',
         fill: true, tension: 0.3
       }
     ]
@@ -2782,8 +2782,8 @@ _GRAFICE.chartPie = {
     datasets: [{
       data: [16.7, 8.3, 18.6, 4.3, 7.9, 13.1, 24.0, 4.8],
       backgroundColor: [
-        '#00427A','#0070C0','#4D86C2','#C0392B',
-        '#27AE60','#E67E22','#8E44AD','#BDC3C7'
+        '#002A59','#00458C','#4A62A4','#6C8CC7',
+        '#E3001E','#8FA9D8','#B2BFCD','#DDE4EF'
       ]
     }]
   },
@@ -2805,7 +2805,7 @@ _GRAFICE.chartProceduri = {
     datasets: [{
       label: 'Nr. contracte 2025',
       data: [38, 12, 3, 5, 8],
-      backgroundColor: ['#C0392B','#27AE60','#F39C12','#E67E22','#BDC3C7'],
+      backgroundColor: ['#E3001E','#002A59','#00458C','#6C8CC7','#B2BFCD'],
       borderRadius: 4
     }]
   },
@@ -2830,9 +2830,9 @@ _GRAFICE.chartLunar = {
       data: [2, 2, 28, 45, 41, 28, 38, 35, 38, 29, 31, 32, 34, 38, 23, 29, 33],
       backgroundColor: function(ctx) {
         const v = ctx.raw;
-        if (v >= 40) return '#C0392B';
-        if (v >= 35) return '#E67E22';
-        return 'rgba(0,112,192,0.7)';
+        if (v >= 40) return '#E3001E';
+        if (v >= 35) return '#00458C';
+        return '#6C8CC7';
       },
       borderRadius: 4
     }]

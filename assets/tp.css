@@ -913,3 +913,317 @@ html.tp-theme body { margin: 0; }
   .tp-flag.tp-pre-hidden { display: block !important; }
   .tp-data-band, .tp-skip-link, .tp-toolbar-slot, #tp-firma-panel, #tp-firma-overlay { display: none !important; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   TEMA „AFIȘ” (29.10.2026) — litere groase (Archivo Black / Archivo), chenare
+   de 3 px, fără colțuri rotunjite și fără umbre. Paleta: bleumarin, albastru,
+   albastru deschis și roșu (doar pentru ce e grav).
+   Vine ultima, deci suprascrie tema „Registru” de mai sus. Aspectul de dinainte:
+   assets/tp-clasic.css și tag-ul git stil-vechi-2026-10-29.
+   Selectorii încep cu html.tp-theme ca să bată și stilurile proprii ale paginilor.
+   ════════════════════════════════════════════════════════════════ */
+@font-face { font-family: "TP Display"; font-style: normal; font-weight: 400; font-display: optional;
+  src: url("fonts/archivo-black-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "TP Display"; font-style: normal; font-weight: 400; font-display: optional;
+  src: url("fonts/archivo-black-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "TP Grotesk"; font-style: normal; font-weight: 400; font-display: optional;
+  src: url("fonts/archivo-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "TP Grotesk"; font-style: normal; font-weight: 400; font-display: optional;
+  src: url("fonts/archivo-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "TP Grotesk"; font-style: normal; font-weight: 600; font-display: optional;
+  src: url("fonts/archivo-latin-ext-600-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "TP Grotesk"; font-style: normal; font-weight: 600; font-display: optional;
+  src: url("fonts/archivo-latin-600-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "TP Grotesk"; font-style: normal; font-weight: 800; font-display: optional;
+  src: url("fonts/archivo-latin-ext-800-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "TP Grotesk"; font-style: normal; font-weight: 800; font-display: optional;
+  src: url("fonts/archivo-latin-800-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+
+html.tp-theme {
+  --tp-ink:#002A59; --tp-ink-bg:#002A59; --tp-sky:#8FA9D8; --tp-sky-text:#4A62A4;
+  --tp-bg:#ffffff; --tp-paper:#ffffff; --tp-fg:#002A59; --tp-muted:#3A4F73;
+  --tp-border:#B2BFCD; --tp-card-bg:#EEF2F8; --tp-link:#00458C;
+  --tp-accent:#00458C; --tp-accent-d:#002A59; --tp-accent-fill:#00458C; --tp-tint:#E8EEF7; --tp-line:#6C8CC7;
+  --tp-hi:#D0001B; --tp-hi-fill:#E3001E; --tp-mid:#00458C; --tp-low:#4A62A4;
+  --tp-hi-t:#FFE5E8; --tp-mid-t:#E1EAF5; --tp-low-t:#ECEFF6;
+  --tp-display:"TP Display", "Archivo Black", "Arial Black", Impact, sans-serif;
+  --tp-serif:var(--tp-display);
+  --tp-sans:"TP Grotesk", Archivo, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  font-synthesis: none;
+}
+html.tp-theme[data-tp-theme="dark"] {
+  --tp-ink:#6C8CC7; --tp-ink-bg:#00244D; --tp-sky:#8FA9D8; --tp-sky-text:#8FA9D8;
+  --tp-bg:#001A38; --tp-paper:#00142C; --tp-fg:#EEF3FA; --tp-muted:#B2BFCD;
+  --tp-border:#2C4A75; --tp-card-bg:#00244D; --tp-link:#9DB8E8;
+  --tp-accent:#9DB8E8; --tp-accent-d:#6C8CC7; --tp-accent-fill:#00458C; --tp-tint:#062B57; --tp-line:#6C8CC7;
+  --tp-hi:#FF6B7C; --tp-hi-fill:#E3001E; --tp-mid:#9DB8E8; --tp-low:#B2BFCD;
+  --tp-hi-t:#3D0A12; --tp-mid-t:#082F5E; --tp-low-t:#0F2A4E;
+}
+
+/* Bază */
+html.tp-theme body { font-family: var(--tp-sans) !important; background: var(--tp-paper) !important; color: var(--tp-fg); }
+html.tp-theme h1, html.tp-theme h2, html.tp-theme h3 { font-family: var(--tp-display) !important; font-weight: 400 !important; letter-spacing: -.01em; line-height: 1.1; }
+html.tp-theme h4 { font-weight: 800; }
+html.tp-theme strong, html.tp-theme b { font-weight: 800; }
+html.tp-theme a { text-underline-offset: 3px; }
+html.tp-theme ::selection { background: var(--tp-sky); color: #002A59; }
+
+/* Meniu: o bandă albă cu chenar gros dedesubt */
+html.tp-theme .tp-nav { background: var(--tp-bg); border-bottom: 3px solid var(--tp-ink); }
+html.tp-theme .tp-nav-name { font-family: var(--tp-display); font-weight: 400; font-size: 1.18rem; letter-spacing: .01em; text-transform: uppercase; }
+html.tp-theme .tp-nav-brand small { font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: .7rem; }
+html.tp-theme .tp-logo { --tp-logo-bg: #002A59; --tp-logo-fg: #fff; --tp-logo-hi: #6C8CC7; }
+html.tp-theme[data-tp-theme="dark"] .tp-logo { --tp-logo-bg: #fff; --tp-logo-fg: #002A59; --tp-logo-hi: #00458C; }
+html.tp-theme .tp-nav-links a { border-radius: 0; font-weight: 800; color: var(--tp-fg); }
+html.tp-theme .tp-nav-links a:hover { background: transparent; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+html.tp-theme .tp-nav-links a.active, html.tp-theme .tp-nav-links a[aria-current="page"] { background: var(--tp-ink-bg); color: #fff; text-decoration: none; }
+html.tp-theme .tp-more summary { font-weight: 800; }
+html.tp-theme .tp-more-list { border: 3px solid var(--tp-ink); border-radius: 0; box-shadow: none; background: var(--tp-bg); }
+html.tp-theme .tp-theme-toggle { border-radius: 0; border: 3px solid var(--tp-ink); color: var(--tp-fg); }
+
+/* Banda de date: albastru plin */
+html.tp-theme .tp-data-band, html.tp-theme[data-tp-theme="dark"] .tp-data-band { background: var(--tp-accent-fill); color: #fff; border-bottom: 3px solid var(--tp-ink); font-weight: 600; }
+html.tp-theme .tp-data-band strong { font-weight: 800; }
+html.tp-theme .tp-data-band a { color: #fff; }
+html.tp-theme .tp-banner-whats-new { background: var(--tp-hi-fill); }
+html.tp-theme .tp-skip-link { background: var(--tp-hi-fill); border-radius: 0; }
+
+/* Butoane, câmpuri, etichete */
+html.tp-theme .tp-btn, html.tp-theme .tp-act, html.tp-theme .ext-btn, html.tp-theme .tp-anap-btn, html.tp-theme .tp-atp-close,
+html.tp-theme .tp-share a, html.tp-theme .tp-share button, html.tp-theme .tp-chip, html.tp-theme .tp-select, html.tp-theme .tp-search,
+html.tp-theme .tp-riskpill, html.tp-theme .flag-new, html.tp-theme .tp-sig, html.tp-theme .flag-code { border-radius: 0 !important; }
+html.tp-theme .tp-act, html.tp-theme .ext-btn, html.tp-theme .tp-anap-btn { border: 3px solid var(--tp-ink) !important; font-weight: 800; box-shadow: none; }
+html.tp-theme .tp-act-primary, html.tp-theme .ext-btn:not(.ext-btn-sec), html.tp-theme .tp-btn-primary { background: var(--tp-accent-fill) !important; border-color: var(--tp-accent-fill) !important; color: #fff !important; }
+html.tp-theme .tp-act-primary:hover, html.tp-theme .ext-btn:not(.ext-btn-sec):hover { background: var(--tp-ink-bg) !important; }
+html.tp-theme[data-tp-theme="dark"] .tp-act-primary, html.tp-theme[data-tp-theme="dark"] .ext-btn:not(.ext-btn-sec) { color: #fff !important; }
+html.tp-theme .tp-search, html.tp-theme .tp-filterbar input, html.tp-theme .tp-404 form { border: 3px solid var(--tp-ink); border-radius: 0; }
+html.tp-theme .tp-filterbar select, html.tp-theme .tp-select { border: 3px solid var(--tp-ink); border-radius: 0; }
+html.tp-theme .tp-404 button { background: var(--tp-accent-fill); font-family: var(--tp-display); font-weight: 400; text-transform: uppercase; }
+html.tp-theme .tp-chip { border: 3px solid var(--tp-ink); font-weight: 800; }
+html.tp-theme .tp-chip.active { background: var(--tp-ink-bg); border-color: var(--tp-ink-bg); color: #fff; }
+html.tp-theme .tp-chip[data-sev="CRITIC"] { border-color: var(--tp-hi-fill); color: var(--tp-hi); }
+html.tp-theme .tp-chip[data-sev="CRITIC"].active { background: var(--tp-hi-fill); border-color: var(--tp-hi-fill); color: #fff; }
+html.tp-theme .tp-chip[data-sev="MAJOR"].active { background: var(--tp-accent-fill); border-color: var(--tp-accent-fill); color: #fff; }
+html.tp-theme .tp-chip[data-sev="MEDIU"].active { background: var(--tp-sky); border-color: var(--tp-sky); color: #002A59; }
+html.tp-theme .tp-toolbar { border-bottom: 3px solid var(--tp-ink); }
+
+/* Etichetele de severitate: dreptunghiuri pline, cu majuscule */
+html.tp-theme .tp-sevpill { border-radius: 0; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; font-size: .72rem; padding: 3px 8px; }
+html.tp-theme .tp-sevpill[data-sev="CRITIC"], html.tp-theme [data-sev="CRITIC"] > .tp-sevpill, html.tp-theme .tp-flag[data-severity="CRITIC"] .tp-sevpill { background: var(--tp-hi-fill) !important; color: #fff !important; }
+html.tp-theme .tp-sevpill[data-sev="MAJOR"], html.tp-theme [data-sev="MAJOR"] > .tp-sevpill, html.tp-theme .tp-flag[data-severity="MAJOR"] .tp-sevpill { background: var(--tp-accent-fill) !important; color: #fff !important; }
+html.tp-theme .tp-sevpill[data-sev="MEDIU"], html.tp-theme [data-sev="MEDIU"] > .tp-sevpill, html.tp-theme .tp-flag[data-severity="MEDIU"] .tp-sevpill { background: var(--tp-sky) !important; color: #002A59 !important; }
+html.tp-theme .flag-new { background: var(--tp-hi-fill); }
+html.tp-theme .tp-flag[data-severity="CRITIC"], html.tp-theme .tp-atp-card[data-sev="CRITIC"], html.tp-theme .tp-atp-panel[data-sev="CRITIC"] { --sev: var(--tp-hi-fill); }
+html.tp-theme .tp-flag[data-severity="MAJOR"], html.tp-theme .tp-atp-card[data-sev="MAJOR"], html.tp-theme .tp-atp-panel[data-sev="MAJOR"] { --sev: var(--tp-accent-fill); }
+html.tp-theme .tp-flag[data-severity="MEDIU"], html.tp-theme .tp-atp-card[data-sev="MEDIU"], html.tp-theme .tp-atp-panel[data-sev="MEDIU"] { --sev: var(--tp-sky); }
+
+/* Carduri: chenar gros, margine colorată lată, fără rotunjiri și umbre */
+html.tp-theme .tp-flag { border: 3px solid var(--tp-ink) !important; border-left: 12px solid var(--sev, var(--tp-sky)) !important; border-radius: 0 !important; box-shadow: none !important; }
+html.tp-theme .tp-flag:hover { box-shadow: none !important; background: var(--tp-tint) !important; }
+html.tp-theme .flag-firm { font-family: var(--tp-display); font-weight: 400; font-size: 1.12rem; letter-spacing: -.005em; }
+html.tp-theme .flag-title { color: var(--tp-fg); font-weight: 600; }
+html.tp-theme .flag-code { border: 2px solid var(--tp-ink); background: transparent; }
+html.tp-theme .flag-detail { border-top: 3px solid var(--tp-ink); }
+html.tp-theme .tp-kpi, html.tp-theme .tp-page-firma .stat, html.tp-theme .tp-atp-card, html.tp-theme .tp-atp-panel, html.tp-theme .tp-atp,
+html.tp-theme .tp-summary, html.tp-theme .tp-sigcard, html.tp-theme .tp-ment, html.tp-theme .tp-fp-score, html.tp-theme .tp-fp-flag {
+  border: 3px solid var(--tp-ink) !important; border-radius: 0 !important; box-shadow: none !important; }
+html.tp-theme .tp-kpi-hi, html.tp-theme .tp-page-firma .stat[data-sev="CRITIC"] { background: var(--tp-hi-fill); border-color: var(--tp-hi-fill) !important; }
+html.tp-theme .tp-kpi-hi *, html.tp-theme .tp-page-firma .stat[data-sev="CRITIC"] * { color: #fff !important; }
+html.tp-theme .tp-atp-card { border-top: 10px solid var(--sev, var(--tp-sky)) !important; }
+html.tp-theme .tp-atp-panel, html.tp-theme .tp-fp-flag, html.tp-theme .tp-ment { border-left: 12px solid var(--sev, var(--tp-sky)) !important; }
+html.tp-theme .tp-fp-flag[data-sev="CRITIC"] { --sev: var(--tp-hi-fill); }
+html.tp-theme .tp-fp-flag[data-sev="MAJOR"] { --sev: var(--tp-accent-fill); }
+html.tp-theme .tp-kpi-v, html.tp-theme .tp-atp-n, html.tp-theme .tp-page-firma .stat-val, html.tp-theme .tp-rhero-stats > div > div:first-child,
+html.tp-theme .tp-fp-score > div:first-child span, html.tp-theme #tp-fp-name { font-family: var(--tp-display); font-weight: 400; letter-spacing: -.01em; }
+html.tp-theme .tp-kpi-v, html.tp-theme .tp-page-firma .stat-val { font-size: 1.9rem; line-height: 1; }
+html.tp-theme .tp-kpi-l, html.tp-theme .tp-page-firma .stat-lbl, html.tp-theme .tp-atp-l { font-weight: 600; color: var(--tp-fg); }
+html.tp-theme .tp-note { border-radius: 0; border: 3px solid var(--tp-ink); border-left: 12px solid var(--tp-accent-fill); background: var(--tp-bg); }
+html.tp-theme .tp-summary-bar { border-radius: 0; border: 3px solid var(--tp-ink); height: 26px; }
+html.tp-theme .tp-sevbar-critic { background: var(--tp-hi-fill); }
+html.tp-theme .tp-sevbar-major { background: var(--tp-accent-fill); }
+html.tp-theme .tp-sevbar-mediu { background: var(--tp-sky); }
+html.tp-theme .tp-summary-bar > span.tp-sevbar-mediu { color: #002A59 !important; }
+
+/* Tabele: cap bleumarin, linii groase */
+html.tp-theme .tp-table { border: 3px solid var(--tp-ink); border-radius: 0; }
+html.tp-theme .tp-table thead { background: var(--tp-ink-bg) !important; }
+html.tp-theme .tp-table th { font-weight: 800; letter-spacing: .08em; }
+html.tp-theme .tp-table td { border-bottom: 2px solid var(--tp-border); }
+html.tp-theme .tp-table tr.has-sig td:first-child { box-shadow: inset 6px 0 0 var(--tp-hi-fill); }
+
+/* Antetele mari (raport, buget): afiș bleumarin */
+html.tp-theme .tp-rhero, html.tp-theme header.tp-bhero { background: var(--tp-ink-bg) !important; color: #fff !important; border-bottom: 3px solid var(--tp-ink) !important; }
+html.tp-theme .tp-rhero h1, html.tp-theme header.tp-bhero h1 { color: #fff; font-size: clamp(2.2rem, 5.4vw, 3.6rem); line-height: .98; letter-spacing: -.02em; }
+html.tp-theme .tp-rhero h1 span, html.tp-theme header.tp-bhero h1 span { color: var(--tp-sky) !important; }
+html.tp-theme .tp-rhero p, html.tp-theme header.tp-bhero .header-main p { color: #C9D5EA !important; }
+html.tp-theme .tp-rhero-stats, html.tp-theme header.tp-bhero .header-stats { border-top: 3px solid var(--tp-sky) !important; }
+html.tp-theme .tp-rhero-stats > div > div:first-child, html.tp-theme header.tp-bhero .stat-pill .val { color: #fff !important; font-family: var(--tp-display) !important; font-weight: 400 !important; font-size: 2rem !important; line-height: 1.05; }
+html.tp-theme .tp-rhero-stats > div > div:last-child, html.tp-theme header.tp-bhero .stat-pill .lbl { color: #C9D5EA !important; font-weight: 600; }
+html.tp-theme .tp-rhero-stats > div:first-child > div:first-child { color: var(--tp-sky) !important; }
+html.tp-theme .tp-rhero .no-print a, html.tp-theme .tp-rhero .no-print button,
+html.tp-theme header.tp-bhero .header-actions a, html.tp-theme header.tp-bhero .header-actions button {
+  border-radius: 0 !important; border: 3px solid #fff !important; background: transparent !important; color: #fff !important; font-weight: 800 !important; }
+html.tp-theme .tp-rhero .no-print button, html.tp-theme header.tp-bhero .header-actions a.primary { background: #fff !important; color: #002A59 !important; }
+html.tp-theme .tp-rhero .no-print span { color: #C9D5EA; }
+html.tp-theme header.tp-bhero .badge-civic { border-radius: 0; background: var(--tp-sky); color: #002A59; }
+html.tp-theme .tp-page-firma h1, html.tp-theme .tp-page-firme h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1; letter-spacing: -.02em; }
+html.tp-theme .tp-page-firma .meta { font-weight: 600; letter-spacing: .04em; color: var(--tp-accent); }
+html.tp-theme .tp-page-raport h2, html.tp-theme .tp-page-firma h2, html.tp-theme .tp-page-firme h2 { font-size: 1.7rem; border-bottom: 3px solid var(--tp-ink); padding-bottom: 6px; }
+
+/* Panoul profilului firmei */
+html.tp-theme #tp-firma-panel { border-left: 3px solid var(--tp-ink); box-shadow: none; }
+html.tp-theme .tp-fp-head { background: var(--tp-ink-bg); }
+html.tp-theme .tp-fp-head button { border-radius: 0; }
+
+/* Paginile cu stil propriu (despre, modele, petiție, presă, GDPR, hartă, rețele) */
+html.tp-theme .page-wrap h1 { font-size: clamp(2rem, 5vw, 3.2rem) !important; line-height: 1 !important; letter-spacing: -.02em; color: var(--tp-fg) !important; }
+html.tp-theme .page-wrap h2 { color: var(--tp-fg) !important; border-bottom: 3px solid var(--tp-ink) !important; }
+html.tp-theme .page-wrap h3 { color: var(--tp-fg) !important; }
+html.tp-theme .page-wrap p, html.tp-theme .page-wrap li { color: var(--tp-fg); }
+html.tp-theme .page-wrap a { color: var(--tp-link); }
+html.tp-theme .note, html.tp-theme .warn, html.tp-theme .callout { border-radius: 0 !important; border: 3px solid var(--tp-ink) !important; border-left: 12px solid var(--tp-accent-fill) !important; background: var(--tp-bg) !important; color: var(--tp-fg) !important; }
+html.tp-theme .warn { border-left-color: var(--tp-hi-fill) !important; }
+html.tp-theme .tag { border-radius: 0; text-transform: uppercase; letter-spacing: .06em; }
+html.tp-theme .tag-critic { background: var(--tp-hi-fill); color: #fff; }
+html.tp-theme .tag-major { background: var(--tp-accent-fill); color: #fff; }
+html.tp-theme .tag-mediu { background: var(--tp-sky); color: #002A59; }
+html.tp-theme .counter-box { border-radius: 0 !important; background: var(--tp-ink-bg) !important; }
+html.tp-theme .counter-num { font-family: var(--tp-display); font-weight: 400; font-size: 3.6rem; }
+html.tp-theme .petition-form { border-radius: 0 !important; border: 3px solid var(--tp-ink) !important; box-shadow: none !important; }
+html.tp-theme .page-wrap input[type="text"], html.tp-theme .page-wrap input[type="email"], html.tp-theme .page-wrap textarea { border: 3px solid var(--tp-ink); border-radius: 0; }
+html.tp-theme .page-wrap button { border-radius: 0 !important; font-weight: 800; }
+html.tp-theme .page-wrap code { border-radius: 0; background: var(--tp-tint); color: var(--tp-fg); }
+
+/* Bara de jos (telefon) și butonul „sus” */
+html.tp-theme .tp-sticky-cta { border-top: 3px solid var(--tp-ink); box-shadow: none; padding: 0; justify-content: stretch; }
+html.tp-theme .tp-sticky-cta a { flex: 1; border-radius: 0; font-weight: 800; font-size: 12px; padding: 6px 4px; text-align: center; }
+html.tp-theme .tp-sticky-cta a + a { border-left: 3px solid var(--tp-ink); }
+html.tp-theme .tp-sticky-cta a:first-child { background: var(--tp-ink-bg); color: #fff; }
+html.tp-theme .tp-back-top { border-radius: 0; border: 3px solid var(--tp-ink); box-shadow: none; font-weight: 800; }
+
+/* Subsol */
+html.tp-theme .tp-site-footer { background: var(--tp-ink-bg); color: #C9D5EA; border-top: 10px solid var(--tp-accent-fill); }
+html.tp-theme .tp-site-footer strong { font-family: var(--tp-display); font-weight: 400; text-transform: uppercase; letter-spacing: .02em; }
+html.tp-theme .tp-site-footer a { font-weight: 600; }
+
+@media (max-width: 640px) {
+  html.tp-theme .tp-nav-name { font-size: clamp(.72rem, 3.5vw, .95rem); letter-spacing: 0; }
+  html.tp-theme .tp-nav-brand small { font-size: .62rem; letter-spacing: .08em; }
+  html.tp-theme .tp-rhero-stats > div > div:first-child, html.tp-theme header.tp-bhero .stat-pill .val { font-size: 1.5rem !important; }
+  html.tp-theme .tp-flag { border-left-width: 8px !important; }
+  html.tp-theme .tp-page-firme .tp-table tr { border: 3px solid var(--tp-ink); border-radius: 0; }
+}
+@media print {
+  html.tp-theme .tp-rhero, html.tp-theme header.tp-bhero { background: #fff !important; color: #000 !important; }
+  html.tp-theme .tp-rhero h1, html.tp-theme .tp-rhero-stats > div > div:first-child { color: #000 !important; }
+}
+
+/* ── Afiș: componentele paginilor cu stil propriu ─────────────────────── */
+/* Fără colțuri rotunjite și fără umbre în conținut (excepții: ștampila rotundă,
+   punctele din legende și hărțile) */
+html.tp-theme main :is(div, section, article, aside, a, button, span, input, select, textarea, ul, ol, table, details, summary, label, nav, p):not(.ph-stamp):not([class*="leaflet"]):not([class*="legend-dot"]):not(.status-dot) {
+  border-radius: 0 !important; box-shadow: none !important; }
+
+/* Pagina unui semnal (semnale/*.html) */
+html.tp-theme main > article.card { border: 3px solid var(--tp-ink); border-left: 14px solid var(--sev, var(--tp-sky)); padding: 26px 28px; }
+html.tp-theme article.card[data-sev="CRITIC"] { --sev: var(--tp-hi-fill); }
+html.tp-theme article.card[data-sev="MAJOR"] { --sev: var(--tp-accent-fill); }
+html.tp-theme article.card[data-sev="MEDIU"] { --sev: var(--tp-sky); }
+html.tp-theme article.card .sev { background: var(--sev, var(--tp-sky)); color: #fff; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; font-size: 12px; padding: 4px 10px; }
+html.tp-theme article.card[data-sev="MEDIU"] .sev { color: #002A59; }
+html.tp-theme article.card h1 { font-size: clamp(1.9rem, 4.4vw, 2.8rem); line-height: 1.02; letter-spacing: -.02em; }
+html.tp-theme article.card .firma a { font-family: var(--tp-display); font-weight: 400; font-size: 1.15rem; }
+html.tp-theme article.card .fapte span:first-child { font-family: var(--tp-display); font-size: 1.6rem; color: var(--tp-fg); }
+html.tp-theme article.card .btn { background: var(--tp-accent-fill); border: 3px solid var(--tp-accent-fill); font-weight: 800; }
+html.tp-theme article.card .btn:hover { background: var(--tp-ink-bg); border-color: var(--tp-ink-bg); }
+html.tp-theme article.card .btn.sec { background: var(--tp-bg); color: var(--tp-fg); border: 3px solid var(--tp-ink); }
+html.tp-theme article.card .btn.sec:hover { background: var(--tp-tint); }
+
+/* Butoanele de distribuire */
+html.tp-theme .tp-share a, html.tp-theme .tp-share button { border: 3px solid var(--tp-ink) !important; font-weight: 800; color: var(--tp-fg) !important; background: var(--tp-bg); }
+html.tp-theme .tp-share .tp-sh-wa, html.tp-theme .tp-share .tp-sh-fb { background: var(--tp-accent-fill); border-color: var(--tp-accent-fill) !important; color: #fff !important; }
+html.tp-theme .tp-share-lbl { font-weight: 800; text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; }
+
+/* Meniu: elementul activ are loc pentru text */
+@media (min-width: 641px) {
+  html.tp-theme .tp-nav-links { gap: 2px; }
+  html.tp-theme .tp-nav-links a { padding: 0 10px; }
+  html.tp-theme .tp-more summary { padding: 0 10px; }
+}
+html.tp-theme .tp-nav-links a.active { box-shadow: none; }
+@media (max-width: 640px) {
+  html.tp-theme .tp-nav-links { border-bottom: 3px solid var(--tp-ink); box-shadow: none; }
+  html.tp-theme .tp-nav-links a { border-radius: 0; border-bottom: 2px solid var(--tp-border); }
+}
+
+/* Fișa firmei: căsuța „critic” e roșie doar ca bordură (poate fi 0) */
+html.tp-theme .tp-page-firma .stat[data-sev="CRITIC"], html.tp-theme .tp-kpi-hi { background: var(--tp-bg); border-color: var(--tp-ink) !important; border-top: 10px solid var(--tp-hi-fill) !important; }
+html.tp-theme .tp-page-firma .stat[data-sev="CRITIC"] *, html.tp-theme .tp-kpi-hi * { color: inherit !important; }
+html.tp-theme .tp-page-firma .stat[data-sev="CRITIC"] .stat-val, html.tp-theme .tp-kpi-hi .tp-kpi-v { color: var(--tp-hi) !important; }
+html.tp-theme .tp-page-firma .stat[data-sev="MAJOR"] { border-top: 10px solid var(--tp-accent-fill) !important; }
+html.tp-theme .tp-page-firma .stat[data-sev="MEDIU"] { border-top: 10px solid var(--tp-sky) !important; }
+
+/* Bugetul (transparenta_pantelimon.html) */
+html.tp-theme nav.tabs { background: var(--tp-bg) !important; border-bottom: 3px solid var(--tp-ink) !important; box-shadow: none !important; }
+html.tp-theme nav.tabs ul li a { color: var(--tp-fg) !important; font-weight: 800 !important; border-bottom: 0 !important; }
+html.tp-theme nav.tabs ul li a:hover { background: var(--tp-tint) !important; }
+html.tp-theme nav.tabs ul li a.active { background: var(--tp-ink-bg) !important; color: #fff !important; }
+html.tp-theme nav.tabs .cnt, html.tp-theme nav.tabs [class*="badge"] { background: var(--tp-hi-fill) !important; color: #fff !important; }
+html.tp-theme .section-title { font-family: var(--tp-display) !important; font-weight: 400 !important; color: var(--tp-fg) !important; font-size: clamp(1.5rem, 3vw, 2rem) !important;
+  border-bottom: 3px solid var(--tp-ink) !important; }
+html.tp-theme .section-title .icon { display: none; }
+html.tp-theme .card:not([data-sev]), html.tp-theme .chart-box, html.tp-theme .flag-card, html.tp-theme .source-item, html.tp-theme .sources-box, html.tp-theme .method-box,
+html.tp-theme .score-box, html.tp-theme .kpi-detail-panel, html.tp-theme .d-item, html.tp-theme .signature-block, html.tp-theme .revendicari,
+html.tp-theme .doc-list > li, html.tp-theme .contact-box, html.tp-theme .petition-form, html.tp-theme .stat-chip, html.tp-theme .retea-table-wrap,
+html.tp-theme .info-placeholder, html.tp-theme #cy, html.tp-theme #map {
+  border: 3px solid var(--tp-ink) !important; background: var(--tp-bg) !important; }
+html.tp-theme .card:not([data-sev]) { border-top-width: 10px !important; }
+html.tp-theme .card.red, html.tp-theme .flag-card.red { border-top-color: var(--tp-hi-fill) !important; }
+html.tp-theme .card.orange, html.tp-theme .flag-card.orange { border-top-color: var(--tp-accent-fill) !important; }
+html.tp-theme .card.green, html.tp-theme .card.blue, html.tp-theme .flag-card.yellow { border-top-color: var(--tp-sky) !important; }
+html.tp-theme .flag-card { border-top-width: 3px !important; border-left: 12px solid var(--tp-sky) !important; }
+html.tp-theme .flag-card.red { border-left-color: var(--tp-hi-fill) !important; }
+html.tp-theme .flag-card.orange { border-left-color: var(--tp-accent-fill) !important; }
+html.tp-theme .card .val, html.tp-theme .d-val, html.tp-theme .score-number { font-family: var(--tp-display) !important; font-weight: 400 !important; color: var(--tp-fg) !important; letter-spacing: -.01em; }
+html.tp-theme .card .lbl, html.tp-theme .d-lbl { font-weight: 600 !important; color: var(--tp-fg) !important; }
+html.tp-theme .alert, html.tp-theme .disclaimer, html.tp-theme .legal-citation {
+  border: 3px solid var(--tp-ink) !important; border-left: 12px solid var(--tp-accent-fill) !important; background: var(--tp-bg) !important; color: var(--tp-fg) !important; }
+html.tp-theme .alert.red, html.tp-theme .disclaimer { border-left-color: var(--tp-hi-fill) !important; }
+html.tp-theme .alert.orange { border-left-color: var(--tp-sky) !important; }
+html.tp-theme .alert *, html.tp-theme .disclaimer *, html.tp-theme .legal-citation * { color: inherit !important; }
+html.tp-theme .data-table { border: 3px solid var(--tp-ink) !important; }
+html.tp-theme .data-table thead, html.tp-theme .data-table th { background: var(--tp-ink-bg) !important; color: #fff !important; }
+html.tp-theme .badge, html.tp-theme .tag, html.tp-theme .sev { text-transform: uppercase; letter-spacing: .05em; font-weight: 800 !important; }
+html.tp-theme .badge.red, html.tp-theme .tag.red, html.tp-theme .sev.sev-critic { background: var(--tp-hi-fill) !important; color: #fff !important; }
+html.tp-theme .badge.orange, html.tp-theme .tag.orange, html.tp-theme .sev.sev-major { background: var(--tp-accent-fill) !important; color: #fff !important; }
+html.tp-theme .badge.green, html.tp-theme .badge.blue, html.tp-theme .tag.yellow, html.tp-theme .sev.sev-mediu, html.tp-theme .sev.sev-ok { background: var(--tp-sky) !important; color: #002A59 !important; }
+html.tp-theme .progress-bar-bg { background: var(--tp-tint) !important; border: 2px solid var(--tp-ink); }
+html.tp-theme .progress-bar-fill { background: var(--tp-accent-fill) !important; }
+html.tp-theme .chip, html.tp-theme .filter-btn, html.tp-theme .citizen-report-btn, html.tp-theme .cy-btn {
+  border: 3px solid var(--tp-ink) !important; background: var(--tp-bg) !important; color: var(--tp-fg) !important; font-weight: 800 !important; }
+html.tp-theme .filter-btn.active { background: var(--tp-ink-bg) !important; color: #fff !important; }
+
+/* Modele de cereri, petiție, rețele */
+html.tp-theme .doc-title { font-family: var(--tp-display) !important; font-weight: 400 !important; font-size: 1.2rem !important; color: var(--tp-fg) !important; }
+html.tp-theme .doc-dl, html.tp-theme .submit-btn { background: var(--tp-accent-fill) !important; border: 3px solid var(--tp-accent-fill) !important; color: #fff !important; font-weight: 800 !important; }
+html.tp-theme .doc-dl:hover, html.tp-theme .submit-btn:hover { background: var(--tp-ink-bg) !important; border-color: var(--tp-ink-bg) !important; }
+html.tp-theme .doc-list { counter-reset: doc; }
+html.tp-theme .doc-list > li { counter-increment: doc; position: relative; padding-left: 92px !important; }
+html.tp-theme .doc-list > li::before { content: counter(doc, decimal-leading-zero); position: absolute; left: 20px; top: 14px; font: 400 44px/1 var(--tp-display); color: var(--tp-sky-text); }
+html.tp-theme .revendicari li strong { font-family: var(--tp-display); font-weight: 400; }
+html.tp-theme .subtitle, html.tp-theme .back-link { color: var(--tp-muted) !important; font-weight: 600; }
+html.tp-theme .stat-chip strong, html.tp-theme .stat-chip b { font-family: var(--tp-display); font-weight: 400; font-size: 1.2rem; }
+
+@media (max-width: 640px) {
+  html.tp-theme main > article.card { padding: 18px 16px; border-left-width: 10px; }
+  html.tp-theme .doc-list > li { padding-left: 68px !important; }
+  html.tp-theme .doc-list > li::before { left: 12px; font-size: 34px; }
+}

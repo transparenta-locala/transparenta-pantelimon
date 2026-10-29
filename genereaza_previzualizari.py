@@ -39,10 +39,11 @@ OG_W, OG_H = 1200, 630
 _ROOT = os.path.dirname(os.path.abspath(__file__))
 _FONT_DIR = os.path.join(_ROOT, "assets", "fonts")
 
-CULORI_SEV = {"CRITIC": "#A23B2C", "MAJOR": "#8F5A1E", "MEDIU": "#5E6B78"}
+# Tema „afiș” (29.10.2026): roșu doar pentru critic, albastrurile pentru restul
+CULORI_SEV = {"CRITIC": "#E3001E", "MAJOR": "#00458C", "MEDIU": "#4A62A4"}
 # Etichete afișate (datele păstrează CRITIC/MAJOR/MEDIU)
 ETICHETE_SEV = {"CRITIC": "Semnal CRITIC", "MAJOR": "Semnal MAJOR", "MEDIU": "Semnal MEDIU"}
-FUNDAL = "#14263D"
+FUNDAL = "#002A59"
 DISCLAIMER = "Indicator automat din datele SEAP, nu o constatare juridică."
 
 # Tipuri fără contract individual: data din card e data analizei, nu a contractului
@@ -512,7 +513,7 @@ h1{{font-size:1.9rem;line-height:1.2;margin:14px 0 6px}}
 </head>
 <body>
 <main id="main-content">
-  <article class="card" data-tp-share-title="{e(titlu)}" data-tp-share-firma="{e(firma)}" data-tp-share-suma="{e(fmt_lei(semnal['suma']) if semnal.get('suma') else '')}">
+  <article class="card" data-sev="{e(semnal.get('severitate', ''))}" data-tp-share-title="{e(titlu)}" data-tp-share-firma="{e(firma)}" data-tp-share-suma="{e(fmt_lei(semnal['suma']) if semnal.get('suma') else '')}">
     <span class="sev">{e(ETICHETE_SEV.get(semnal.get('severitate', ''), 'Semnal automat'))}</span>
     <h1>{e(titlu)}</h1>
     {(f'<p class="firma"><a href="../furnizori/{e(slug_furnizor)}.html">{e(firma)}</a></p>' if slug_furnizor else f'<p class="firma">{e(firma)}</p>') if firma else ''}

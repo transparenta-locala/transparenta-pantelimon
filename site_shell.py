@@ -55,8 +55,8 @@ NAV_EXTERN = [
 
 # Fonturile din primul ecran (restul se încarcă la nevoie, prin unicode-range)
 FONTURI_PRELOAD = (
-    "assets/fonts/source-sans-3-latin-400-normal.woff2",
-    "assets/fonts/source-serif-4-latin-600-normal.woff2",
+    "assets/fonts/archivo-latin-400-normal.woff2",
+    "assets/fonts/archivo-black-latin-400-normal.woff2",
 )
 
 # Paginile din rădăcină care NU primesc cadrul (pagina offline a service worker-ului

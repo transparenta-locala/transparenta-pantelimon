@@ -5443,6 +5443,25 @@ def actualizeaza_semnale_index(n_semnale: int, n_critic: int, index_path: str = 
     return True
 
 
+def cumparari_directe(contracte: list) -> tuple:
+    """(număr, valoare RON, primul an) pentru cumpărările directe — contractele date
+    fără licitație. Fiecare contract o singură dată (vezi contracte_unice)."""
+    directe = [c for c in contracte_unice(contracte)
+               if (c.get("tip_contract") or c.get("tipc")) == "achizitie-directa"]
+    valoare = sum(float(c.get("valoare_ron", c.get("valoare", 0)) or 0) for c in directe)
+    ani = sorted(str(c.get("data") or "")[:4] for c in directe if str(c.get("data") or "")[:4].isdigit())
+    return len(directe), valoare, (ani[0] if ani else "")
+
+
+def _mil_lei(valoare: float) -> str:
+    """27_490_000 → „27,5 mil. lei”; sub un milion → „840.000 lei”."""
+    if not valoare:
+        return ""
+    if valoare >= 1_000_000:
+        return f"{valoare / 1_000_000:.1f}".replace(".", ",") + " mil. lei"
+    return f"{round(valoare):,}".replace(",", ".") + " lei"
+
+
 def actualizeaza_contoare_index(contracte_export: list, index_path: str = None) -> bool:
     """Scrie în index.html (fără JS) numărul de contracte unice și de firme.
 
@@ -5459,6 +5478,12 @@ def actualizeaza_contoare_index(contracte_export: list, index_path: str = None) 
         content = handle.read()
     nou = re.sub(r'(<span class="v" id="idx-contracte">)[^<]*(</span>)', rf"\g<1>{n_contracte}\2", content, count=1)
     nou = re.sub(r'(<b id="idx-firme">)[^<]*(</b>)', rf"\g<1>{n_firme}\2", nou, count=1)
+    # Cifra mare de pe prima pagină: banii dați prin cumpărare directă (fără licitație)
+    n_dir, val_dir, an_dir = cumparari_directe(contracte_export)
+    for elem_id, val in (("idx-directe-val", _mil_lei(val_dir)), ("idx-directe-n", str(n_dir)),
+                         ("idx-directe-din", an_dir)):
+        if val:
+            nou = re.sub(rf'(<span id="{elem_id}">)[^<]*(</span>)', rf"\g<1>{val}\2", nou, count=1)
     if nou == content:
         return False
     with open(index_path, "w", encoding="utf-8") as handle:

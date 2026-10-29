@@ -307,6 +307,14 @@ ecranul (`clamp`), ca să nu intre sub butoane. Iconițele (favicon.ico 16/32/48
 icon-maskable-512, apple-touch-icon fără transparență) se refac cu `python logo_tp.py`.
 Teste: `tests/test_logo.py`.
 
+**Tema „afiș” (29.10.2026)**: litere groase (Archivo Black pentru titluri și cifre, Archivo pentru text, găzduite
+în `assets/fonts/`), chenare de 3 px, fără colțuri rotunjite și umbre. Culori: bleumarin #002A59, albastru #00458C,
+albastru deschis #8FA9D8 (#6C8CC7 doar la bare, fără text pe el, pentru contrast) și roșu #E3001E (doar pentru
+ce e grav: critic, ștampila cu semnale, sesizări). E un strat la finalul `assets/tp.css`, cu selectori `html.tp-theme …`
+(bat și stilurile proprii ale paginilor). Aspectul vechi: `assets/tp-clasic.css` și tag-ul git `stil-vechi-2026-10-29`.
+Prima pagină arată sus cifra cumpărărilor directe (`cumparari_directe()`, scrisă de `actualizeaza_contoare_index` în
+`idx-directe-val/-n/-din`). Paginile semnalelor au `data-sev` pe `article.card`. Teste: `tests/test_tema_afis.py`.
+
 **Date financiare ANAF automate (27.10.2026)** — `import_financiar_datagov.py --auto` (pasul dinaintea
 monitorului în `update-report.yml`): găsește prin API-ul CKAN data.gov.ro cel mai recent set
 `situatii_financiare_{an}` (404 = an nepublicat), importă BL + UU doar dacă anul e mai nou decât cel din
