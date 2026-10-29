@@ -973,8 +973,8 @@
       "label": "STANGER DESIGN S.R.L.",
       "cui": "40412167",
       "adresa": "JUD. CĂLĂRAŞI, MUN. CĂLĂRAŞI, PRL. BUCUREŞTI, NR.24, BL.M19, SC.2, ET.3, AP.6",
-      "lat": 44.210116,
-      "lng": 27.30713,
+      "lat": 44.19075,
+      "lng": 27.356437,
       "valoare": 115500.0,
       "nr_contracte": 1,
       "in_retea": false
@@ -1272,8 +1272,8 @@
       "adresa": "JUD. BACĂU, MUN. BACĂU, STR. ABATORULUI, NR.4",
       "lat": 46.556049,
       "lng": 26.915356,
-      "valoare": 8895.86,
-      "nr_contracte": 4,
+      "valoare": 9350.4,
+      "nr_contracte": 5,
       "in_retea": false
     },
     {
@@ -1412,7 +1412,7 @@
       "id": "28610220",
       "label": "GLOBEXTERRA S.R.L.",
       "cui": "28610220",
-      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, STR MUZEUL ZAMBACCIAN, NR.1, ET.1 ŞI 2",
+      "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 1, CAL FLOREASCA, NR.246C, ET.29",
       "lat": 44.487945,
       "lng": 26.050155,
       "valoare": 24742834.32,
@@ -1481,8 +1481,8 @@
       "adresa": "JUD. ILFOV, SAT DRAGOMIREŞTI-DEAL COM. DRAGOMIREŞTI-VALE, ALEEA ŞTEFANIA, NR.2, (CLĂDIREA E - HALA E)",
       "lat": 44.458692,
       "lng": 25.945338,
-      "valoare": 94549.74,
-      "nr_contracte": 6,
+      "valoare": 96374.41,
+      "nr_contracte": 7,
       "in_retea": false
     },
     {
@@ -1809,8 +1809,8 @@
       "label": "SELGROS CASH & CARRY SRL",
       "cui": "11805367",
       "adresa": "JUD. BRAŞOV, MUN. BRAŞOV, CAL. BUCUREŞTI, NR.231",
-      "lat": 45.631239,
-      "lng": 25.637768,
+      "lat": 45.606983,
+      "lng": 25.65437,
       "valoare": 9449.72,
       "nr_contracte": 3,
       "in_retea": false
@@ -2194,8 +2194,8 @@
       "label": "BET AUTO SERVICE FUNDENI SRL",
       "cui": "27987613",
       "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, DRM. GĂRII, NR.8, TEREN IN SUPRAFATA DE 600 MP SI CONSTRUCTIE P+1E",
-      "lat": 44.470278,
-      "lng": 26.176246,
+      "lat": 44.457952,
+      "lng": 26.162859,
       "valoare": 3050.0,
       "nr_contracte": 1,
       "in_retea": false
@@ -2504,5 +2504,5 @@
     "edges_adresa_comuna": 5,
     "total_edges": 5
   },
-  "generated_at": "2026-10-27T13:50:34.375321"
+  "generated_at": "2026-10-29T13:31:58.166821"
 }

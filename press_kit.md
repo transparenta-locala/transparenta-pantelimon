@@ -1,4 +1,4 @@
-# Press kit — Transparența Pantelimon (27.10.2026)
+# Press kit — Transparența Pantelimon (29.10.2026)
 
 Monitorizare cetățenească automată a achizițiilor publice — Orașul Pantelimon.
 
@@ -9,7 +9,7 @@ Monitorizare cetățenească automată a achizițiilor publice — Orașul Pante
 | Semnale automate totale | 349 |
 | Contracte unice cu semnale | 249 |
 | Critice / Majore / Medii | 26 / 97 / 226 |
-| Contracte analizate | 744 |
+| Contracte analizate | 746 |
 | Valoare totală contracte | 169.28 M RON |
 | Scor transparență | 23/100 |
 
@@ -49,4 +49,4 @@ https://transparenta-pantelimon.eu/despre.html
 Semnalele sunt indicatori euristici și nu reprezintă constatări juridice sau prejudicii.
 
 ---
-*Generat automat de monitor_pantelimon.py la 2026-10-27*
+*Generat automat de monitor_pantelimon.py la 2026-10-29*

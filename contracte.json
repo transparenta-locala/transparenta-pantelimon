@@ -10568,5 +10568,33 @@
     "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123337019",
     "k": "da:123337019",
     "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123343522",
+    "titlu": "Servicii de reparare si de intretinere a vehiculelor si a echipamentelor aferent",
+    "valoare": 1824.67,
+    "data": "2026-10-28",
+    "tip": "",
+    "firma": "TITAN MACHINERY ROMANIA",
+    "cui": "29352595",
+    "ofertanti": 1,
+    "cod": "DA41498369",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123343522",
+    "k": "da:123343522",
+    "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123352062",
+    "titlu": "Cartuse de toner (Rev.2)",
+    "valoare": 454.54,
+    "data": "2026-10-28",
+    "tip": "",
+    "firma": "ROMSYSTEMS",
+    "cui": "15437993",
+    "ofertanti": 1,
+    "cod": "DA41506144",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123352062",
+    "k": "da:123352062",
+    "tipc": "achizitie-directa"
   }
 ]
