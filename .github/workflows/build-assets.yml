@@ -12,6 +12,7 @@ name: 🧱 Build assets (enhance.min.js + cadrul paginilor)
       - enhance.js
       - assets/tp.css
       - site_shell.py
+      - logo_tp.py
       - '*.html'
   workflow_dispatch:
 

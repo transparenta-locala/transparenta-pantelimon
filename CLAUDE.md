@@ -298,6 +298,15 @@ vizitatorii vedeau pagini vechi).
   (`site_shell.rand_distribuie_html`); `enhance.js` doar leagă „Copiază link” (`leagaShareRow`).
 - `furnizori/index.html` sub 640px: rândurile devin carduri (doar CSS, etichetele din `::before`).
 
+**Logo (29.10.2026)** — `logo_tp.py`, varianta „Primăria din grafice” (acoperiș peste bare de grafic
+în creștere, pe pătrat rotunjit). Desenul e definit o singură dată (`FORME`, grilă 48×48) și de acolo ies:
+SVG-ul din meniu (`simbol_svg`, în `site_shell.header_html`; `width`/`height` fixe → fără CLS; culorile din
+variabilele `.tp-logo` din `tp.css`, altele pe tema întunecată), `assets/logo.svg` și simbolul desenat cu
+Pillow (`lipeste_simbol`) pe `og-image.png` și pe imaginile din `og/`. Pe telefon numele scade cu
+ecranul (`clamp`), ca să nu intre sub butoane. Iconițele (favicon.ico 16/32/48, icon-192/512,
+icon-maskable-512, apple-touch-icon fără transparență) se refac cu `python logo_tp.py`.
+Teste: `tests/test_logo.py`.
+
 **Date financiare ANAF automate (27.10.2026)** — `import_financiar_datagov.py --auto` (pasul dinaintea
 monitorului în `update-report.yml`): găsește prin API-ul CKAN data.gov.ro cel mai recent set
 `situatii_financiare_{an}` (404 = an nepublicat), importă BL + UU doar dacă anul e mai nou decât cel din

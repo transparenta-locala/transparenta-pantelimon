@@ -492,8 +492,12 @@ html.tp-theme h1, html.tp-theme h2, html.tp-theme h3 { font-family: var(--tp-ser
 /* Meniu */
 .tp-nav { background: var(--tp-bg); border-bottom: 1px solid var(--tp-border); }
 .tp-nav-inner { max-width: 1120px; padding: 0 24px; min-height: 64px; gap: 24px; flex-wrap: nowrap; }
-.tp-nav-brand { font-family: var(--tp-serif); font-weight: 600; font-size: 1.15rem; display: block; line-height: 1.15; margin-right: auto; color: var(--tp-fg); }
-.tp-nav-brand small { display: block; font-family: var(--tp-sans); font-weight: 400; font-size: .78rem; color: var(--tp-muted); margin-top: 2px; }
+.tp-nav-brand { display: flex; align-items: center; gap: 12px; margin-right: auto; color: var(--tp-fg); min-width: 0; }
+.tp-nav-name { display: block; font-family: var(--tp-serif); font-weight: 600; font-size: 1.3rem; line-height: 1.1; }
+.tp-nav-brand small { display: block; font-family: var(--tp-sans); font-weight: 400; font-size: .8rem; color: var(--tp-muted); margin-top: 3px; letter-spacing: .02em; }
+/* Simbolul (logo_tp.py): dimensiuni fixe, ca meniul să nu se mute la încărcare */
+.tp-logo { display: block; flex: none; width: 44px; height: 44px; --tp-logo-bg: #1D3F63; --tp-logo-fg: #fff; --tp-logo-hi: #9CC0E6; }
+html[data-tp-theme="dark"] .tp-logo { --tp-logo-bg: #6E9FD6; --tp-logo-fg: #0C131E; --tp-logo-hi: #E6ECF4; }
 .tp-nav-date { display: none; }
 .tp-nav-links { flex: 0 1 auto; gap: 22px; align-items: center; flex-wrap: nowrap; }
 .tp-nav-links a, .tp-more summary { padding: 0; border-radius: 0; font-size: .98rem; font-weight: 600; color: var(--tp-fg); text-decoration: none; min-height: 64px; display: inline-flex; align-items: center; white-space: nowrap; }
@@ -522,8 +526,14 @@ html.tp-theme h1, html.tp-theme h2, html.tp-theme h3 { font-family: var(--tp-ser
   .tp-more:not([open]) .tp-more-list { display: block; }
   .tp-more-list a { padding: 0; border-radius: 0; border-bottom: 1px solid var(--tp-border); color: var(--tp-muted); }
   .tp-more-list a:last-child { border-bottom: 0; }
-  .tp-nav-brand { font-size: 1.02rem; }
+  .tp-nav-brand { gap: 9px; }
+  /* numele scade odată cu ecranul, ca să nu ajungă sub butoanele din dreapta */
+  .tp-nav-name { font-size: clamp(.9rem, calc((100vw - 176px) / 12.6), 1.06rem); }
+  .tp-nav-brand small { font-size: .78rem; margin-top: 2px; }
+  .tp-logo { width: 36px; height: 36px; }
 }
+@media (max-width: 400px) { .tp-logo { width: 32px; height: 32px; } }
+@media (max-width: 340px) { .tp-nav-name { white-space: normal; font-size: .95rem; } .tp-nav-brand small { display: none; } }
 @media (min-width: 1001px) { .tp-hamburger { display: none !important; } }
 /* <details> închis ascunde conținutul; pe telefon îl vrem mereu vizibil */
 @media (max-width: 1000px) { .tp-more > .tp-more-list { display: block !important; } .tp-more { display: block; } .tp-more:not([open]) > :not(summary) { display: block; } }

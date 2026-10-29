@@ -330,7 +330,7 @@
     nav.style.position = 'sticky';
     nav.innerHTML = `
       <div class="tp-nav-inner">
-        <a href="${base}index.html" class="tp-nav-brand">Transparența Pantelimon<small>Inițiativă civică</small></a>
+        <a href="${base}index.html" class="tp-nav-brand"><svg class="tp-logo" width="44" height="44" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect width="48" height="48" rx="11" fill="var(--tp-logo-bg,#1D3F63)"/><path d="M8 18.5 24 8 40 18.5z" fill="var(--tp-logo-fg,#fff)"/><rect x="11" y="30" width="5" height="7" fill="var(--tp-logo-fg,#fff)"/><rect x="18" y="26.5" width="5" height="10.5" fill="var(--tp-logo-fg,#fff)"/><rect x="25" y="23" width="5" height="14" fill="var(--tp-logo-fg,#fff)"/><rect x="32" y="20" width="5" height="17" fill="var(--tp-logo-hi,#9CC0E6)"/><rect x="8" y="38.5" width="32" height="3" rx="0.8" fill="var(--tp-logo-fg,#fff)"/></svg><span class="tp-nav-name">Transparența Pantelimon<small>Inițiativă civică</small></span></a>
         <button class="tp-hamburger" id="tp-hamburger" aria-label="Meniu" aria-expanded="false" aria-controls="tp-nav-links">
           <span></span><span></span><span></span>
         </button>

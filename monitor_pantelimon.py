@@ -5562,7 +5562,13 @@ def genereaza_og_image(n_flags: int, n_critic: int, valoare_mil: float,
     img = Image.new('RGB', (1200, 630), '#14263D')
     d = ImageDraw.Draw(img)
     d.rectangle([(0, 0), (12, 630)], fill='#4D86C2')
-    d.text((64, 52), 'Transparența Pantelimon', fill='#A9B8CC', font=_font(26))
+    try:
+        from logo_tp import lipeste_simbol
+        lipeste_simbol(img, 64, 34, 52)
+        x_nume = 132
+    except ImportError:
+        x_nume = 64
+    d.text((x_nume, 46), 'Transparența Pantelimon', fill='#E6ECF4', font=_font(28))
     if n_contracte:
         titlu = [f'{n_contracte} de contracte', 'ale primăriei, într-un', 'singur loc.']
     else:

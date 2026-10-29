@@ -30,6 +30,8 @@ import json
 import os
 import re
 
+from logo_tp import simbol_svg
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
 NAV_PRINCIPAL = [
@@ -140,6 +142,7 @@ def head_html(rel_path: str, root: str = ROOT) -> str:
         f"{preload}\n"
         f'<link rel="stylesheet" href="{p}assets/tp.css?v={v_css}">\n'
         f'<link rel="icon" href="{p}favicon.ico" sizes="any">'
+        f'<link rel="icon" href="{p}assets/logo.svg" type="image/svg+xml">'
         f'<link rel="icon" href="{p}icon-192.png" type="image/png" sizes="192x192">'
         f'<link rel="apple-touch-icon" href="{p}apple-touch-icon.png">\n'
         f'<link rel="manifest" href="{p}manifest.webmanifest"><meta name="theme-color" content="#14263D">\n'
@@ -215,7 +218,8 @@ def header_html(rel_path: str, titlu_pagina: str = "", delta: dict | None = None
         f"{_MARCAJE['header'][0]}\n"
         '<a class="tp-skip-link" href="#main-content">Salt la conținut</a>\n'
         '<nav class="tp-nav" aria-label="Navigare principală"><div class="tp-nav-inner">'
-        f'<a href="{p}index.html" class="tp-nav-brand">Transparența Pantelimon<small>Inițiativă civică</small></a>'
+        f'<a href="{p}index.html" class="tp-nav-brand">{simbol_svg(44)}'
+        '<span class="tp-nav-name">Transparența Pantelimon<small>Inițiativă civică</small></span></a>'
         '<button class="tp-hamburger" id="tp-hamburger" type="button" aria-label="Meniu" aria-expanded="false" '
         'aria-controls="tp-nav-links"><span></span><span></span><span></span></button>'
         f'<div class="tp-nav-links" id="tp-nav-links">{principale}'

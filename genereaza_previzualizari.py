@@ -288,7 +288,9 @@ def _cadru(data_seap: str):
 
     img = Image.new("RGB", (OG_W, OG_H), FUNDAL)
     d = ImageDraw.Draw(img)
-    d.text((64, 44), "Transparența Pantelimon", fill="#A9B8CC", font=_font(24, True))
+    from logo_tp import lipeste_simbol
+    lipeste_simbol(img, 64, 28, 44)
+    d.text((122, 36), "Transparența Pantelimon", fill="#E6ECF4", font=_font(24, True))
     d.line([(64, 552), (OG_W - 64, 552)], fill="#2B4364", width=2)
     d.text((64, 570), "Verifică singur: transparenta-pantelimon.eu", fill="#ffffff", font=_font(26, True))
     if data_seap:

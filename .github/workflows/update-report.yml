@@ -16,6 +16,7 @@
     paths:
       - monitor_pantelimon.py
       - genereaza_previzualizari.py
+      - logo_tp.py
       - sursa_seap_api.py
       - risc_firma.py
       - .github/workflows/update-report.yml
