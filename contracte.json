@@ -10596,5 +10596,19 @@
     "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123352062",
     "k": "da:123352062",
     "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123368228",
+    "titlu": "Servicii de asigurare a autovehiculelor (Rev.2)",
+    "valoare": 4771.86,
+    "data": "2026-10-30",
+    "tip": "",
+    "firma": "ZBK BALKAN S.A. BULGARIA SUCURSALA ROMANIA",
+    "cui": "35779982",
+    "ofertanti": 1,
+    "cod": "DA41521160",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123368228",
+    "k": "da:123368228",
+    "tipc": "achizitie-directa"
   }
 ]
