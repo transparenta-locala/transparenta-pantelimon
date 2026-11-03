@@ -5,15 +5,20 @@ name: 🏛️ Consiliul Local (rezumate și pagină)
 # consume timpul raportului. Prima completare a arhivei se face în câteva rulări (--max-minute);
 # când nu e nimic nou, rularea durează 1-2 minute.
 #
-# Rezumatele pornesc doar după ce alegi furnizorul (Settings → Secrets and variables → Actions):
-#   variabila REZUMAT_FURNIZOR = anthropic | gemini, opțional variabila REZUMAT_MODEL,
-#   secretul ANTHROPIC_API_KEY sau GEMINI_API_KEY.
-# Fără ele, rularea continuă cu ::warning:: și pagina arată titlurile și linkurile spre PDF.
+# Furnizorul ales (03.11.2026) e Anthropic, cu modelul Claude Haiku 5.5. Rezumatele pornesc când există
+# secretul ANTHROPIC_API_KEY (Settings → Secrets and variables → Actions). Fără el, rularea continuă cu
+# ::warning:: și pagina arată titlurile și linkurile spre PDF.
+# Alt furnizor sau alt model: variabilele REZUMAT_FURNIZOR și REZUMAT_MODEL (nu uita de gdpr.html).
 "on":
   schedule:
     # Lunea, la 06:43 UTC (ședințele Consiliului apar pe site la câteva zile după ce au loc)
     - cron: '43 6 * * 1'
   workflow_dispatch:
+    inputs:
+      max_rezumate:
+        description: 'Câte rezumate noi se fac la această rulare'
+        required: false
+        default: '10'
   push:
     branches: [main]
     paths:
@@ -51,13 +56,15 @@ jobs:
 
       - name: 🏛️ Documente, rezumate, pagină
         env:
-          REZUMAT_FURNIZOR: ${{ vars.REZUMAT_FURNIZOR }}
+          REZUMAT_FURNIZOR: ${{ vars.REZUMAT_FURNIZOR || 'anthropic' }}
           REZUMAT_MODEL: ${{ vars.REZUMAT_MODEL }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           # Câte un fir pe proces Tesseract: paralelismul îl face scriptul, pe pagini
           OMP_THREAD_LIMIT: '1'
-        run: python consiliu_local.py --max-minute 75 || echo "::warning::consiliu_local.py a eșuat — pagina rămâne cea anterioară"
+          # Pilot: primele rezumate se verifică înainte de restul arhivei. Plafonul crește după verificare.
+          MAX_REZUMATE: ${{ inputs.max_rezumate || '10' }}
+        run: python consiliu_local.py --max-minute 75 --max-rezumate "$MAX_REZUMATE" || echo "::warning::consiliu_local.py a eșuat — pagina rămâne cea anterioară"
 
       - name: 💾 Commit (doar dacă s-a schimbat ceva)
         if: always()

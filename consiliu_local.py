@@ -658,6 +658,10 @@ class RefuzModel(Exception):
     """Modelul a refuzat acest document; rămân titlul și linkul."""
 
 
+# Consumul real al rulării, ca să putem compara costul cu estimarea
+CONSUM = {"tokeni_intrare": 0, "tokeni_iesire": 0}
+
+
 def cere_anthropic(model: str, sistem: str, continut: str) -> str:
     import anthropic
     try:
@@ -670,6 +674,8 @@ def cere_anthropic(model: str, sistem: str, continut: str) -> str:
         )
     except anthropic.APIError as e:
         raise EroareModel(f"Anthropic: {type(e).__name__}: {str(e)[:200]}") from e
+    CONSUM["tokeni_intrare"] += r.usage.input_tokens
+    CONSUM["tokeni_iesire"] += r.usage.output_tokens
     if r.stop_reason == "refusal":
         raise RefuzModel("refuz")
     if r.stop_reason != "end_turn":
@@ -1168,7 +1174,7 @@ def main(argv=None) -> int:
         return 0
     stare["actualizat_la"] = datetime.now().strftime("%Y-%m-%dT%H:%M")
     stare["ultima_rulare"] = {"documente_pe_site": len(gasite), "surse_fara_raspuns": esuate,
-                              "ocr": ocr_functional, "furnizor": furnizor}
+                              "ocr": ocr_functional, "furnizor": furnizor, **CONSUM}
     salveaza_stare(stare, args.json)
     scrie_pagina(stare, args.iesire)
     print("  [OK] consiliu.html și consiliu_local.json actualizate", flush=True)

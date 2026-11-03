@@ -604,6 +604,87 @@ def test_gdpr_descrie_rezumatele():
     assert 'id="rezumate-ai"' in gdpr and "furnizorul modelului AI" in gdpr
 
 
+def _server_anthropic(monkeypatch, raspunsuri):
+    """Server local cu forma API-ului real: verifică SDK-ul adevărat, fără rețea."""
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+    from threading import Thread
+    primite = []
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_POST(self):
+            corp = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+            # SDK-ul 2.x trimite cheia ca Authorization: Bearer; versiunile vechi, ca x-api-key
+            cheie = self.headers.get("x-api-key") or (self.headers.get("Authorization") or "").removeprefix("Bearer ")
+            primite.append((self.path, cheie, corp))
+            cod, date = raspunsuri.pop(0)
+            text = json.dumps(date).encode()
+            self.send_response(cod)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(text)))
+            self.end_headers()
+            self.wfile.write(text)
+
+        def log_message(self, *a):
+            pass
+
+    server = HTTPServer(("127.0.0.1", 0), Handler)
+    Thread(target=server.serve_forever, daemon=True).start()
+    monkeypatch.setenv("ANTHROPIC_BASE_URL", f"http://127.0.0.1:{server.server_port}")
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "cheie-de-test")
+    monkeypatch.delenv("ANTHROPIC_AUTH_TOKEN", raising=False)
+    return server, primite
+
+
+def _mesaj(continut, stop="end_turn"):
+    return {"id": "msg_1", "type": "message", "role": "assistant", "model": "claude-haiku-5-5", "content": continut,
+            "stop_reason": stop, "stop_sequence": None, "usage": {"input_tokens": 1900, "output_tokens": 300}}
+
+
+def test_cererea_reala_spre_anthropic_are_forma_corecta(monkeypatch):
+    pytest.importorskip("anthropic")
+    text = json.dumps(_rezumat())
+    continut = [{"type": "thinking", "thinking": "", "signature": "x"}, {"type": "text", "text": text}]
+    server, primite = _server_anthropic(monkeypatch, [(200, _mesaj(continut))])
+    monkeypatch.setitem(cl.CONSUM, "tokeni_intrare", 0)
+    monkeypatch.setitem(cl.CONSUM, "tokeni_iesire", 0)
+    try:
+        assert cl.cere_anthropic("claude-haiku-5-5", "sistem", "document") == text
+    finally:
+        server.shutdown()
+    cale, cheie, corp = primite[0]
+    assert cale == "/v1/messages" and cheie == "cheie-de-test"
+    assert corp["model"] == "claude-haiku-5-5" and corp["system"] == "sistem"
+    assert corp["output_config"]["format"]["schema"] == cl.SCHEMA and corp["output_config"]["effort"] == "low"
+    assert "temperature" not in corp and "thinking" not in corp
+    assert cl.CONSUM == {"tokeni_intrare": 1900, "tokeni_iesire": 300}
+
+
+def test_refuzul_si_eroarea_de_cheie_de_la_anthropic(monkeypatch):
+    pytest.importorskip("anthropic")
+    eroare = {"type": "error", "error": {"type": "authentication_error", "message": "invalid x-api-key"}}
+    server, _ = _server_anthropic(monkeypatch, [(200, _mesaj([], stop="refusal")), (401, eroare)])
+    try:
+        with pytest.raises(cl.RefuzModel):
+            cl.cere_anthropic("m", "s", "d")
+        with pytest.raises(cl.EroareModel) as e:
+            cl.cere_anthropic("m", "s", "d")
+    finally:
+        server.shutdown()
+    assert "cheie-de-test" not in str(e.value)
+
+
+def test_workflow_foloseste_anthropic_si_porneste_cu_pilot():
+    yml = open(os.path.join(ROOT, ".github", "workflows", "consiliu-local.yml"), encoding="utf-8").read()
+    assert "vars.REZUMAT_FURNIZOR || 'anthropic'" in yml
+    assert "inputs.max_rezumate || '10'" in yml and '--max-rezumate "$MAX_REZUMATE"' in yml
+
+
+def test_gdpr_numeste_furnizorul_ales():
+    gdpr = open(os.path.join(ROOT, "gdpr.html"), encoding="utf-8").read()
+    assert "Anthropic" in gdpr and "Claude Haiku 5.5" in gdpr and "30 de zile" in gdpr
+    assert "nu sunt încă active" not in gdpr
+
+
 def test_workflow_nu_foloseste_fisierul_cu_cheie_si_cere_alegere_explicita():
     yml = open(os.path.join(ROOT, ".github", "workflows", "consiliu-local.yml"), encoding="utf-8").read()
     assert "vars.REZUMAT_FURNIZOR" in yml and "secrets.ANTHROPIC_API_KEY" in yml

@@ -147,8 +147,12 @@
   </p>
   <ul>
     <li>textul citit automat din PDF-uri <strong>nu se salvează</strong> în site sau în codul sursă; rămân doar rezumatele validate;</li>
-    <li>rezumatele automate nu sunt încă active: deocamdată afișăm doar titlurile citite din documente și linkurile. Când
-      vor fi active, furnizorul va fi menționat aici și pe pagina Consiliului;</li>
+    <li>rezumatele se fac cu modelul Claude Haiku 5.5, prin API-ul <strong>Anthropic</strong>, companie din SUA; textul
+      poate fi prelucrat în afara Uniunii Europene. Conform
+      <a href="https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training" target="_blank" rel="noopener">politicii Anthropic</a>,
+      aceste date nu sunt folosite la antrenarea modelelor și sunt
+      <a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener">șterse în 30 de zile</a>,
+      cu excepțiile prevăzute acolo;</li>
     <li>înainte de trimiterea către furnizorul modelului AI, eliminăm automat CNP-urile, adresele de e-mail, numerele de
       telefon și adresele de domiciliu recunoscute. Această filtrare automată poate rata unele date, iar numele persoanelor
       din document pot ajunge la furnizor, care prelucrează textul pentru a genera rezumatul. Modelul folosit este

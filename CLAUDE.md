@@ -329,8 +329,11 @@ rulat de `.github/workflows/consiliu-local.yml` (lunea + manual + la push cu scr
   după alta, cu anexe (până la 249 de pagini / 100 MB). O intrare de pe pagină = o hotărâre, cu `#page=N` în linkul spre PDF.
 - Doar documentele noi se procesează: HEAD (ETag + lungime), apoi hash SHA-256. OCR pe antetul fiecărei pagini (40% sus, 150 DPI)
   ca să găsească „HOTĂRÂREA NR.” / „PROIECT DE HOTĂRÂRE”, apoi OCR pe primele 3 pagini ale hotărârii. Anexele nu se citesc.
-- Rezumatele pornesc doar cu variabila `REZUMAT_FURNIZOR` (`anthropic` | `gemini`) și cheia lui: o cheie rămasă în Secrets nu
-  trimite singură date. Fără ele: `::warning::`, rămân titlurile OCR și linkurile. `--dry-run` nu cere cheie și nu scrie nimic.
+- Furnizorul ales (03.11.2026): Anthropic, `claude-haiku-5-5`. Workflow-ul setează `REZUMAT_FURNIZOR` implicit pe `anthropic`,
+  deci rezumatele pornesc când există secretul `ANTHROPIC_API_KEY`. Fără el: `::warning::`, rămân titlurile OCR și linkurile.
+  Dacă schimbi furnizorul, actualizează `gdpr.html#rezumate-ai`. `--dry-run` nu cere cheie și nu scrie nimic.
+- Pilot: workflow-ul face cel mult 10 rezumate pe rulare (`inputs.max_rezumate`) până la verificarea primelor rezultate; apoi
+  plafonul din workflow crește. Consumul real apare în `consiliu_local.json` → `ultima_rulare`.
 - Validare (`valideaza_rezumat`): sumele și datele trebuie să fie în textul sursă; fără nume private, CNP, adrese, acuzații, linkuri.
   Respins = `stare: doar_titlu`, doar titlul și linkul; textul respins NU se salvează. Textul OCR nu ajunge niciodată în repo.
 - Proiectele sunt afișate separat de hotărâri: un proiect nu e o hotărâre adoptată.
