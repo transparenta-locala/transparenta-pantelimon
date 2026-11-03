@@ -541,6 +541,14 @@ def test_pagina_are_eticheta_data_rezumatul_si_linkul_la_pagina_din_pdf():
     assert "model-x" in h
 
 
+def test_pagina_nu_pretinde_rezumate_cand_nu_exista():
+    fara = {"documente": [_doc(hotarari=[{"nr": 1, "pagina": 1, "data": "2026-03-31", "stare": "fara_rezumat"}])]}
+    h = cl.genereaza_pagina(fara)
+    assert "nu sunt încă active" in h and cl.ETICHETA_AUTOMAT not in h and "rezumate automate</li>" not in h
+    h = cl.genereaza_pagina(_stare_pagina())
+    assert "nu sunt încă active" not in h and "le rezumăm cu un model AI" in h and "rezumate automate</li>" in h
+
+
 def test_intrarea_fara_rezumat_are_doar_titlu_si_link():
     h = cl.genereaza_pagina(_stare_pagina())
     bloc = h.split("Hotărârea nr. 28 din 31.03.2026")[1].split("</article>")[0]

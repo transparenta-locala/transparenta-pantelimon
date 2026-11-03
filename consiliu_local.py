@@ -908,21 +908,32 @@ def genereaza_pagina(stare: dict) -> str:
     are_proba = any(h.get("proba") for h in intrari)
     ultima = lambda t: next((data_ro(d["data"]) for d in pe_tip[t] if d.get("data")), "—")
     modele = sorted({h["model"] for h in intrari if h.get("model")})
+    model_txt = f" Modelul folosit: {_e(', '.join(modele))}." if modele else ""
     fapte = (
         '<ul class="cl-fapte">'
         f'<li><strong>{ultima("hotarari")}</strong>ultimele hotărâri publicate pe site-ul Primăriei</li>'
         f'<li><strong>{ultima("proiecte")}</strong>ultimele proiecte publicate</li>'
         f'<li><strong>{len(documente)}</strong>documente PDF urmărite</li>'
-        f"<li><strong>{cu_rezumat}</strong>rezumate automate</li></ul>"
+        + (f"<li><strong>{cu_rezumat}</strong>rezumate automate</li>" if cu_rezumat else "")
+        + "</ul>"
     )
+    if cu_rezumat:
+        cum = f"le citim automat (OCR) și le rezumăm cu un model AI.{model_txt}"
+        nota = (f"<strong>{ETICHETA_AUTOMAT}.</strong> Rezumatul nu înlocuiește documentul: verifică PDF-ul original "
+                "înainte să te bazezi pe o informație. Titlurile sunt citite automat din scan și pot avea greșeli de literă. "
+                "De regulă rezumăm textul hotărârii, fără anexe. Dacă o sumă sau o dată din rezumat nu se regăsește în "
+                "document, publicăm doar titlul și linkul. Numele persoanelor private nu apar în rezumate.")
+    else:
+        cum = ("le citim automat (OCR). Rezumatele automate nu sunt încă active: deocamdată găsești aici titlurile "
+               "citite din documente și linkul spre fiecare PDF.")
+        nota = ("<strong>Titluri citite automat.</strong> Pot avea greșeli de literă, așa că verifică PDF-ul original. "
+                "Titlurile care par să conțină numele unei persoane private nu sunt afișate.")
     banner_proba = ('<div class="tp-note" role="alert"><strong>DATE DE PROBĂ.</strong> Rezumatele de pe această '
                     "pagină sunt exemple pentru verificarea aspectului, nu rezumate generate de sistem.</div>"
                     if are_proba else "")
     sectiuni = "".join(_sectiune_tip(t, pe_tip[t]) for t in _TITLURI_TIP if pe_tip[t])
-    model_txt = f" Modelul folosit: {_e(', '.join(modele))}." if modele else ""
     ancore = " · ".join(f'<a href="#{_TITLURI_TIP[t][0]}">{_TITLURI_TIP[t][1]}</a>' for t in _TITLURI_TIP if pe_tip[t])
-    descriere = ("Rezumate automate, în limbaj simplu, ale hotărârilor și proiectelor Consiliului Local Pantelimon, "
-                 "cu link la documentul original.")
+    descriere = ("Hotărârile și proiectele Consiliului Local Pantelimon, pe scurt, cu link la documentul original.")
     return f"""<!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -951,11 +962,9 @@ def genereaza_pagina(stare: dict) -> str:
 <main class="page-wrap" id="main-content">
   <h1>Ce a hotărât Consiliul Local</h1>
   <p>Hotărârile și proiectele Consiliului Local Pantelimon, pe scurt. Sursa este site-ul Primăriei, unde documentele
-  sunt publicate ca PDF-uri scanate: le citim automat (OCR) și le rezumăm cu un model AI.{model_txt}</p>
+  sunt publicate ca PDF-uri scanate: {cum}</p>
   {banner_proba}
-  <div class="tp-note"><strong>{ETICHETA_AUTOMAT}.</strong> Rezumatul nu înlocuiește documentul: verifică PDF-ul
-  original înainte să te bazezi pe o informație. Titlurile sunt citite automat din scan și pot avea greșeli de literă. De regulă rezumăm textul hotărârii, fără anexe. Dacă o sumă sau o dată
-  din rezumat nu se regăsește în document, publicăm doar titlul și linkul. Numele persoanelor private nu apar în rezumate.
+  <div class="tp-note">{nota}
   <a href="gdpr.html#rezumate-ai">Cum prelucrăm documentele</a>.</div>
   {fapte}
   <p>{ancore}</p>
