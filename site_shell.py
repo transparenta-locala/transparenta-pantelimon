@@ -43,6 +43,7 @@ NAV_PRINCIPAL = [
     ("despre.html", "Despre"),
 ]
 NAV_MAI_MULT = [
+    ("consiliu.html", "Ce a hotărât Consiliul"),
     ("petitie.html", "Petiție"),
     ("harta.html", "Harta firmelor"),
     ("retele.html", "Rețele de firme"),
@@ -240,7 +241,8 @@ def footer_html(rel_path: str) -> str:
     p = prefix_pentru(rel_path)
     site = [
         ("raport_transparenta.html", "Semnale"), ("furnizori/index.html", "Firme"),
-        ("transparenta_pantelimon.html", "Buget"), ("harta.html", "Harta firmelor"),
+        ("transparenta_pantelimon.html", "Buget"), ("consiliu.html", "Consiliul Local"),
+        ("harta.html", "Harta firmelor"),
         ("retele.html", "Rețele de firme"), ("modele.html", "Modele de cereri"),
         ("petitie.html", "Petiție"), ("presa.html", "Pentru presă"),
         ("despre.html", "Despre și metodologie"), ("gdpr.html", "Date personale"),

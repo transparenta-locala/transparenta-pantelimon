@@ -323,6 +323,20 @@ monitorului în `update-report.yml`): găsește prin API-ul CKAN data.gov.ro cel
 numerotare. Portal indisponibil din runner → `::warning::`, rularea continuă. Anul 2025 importat pe 27.10.2026.
 Teste: `tests/test_import_financiar_auto.py`.
 
+**Pagina „Ce a hotărât Consiliul Local” (nov. 2026)** — `consiliu_local.py` → `consiliu_local.json` + `consiliu.html`,
+rulat de `.github/workflows/consiliu-local.yml` (lunea + manual + la push cu scriptul), în coada comună cu monitorul.
+- Primăria publică PDF-uri SCANATE (60 din 60 în eșantion, fără text), de regulă o ședință întreagă într-un PDF: hotărârile una
+  după alta, cu anexe (până la 249 de pagini / 100 MB). O intrare de pe pagină = o hotărâre, cu `#page=N` în linkul spre PDF.
+- Doar documentele noi se procesează: HEAD (ETag + lungime), apoi hash SHA-256. OCR pe antetul fiecărei pagini (40% sus, 150 DPI)
+  ca să găsească „HOTĂRÂREA NR.” / „PROIECT DE HOTĂRÂRE”, apoi OCR pe primele 3 pagini ale hotărârii. Anexele nu se citesc.
+- Rezumatele pornesc doar cu variabila `REZUMAT_FURNIZOR` (`anthropic` | `gemini`) și cheia lui: o cheie rămasă în Secrets nu
+  trimite singură date. Fără ele: `::warning::`, rămân titlurile OCR și linkurile. `--dry-run` nu cere cheie și nu scrie nimic.
+- Validare (`valideaza_rezumat`): sumele și datele trebuie să fie în textul sursă; fără nume private, CNP, adrese, acuzații, linkuri.
+  Respins = `stare: doar_titlu`, doar titlul și linkul; textul respins NU se salvează. Textul OCR nu ajunge niciodată în repo.
+- Proiectele sunt afișate separat de hotărâri: un proiect nu e o hotărâre adoptată.
+- `genereaza_analiza_ai.py` NU e refolosit: `gemini-2.0-flash` a fost oprit pe 01.06.2026, iar monitorul nu citește `analiza_ai.json`.
+Teste: `tests/test_consiliu_local.py`.
+
 ## Praguri legale folosite (Legea 98/2016)
 
 ```python

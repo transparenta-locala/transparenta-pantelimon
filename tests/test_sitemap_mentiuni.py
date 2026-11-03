@@ -61,22 +61,23 @@ def test_sitemap_structura_xml_valida():
 
 
 def test_sitemap_fara_furnizori_contine_9_url():
-    """Fără furnizori, sitemap-ul are exact 11 URL-uri statice (incl. gdpr, petiție, hartă, modele, rețele)."""
+    """Fără furnizori, sitemap-ul are exact 12 URL-uri statice (incl. gdpr, petiție, hartă, modele, rețele, consiliu)."""
     xml = genereaza_sitemap([])
-    assert xml.count('<url>') == 11
+    assert xml.count('<url>') == 12
+    assert 'consiliu.html' in xml
 
 
 def test_sitemap_cu_furnizori_creste_numaratoarea():
-    """Cu 3 furnizori, sitemap-ul are 11 + 3 = 14 URL-uri."""
+    """Cu 3 furnizori, sitemap-ul are 12 + 3 = 15 URL-uri."""
     index = [_idx(f'firma-{i}') for i in range(3)]
     xml = genereaza_sitemap(index)
-    assert xml.count('<url>') == 14
+    assert xml.count('<url>') == 15
 
 
 def test_sitemap_include_paginile_de_semnal():
     """Paginile semnale/<slug>.html (cele distribuite pe rețele) sunt în sitemap."""
     xml = genereaza_sitemap([], sluguri_semnale=['ofertant-unic-2025-1', 'fragmentare-2025-2-2025-3'])
-    assert xml.count('<url>') == 13
+    assert xml.count('<url>') == 14
     assert 'https://transparenta-pantelimon.eu/semnale/ofertant-unic-2025-1.html' in xml
 
 

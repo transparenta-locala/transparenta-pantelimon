@@ -305,6 +305,7 @@
       { href: 'furnizori/index.html',          text: 'Firme' },
       { href: 'transparenta_pantelimon.html',  text: 'Buget' },
       { href: 'modele.html',                   text: 'Modele de cereri' },
+      { href: 'consiliu.html',                 text: 'Consiliul Local' },
       { href: 'despre.html',                   text: 'Despre' },
     ];
     const more = [
@@ -1869,7 +1870,8 @@
     'petitie.html': 'Petiție',
     'gdpr.html': 'GDPR',
     'retele.html': 'Rețele',
-    'modele.html': 'Modele de cereri'
+    'modele.html': 'Modele de cereri',
+    'consiliu.html': 'Ce a hotărât Consiliul Local'
   };
 
   function injectBreadcrumbs() {

@@ -1,0 +1,76 @@
+name: 🏛️ Consiliul Local (rezumate și pagină)
+
+# Citește documentele noi ale Consiliului Local și regenerează consiliu.html.
+# Separat de monitor: PDF-urile sunt scanate și mari (până la 100 MB), iar OCR-ul nu trebuie să
+# consume timpul raportului. Prima completare a arhivei se face în câteva rulări (--max-minute);
+# când nu e nimic nou, rularea durează 1-2 minute.
+#
+# Rezumatele pornesc doar după ce alegi furnizorul (Settings → Secrets and variables → Actions):
+#   variabila REZUMAT_FURNIZOR = anthropic | gemini, opțional variabila REZUMAT_MODEL,
+#   secretul ANTHROPIC_API_KEY sau GEMINI_API_KEY.
+# Fără ele, rularea continuă cu ::warning:: și pagina arată titlurile și linkurile spre PDF.
+"on":
+  schedule:
+    # Lunea, la 06:43 UTC (ședințele Consiliului apar pe site la câteva zile după ce au loc)
+    - cron: '43 6 * * 1'
+  workflow_dispatch:
+  push:
+    branches: [main, feat/consiliu-local]
+    paths:
+      - consiliu_local.py
+      - .github/workflows/consiliu-local.yml
+
+# Aceeași coadă ca monitorul: cele două nu scriu niciodată în paralel
+concurrency:
+  group: monitor-transparenta
+  cancel-in-progress: false
+
+jobs:
+  consiliu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v7
+
+      - name: 🐍 Configurare Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      - name: 🔧 Instalare Tesseract OCR
+        run: |
+          sudo apt-get update -q || true
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-ron || echo "::warning::Tesseract neinstalat — PDF-urile scanate nu se pot citi la această rulare"
+
+      - name: 📦 Instalare dependențe Python
+        run: pip install -r requirements.txt
+
+      - name: 🏛️ Documente, rezumate, pagină
+        env:
+          REZUMAT_FURNIZOR: ${{ vars.REZUMAT_FURNIZOR }}
+          REZUMAT_MODEL: ${{ vars.REZUMAT_MODEL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # Câte un fir pe proces Tesseract: paralelismul îl face scriptul, pe pagini
+          OMP_THREAD_LIMIT: '1'
+        run: python consiliu_local.py --max-minute 75 || echo "::warning::consiliu_local.py a eșuat — pagina rămâne cea anterioară"
+
+      - name: 💾 Commit (doar dacă s-a schimbat ceva)
+        if: always()
+        run: |
+          git config --local user.email "transparenta-bot@cetatenipantelimon.ro"
+          git config --local user.name "Monitor Transparență Cetățenesc Pantelimon"
+          git add consiliu_local.json consiliu.html 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "Nimic de actualizat"
+            exit 0
+          fi
+          git commit -m "🏛️ Consiliul Local actualizat $(date +'%d.%m.%Y')"
+          git checkout -- . 2>/dev/null || true
+          git clean -fd 2>/dev/null || true
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

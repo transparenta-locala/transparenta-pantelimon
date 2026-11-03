@@ -1,0 +1,3712 @@
+{
+ "actualizat_la": "2026-11-03T12:13",
+ "documente": [
+  {
+   "data": "2026-10-28",
+   "etag": "\"2aca43e-65ed23411f880\"",
+   "hotarari": [
+    {
+     "data": "2026-10-16",
+     "nr": 203,
+     "obiect": "",
+     "pagina": 1,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 204,
+     "obiect": "privind modificarea și completarea H.C.L.nr. 54 din 09.04.2020 pentru aprobarea normelor de igienă, salubrizare și sănătate publică, privind mediul de viață al populaţiei din Orașul Pantelimon",
+     "pagina": 3,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 205,
+     "obiect": "",
+     "pagina": 5,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 206,
+     "obiect": "",
+     "pagina": 8,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 207,
+     "obiect": "",
+     "pagina": 11,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 208,
+     "obiect": "",
+     "pagina": 14,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 209,
+     "obiect": "",
+     "pagina": 17,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 210,
+     "obiect": "",
+     "pagina": 20,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 211,
+     "obiect": "",
+     "pagina": 23,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 212,
+     "obiect": "",
+     "pagina": 26,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 213,
+     "obiect": "",
+     "pagina": 29,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 214,
+     "obiect": "",
+     "pagina": 32,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 215,
+     "obiect": "",
+     "pagina": 35,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 216,
+     "obiect": "",
+     "pagina": 38,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 217,
+     "obiect": "",
+     "pagina": 41,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 218,
+     "obiect": "",
+     "pagina": 44,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 219,
+     "obiect": "",
+     "pagina": 47,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 220,
+     "obiect": "",
+     "pagina": 50,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 221,
+     "obiect": "",
+     "pagina": 53,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 222,
+     "obiect": "",
+     "pagina": 56,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 223,
+     "obiect": "",
+     "pagina": 58,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 225,
+     "obiect": "",
+     "pagina": 60,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 226,
+     "obiect": "",
+     "pagina": 61,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 227,
+     "obiect": "",
+     "pagina": 62,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 228,
+     "obiect": "pentru modificarea H.C.L. nr. 213 din 27.09.2023 privind aprobarea studiului de fezabilitate, a",
+     "pagina": 63,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-16",
+     "nr": 229,
+     "obiect": "pentru actualizarea H.C.L. nr. 107 din 26.05.2026 privind aprobarea documentației tehnico- economice faza Proiect Tehnic de execuție și Detalii de execuţie (P.T si D.D.E), precum si a principalilor indicatorilor tehnico-economici pentru obiectivul de investiții „CONSTRUIRE GRADINITA”",
+     "pagina": 65,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-26",
+     "nr": 231,
+     "obiect": "privind modificarea si completarea Statului de funcţii al",
+     "pagina": 68,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-10-26",
+     "nr": 232,
+     "obiect": "privind organizarea evenimentului „Nunta de aur” pentru cuplurile care au împlinit 50 ani de căsnicie neîntreruptă",
+     "pagina": 70,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-18",
+     "nr": 233,
+     "obiect": "pentru modificarea H.C.L. nr. 101 din 24.04.2024 privind aprobarea documentației tehnico- economice faza Proiect Tehnic de execuţie și Detalii de execuţie (P.T si D.D.E) precum și a principalilor indicatori tehnico-economici(Deviz general) pentru obiectivul de investiții „Modernizarea străzilor Arma",
+     "pagina": 72,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 44868670,
+   "pagini": 73,
+   "sha256": "7a945810136a77337dbee06d2a4e8447161aefc6493a083d7dbfff27ffea0024",
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte de hotarare supuse aprobarii in sedinta ordinara din 28.10.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-aprobarii-in-sedinta-ordinara-din-28.10.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-10-19",
+   "etag": "\"133cdb-65df2c764ba40\"",
+   "hotarari": [
+    {
+     "data": "2026-10-15",
+     "nr": 202,
+     "obiect": "",
+     "pagina": 1,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 1260763,
+   "pagini": 2,
+   "sha256": "278bc54774ce6233b411561735fb6c1edb591b7cfd31572a845cd74926ffb84b",
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiect de hotarare supus aprobării in sedinta extraordinara cu convocare de indata din 19.10.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiect-de-hotarare-supus-aprobării-in-sedinta-extraordinara-cu-convocare-de-indata-din-19.10.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-10-09",
+   "etag": "\"e9039-65d4fe03a9880\"",
+   "hotarari": [
+    {
+     "data": "2026-10-07",
+     "nr": 201,
+     "obiect": "pentru modificarea H.C.L. nr. 62 din 08.05.2025 privind aprobarea contractării unei finanţări rambursabile interne/externe in valoare de 39.913.827,33 lei pentru asigurarea finanțării proiectelor de investiţii de interes local",
+     "pagina": 1,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 954425,
+   "pagini": 2,
+   "sha256": "ed2b9651b289856e7ab46c69a1bf2864e2b3571ea1a84735361802b07775648d",
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiect hotarare supus aprobarii sedinta extraordinara cu convocare de indata din 09.10.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiect-hotarare-supus-aprobarii-sedinta-extraordinara-cu-convocare-de-indata-din-09.10.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-09-30",
+   "etag": "\"140be52-65c9a33709880\"",
+   "hotarari": [
+    {
+     "data": "2026-09-18",
+     "nr": 177,
+     "obiect": "privind rectificarea bugetului local si virarea creditelor pe anul 2026",
+     "pagina": 1,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-18",
+     "nr": 178,
+     "obiect": "privind desemnarea a doi reprezentanţi ai Consiliului Local Pantelimon în Consiliul de Administraţie al Şcolii Gimnaziale nr. 1 Pantelimon pentru anul şcolar 2026-2027",
+     "pagina": 2,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-18",
+     "nr": 179,
+     "obiect": "privind desemnarea unui reprezentant al Consiliului Local Pantelimon pentru a face parte din Comisia de evaluare a probei de interviu din cadrul concursului pentru ocuparea funcţiilor de director/director adjunct, sesiunea august-decembrie 2026",
+     "pagina": 4,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-18",
+     "nr": 180,
+     "obiect": "",
+     "pagina": 6,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-18",
+     "nr": 181,
+     "obiect": "",
+     "pagina": 8,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-18",
+     "nr": 182,
+     "obiect": "",
+     "pagina": 10,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-18",
+     "nr": 183,
+     "obiect": "",
+     "pagina": 12,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-18",
+     "nr": 184,
+     "obiect": "",
+     "pagina": 14,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-18",
+     "nr": 185,
+     "obiect": "",
+     "pagina": 16,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-18",
+     "nr": 186,
+     "obiect": "",
+     "pagina": 18,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-18",
+     "nr": 187,
+     "obiect": "pentru modificarea H.C.L. nr. H.C.L. 124/12.09.2025 privind aprobarea proiectului “AMENAJARE SPAŢIU VERDE PARC PANTELIMON” în vederea finanțării acestuia prin PR BI, in cadrul Apelului de Proiecte PRBI/563/PRBI P3/OP2/RSO2.7/PRBI A19 - PR BI P3/3.5/1/2024 Apel dedicat Creării, îmbunătățirii, extinde",
+     "pagina": 21,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-18",
+     "nr": 188,
+     "obiect": "pentru actualizarea H.C.L. nr. 103 din 19.05.2026 privind aprobarea documentației tehnico- economice faza Proiect Tehnic de execuţie si Detalii de execuţie (P.T si D.D.E) precum și a principalilor indicatorilor tehnico-economici(Deviz general) pentru obiectivul de investiţii „AMENAJARE SPAȚIU VERDE",
+     "pagina": 23,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-21",
+     "nr": 189,
+     "obiect": "Privind completarea Anexei prevăzute la HCL nr. 51 /14 mai 2013 cu două poziţii, respectiv de la poziţia 1201 la poziția 1202",
+     "pagina": 26,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-21",
+     "nr": 190,
+     "obiect": "privind apartamentarea în 25 unități individuale a imobilului situat în strada Târnava Mare, nr. 8, Tarla 27, parcela 173/2 lot 1, Oraș Pantelimon, având numărul cadastral 125390, imobil care aparține domeniului public al U.A.T. Pantelimon",
+     "pagina": 28,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-21",
+     "nr": 191,
+     "obiect": "privind apartamentarea în 25 unități individuale a imobilului situat în strada Târnava Mare, nr. 8A, Tarla 27, parcela 173/2 lot 2, Oraș Pantelimon, având numărul cadastral 125391, imobil care aparține domeniului public al U.A.T. Pantelimon",
+     "pagina": 30,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-21",
+     "nr": 192,
+     "obiect": "privind apartamentarea in 25 unități individuale a imobilului situat în strada Târnava Mare, nr. 8B, Tarla 27, parcela 173/2 lot 3, Oraș Pantelimon, având numărul cadastral 125392, imobil care aparține domeniului public al U.A.T. Pantelimon",
+     "pagina": 32,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-21",
+     "nr": 193,
+     "obiect": "privind apartamentarea în 25 unități individuale a imobilului situat in strada Târnava Mare, nr. 8C, Tarla 27, parcela 173/2 lot 4, Oraș Pantelimon, având numărul cadastral 125393, imobil care aparține domeniului public al U.A.T. Pantelimon",
+     "pagina": 34,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-21",
+     "nr": 194,
+     "obiect": "privind apartamentarea în 25 unități individuale a imobilului situat în strada Târnava Mare, nr. 8D, Tarla 27, parcela 173/2 lot 5, Oraș Pantelimon, având numărul cadastral 125394, imobil care aparține domeniului public al U.A.T. Pantelimon",
+     "pagina": 36,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-21",
+     "nr": 195,
+     "obiect": "",
+     "pagina": 38,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-21",
+     "nr": 196,
+     "obiect": "",
+     "pagina": 40,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-21",
+     "nr": 197,
+     "obiect": "",
+     "pagina": 42,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-28",
+     "nr": 197,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuinţe de serviciu P+6E, 56 apartamente. Beneficiar Consiliul Local Pantelimon",
+     "pagina": 44,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-28",
+     "nr": 199,
+     "obiect": "privind propunerea de dezmembrare în 2 loturi a imobilului identificat cu numărul cadastral 101228, înscris în cartea funciara 101228 a UAT Pantelimon, imobil care aparține domeniului public al U.A.T. Pantelimon",
+     "pagina": 45,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-09-28",
+     "nr": 200,
+     "obiect": "privind aprobarea identificării amplasamentului imobilului, în suprafață totală de 257,455 ha bălți — Lacul Cernica (luciu de apa/teren), situat în Orașul Pantelimon, în vederea retrocedării",
+     "pagina": 46,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 21020242,
+   "pagini": 47,
+   "sha256": "a5810b01916bfff38675c44cbb6ba5dbe587404ceea3447c25c3ad9e32fc508c",
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte de hotarare supuse aprobarii in sedinta ordinara 30.09.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-aprobarii-in-sedinta-ordinara-30.09.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-08-12",
+   "etag": "\"f40e89-658e92a813900\"",
+   "hotarari": [
+    {
+     "data": "2026-07-27",
+     "nr": 155,
+     "obiect": "privind trecerea din domeniul public în domeniul privat al Orașului Pantelimon a imobilului în suprafață de 257,455 ha bălți — Lacul Cernica (luciu de apă/teren), situat în Orașul Pantelimon, identificat cu numerele cadastrale: NC/CF 119297, NC/CF 101228, NC/CF 115667, NC/CF 101206",
+     "pagina": 1,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 156,
+     "obiect": "",
+     "pagina": 3,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 157,
+     "obiect": "",
+     "pagina": 5,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 158,
+     "obiect": "",
+     "pagina": 7,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 159,
+     "obiect": "privind modificarea si completarea Hotărârii Consiliului Local nr. 127 din 09.05.2024 pentru aprobarea regulamentului privind repartizare și închiriere locuințe aparținând Oraşul Pantelimon, județ Ilfov",
+     "pagina": 9,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 160,
+     "obiect": "",
+     "pagina": 11,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 161,
+     "obiect": "",
+     "pagina": 14,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 162,
+     "obiect": "",
+     "pagina": 17,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 163,
+     "obiect": "",
+     "pagina": 20,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 164,
+     "obiect": "",
+     "pagina": 23,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 165,
+     "obiect": "",
+     "pagina": 26,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 166,
+     "obiect": "",
+     "pagina": 29,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 167,
+     "obiect": "",
+     "pagina": 32,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 168,
+     "obiect": "",
+     "pagina": 35,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-08-10",
+     "nr": 169,
+     "obiect": "",
+     "pagina": 38,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 15994505,
+   "pagini": 40,
+   "sha256": "b4775729d1dad80d98c29c79e852135101d1055360006fdbef272d9f301d4b02",
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte de hotarare supuse dezbaterii in sedinta ordinara din 12.08.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-dezbaterii-in-sedinta-ordinara-din-12.08.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-07-08",
+   "etag": "\"1b5256-65613b22e2580\"",
+   "hotarari": [
+    {
+     "data": "2026-07-07",
+     "nr": 136,
+     "obiect": "",
+     "pagina": 1,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-07-07",
+     "nr": 137,
+     "obiect": "",
+     "pagina": 3,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 1790550,
+   "pagini": 4,
+   "sha256": "aa490f9cb784792fc62afe895c03ef44145ba95e10bbe65967a5189e74aa01f2",
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiecte supuse aprobarii in sedinta extraordinara cu convocare de indata din data de 08.07.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-supuse-aprobarii-in-sedinta-extraordinara-cu-convocare-de-indata-din-data-de-08.07.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-06-30",
+   "etag": "\"2314d61-65564322a7dc0\"",
+   "hotarari": [
+    {
+     "data": "2026-06-19",
+     "nr": 110,
+     "obiect": "",
+     "pagina": 1,
+     "pagini": 27,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 111,
+     "obiect": "",
+     "pagina": 28,
+     "pagini": 26,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 112,
+     "obiect": "",
+     "pagina": 54,
+     "pagini": 61,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 113,
+     "obiect": "pentru revocarea Hotărârii Consiliului Local Pantelimon nr. 53 din 15.03.2023 privind darea în administrare a imobilului situat în str. Tractorului, nr.1, tarla 115, P 3646-3651, cu numărul cadastral 121501, în suprafață de 858 mp, în favoarea Direcţiei de Asistenţă Socială Pantelimon",
+     "pagina": 115,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-30",
+     "nr": 114,
+     "obiect": "privind darea în folosință gratuită a unui teren către Biserica Maranata Pantelimon în vederea edificării unui lăcaș de cult",
+     "pagina": 117,
+     "pagini": 7,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 115,
+     "obiect": "privind darea in administrarea S.C. Parcuri, Servicii&Prod Pantelimon S.R.L. a statiilor de reîncărcare pentru vehicule electrice, proprietatea orașului Pantelimon, realizate prin proiectul ,, Staţii de reîncărcare pentru vehicule electrice în orașul Pantelimon, județ Ilfov”",
+     "pagina": 124,
+     "pagini": 6,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 116,
+     "obiect": "Privind completarea Anexei prevăzute la HCL nr. 51 /14 mai 2013 cu patru poziții, respectiv de la poziţia 1197 la poziţia 1200",
+     "pagina": 130,
+     "pagini": 5,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 117,
+     "obiect": "privind trecerea din domeniul public in domeniul privat al Orasului Pantelimon a imobilului în suprafață de 6500 mp, identificat cu număr cadastral: NC/CF 100242",
+     "pagina": 135,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 118,
+     "obiect": "privind aprobarea finanțării din bugetul local al Orașului Pantelimon, a sumei de 500.000 lei, către Spitalul Clinic de Urgenţă „Sfântul Pantelimon”",
+     "pagina": 137,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 119,
+     "obiect": "privind modificarea si completarea H.C.L.nr. 54 din 09.04.2020 pentru aprobarea normelor de igienă, salubrizare şi sănătate publică, privind mediul de viata al populaţiei din Orașul Pantelimon",
+     "pagina": 139,
+     "pagini": 7,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 120,
+     "obiect": "pentru modificarea Hotărârii Consiliului Local nr. 107/15.09.2010 privind aprobarea \"Regulamentului de administrare a infrastructurii domeniului public și privat al orașului Pantelimon”",
+     "pagina": 146,
+     "pagini": 8,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 121,
+     "obiect": "pentru modificarea Hotărârii Consiliului Local nr. 215 din 27.09.2021 privind aprobarea Regulamentului de atribuire și folosire a locurilor de parcare aflate pe raza orașului Pantelimon",
+     "pagina": 154,
+     "pagini": 12,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 122,
+     "obiect": "privind modificarea Hotărârii Consiliului Local nr. 263 din 28.09.2022 pentru aprobarea Regulamentului privind autorizarea si desfăşurarea activităților comerciale, de alimentaţie publica şi servicii de raza orașului Pantelimon",
+     "pagina": 166,
+     "pagini": 38,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 123,
+     "obiect": "",
+     "pagina": 204,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 124,
+     "obiect": "",
+     "pagina": 206,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 125,
+     "obiect": "",
+     "pagina": 207,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 126,
+     "obiect": "",
+     "pagina": 208,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 127,
+     "obiect": "",
+     "pagina": 209,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-19",
+     "nr": 128,
+     "obiect": "pentru modificarea și completarea H.C.L. 163 din data de 30.10.2025",
+     "pagina": 211,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-26",
+     "nr": 129,
+     "obiect": "",
+     "pagina": 213,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-26",
+     "nr": 130,
+     "obiect": "",
+     "pagina": 215,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-26",
+     "nr": 131,
+     "obiect": "",
+     "pagina": 217,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-26",
+     "nr": 132,
+     "obiect": "",
+     "pagina": 219,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-26",
+     "nr": 133,
+     "obiect": "",
+     "pagina": 221,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-29",
+     "nr": 134,
+     "obiect": "privind modificarea si aprobarea organigramei, a statului de funcţii ale aparatului de specialitate al aparatului de specialitate al primarului UAT Pantelimon, județul Ilfov",
+     "pagina": 223,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-06-29",
+     "nr": 135,
+     "obiect": "",
+     "pagina": 225,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 36785505,
+   "pagini": 227,
+   "sha256": "c85c6df4af08dd8a967d49f00df340ca747f36dd61953188b674c3b97cb6e46e",
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte hotarare supuse dezbaterii in sedinta ordina din 30.06.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-hotarare-supuse-dezbaterii-in-sedinta-ordina-din-30.06.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-06-12",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiecte supuse aprobarii sedinta extraordinara cu convocare de indata din 12.06.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-supuse-aprobarii-sedinta-extraordinara-cu-convocare-de-indata-din-12.06.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-05-26",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiecte de hotarare supuse aprobarii sedinta extraordinara cu convocare de indata in 26.05.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-aprobarii-sedinta-extraordinara-cu-convocare-de-indata-in-26.05.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-05-19",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiecte de hotarare supuse aprobarii sedinta extraordinara cu convocare de indata in 19.05.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-aprobarii-sedinta-extraordinara-cu-convocare-de-indata-in-19.05.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-05-13",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte de hotarare supuse aprobarii in sedinta ordinara din data de 13.05.2026 (2)",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-aprobarii-in-sedinta-ordinara-din-data-de-13.05.2026-2.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-05-13",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte de hotarare supuse aprobarii in sedinta ordinara din data de 13.05.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-aprobarii-in-sedinta-ordinara-din-data-de-13.05.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-04-15",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiecte supuse aprobãrii în ședința extraordinara cu convocare de îndata în 15.04.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-supuse-aprobarii-in-sedinta-extraordinara-cu-convocare-de-indata-in-15.04.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-03-31",
+   "etag": "\"62defe5-64e8cc96cc280\"",
+   "hotarari": [
+    {
+     "data": "2026-03-31",
+     "nr": 27,
+     "obiect": "privind însuşirea raportului elaborat de primarul oraşului privind starea economică, socială şi de mediu a oraşului Pantelimon pe anul 2025",
+     "pagina": 1,
+     "pagini": 101,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 28,
+     "obiect": "privind aprobarea Planului anual de acțiune al Direcţiei de Asistenţă Socială privind serviciile sociale administrate și finanțate din bugetul consiliului local Pantelimon pentru anul 2026",
+     "pagina": 102,
+     "pagini": 18,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 29,
+     "obiect": "privind darea în folosință gratuită a unui teren pentru construirea unui centru multifunctional de către Biserica Sfinţii Arhangheli Mihail și Gavriil (Parohia Pantelimon III)",
+     "pagina": 120,
+     "pagini": 6,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 30,
+     "obiect": "pentru modificarea și completarea Hotărârii Consiliului Local nr. 37/28.02.2023 privind aprobarea Regulamentului privind vânzarea imobilelor - clădiri si terenuri aflate în proprietatea privată a Oraşului Pantelimon, Judeţ Ilfov",
+     "pagina": 126,
+     "pagini": 24,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 31,
+     "obiect": "pentru aprobarea Regulamentului privind concesionarea directa a spatiilor cu destinatia de cabinet medicale pentru medicina de familie, cabinete stomatologice, laboratoare de tehnică dentară, laboratoare de analize medicale și alte activităţi conexe actului medical precum și darea în folosință gratu",
+     "pagina": 150,
+     "pagini": 16,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 32,
+     "obiect": "privind aprobarea bugetului de venituri si cheltuieli al S.C. Parcuri, Servicii& Prod Pantelimon S.R.L. pe anul 2026",
+     "pagina": 166,
+     "pagini": 17,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 33,
+     "obiect": "",
+     "pagina": 183,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 34,
+     "obiect": "",
+     "pagina": 186,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 35,
+     "obiect": "",
+     "pagina": 189,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 36,
+     "obiect": "",
+     "pagina": 192,
+     "pagini": 7,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 38,
+     "obiect": "privind dezmembrarea cadastrală si notarială a terenului ce aparține domeniului privat al U.A.T. Pantelimon, situat în str. Târnava Mare, nr.8, T27, P173/2 cu numărul cadastral 116833 din Oraşul Pantelimon, județul Ilfov, în 9 loturi",
+     "pagina": 199,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 39,
+     "obiect": "privind dezmembrarea cadastrală și notarială a terenului ce aparține domeniului privat al U.A.T. Pantelimon, situat în T30, P284 cu numărul cadastral 125039 din Oraşul Pantelimon, judeţul Ilfov, în 53 loturi",
+     "pagina": 201,
+     "pagini": 8,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 41,
+     "obiect": "",
+     "pagina": 209,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 42,
+     "obiect": "privind interzicerea organizării si exploatării jocurilor de noroc pe raza unității administrativ-teritoriale a Oraşului Pantelimon",
+     "pagina": 211,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 43,
+     "obiect": "",
+     "pagina": 213,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 44,
+     "obiect": "",
+     "pagina": 216,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 45,
+     "obiect": "",
+     "pagina": 219,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 46,
+     "obiect": "",
+     "pagina": 222,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 47,
+     "obiect": "",
+     "pagina": 225,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 48,
+     "obiect": "",
+     "pagina": 228,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 49,
+     "obiect": "",
+     "pagina": 231,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 50,
+     "obiect": "",
+     "pagina": 234,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 51,
+     "obiect": "",
+     "pagina": 237,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 52,
+     "obiect": "pentru actualizarea H.C.L. 61 din 08.05.2024 privind aprobarea documentatiei tehnico- economice faza Proiect Tehnic de executie si Detalii de executie (P.T. si D.D.E.) precum sia principalilor indicatori tehnico-economici (Deviz general) pentru obiectivul de investiţii “Modernizare străzi lot III, o",
+     "pagina": 240,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 53,
+     "obiect": "pentru actualizarea H.C.L. 96 din 03.04.2024 privind aprobarea documentației tehnico- economice faza D.T.A.C. precum si a principalilor indicatori tehnico-economici (Deviz general) pentru obiectivul de investiţii \"Extindere rețele de colectare ape pluviale in zona Bd. Biruintei - Sos. Cernica - Cale",
+     "pagina": 242,
+     "pagini": 4,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 54,
+     "obiect": "",
+     "pagina": 246,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2026-03-31",
+     "nr": 55,
+     "obiect": "",
+     "pagina": 248,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 103673829,
+   "pagini": 249,
+   "sha256": "98f40cd3130795271b9b8d79f152977798cbcb1e46479a16ae6140c3b21d5d66",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "H.C.L. sedinta ordinara din 31.03.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-ordinara-din-31.03.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-03-31",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte supuse aprobării în sedința ordinară 31.03.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-supuse-aprobării-sedința-ordinară-31.03.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-03-04",
+   "etag": "\"12fcc4-64c2f74eb1040\"",
+   "hotarari": [
+    {
+     "data": "2026-03-04",
+     "nr": 26,
+     "obiect": "privind acordarea scutirilor pentru clădirile folosite pentru desfăşurarea de activităţi sportive, şi a persoanelor cu handicap respectiv ai reprezentanților acestora începând cu anul 2026",
+     "pagina": 1,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 1244356,
+   "pagini": 3,
+   "sha256": "c03d8787d3a2e609624b78720fd77c8689e616d3cbd018099fe88a073a58e2ab",
+   "tip": "hotarari",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "H.C.L. sedinta exaordinara cu convocare de indata din 04.03.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/HCL-sedinta-exaordinara-cu-convocare-de-indata-din-04.03.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-03-04",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "",
+   "titlu": "Proiect de hotarare supus aprobarii in sedinta din data de 04.03.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiect-de-hotarare-supus-aprobarii-in-sedinta-din-data-de-04.03.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-02-25",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte de hotarare supuse aprobarii sedinta ordinara din 25.02.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-aprobarii-sedinta-ordinara-din-25.02.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2026-01-28",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte hotarare supuse aprobarii sedinta ordinara din 28.01.2026",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-hotarare-supuse-aprobarii-sedinta-ordinara-din-28.01.2026.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-12-22",
+   "etag": "\"4ad53e-6472a0bf3f5c0\"",
+   "hotarari": [
+    {
+     "data": "2025-12-22",
+     "nr": 214,
+     "obiect": "pentru modificarea art.1 al Hotărârii Consiliului Local nr. 205 din data de 17.12.2025 privind nivelurile impozitelor şi taxelor locale pe anul 2026 în orașul Pantelimon",
+     "pagina": 1,
+     "pagini": 12,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 4904254,
+   "pagini": 12,
+   "sha256": "89d4fe39ac3ada2b33f20ac0f162383f502b167455d838b94b2f1f10110b5737",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară cu convocare de îndată",
+   "titlu": "H.C.L. sedinta ordinara cu convocare de indata din 22.12.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-ordinara-cu-convocare-de-indata-din-22.12.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-12-22",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiect de hotarare supus aprobarii in sedinta extraordinara cu convocare de indata din 22.12.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiect-de-hotarare-supus-aprobarii-in-sedinta-extraordinara-cu-convocare-de-indata-din-22.12.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-12-17",
+   "etag": "\"22cba4c-6464851d88d40\"",
+   "hotarari": [
+    {
+     "data": "2025-12-17",
+     "nr": 185,
+     "obiect": "",
+     "pagina": 1,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 186,
+     "obiect": "",
+     "pagina": 4,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 187,
+     "obiect": "",
+     "pagina": 7,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 188,
+     "obiect": "privind aprobarea unui P.U.D. — amenajare parcare şi sistematizare circulație intersecţie str.Tractorului-str.George Călinescu-str.Călăraşi-crearea unei benzi de circulație spre str. Călărași pentru obiectivul Construire grădiniță cu grupe de antepreșcolari str. George Călinescu, oraș Pantelimon, ju",
+     "pagina": 10,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 189,
+     "obiect": "",
+     "pagina": 12,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 190,
+     "obiect": "",
+     "pagina": 14,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 191,
+     "obiect": "privind aprobarea rețelei şcolare a învățământului preuniversitar de stat și particular la nivelul orașului Pantelimon, pentru anul şcolar 2026-2027",
+     "pagina": 16,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 192,
+     "obiect": "pentru modificarea H.C.L. nr. 79 din 04.04.2019 privind aprobarea indicatorilor tehnico- economici si finanțarea de la bugetul local a obiectivului de investiţii „Construire locuinţe sociale, utilități Oraş Pantelimon, județ Ilfov”",
+     "pagina": 19,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 193,
+     "obiect": "pentru actualizarea H.C.L. nr. 147 din 27.06.2023 privind aprobarea depunerii proiectului “SCOALA GIMNAZIALA St+P+2E, Școală Verde în orașul Pantelimon, județul Ilfov” în cadrul Programului de finanţare Planul National de Redresare și Reziliență, Pilonul VI. Politici pentru noua generaţie Componenta",
+     "pagina": 21,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 194,
+     "obiect": "pentru modificarea art. 2 din H.C.L. nr. 14 din 29.01.2025 privind aprobarea Programului de activitate sportivă „Promovarea sportului pentru copii” si încheierea unui contract de finanțare nerambursabilă, cu Asociaţia Club Sportiv Orășenesc Viitorul Pantelimon, pentru activitate sportivă pe anul 202",
+     "pagina": 23,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 195,
+     "obiect": "",
+     "pagina": 26,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 196,
+     "obiect": "",
+     "pagina": 28,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 197,
+     "obiect": "",
+     "pagina": 30,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 198,
+     "obiect": "",
+     "pagina": 32,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 199,
+     "obiect": "",
+     "pagina": 34,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 200,
+     "obiect": "",
+     "pagina": 36,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 201,
+     "obiect": "",
+     "pagina": 38,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 202,
+     "obiect": "",
+     "pagina": 40,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 203,
+     "obiect": "",
+     "pagina": 42,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 204,
+     "obiect": "",
+     "pagina": 44,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 205,
+     "obiect": "privind nivelurile impozitelor si taxelor locale pe anul 2026 în orașul Pantelimon",
+     "pagina": 46,
+     "pagini": 13,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 206,
+     "obiect": "pentru modificarea Hotărârii Consiliului Local nr. 37/28.02.2023 privind aprobarea Regulamentului privind vânzarea imobilelor - clădiri și terenuri aflate în proprietatea privată a Orașului Pantelimon, Judeţ Ilfov",
+     "pagina": 59,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 207,
+     "obiect": "",
+     "pagina": 61,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 208,
+     "obiect": "",
+     "pagina": 64,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 209,
+     "obiect": "privind vânzarea, cu drept de preemptiune, a unui teren aparținând domeniului privat al Orașului Pantelimon, județul Ilfov către societatea ILFOVEANA SA",
+     "pagina": 66,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 210,
+     "obiect": "",
+     "pagina": 68,
+     "pagini": 4,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 211,
+     "obiect": "privind aprobarea Programului de acțiune comunitară la nivelul U.A.T. Pantelimon, aferent anului 2026",
+     "pagina": 72,
+     "pagini": 6,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 212,
+     "obiect": "",
+     "pagina": 78,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-12-17",
+     "nr": 213,
+     "obiect": "",
+     "pagina": 80,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 36485708,
+   "pagini": 81,
+   "sha256": "4ca6dbdcaace3b0376ba7d10b77e3dcc92f3e784dc145cb6d5d5eeb4c8f62507",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "H.C.L. sedinta ordinara din 17.12.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-ordinara-din-17.12.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-11-26",
+   "etag": "\"27dc77-646485e6c2800\"",
+   "hotarari": [
+    {
+     "data": "2025-11-26",
+     "nr": 183,
+     "obiect": "pentru actualizarea H.C.L. nr. 111 din 18.08.2025 privind aprobarea documentat",
+     "pagina": 1,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-11-26",
+     "nr": 184,
+     "obiect": "pentru actualizarea H.C.L. nr. 147 din 27.06.2023 privind aprobarea depunerii proiectului “ȘCOALĂ GIMNAZIALA St+P+2E, Școală Verde în orașul Pantelimon, județul Ilfov” în cadrul Programului de finanţare Planul National de Redresare și Reziliență, Pilonul VI. Politici pentru noua generație Componenta",
+     "pagina": 4,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 2612343,
+   "pagini": 5,
+   "sha256": "6239ffccfefedb8f13b76ad41150092b0daf7a9f44314d017c56db4bf999a4d7",
+   "tip": "hotarari",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "H.C.L.sedinta extraordinara cu convocare de indata din 26.11.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.sedinta-extraordinara-cu-convocare-de-indata-din-26.11.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-11-26",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiecte supuse aprobarii in sedinta extraordinara cu convocare de indata din 26.11.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-supuse-aprobarii-in-sedinta-extraordinara-cu-convocare-de-indata-din-26.11.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-11-26",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "P.V. sedinta extraodinara cu convocare de indata din 26.11.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-extraodinara-cu-convocare-de-indata-din-26.11.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-11-21",
+   "etag": "\"209588-644684dee14c0\"",
+   "hotarari": [
+    {
+     "data": "2025-11-21",
+     "nr": null,
+     "obiect": "",
+     "pagina": 1,
+     "pagini": 4,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 2135432,
+   "pagini": 4,
+   "sha256": "593d7e3ae0d7cab99c6382815c2999290283eec2baa846a55eeace08acb15d4d",
+   "tip": "hotarari",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "H.C.L.sedinta extraordinara convocare de indata din 21.11.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.sedinta-extraordinara-convocare-de-indata-din-21.11.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-11-21",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiect hotarare supus aprobarii in sedinta extraordinara cu convocare de indata din 21.11.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiect-hotarare-supus-aprobarii-in-sedinta-extraordinara-cu-convocare-de-indata-din-21.11.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-11-21",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "P.V. sedinta extraodinara cu convocare de indata din 21.11.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-extraodinara-cu-convocare-de-indata-din-21.11.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-11-19",
+   "etag": "\"8c2bb1-64468460febc0\"",
+   "hotarari": [
+    {
+     "data": "2025-11-19",
+     "nr": 173,
+     "obiect": "privind alegerea preşedintelui de şedinţă",
+     "pagina": 1,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-11-19",
+     "nr": 174,
+     "obiect": "",
+     "pagina": 2,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-11-19",
+     "nr": 175,
+     "obiect": "privind aprobarea listei de priorități întocmită în baza criteriilor care se au în vedere la stabilirea ordinii de prioritate a solicitantilor indreptatiti să primească o locuință socială în anul 2026",
+     "pagina": 4,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-11-19",
+     "nr": 176,
+     "obiect": "",
+     "pagina": 7,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-11-19",
+     "nr": 177,
+     "obiect": "",
+     "pagina": 9,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-11-19",
+     "nr": 178,
+     "obiect": "pentru modificarea H.C.L. nr. 79 din 04.04.2019 privind aprobarea indicatorilor tehnico- economici si finanţarea de la bugetul local a obiectivului de investiţii „Construire locuințe sociale, utilități Oraş Pantelimon, județ Ilfov”",
+     "pagina": 11,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-11-19",
+     "nr": 179,
+     "obiect": "privind aprobarea declanșării procedurilor de expropriere pentru imobilul proprietate privată situat în orașul Pantelimon care constituie coridorul de expropriere aferent lucrării de utilitate publică de interes local la obiectivul de investiţii „Amenajare spaţiu verde, loc de joaca şi parcări”",
+     "pagina": 13,
+     "pagini": 8,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-11-19",
+     "nr": 181,
+     "obiect": "privind accesul pe terenurile/drumurile ce aparțin U.A.T. Pantelimon pentru executarea lucrărilor de construire aferente „Proiectului Regional de Dezvoltare a Infrastructurii de Apă şi Apă Uzată din județul Ilfov” Contract CL-G02 — „Gospodării de apă și aductiuni in Ciorogârla, Domnești, Clinceni, C",
+     "pagina": 21,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 9186225,
+   "pagini": 23,
+   "sha256": "52236b3b809aa831eea3808cfe469fe0abbb0df81765354ee918b07b93e00142",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "H.C.L.sedinta ordinara din data de 19.11.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.sedinta-ordinara-din-data-de-19.11.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-11-19",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte supuse aprobarii in sedinta ordinara 19.11.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-supuse-aprobarii-in-sedinta-ordinara-19.11.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-11-19",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "ordinară",
+   "titlu": "P.V. sedinta ordinara din data de 19.11.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-ordinara-din-data-de-19.11.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-10-30",
+   "etag": "\"265a12a-642c1589bf0c0\"",
+   "hotarari": [
+    {
+     "data": "2025-10-30",
+     "nr": 150,
+     "obiect": "privind desemnarea unui reprezentant al Consiliului Local Pantelimon în Comisia de asigurare a calității din cadrul Școlii Gimnaziale nr. 1 Pantelimon pentru anul școlar 2025-2026",
+     "pagina": 1,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 151,
+     "obiect": "privind dezmembrarea cadastrală si notariala a terenului ce aparține domeniului privat al U.A.T. Pantelimon, situat în T30, P284 cu numărul cadastral 124312 din Orașul Pantelimon, judeţul Ilfov, în 22 loturi",
+     "pagina": 3,
+     "pagini": 10,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 153,
+     "obiect": "privind aprobarea unui P.U.D. — construire spațiu comercial, imprejmuire, bransamente la utilități organizare de șantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 13,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 154,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilităţi organizare de șantier. Beneficiar Nos Sistem Auto Service S.R.L",
+     "pagina": 15,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 155,
+     "obiect": "",
+     "pagina": 17,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 156,
+     "obiect": "privind aprobarea unui P.U.D. — construire hală depozitare, imprejmuire, bransamente la utilități organizare de șantier. Beneficiar S.C.Nimirode Impex S.R.L",
+     "pagina": 19,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 157,
+     "obiect": "",
+     "pagina": 21,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 158,
+     "obiect": "privind rectificarea bugetului local și virarea creditelor pe anul 2025",
+     "pagina": 23,
+     "pagini": 27,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 159,
+     "obiect": "privind aprobarea bugetului creditelor interne pe anul 2025",
+     "pagina": 50,
+     "pagini": 4,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 160,
+     "obiect": "privind aprobarea declanșării procedurilor de expropriere pentru imobilele proprietate privată situate în orașul Pantelimon care constituie coridorul de expropriere aferent lucrării de utilitate publică de interes local la obiectivul de investiţii „Modernizare strada Sibiu, oraş Pantelimon”",
+     "pagina": 54,
+     "pagini": 6,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 161,
+     "obiect": "",
+     "pagina": 60,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 162,
+     "obiect": "",
+     "pagina": 62,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 163,
+     "obiect": "",
+     "pagina": 65,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 164,
+     "obiect": "",
+     "pagina": 68,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 165,
+     "obiect": "",
+     "pagina": 71,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 166,
+     "obiect": "",
+     "pagina": 74,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 167,
+     "obiect": "",
+     "pagina": 77,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 168,
+     "obiect": "",
+     "pagina": 80,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 169,
+     "obiect": "",
+     "pagina": 83,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 170,
+     "obiect": "",
+     "pagina": 86,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 171,
+     "obiect": "",
+     "pagina": 89,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 172,
+     "obiect": "privind dezmembrarea cadastrală și notarială a terenului ce aparține domeniului public al U.A.T. Pantelimon, situat în T96, parcela Hb 971 cu numărul cadastral 121728 din Orașul Pantelimon, județul Ilfov, în 2 loturi",
+     "pagina": 92,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 40214826,
+   "pagini": 92,
+   "sha256": "4d77861754ed12a2efe209c835a7977017935f4adaee46ab54fd55851b0273b2",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "H.C.L. sedinta ordinara din 30.10.2025 (II)",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-ordinara-din-30.10.2025-1.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-10-30",
+   "etag": "\"dd0108-6425c353eda80\"",
+   "hotarari": [
+    {
+     "data": "2025-10-30",
+     "nr": 162,
+     "obiect": "",
+     "pagina": 1,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 163,
+     "obiect": "",
+     "pagina": 4,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 164,
+     "obiect": "",
+     "pagina": 7,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 165,
+     "obiect": "",
+     "pagina": 10,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 166,
+     "obiect": "",
+     "pagina": 13,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 167,
+     "obiect": "",
+     "pagina": 16,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 168,
+     "obiect": "",
+     "pagina": 19,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 169,
+     "obiect": "",
+     "pagina": 22,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 170,
+     "obiect": "",
+     "pagina": 25,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-10-30",
+     "nr": 171,
+     "obiect": "",
+     "pagina": 28,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 14483720,
+   "pagini": 30,
+   "sha256": "9ecea3164d4f8c39b1262cf5a819ae1f96b42ac9538858f9862e44ef7c203153",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "H.C.L. sedinta ordinara din 30.10.2025 (I)",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-ordinara-din-30.10.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-10-30",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte de hotarare supuse aprobarii in sedinta ordinara din 30.10.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-aprobarii-in-sedinta-ordinara-din-30.10.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-10-30",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "ordinară",
+   "titlu": "P.V. sedinta ordinara din 30.10.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-ordinara-din-30.10.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-09-30",
+   "etag": "\"403abb6-6409181a87380\"",
+   "hotarari": [
+    {
+     "data": "2025-09-30",
+     "nr": 127,
+     "obiect": "privind aprobarea indicatorilor tehnico-economici ai obiectivului de investiţii „Amplasare totemuri, seminaristică intrare în localitatea Pantelimon DN3 — ieşire din localitatea Pantelimon, județul Ilfov”",
+     "pagina": 1,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 128,
+     "obiect": "pentru modificarea art. 1 din H.C.L. nr. 105 din 31.05.2019 privind aprobarea indicatorilor tehnico-economici pentru obiectivul de inve: rivind cresterea performantei energetice a 14 blocuri de locuinţe de pe raza administrativa a orașului Pantelimon, județul Ilfov",
+     "pagina": 3,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 129,
+     "obiect": "pentru modificarea art.1 din H.C.L. nr. 106 din 31.05.2019 privind aprobarea de la bugetul local a cheltuielilor aferente obiectivului de investiţii privind creşterea performanței energetice a 14 blocuri de locuinţe de pe raza administrativă a orașului Pantelimon, județul Ilfov",
+     "pagina": 5,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 130,
+     "obiect": "pentru modificarea art.1 din H.C.L. nr. 137 din 03.07.2019 privind suportarea din fondurile bugetului local al orașului Pantelimon a sumelor reprezentând contribuţia asociaţiilor de proprietari a cheltuielilor aferente obiectivului de investiții privind creşterea performantei energetice a 14 blocuri",
+     "pagina": 7,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 131,
+     "obiect": "pentru modificarea H.C.L. nr. 62 din 08.05.2025 privind aprobarea contractării unei finanţări rambursabile interne/externe in valoare de 39.913.827,33 lei pentru asigurarea finanțării proiectelor de investiţii de interes local",
+     "pagina": 10,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 132,
+     "obiect": "privind aprobarea Regulamentului privind repartizarea și închirierea locuinţelor sociale aparținând orașului Pantelimon si constituirea comisiei de analiza și soluționare a cererilor pentru locuințele sociale",
+     "pagina": 12,
+     "pagini": 29,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 133,
+     "obiect": "",
+     "pagina": 41,
+     "pagini": 68,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 135,
+     "obiect": "privind dezmembrarea cadastrală și notarială a terenului ce aparține domeniului privat al U.A.T. Pantelimon, situat in T29, P255, 256, 257 cu numărul cadastral 123194 din Orașul Pantelimon, județul Ilfov, în 2 loturi",
+     "pagina": 109,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 136,
+     "obiect": "privind rectificarea și completarea Anexei prevăzute la H.C.L. 70/29.05.2025 pentru rectificarea şi completarea Anexei prevăzute la H.C.L. 45/26.03.2025, privind completarea Anexei prevăzute la Hotărârea Consiliului Local al orașului Pantelimon nr. 51/14 mai 2013",
+     "pagina": 110,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 137,
+     "obiect": "",
+     "pagina": 112,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 138,
+     "obiect": "",
+     "pagina": 114,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 139,
+     "obiect": "",
+     "pagina": 116,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 140,
+     "obiect": "",
+     "pagina": 118,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 141,
+     "obiect": "",
+     "pagina": 120,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 142,
+     "obiect": "",
+     "pagina": 122,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 143,
+     "obiect": "",
+     "pagina": 124,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 144,
+     "obiect": "privind aprobarea indicatorilor tehnico-economici ai obiectivului de investiţii “ Amenajare spațiu verde, loc de joacă şi parcări”",
+     "pagina": 127,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 145,
+     "obiect": "",
+     "pagina": 129,
+     "pagini": 22,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 146,
+     "obiect": "privind desemnarea a doi reprezentanți ai Consiliului Local Pantelimon în Consiliul de Administraţie al Şcolii Gimnaziale nr. 1 Pantelimon pentru anul şcolar 2025-2026",
+     "pagina": 151,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 147,
+     "obiect": "privind organizarea evenimentului „Nunta de aur” pentru cuplurile care au împlinit 50 ani de căsnicie neîntreruptă",
+     "pagina": 153,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-30",
+     "nr": 148,
+     "obiect": "",
+     "pagina": 155,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 67349430,
+   "pagini": 156,
+   "sha256": "eef51c045c1ef8eb1725db1348a487faf9d92edc1325cf7544027212f479d9c9",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "H.C.L. sedinta ordinara din 30.09.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-ordinara-din-30.09.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-09-24",
+   "etag": "\"13ef21-6409181b7b5c0\"",
+   "hotarari": [
+    {
+     "data": "2025-09-24",
+     "nr": 126,
+     "obiect": "privind actualizarea H.C.L. nr. 48 din 15.02.2024 privind aprobarea documentatiei tehnice pentru obținerea autorizaţiei de construire (D.T.A.C.), precum și a principalilor indicatori tehnico-economici pentru obiectivul de investiții „CONSTRUIRE GRĂDINIȚĂ”",
+     "pagina": 1,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 1306401,
+   "pagini": 3,
+   "sha256": "b03ebe9f8cffae09240ef1b922df23aea9e9e67a75a24ed12fada50b32891cd2",
+   "tip": "hotarari",
+   "tip_sedinta": "",
+   "titlu": "H.C.L. nr.126 din 24.09.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-nr.126-din-24.09.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-09-24",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiect hotarare supus aprobarii in sedinta extraordinara cu convocare de indata in 24.09.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiect-hotarare-supus-aprobarii-in-sedinta-extraordinara-cu-convocare-de-indata-in-24.09.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-09-24",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "P.V. sedinta extraordinara cu convocare de indata din data de 24.09.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-extraordinara-cu-convocare-de-indata-din-data-de-24.09.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-09-12",
+   "etag": "\"3a370e-64091814ce600\"",
+   "hotarari": [
+    {
+     "data": "2025-09-12",
+     "nr": 123,
+     "obiect": "pentru actualizarea H.C.L. nr. 309 din 18.12.2024 privind aprobarea documentației tehnico- economice faza Proiect Tehnic de execuție şi Detalii de execuţie (P.T si D.D.E) precum și a principalilor indicatorilor tehnico-economici(Deviz general) pentru obiectivul de investiţii „AMENAJARE SPAȚIU VERDE",
+     "pagina": 1,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-12",
+     "nr": 124,
+     "obiect": "privind aprobarea proiectului “AMENAJARE SPATIU VERDE PARC PANTELIMON” în vederea finanțării acestuia prin PR BI, in cadrul Apelului de Proiecte PRBI/563/PRBI P3/OP2/RSO2.7/PRBI A19 - PR BI P3/3.5/1/2024 Apel dedicat Creării, îmbunătățirii, extinderii spațiilor si infrastructurilor verzi",
+     "pagina": 4,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-09-12",
+     "nr": 125,
+     "obiect": "",
+     "pagina": 6,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 3815182,
+   "pagini": 7,
+   "sha256": "1de19ee61b6d7b3741ab3486dcc888067372cf533a0a53380a6540cbebebb5bc",
+   "tip": "hotarari",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "H.C.L.sedinta extraordinara cu convocare de indata din 12.09.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.sedinta-extraordinara-cu-convocare-de-indata-din-12.09.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-09-12",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiecte de hotarare supuse aprobarii in sedinta extraordinara cu convocare de indata din 12.09.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-aprobarii-in-sedinta-extraordinara-cu-convocare-de-indata-din-12.09.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-09-12",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "extraordinară",
+   "titlu": "P.V. sedinta extraordinara din 12.09.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-extraordinara-din-12.09.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-08-27",
+   "etag": "\"85ffc3-63db9d7db9500\"",
+   "hotarari": [
+    {
+     "data": "2025-08-27",
+     "nr": 112,
+     "obiect": "pentru modificarea art. 1 din H.C.L. nr. 105 din 31.05.2019 privind aprobarea indicatorilor tehnico-economici pentru obiectivul de investiţii privind creșterea performantei energetice a 14 blocuri de locuinţe de pe raza administrativa a orașului Pantelimon, judeţul Ilfov",
+     "pagina": 1,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-08-27",
+     "nr": 113,
+     "obiect": "pentru modificarea art.1 din H.C.L. nr. 106 din 31.05.2019 privind aprobarea de la bugetul local a cheltuielilor aferente obiectivului de investiţii privind creşterea performanței energetice a 14 blocuri de locuinţe de pe raza administrativă a oraşului Pantelimon, județul Ilfov",
+     "pagina": 3,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-08-27",
+     "nr": 114,
+     "obiect": "pentru modificarea art.1 din H.C.L. nr. 137 din 03.07.2019 privind suportarea din fondurile bugetului local al orașului Pantelimon a sumelor reprezentând contribuția asociaţiilor de proprietari a cheltuielilor aferente obiectivului de investiții privind creșterea performantei energetice a 14 blocuri",
+     "pagina": 6,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-08-27",
+     "nr": 115,
+     "obiect": "privind îndreptarea unei erori materiale strecurată in H.C.L. nr. 287 din 20 decembrie 2023 privind aprobarea unui P.U.D. — construire clădire cu trei unități de locuinţe unifamiliale P+1E+M, împrejmuire, organizare de șantier, bransamente la utilități. Beneficiar S.C.Urban Staff Design S.R.L. și S",
+     "pagina": 9,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-08-27",
+     "nr": 116,
+     "obiect": "",
+     "pagina": 11,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-08-27",
+     "nr": 117,
+     "obiect": "",
+     "pagina": 13,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-08-27",
+     "nr": 118,
+     "obiect": "privind desemnarea a doi reprezentanți ai Consiliului Local Pantelimon în Consiliul de Administraţie al Gradinitei nr. 1 Pantelimon pentru anul scolar 2025-2026",
+     "pagina": 15,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-08-27",
+     "nr": 119,
+     "obiect": "",
+     "pagina": 17,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-08-27",
+     "nr": 120,
+     "obiect": "",
+     "pagina": 19,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-08-27",
+     "nr": 121,
+     "obiect": "",
+     "pagina": 20,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-08-27",
+     "nr": 122,
+     "obiect": "privind completarea H.C.L.nr. 54 din 09.04.2020 pentru aprobarea normelor de igienă, salubrizare şi sănătate publică, privind mediul de viata al populației din Orașul Pantelimon",
+     "pagina": 22,
+     "pagini": 7,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 8781763,
+   "pagini": 28,
+   "sha256": "3dd75058a02e0f7740c413941e556a1e05c1d368a594887eb187be6367f5873f",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "H.C.L. sedinta ordinara 27.08.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-ordinara-27.08.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-08-27",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "",
+   "titlu": "Proiecte de hotarare supuse aprobarii in sedinta din 27.08.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-aprobarii-in-sedinta-din-27.08.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-08-27",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "ordinară",
+   "titlu": "P.V. sedinta ordinara din 27.08.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-ordinara-din-27.08.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-08-18",
+   "etag": "\"ed5e0-63cb35483cbc0\"",
+   "hotarari": [
+    {
+     "data": "2025-08-18",
+     "nr": 110,
+     "obiect": "privind alegerea preşedintelui de ședință",
+     "pagina": 1,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-08-18",
+     "nr": 111,
+     "obiect": "pentru modificarea H.C.L. nr. 37 din 03.04.2013 privind aprobarea indicatorilor tehnico-economici pentru obiectivul de investiţii „Școala Gimnazială ST+P+2E, Intr. Marginei, oraș Pantelimon, județ Ilfov”",
+     "pagina": 2,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 972256,
+   "pagini": 3,
+   "sha256": "7af28bc8938fe1a729f995c8d22107b56ac1bde2708aabb25860a97a824f0162",
+   "tip": "hotarari",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "H.C.L. sedinta extraordinara cu convocare de indata 18.08.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-extraordinara-cu-convocare-de-indata-18.08.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-08-18",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiect supus dezbaterii in sedinta extraordinara cu convocare de indata 18.08.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiect-supus-dezbaterii-in-sedinta-extraordinara-cu-convocare-de-indata-18.08.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-08-18",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "P.V. sedinta extraordinara cu convocare de indata 18.08.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-extraordinara-cu-convocare-de-indata-18.08.2025-1.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-08-18",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "P.V. sedinta extraordinara cu convocare de indata 18.08.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-extraordinara-cu-convocare-de-indata-18.08.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-07-30",
+   "etag": "\"e5b9a6-63c3f36f695c0\"",
+   "hotarari": [
+    {
+     "data": "2025-07-30",
+     "nr": 87,
+     "obiect": "",
+     "pagina": 1,
+     "pagini": 7,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 89,
+     "obiect": "",
+     "pagina": 8,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 90,
+     "obiect": "",
+     "pagina": 10,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 91,
+     "obiect": "",
+     "pagina": 12,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 92,
+     "obiect": "",
+     "pagina": 14,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 93,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilităţi organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 16,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 94,
+     "obiect": "privind aprobarea unui P.U.D. - construire locuință, împrejmuire, branşamente la utilități organizare de șantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 18,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 95,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, imprejmuire, bransamente la utilități organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 20,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 96,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilităţi organizare de șantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 22,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 97,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilități organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 24,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 98,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, imprejmuire, branșamente la utilităţi organizare de șantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 26,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 99,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilități organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 28,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 100,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, imprejmuire, branșamente la utilităţi organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 30,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 101,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilităţi organizare de șantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 32,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 102,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, imprejmuire, branșamente la utilități organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 34,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 103,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branşamente la utilități organizare de șantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 36,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 104,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilităţi organizare de șantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 38,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 105,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, imprejmuire, branșamente la utilităţi organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 40,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 106,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilități organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "pagina": 42,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 107,
+     "obiect": "",
+     "pagina": 44,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 108,
+     "obiect": "",
+     "pagina": 46,
+     "pagini": 7,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-07-30",
+     "nr": 109,
+     "obiect": "privind atribuirea denumirii de strada Hortensiei, drumului de acces situat în T26, P 593 cu numărul cadastral 124396 Orașul Pantelimon, Judeţul Ilfov",
+     "pagina": 53,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 15055270,
+   "pagini": 53,
+   "sha256": "eaee5dd69e8fe638705d0d3a86d64f79efc791b0d1477cfb00a581b20b0a9e82",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "H.C.L.Pantelimon sedinta ordinara 30.07.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.Pantelimon-sedinta-ordinara-30.07.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-07-30",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte hotarare supuse aprobarii sedinta ordinara 30.07.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-hotarare-supuse-aprobarii-sedinta-ordinara-30.07.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-07-30",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "ordinară",
+   "titlu": "P.V. sedinta ordinara din 30.07.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-ordinara-din-30.07.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-06-25",
+   "etag": "\"177eff9-63875733d7300\"",
+   "hotarari": [
+    {
+     "data": "2025-06-25",
+     "nr": 84,
+     "obiect": "privind aprobarea structurii organizatorice- organigrama şi statul de funcții pentru aparatului de specialitate al Primarului Orașului Pantelimon, județul Ilfov şi pentru serviciile publice fără personalitate juridică aflate în subordinea Consiliului Local al oraşului Pantelimon",
+     "pagina": 1,
+     "pagini": 15,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-06-25",
+     "nr": 85,
+     "obiect": "",
+     "pagina": 16,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-06-25",
+     "nr": 86,
+     "obiect": "privind aprobarea Organigramei , Statului de functii si Regulamentului de Organizare si Functionare pentru Direcţia de Asistenţă Socială Pantelimon",
+     "pagina": 18,
+     "pagini": 52,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 24637433,
+   "pagini": 69,
+   "sha256": "4d0de55393bd144874b818a02f039a0b662ff59c448421356a017c8e675263f5",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "HCL sedinta ordinara 25.06.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/HCL-sedinta-ordinara-25.06.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-06-25",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte hotarare supuse aprobarii in sedinta ordinara 25.06.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-hotarare-supuse-aprobarii-in-sedinta-ordinara-25.06.2025-1.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-06-25",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "ordinară",
+   "titlu": "P.V. sedinta ordinara 25.06.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-ordinara-25.06.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-05-29",
+   "etag": "\"172ff23-636bd7c09cd80\"",
+   "hotarari": [
+    {
+     "data": "2025-05-29",
+     "nr": 65,
+     "obiect": "",
+     "pagina": 1,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 66,
+     "obiect": "privind completarea obiectului secundar de activitate al S.C. Parcuri, Servicii&Prod Pantelimon S.R.L. pe anul 2025",
+     "pagina": 3,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 67,
+     "obiect": "",
+     "pagina": 4,
+     "pagini": 24,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 68,
+     "obiect": "",
+     "pagina": 28,
+     "pagini": 24,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 69,
+     "obiect": "privind modificarea şi completarea Statului de funcții al Direcţiei de Asistenţă Socială a oraşului Pantelimon",
+     "pagina": 52,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 70,
+     "obiect": "pentru rectificarea și completarea Anexei prevăzute la H.C.L. 45/26.03.2025, privind completarea Anexei prevăzute la Hotărârea Consiliului Local al orașului Pantelimon nr. 51/14 mai 2013",
+     "pagina": 55,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 71,
+     "obiect": "",
+     "pagina": 58,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 72,
+     "obiect": "",
+     "pagina": 60,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 73,
+     "obiect": "",
+     "pagina": 62,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 74,
+     "obiect": "",
+     "pagina": 64,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 75,
+     "obiect": "privind aprobarea unui P.U.D. — construire locuinţă, garaj, împrejmuire, bransamente la utilități organizare de șantier. Beneficiar SC FDP Pro Cons S.R.L",
+     "pagina": 66,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 76,
+     "obiect": "privind aprobarea unui P.U.D. — construire 4 locuințe, imprejmuire, bransamente la utilități organizare de șantier. Beneficiar S.C.Fresh Catering S.R.L",
+     "pagina": 68,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 77,
+     "obiect": "",
+     "pagina": 70,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 78,
+     "obiect": "privind aprobarea încheierii protocolului de cooperare între Judeţul Ilfov — Consiliul Judeţean, Direcția Silvică Ilfov, Asociaţia Crestem România Împreună, Fundaţia ILFOV ÎMPREUNĂ si Unitatea administrativ — teritorială Pantelimon, Judeţul Ilfov în vederea realizării proiectului de interes public „",
+     "pagina": 72,
+     "pagini": 7,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 79,
+     "obiect": "",
+     "pagina": 79,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 80,
+     "obiect": "privind aprobarea si finanțarea proiectului „Elevi performanti— Elevi premiati”",
+     "pagina": 81,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 81,
+     "obiect": "privind aprobarea si finanțarea proiectului ,, Împreună descoperim lumea”",
+     "pagina": 82,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 82,
+     "obiect": "privind modificarea si completarea H.C.L.nr. 54 din 09.04.2020 pentru aprobarea normelor de igienă, salubrizare şi sănătate publică, privind mediul de viata al populaţiei din Orașul Pantelimon",
+     "pagina": 83,
+     "pagini": 7,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-29",
+     "nr": 83,
+     "obiect": "",
+     "pagina": 90,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 24313635,
+   "pagini": 91,
+   "sha256": "f458881136f5aff102f5aef381eb7286a95a7dce3abf400b1290cb840fcc0589",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "H.C.L. sedinta ordinara din 29.05.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-ordinara-din-29.05.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-05-29",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte de hotarare supuse dezbaterii in sedinta ordinara din 29.05.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-dezbaterii-in-sedinta-ordinara-din-29.05.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-05-29",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "ordinară",
+   "titlu": "P.V. sedinta ordinara din 29.05.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-ordinara-din-29.05.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-05-08",
+   "etag": "\"36b4c1-634af5cbbda00\"",
+   "hotarari": [
+    {
+     "data": "2025-05-08",
+     "nr": 60,
+     "obiect": "privind alegerea președintelui de ședință",
+     "pagina": 1,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-08",
+     "nr": 61,
+     "obiect": "pentru modificarea H.C.L. nr. 163 din 23.06.2021 privind aprobarea indicatorilor tehnico-economici pentru obiectivului de investitii “Modernizare străzi lot III, oraș Pantelimon, județ Ilfov”",
+     "pagina": 2,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-08",
+     "nr": 62,
+     "obiect": "privind aprobarea contractării unei finanţări rambursabile interne/externe în valoare de 39.913.827,33 lei pentru asigurarea finanţării proiectelor de investiţii de interes local",
+     "pagina": 4,
+     "pagini": 4,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-08",
+     "nr": 63,
+     "obiect": "privind asocierea între Unitatea administrativ — teritorială Pantelimon și S.C. Apă-Canal Ilfov S.A. în vederea finanțării obiectivului de investiţii „Extindere rețele de apă potabilă și rețele de canalizare menajeră — Str. Licuricilor, Str. Libelulelor, Str. Stupilor şi Str. Mierii”, oraș Pantelimo",
+     "pagina": 8,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-05-08",
+     "nr": 64,
+     "obiect": "pentru modificarea H.C.L. nr. 172 din 05.07.2024 asocierea Oraşului Pantelimon — consiliul Local Pantelimon cu Judeţul Ilfov — consiliul Judeţean în vederea finanțării în comun a obiectivului de investiţii „Construire Sală de sport, Oraş Pantelimon, Judeţ Ilfov”",
+     "pagina": 10,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 3585217,
+   "pagini": 11,
+   "sha256": "7c7d7e9be1edb93d6b9b9af30092eddb4ebf0bb4e18a10d8e48d6a0507a6483d",
+   "tip": "hotarari",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "H.C.L. sedinta cu convocare sedinta extraordinara cu convocare de indata di",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-cu-convocare-sedinta-extraordinara-cu-convocare-de-indata-din-08.05.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-05-08",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiecte supuse dezbaterii in sedinta cu convocare sedinta extraordinara cu convocare de indata din 08.05.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-supuse-dezbaterii-in-sedinta-cu-convocare-sedinta-extraordinara-cu-convocare-de-indata-din-08.05.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-05-08",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "P.V. sedinta cu convocare sedinta extraordinara cu convocare de indata din 08.05.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-cu-convocare-sedinta-extraordinara-cu-convocare-de-indata-din-08.05.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-04-15",
+   "etag": "\"219bba4-633f9ac7cd780\"",
+   "hotarari": [
+    {
+     "data": "2025-04-15",
+     "nr": 49,
+     "obiect": "privind excedentul bugetar inregistrat la 31.12.2024",
+     "pagina": 1,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-04-15",
+     "nr": 51,
+     "obiect": "privind aprobarea declanşării procedurilor de expropriere pentru imobilele proprietate privată situate în oraşul Pantelimon care constituie coridorul de expropriere aferent lucrării de utilitate publică de interes local la obiectivul de investiții „Extindere rețea de canalizare menajera și alimentar",
+     "pagina": 4,
+     "pagini": 8,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-04-15",
+     "nr": 52,
+     "obiect": "privind aprobarea declanșării procedurilor de expropriere pentru imobilele proprietate privată situate în orașul Pantelimon care constituie coridorul de expropriere aferent lucrării de utilitate publică de interes local la obiectivul de investiții „Extindere reţea de canalizare menajera şi alimentar",
+     "pagina": 12,
+     "pagini": 6,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-04-15",
+     "nr": 53,
+     "obiect": "privind desființarea clubului sportiv de drept public Club Sportiv Orășenesc Pantelimon",
+     "pagina": 18,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-04-15",
+     "nr": 54,
+     "obiect": "pentru modificarea si completarea H.C.L. nr. 18/2018 privind înființarea serviciului de iluminat public in orașul Pantelimon",
+     "pagina": 20,
+     "pagini": 59,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-04-15",
+     "nr": 55,
+     "obiect": "pentru modificarea şi completarea H.C.L. nr. 110/2019 privind aprobarea Studiului de Oportunitate privind modalitatea de gestiune a serviciului de iluminat public în Orașul Pantelimon, Jud Ilfov, stabilirea modalității de gestiune delegate a serviciului de iluminat public în Orașul Pantelimon, Jud I",
+     "pagina": 79,
+     "pagini": 30,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-04-15",
+     "nr": 56,
+     "obiect": "privind aprobarea indicatorilor tehnico-economici pentru obiectivul de investitii „Modernizare drumuri de interes local Etapa 1, oraș Pantelimon, județul Ilfov”",
+     "pagina": 109,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-04-15",
+     "nr": 57,
+     "obiect": "privind aprobarea indicatorilor tehnico-economici pentru obiectivul de investiţii „Modernizare drumuri de interes local Etapa 2, oraș Pantelimon, județul Ilfov”",
+     "pagina": 111,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-04-15",
+     "nr": 58,
+     "obiect": "",
+     "pagina": 113,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-04-15",
+     "nr": 59,
+     "obiect": "",
+     "pagina": 115,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 35240868,
+   "pagini": 116,
+   "sha256": "cfa791cc78785ca07d9a3d5b2274a60a0a5e2e7cdd01821d7a1caca8b59d652f",
+   "tip": "hotarari",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "H.C.L. sedinta extraordinara cu convocare de indata din 15.04.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-extraordinara-cu-convocare-de-indata-din-15.04.2025-1.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-04-15",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "Proiecte supuse aprobarii sedinta extraordinara convocare de indata 15.04.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-supuse-aprobarii-sedinta-extraordinara-convocare-de-indata-15.04.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-04-15",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "extraordinară cu convocare de îndată",
+   "titlu": "P.V. sedinta extraordinara convocare de indata 15.04.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-extraordinara-convocare-de-indata-15.04.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-03-26",
+   "etag": "\"39166d4-631b13803a7c0\"",
+   "hotarari": [
+    {
+     "data": "2025-03-26",
+     "nr": 37,
+     "obiect": "privind însuşirea raportului elaborat de primarul oraşului privind starea economică, socială şi de mediu a oraşului Pantelimon pe anul 2024",
+     "pagina": 1,
+     "pagini": 123,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-03-26",
+     "nr": 38,
+     "obiect": "privind aprobarea bugetului local al orașului Pantelimon pe anul 2025",
+     "pagina": 124,
+     "pagini": 26,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-03-26",
+     "nr": 39,
+     "obiect": "privind aprobarea bugetului de venituri și cheltuieli al S.C. Parcuri, Servicii&Prod Pantelimon S.R.L. pe anul 2025",
+     "pagina": 150,
+     "pagini": 17,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-03-26",
+     "nr": 40,
+     "obiect": "privind aprobarea încheierii protocolului de cooperare între Județul Ilfov - Consiliul Judeţean şi Unitatea administrativ — teritorială Pantelimon, Judeţul Ilfov în vederea realizării proiectului ,, Ilfov fără țânțari”",
+     "pagina": 167,
+     "pagini": 9,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-03-26",
+     "nr": 42,
+     "obiect": "pentru modificarea H.C.L. nr. 211 din 25.09.2024 privind aprobarea indicatorilor tehnico- economici a obiectivului de investiții “Extindere rețele de canalizare menajera si apa potabila in zona Tractorului, UM”",
+     "pagina": 176,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-03-26",
+     "nr": 43,
+     "obiect": "pentru aprobarea Regulamentului privind gestionarea câinilor cu stăpân din Orașul Pantelimon, județul Ilfov",
+     "pagina": 178,
+     "pagini": 8,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-03-26",
+     "nr": 44,
+     "obiect": "pentru aprobarea Planului anual de acțiune al Direcţiei de Asistenţă Socială privind serviciile sociale administrate si finanțate din bugetul consiliului local Pantelimon pentru anul 2025",
+     "pagina": 186,
+     "pagini": 23,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-03-26",
+     "nr": 46,
+     "obiect": "",
+     "pagina": 209,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-03-26",
+     "nr": 47,
+     "obiect": "",
+     "pagina": 211,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-03-26",
+     "nr": 48,
+     "obiect": "",
+     "pagina": 213,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 59860692,
+   "pagini": 214,
+   "sha256": "9b3352843108b4b2b3bce1a1a707b0da98a416c7844a8a8dde32eea7e95f1f4d",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "H.C.L.Pantelimon sedinta ordinara din data de 26.03.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.Pantelimon-sedinta-ordinara-din-data-de-26.03.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-03-26",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte supuse aprobarii in sedinta ordinara in data de 26.03.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-supuse-aprobarii-in-sedinta-ordinara-in-data-de-26.03.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-03-26",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "ordinară",
+   "titlu": "P.V. sedinta ordinara din data de 26.03.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-ordinara-din-data-de-26.03.2025-1.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-02-26",
+   "etag": "\"20f5092-631b138316e80\"",
+   "hotarari": [
+    {
+     "data": "2025-02-26",
+     "nr": 17,
+     "obiect": "",
+     "pagina": 1,
+     "pagini": 7,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 18,
+     "obiect": "privind aprobarea indicatorilor tehnico-economici pentru obiectivul de investiţii dere reţea de canalizare pluviala pe strada intr. Ulmilor, oraș Pantelimon, județ Ilfov”",
+     "pagina": 8,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 19,
+     "obiect": "pentru modificarea H.C.L. nr. 37 din 03.04.2013 privind aprobarea indicatorilor tehnico-economici pentru obiectivul de investiţii „Școala Gimnazială ST+P+2E, Intr. Marginei, oraș Pantelimon, județ Ilfov”",
+     "pagina": 10,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 20,
+     "obiect": "privind Raportul de activitate al Direcţiei de Asistenţă Socială pentru anul 2024",
+     "pagina": 12,
+     "pagini": 62,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 21,
+     "obiect": "pentru modificarea art.6 punctul 2 din Anexa nr.1 si cuantumul ajutorului pentru plata chiriei din Anexa nr.2 la la H.C.L nr. 28 din 31.01.2024 privind acordarea ajutorului pentru plata chiriei",
+     "pagina": 74,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 22,
+     "obiect": "",
+     "pagina": 76,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 23,
+     "obiect": "",
+     "pagina": 78,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 24,
+     "obiect": "",
+     "pagina": 80,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 25,
+     "obiect": "",
+     "pagina": 82,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 26,
+     "obiect": "",
+     "pagina": 84,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 27,
+     "obiect": "",
+     "pagina": 86,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 28,
+     "obiect": "pentru modificarea H.C.L. nr. 211 din 25.09.2024 privind aprobarea indicatorilor tehnico- economici a obiectivului de investiţii “Extindere rețele de canalizare menajera si apa potabila in zona Tractorului, UM”",
+     "pagina": 88,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 29,
+     "obiect": "privind dezmembrarea cadastrală si notarială a terenului ce aparține domeniului privat al U.A.T. Pantelimon, situat în T30, P284 cu numărul cadastral 123733 din Oraşul Pantelimon, județul Ilfov, în 24 loturi",
+     "pagina": 90,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 30,
+     "obiect": "",
+     "pagina": 92,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 31,
+     "obiect": "",
+     "pagina": 94,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 32,
+     "obiect": "",
+     "pagina": 96,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 33,
+     "obiect": "",
+     "pagina": 98,
+     "pagini": 9,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 34,
+     "obiect": "privind acordarea unui ajutor constând în achiziționarea și livrarea de lapte praf copiilor beneficiari ai Legii nr.321/2001 care se află în evidența Direcţiei de Asistenţă Socială a oraşului Pantelimon",
+     "pagina": 107,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-02-26",
+     "nr": 36,
+     "obiect": "pentru aprobarea încheierii unui protocol de cooperare între Județul Ilfov - Consiliul Judetean si Unitatea administrativ — teritorială Pantelimon, Județul Ilfov privind transferul dreptului de proprietate cu titlu gratuit al microbuzului electric scolar achiziționat prin proiectul „Microbuze electr",
+     "pagina": 110,
+     "pagini": 7,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 34558098,
+   "pagini": 116,
+   "sha256": "9f927ef7425017e81dba9db00144150c6fc33156d201ad9fbbd1661b88070cdf",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "H.C.L. sedinta ordinara din 26.02.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-ordinara-din-26.02.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-02-26",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte de hotarare supuse aprobarii in sedinta ordinara din 26.02.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-de-hotarare-supuse-aprobarii-in-sedinta-ordinara-din-26.02.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-02-26",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "ordinară",
+   "titlu": "P.V. sedinta ordinara 26.02.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-ordinara-26.02.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-01-29",
+   "etag": "\"466b863-62f82e7e40bc0\"",
+   "hotarari": [
+    {
+     "data": "2025-01-29",
+     "nr": 1,
+     "obiect": "privind alegerea presedintelui de sedinta",
+     "pagina": 1,
+     "pagini": 1,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 2,
+     "obiect": "",
+     "pagina": 2,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 3,
+     "obiect": "",
+     "pagina": 4,
+     "pagini": 58,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 4,
+     "obiect": "privind aprobarea Planului de acţiune local privind incluziunea cetățenilor români de etnie romă, pentru anul 2025",
+     "pagina": 62,
+     "pagini": 7,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 5,
+     "obiect": "privind aprobarea Programului de acțiune comunitară la nivelul U.A.T. Pantelimon, aferent anului 2025",
+     "pagina": 69,
+     "pagini": 6,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 6,
+     "obiect": "privind aderarea orașului Pantelimon, judeţul Ilfov, la Asociaţia Orașelor din România",
+     "pagina": 75,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 7,
+     "obiect": "",
+     "pagina": 77,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 8,
+     "obiect": "pentru rectificarea si completarea Anexei prevazute la H.C.L. 112/18.07.2018, privind completarea Anexei prevăzute la HCL nr. 51 /14 mai 2013 cu un număr de 14 de poziții, respectiv de la poziţia nr. 639 la poziția nr. 652",
+     "pagina": 79,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 9,
+     "obiect": "pentru modificarea punctului 2 din Anexa nr.3 la H.C.L nr. 2 din 11.01.2024 privind acordarea ajutoarelor de urgenţă și a ajutorului de înmormântare pe raza administrativ - teritoriala a oraşului Pantelimon",
+     "pagina": 81,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 10,
+     "obiect": "",
+     "pagina": 83,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 11,
+     "obiect": "privind aprobarea actualizării planului de analiză si acoperire a riscurilor (P.A.A.R.) in oraşul Pantelimon în anul 2025",
+     "pagina": 85,
+     "pagini": 141,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 12,
+     "obiect": "",
+     "pagina": 226,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 13,
+     "obiect": "",
+     "pagina": 228,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 14,
+     "obiect": "privind aprobarea Programului de activitate sportivă „Promovarea sportului pentru copii” și încheierea unui contract de finanţare nerambursabilă, cu Asociaţia Club Sportiv Orășenesc Viitorul Pantelimon, pentru activitate sportivă pe anul 2024",
+     "pagina": 230,
+     "pagini": 13,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 15,
+     "obiect": "",
+     "pagina": 243,
+     "pagini": 2,
+     "stare": "fara_rezumat"
+    },
+    {
+     "data": "2025-01-29",
+     "nr": 16,
+     "obiect": "privind atestarea apartenentei la domeniul privat al Orașului Pantelimon a unui imobil din Oras Pantelimon, județ Ilfov",
+     "pagina": 245,
+     "pagini": 3,
+     "stare": "fara_rezumat"
+    }
+   ],
+   "lungime": 73840739,
+   "pagini": 247,
+   "sha256": "9ec93530001f94101792c35688d07607e6420de0d72c575c325f9978a29778e2",
+   "tip": "hotarari",
+   "tip_sedinta": "ordinară",
+   "titlu": "H.C.L. sedinta ordinara din 29.01.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-ordinara-din-29.01.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-01-29",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proiecte",
+   "tip_sedinta": "ordinară",
+   "titlu": "Proiecte supuse aprobarii in sedinta ordinara din 29.01.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/Proiecte-supuse-aprobarii-in-sedinta-ordinara-din-29.01.2025.pdf",
+   "vazut_la": "2026-11-03"
+  },
+  {
+   "data": "2025-01-29",
+   "etag": null,
+   "hotarari": [],
+   "lungime": null,
+   "pagini": null,
+   "sha256": null,
+   "tip": "proces-verbal",
+   "tip_sedinta": "ordinară",
+   "titlu": "P.V. sedinta ordinara din 29.01.2025",
+   "url": "https://www.primariapantelimon.ro/assets/media0405/P.V.-sedinta-ordinara-din-29.01.2025.pdf",
+   "vazut_la": "2026-11-03"
+  }
+ ],
+ "versiune": 1
+}

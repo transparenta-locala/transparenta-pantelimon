@@ -612,6 +612,28 @@ def _fetch_hcl_metadata_live(url: str) -> list:
     return results
 
 
+def _configureaza_tesseract() -> None:
+    """Calea Tesseract pe Windows, dacă nu e în PATH (pe runnerele GitHub e în PATH)."""
+    import pytesseract
+    for _tp in [
+        r"C:\Program Files\Tesseract-OCR\tesseract.exe",
+        r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe",
+        r"C:\Users\HP\AppData\Local\Programs\Tesseract-OCR\tesseract.exe",
+    ]:
+        if os.path.exists(_tp):
+            pytesseract.pytesseract.tesseract_cmd = _tp
+            break
+
+
+def ocr_imagine_png(png_bytes: bytes, lang: str = "ron+eng") -> str:
+    """OCR pe imaginea unei pagini (folosit și de consiliu_local.py)."""
+    import io
+    import pytesseract
+    from PIL import Image
+    _configureaza_tesseract()
+    return pytesseract.image_to_string(Image.open(io.BytesIO(png_bytes)), lang=lang)
+
+
 def ocr_pdf_prima_pagina(url: str, max_pages: int = 3) -> str:
     """
     Descarcă PDF-ul și extrage textul în două moduri:
@@ -640,27 +662,13 @@ def ocr_pdf_prima_pagina(url: str, max_pages: int = 3) -> str:
         # Pas 2: dacă textul e prea scurt → PDF scanat → aplică OCR
         if len(text_total.strip()) < 100:
             try:
-                import pytesseract
-                from PIL import Image
-                import io
-                # Setăm calea Tesseract explicit pentru Windows (dacă nu e în PATH)
-                for _tp in [
-                    r"C:\Program Files\Tesseract-OCR\tesseract.exe",
-                    r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe",
-                    r"C:\Users\HP\AppData\Local\Programs\Tesseract-OCR\tesseract.exe",
-                ]:
-                    if os.path.exists(_tp):
-                        pytesseract.pytesseract.tesseract_cmd = _tp
-                        break
                 text_total = ""
                 for page_num in range(min(max_pages, len(doc))):
                     page = doc[page_num]
                     # Renderizează pagina ca imagine (200 DPI)
                     mat = fitz.Matrix(200/72, 200/72)
                     pix = page.get_pixmap(matrix=mat)
-                    img_bytes = pix.tobytes("png")
-                    img = Image.open(io.BytesIO(img_bytes))
-                    text_total += pytesseract.image_to_string(img, lang="ron+eng") + "\n"
+                    text_total += ocr_imagine_png(pix.tobytes("png")) + "\n"
             except Exception as ocr_err:
                 print(f"      ⚠ OCR fallback eșuat: {ocr_err}")
 
@@ -5814,6 +5822,7 @@ def genereaza_sitemap(index_furnizori: list, sluguri_semnale: list = None) -> st
         ("/gdpr.html",                    "0.5", "yearly"),
         ("/petitie.html",                 "0.6", "monthly"),
         ("/modele.html",                 "0.6", "monthly"),
+        ("/consiliu.html",                "0.7", "weekly"),
         ("/harta.html",                   "0.6", "weekly"),
         ("/retele.html",                  "0.5", "monthly"),
         ("/furnizori/index.html",         "0.6", "weekly"),
