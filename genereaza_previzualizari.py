@@ -528,6 +528,7 @@ h1{{font-size:1.9rem;line-height:1.2;margin:14px 0 6px}}
     {limita}
   </article>
 </main>
+<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
 """

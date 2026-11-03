@@ -151,6 +151,13 @@ def test_pagina_semnal_fara_redirect_meta():
     assert "http-equiv" not in gp.pagina_semnal(s).lower()
 
 
+def test_pagina_semnal_are_statistica_declarata_in_gdpr():
+    s = gp.atribuie_sluguri(gp.extrage_semnale(RAPORT))[0]
+    pagina = gp.pagina_semnal(s)
+    assert 'async src="//gc.zgo.at/count.js"' in pagina
+    assert 'async src="//gc.zgo.at/count.js"' in gp.marcheaza_semnal_retras(pagina)
+
+
 def test_semnal_retras_pierde_ancora_si_primeste_nota():
     s = gp.atribuie_sluguri(gp.extrage_semnale(RAPORT))[0]
     out = gp.marcheaza_semnal_retras(gp.pagina_semnal(s))

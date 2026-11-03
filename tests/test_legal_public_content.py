@@ -80,10 +80,10 @@ def test_politica_declara_statistica_folosita():
 
 
 def test_scriptul_de_statistica_ruleaza_unde_spune_politica():
-    """gdpr.html#statistici: pe paginile principale și pe fișe, nu pe semnale și nu pe 404."""
-    cu_script = [p for p in ROOT.glob("*.html") if p.name != "404.html"] + list((ROOT / "furnizori").glob("*.html"))
-    fara_script = [ROOT / "404.html"] + list((ROOT / "semnale").glob("*.html"))
+    """gdpr.html#statistici: pe paginile principale, pe fișe și pe semnale, nu pe 404."""
+    cu_script = [p for p in ROOT.glob("*.html") if p.name != "404.html"]
+    for folder in ("furnizori", "semnale"):
+        cu_script += list((ROOT / folder).glob("*.html"))
     for path in cu_script:
         assert "gc.zgo.at/count.js" in path.read_text(encoding="utf-8"), f"Lipsește scriptul în {path}"
-    for path in fara_script:
-        assert "gc.zgo.at/count.js" not in path.read_text(encoding="utf-8"), f"Script nedeclarat în {path}"
+    assert "gc.zgo.at/count.js" not in (ROOT / "404.html").read_text(encoding="utf-8")
