@@ -10610,5 +10610,33 @@
     "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123368228",
     "k": "da:123368228",
     "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123373678",
+    "titlu": "Produse antigel (Rev.2)",
+    "valoare": 2856.33,
+    "data": "2026-11-02",
+    "tip": "",
+    "firma": "TURBOTOP",
+    "cui": "22627540",
+    "ofertanti": 1,
+    "cod": "DA41526318",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123373678",
+    "k": "da:123373678",
+    "tipc": "achizitie-directa"
+  },
+  {
+    "id": "achizitie-directa-2026-123378961",
+    "titlu": "Servicii de reparare si de intretinere a automobilelor (Rev.2)",
+    "valoare": 5565.27,
+    "data": "2026-11-02",
+    "tip": "",
+    "firma": "GI EUROSERVICE",
+    "cui": "19166285",
+    "ofertanti": 1,
+    "cod": "DA41531183",
+    "url": "https://e-licitatie.ro/pub/direct-acquisition/view/123378961",
+    "k": "da:123378961",
+    "tipc": "achizitie-directa"
   }
 ]

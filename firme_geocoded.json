@@ -3,21 +3,11 @@
     "name": "TOP A-Z CONCEPT S.R.L.",
     "cif": "45058860",
     "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, STR. MĂRULUI, NR.19, CAMERA 2, SC.A, ET.2, AP.16",
-    "lat": 44.457952,
-    "lng": 26.162859,
+    "lat": 44.470278,
+    "lng": 26.176246,
     "valoare": 19516062.72,
     "nr_contracte": 4,
     "slug": "top-a-z-concept-srl"
-  },
-  {
-    "name": "GPK INFRASTRUCTURE DESIGN S.R.L.",
-    "cif": "40092259",
-    "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. RĂSCOALEI, NR. PROVENIT 41 A",
-    "lat": 44.451879,
-    "lng": 26.203556,
-    "valoare": 8896324.58,
-    "nr_contracte": 2,
-    "slug": "gpk-infrastructure-design-srl"
   },
   {
     "name": "MORNINGSTAR CONSULTING SRL",
@@ -195,8 +185,8 @@
     "adresa": "JUD. ILFOV, ORŞ. PANTELIMON, STR. GRĂDINARILOR, NR.11",
     "lat": 44.451879,
     "lng": 26.203556,
-    "valoare": 49381.31,
-    "nr_contracte": 37,
+    "valoare": 52237.64,
+    "nr_contracte": 38,
     "slug": "turbotop-srl"
   },
   {
@@ -355,8 +345,8 @@
     "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 3, STR. NEGOSTINA, NR.111A",
     "lat": 44.418284,
     "lng": 26.165099,
-    "valoare": 63419.67,
-    "nr_contracte": 32,
+    "valoare": 68984.94,
+    "nr_contracte": 33,
     "slug": "gi-euroservice-srl"
   },
   {
@@ -518,16 +508,6 @@
     "valoare": 5853.72,
     "nr_contracte": 3,
     "slug": "arox-equipment-srl"
-  },
-  {
-    "name": "AUTOVEST SRL",
-    "cif": "6836324",
-    "adresa": "JUD. BIHOR, MUN. ORADEA, STR. FRUNZEI, NR.10",
-    "lat": 47.054916,
-    "lng": 21.928523,
-    "valoare": 4369065.0,
-    "nr_contracte": 2,
-    "slug": "autovest-srl"
   },
   {
     "name": "HIDROCONSTRUCT SUD S.R.L.",
@@ -1643,8 +1623,8 @@
     "name": "SELGROS CASH & CARRY SRL",
     "cif": "11805367",
     "adresa": "JUD. BRAŞOV, MUN. BRAŞOV, CAL. BUCUREŞTI, NR.231",
-    "lat": 45.628021,
-    "lng": 25.640704,
+    "lat": 45.606983,
+    "lng": 25.65437,
     "valoare": 9449.72,
     "nr_contracte": 3,
     "slug": "selgros-cash-carry-srl"
@@ -1722,7 +1702,7 @@
   {
     "name": "COMPANIA NATIONALA POSTA ROMANA SA",
     "cif": "427410",
-    "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 6, CAL GIULEȘTI, NR.6-8, CORP B",
+    "adresa": "MUNICIPIUL BUCUREŞTI, SECTOR 6, CAL GIULEŞTI, NR.6-8, CORP B",
     "lat": 44.447875,
     "lng": 26.032448,
     "valoare": 150000.0,
@@ -1993,8 +1973,8 @@
     "name": "BET AUTO SERVICE FUNDENI SRL",
     "cif": "27987613",
     "adresa": "JUD. ILFOV, SAT FUNDENI COM. DOBROEŞTI, DRM. GĂRII, NR.8, TEREN IN SUPRAFATA DE 600 MP SI CONSTRUCTIE P+1E",
-    "lat": 44.457952,
-    "lng": 26.162859,
+    "lat": 44.470278,
+    "lng": 26.176246,
     "valoare": 3050.0,
     "nr_contracte": 1,
     "slug": "bet-auto-service-fundeni-srl"
