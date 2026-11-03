@@ -590,6 +590,10 @@ def test_pagina_generata_primeste_cadrul_site_ului(tmp_path):
     assert 'href="consiliu.html" class="active" aria-current="page"' in nav
 
 
+def test_pagina_generata_are_statistica_declarata_in_gdpr():
+    assert 'async src="//gc.zgo.at/count.js"' in cl.genereaza_pagina(_stare_pagina())
+
+
 def test_consiliu_e_in_meniu_si_in_subsol():
     assert ("consiliu.html", "Ce a hotărât Consiliul") in NAV_MAI_MULT
     assert 'href="consiliu.html"' in footer_html("index.html")

@@ -70,3 +70,20 @@ def test_paginile_publice_nu_pastreaza_praguri_sau_afirmatii_vechi():
         "nu e coincidență — e un pattern sistematic",
     ):
         assert fragment not in texte
+
+
+def test_politica_declara_statistica_folosita():
+    gdpr = (ROOT / "gdpr.html").read_text(encoding="utf-8")
+    assert 'id="statistici"' in gdpr and "GoatCounter.com" in gdpr and "Cloudflare" in gdpr
+    assert "instrument propriu de analytics" not in gdpr
+    assert "analytics terți" not in (ROOT / "despre.html").read_text(encoding="utf-8")
+
+
+def test_scriptul_de_statistica_ruleaza_unde_spune_politica():
+    """gdpr.html#statistici: pe paginile principale și pe fișe, nu pe semnale și nu pe 404."""
+    cu_script = [p for p in ROOT.glob("*.html") if p.name != "404.html"] + list((ROOT / "furnizori").glob("*.html"))
+    fara_script = [ROOT / "404.html"] + list((ROOT / "semnale").glob("*.html"))
+    for path in cu_script:
+        assert "gc.zgo.at/count.js" in path.read_text(encoding="utf-8"), f"Lipsește scriptul în {path}"
+    for path in fara_script:
+        assert "gc.zgo.at/count.js" not in path.read_text(encoding="utf-8"), f"Script nedeclarat în {path}"

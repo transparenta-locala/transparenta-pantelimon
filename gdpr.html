@@ -62,8 +62,9 @@
 
   <div class="callout">
     <strong>Rezumat:</strong> Acest site afișează exclusiv <em>date publice</em> din surse oficiale
-    (SEAP, ANAF, ONRC). Formularul petiției este dezactivat și nu transmite date. Proiectul nu
-    folosește analytics sau cookie-uri de marketing. Furnizorul de hosting și CDN-urile pot primi
+    (SEAP, ANAF, ONRC). Formularul petiției este dezactivat și nu transmite date. Proiectul
+    numără vizitele cu <a href="#statistici">GoatCounter</a>, un serviciu extern de statistici, fără cookie-uri,
+    și nu folosește cookie-uri de marketing. Furnizorul de hosting, Cloudflare și CDN-urile pot primi
     date tehnice (de exemplu adresa IP) când browserul solicită pagina sau resursele externe.
   </div>
 
@@ -160,10 +161,36 @@
 
   <h2>4. Date despre vizitatori și petiție</h2>
   <ul>
-    <li>Nu folosim Google Analytics sau alt instrument propriu de analytics</li>
+    <li>Numărăm vizitele cu GoatCounter (detalii <a href="#statistici">mai jos</a>); nu folosim Google Analytics</li>
     <li>Nu folosim cookie-uri de marketing sau advertising</li>
-    <li>Proiectul nu operează un server propriu și nu consultă loguri cu adrese IP; GitHub Pages și furnizorii CDN pot prelucra date tehnice conform politicilor proprii</li>
-    <li>Nu vindem și nu cedăm date către terți</li>
+    <li>Proiectul nu operează un server propriu și nu consultă loguri cu adrese IP; GitHub Pages, Cloudflare și furnizorii CDN pot prelucra date tehnice conform politicilor proprii</li>
+    <li>Nu vindem date; în afara furnizorilor tehnici numiți în această pagină, nu transmitem date către terți</li>
+  </ul>
+  <h3 id="statistici">Statistici de vizite (GoatCounter)</h3>
+  <p>
+    Măsurăm câte vizite primește site-ul, ca să știm ce pagini sunt citite și de unde vin vizitatorii.
+    Scriptul GoatCounter rulează pe paginile principale, inclusiv pe cea a Consiliului Local, și pe fișele
+    furnizorilor. Nu rulează pe paginile individuale de semnal (<code>semnale/</code>) și pe pagina de eroare 404.
+  </p>
+  <ul>
+    <li><strong>Ce se transmite la fiecare vizită:</strong> adresa paginii și parametrii din ea, titlul paginii, pagina de
+      pe care ai venit, lățimea ecranului și, odată cu cererea, adresa IP, datele browserului (User-Agent) și limba acestuia;</li>
+    <li><strong>Ce se păstrează:</strong> doar totaluri pe oră sau pe zi: pagini, surse, browser, sistem de operare, țară,
+      limbă și lățime de ecran. Potrivit documentației GoatCounter, aceste totaluri sunt ținute separat și nu pot fi legate între ele;</li>
+    <li><strong>Adresa IP și User-Agent:</strong> stau doar în memorie, cel mult 8 ore, ca să nu numărăm de două ori aceeași
+      vizită, și nu se scriu pe disc. Serviciul nu pune cookie-uri și nu păstrează în browser nimic pentru numărare;</li>
+    <li><strong>Cine prelucrează:</strong> operatorul este inițiatorul proiectului (secțiunea 1). Serviciul este
+      GoatCounter.com, operat de Martin Tournoij (Irlanda), pe servere Hetzner din Finlanda și Germania
+      (<a href="https://www.goatcounter.com/help/privacy" target="_blank" rel="noopener noreferrer">politica GoatCounter</a>).
+      Scriptul se încarcă de la <code>gc.zgo.at</code>, prin BunnyCDN, care primește datele tehnice necesare livrării;</li>
+    <li><strong>Temei:</strong> interesul legitim (art. 6 alin. (1) lit. f) GDPR), adică să știm dacă informațiile de interes
+      public ajung la cetățeni. Nu cerem consimțământ;</li>
+    <li><strong>Cât se păstrează:</strong> totalurile rămân cât timp există contul GoatCounter al proiectului. La ștergerea
+      contului, datele se șterg, iar unele pot rămâne în copiile de siguranță până la 30 de zile;</li>
+    <li><strong>Cum oprești numărarea:</strong> deschide <a href="index.html#toggle-goatcounter">acest link</a>. Apare un
+      mesaj în engleză, iar opțiunea se salvează în browserul tău. Scriptul se încarcă în continuare de la
+      <code>gc.zgo.at</code>, dar vizitele nu mai sunt trimise. Același link repornește numărarea. Ca scriptul să nu se
+      mai încarce deloc, blochează-l în browser.</li>
   </ul>
   <p>
     Formularul de pe pagina Petiție este <strong>dezactivat</strong>: nu are un endpoint de procesare,
@@ -173,16 +200,18 @@
   </p>
   <p>
     Site-ul folosește <code>localStorage</code> în browser exclusiv pentru preferințe locale
-    (temă dark/light, stare banner „ce e nou"). Aceste date rămân în browserul tău și nu
-    sunt transmise nicăieri.
+    (temă dark/light, stare banner „ce e nou", oprirea numărării vizitelor). Aceste date rămân în
+    browserul tău și nu sunt transmise nicăieri.
   </p>
 
   <h2>5. Hosting și securitate</h2>
   <p>
-    Site-ul este găzduit pe <strong>GitHub Pages</strong> (Microsoft/GitHub) și accesat prin
-    domeniul <strong>transparenta-pantelimon.eu</strong>. GitHub poate prelucra date tehnice conform
-    propriei <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
-    target="_blank" rel="noopener">politici de confidențialitate</a>.
+    Site-ul este găzduit pe <strong>GitHub Pages</strong> (Microsoft/GitHub), livrat prin
+    <strong>Cloudflare</strong> și accesat prin domeniul <strong>transparenta-pantelimon.eu</strong>.
+    GitHub poate prelucra date tehnice conform propriei
+    <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+    target="_blank" rel="noopener">politici de confidențialitate</a>, iar Cloudflare conform
+    <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">politicii sale</a>.
     Comunicarea este criptată (HTTPS/TLS). Bibliotecile vizuale (grafice, hartă, rețele) sunt găzduite
     pe același site. Harta firmelor încarcă imaginile hărții de la OpenStreetMap, care poate primi datele
     tehnice necesare livrării lor.
@@ -196,7 +225,7 @@
     <li><strong>Ștergere</strong> — în limitele permise de lege (datele din registre publice nu pot
       fi șterse de noi, ci de autoritatea care le-a publicat)</li>
     <li><strong>Restricționare</strong> — în anumite circumstanțe</li>
-    <li><strong>Opoziție</strong> — față de prelucrarea în interes public, în circumstanțe particulare</li>
+    <li><strong>Opoziție</strong> — față de prelucrarea în interes public sau legitim, în circumstanțe particulare</li>
   </ul>
   <p>
     Pentru corectarea datelor publicate pe site, deschideți un
