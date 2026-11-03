@@ -259,6 +259,7 @@ def test_datele_personale_sunt_respinse(text):
     "construire locuință. Beneficiar Best Home Residence S.R.L",
     "Beneficiar S.C.Urban Staff Design S.R.L. și S.",
     "tabelul cu grupele de beneficiari pentru elevii transportați",
+    "grupele de beneficiari pentru anul școlar.\nElevii din oraș și părinții lor",
     "lapte praf copiilor beneficiari ai Legii nr.321/2001",
     "Dl. Marian Ivan, primarul orașului, a propus proiectul.",
     "Darea în folosință gratuită a unui teren către Biserica Maranata Pantelimon.",

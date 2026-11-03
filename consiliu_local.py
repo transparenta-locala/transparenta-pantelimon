@@ -518,9 +518,9 @@ _RX_DESTINATAR = re.compile(
     r"[\wăâîșțĂÂÎȘȚşţŞŢ.-]+\s+[A-ZĂÂÎȘŞȚŢ]")
 
 
-_RX_BENEFICIAR = re.compile(r"\bbeneficiar\w*\s*[:.-]?\s+(.{1,160})", re.I | re.S)
-_RX_NE_PRIVAT = re.compile(r"\bS\.?\s?R\.?\s?L\b|\bS\.?\s?C\b|\bS\.?\s?A\b|\bS\.?$|consili|prim[aă]ri|\buat\b|u\.a\.t|ora[sș]|"
-                           r"[sș]coal|biseric|parohi|asocia[tț]|institu[tț]|direc[tț]|\bai\b|\bde\b|\bpentru\b", re.I)
+_RX_BENEFICIAR = re.compile(r"\bbeneficiar(?:ul)?\b\s*[:.-]?\s+([^\n]{1,160})", re.I)
+_RX_NE_PRIVAT = re.compile(r"\bS\.?\s?R\.?\s?L\b|\bS\.?\s?C\b|\bS\.?\s?A\b|\bS\.?$|consili|prim[aă]ri|\buat\b|u\.a\.t|"
+                           r"[sș]coal|biseric|parohi|asocia[tț]|institu[tț]|direc[tț]", re.I)
 
 
 def _beneficiar_persoana(text: str) -> bool:

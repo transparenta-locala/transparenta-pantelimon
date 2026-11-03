@@ -15,7 +15,7 @@ name: 🏛️ Consiliul Local (rezumate și pagină)
     - cron: '43 6 * * 1'
   workflow_dispatch:
   push:
-    branches: [main, feat/consiliu-local]
+    branches: [main]
     paths:
       - consiliu_local.py
       - .github/workflows/consiliu-local.yml
