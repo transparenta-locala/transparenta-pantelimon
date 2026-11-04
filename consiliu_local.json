@@ -1,5 +1,5 @@
 {
- "actualizat_la": "2026-11-04T11:54",
+ "actualizat_la": "2026-11-04T12:14",
  "documente": [
   {
    "data": "2026-10-28",
@@ -1642,84 +1642,166 @@
      ]
     },
     {
+     "cine_e_afectat": "O persoană fizică, cumpărătorul terenului concesionat, și Primăria orașului Pantelimon",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 46,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție de locuință, către o persoană fizică",
      "pagina": 222,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către o persoană fizică a unui teren intravilan de 450 mp din acte (444 mp din măsurători), proprietatea privată a orașului, ocupat de o locuință. Prețul stabilit este de 16.603 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 de luni, cu avans de minim 20%, garantat prin ipotecă în favoarea orașului. Contractul de concesiune existent se consideră reziliat la încheierea vânzării.",
+     "stare": "rezumat",
+     "sume": [
+      "16.603 euro"
+     ]
     },
     {
+     "cine_e_afectat": "o persoană fizică care deține în concesiune un teren din oraș, cu locuință construită pe el",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 47,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție, către o persoană fizică",
      "pagina": 225,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren de 323 mp din acte (320 mp din măsurători), ocupat de o locuință, către cumpărătorul care îl deținea în concesiune, la prețul de 11.966 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, cu un avans de minim 20%, iar cumpărătorul suportă taxele notariale și costul raportului de evaluare.",
+     "stare": "rezumat",
+     "sume": [
+      "11.966 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Un cumpărător persoană fizică care deține în concesiune un teren din oraș cu o locuință, precum și bugetul local al Orașului Pantelimon",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 48,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție, către un cumpărător persoană fizică",
      "pagina": 228,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 432 mp (442 mp conform măsurătorilor) din domeniul privat al orașului, ocupat de o locuință, către persoana care îl avea în concesiune. Prețul este de 16.528 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 luni, cu avans de minim 20%, garantate prin ipotecă în favoarea orașului. Contractul de concesiune existent se consideră reziliat la semnarea contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "16.528 euro"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică, cumpărătorul terenului care îl avea în concesiune, și Primăria orașului Pantelimon",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 49,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului către o persoană fizică, teren pe care există o construcție",
      "pagina": 231,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de aproximativ 359 mp, proprietatea privată a orașului, ocupat de o locuință, către cumpărătorul care îl avea în concesiune, la prețul de 18.565 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, cu avans de minimum 20%, iar pentru diferența de preț se înscrie ipotecă în favoarea orașului. Contractul de concesiune anterior se consideră reziliat la semnarea contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "18.565 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Doi cumpărători persoane fizice care dețin în concesiune terenul din oraș, precum și locuitorii orașului Pantelimon în calitate de proprietari ai domeniului public și privat",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 50,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție de locuință, către doi cumpărători persoane fizice",
      "pagina": 234,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către doi cumpărători persoane fizice a unui teren intravilan de 135 mp din acte (134 mp din măsurători), ocupat de o locuință, la prețul de 5.011 euro, plătibil în lei. Plata se poate face integral sau în rate lunare de maximum 36 luni, cu avans de minimum 20%, iar contractul de concesiune existent se consideră reziliat.",
+     "stare": "rezumat",
+     "sume": [
+      "5.011 euro"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică care deține în folosință un teren din oraș, cu locuință construită pe el",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 51,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren din domeniul privat al orașului, cu construcție de locuință, către o persoană fizică",
      "pagina": 237,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 432 mp, proprietatea privată a orașului, ocupat de o locuință, către o persoană fizică care îl deține în folosință. Prețul este de 16.752 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 de luni, cu avans de minim 20%. Se aprobă și raportul de evaluare, iar taxele notariale și de publicitate sunt în sarcina cumpărătorului.",
+     "stare": "rezumat",
+     "sume": [
+      "16.752 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Locuitorii orașului Pantelimon",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 52,
-     "obiect": "pentru actualizarea H.C.L. 61 din 08.05.2024 privind aprobarea documentatiei tehnico- economice faza Proiect Tehnic de executie si Detalii de executie (P.T. si D.D.E.) precum sia principalilor indicatori tehnico-economici (Deviz general) pentru obiectivul de investiţii “Modernizare străzi lot III, o",
+     "obiect": "Actualizarea documentației tehnico-economice și a indicatorilor pentru modernizarea străzilor lot III din Pantelimon",
      "pagina": 240,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat documentația tehnică la faza Proiect Tehnic de execuție și Detalii de execuție pentru modernizarea străzilor lot III și a modificat indicatorii tehnico-economici ai investiției. Valoarea totală fără TVA este de 24.934.170,07 lei, iar lungimea totală a străzilor de 3.941,00 ml, cu o durată estimată de execuție de 10 luni. Hotărârea a fost adoptată cu unanimitate de voturi în ședința din 31.03.2026.",
+     "stare": "rezumat",
+     "sume": [
+      "24.934.170,07 lei",
+      "30.126.110,15 lei",
+      "18.000.706,73 lei",
+      "21.780.855,14 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Locuitorii din zonele Bd. Biruintei, Sos. Cernica, Calea Bucureşti, str. Binelui, DE181, str. Brânduşei, Lac Pantelimon și str. Armatei",
      "data": "2026-03-31",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 53,
-     "obiect": "pentru actualizarea H.C.L. 96 din 03.04.2024 privind aprobarea documentației tehnico- economice faza D.T.A.C. precum si a principalilor indicatori tehnico-economici (Deviz general) pentru obiectivul de investiţii \"Extindere rețele de colectare ape pluviale in zona Bd. Biruintei - Sos. Cernica - Cale",
+     "obiect": "Actualizarea indicatorilor tehnico-economici pentru extinderea rețelei de canalizare a apelor pluviale din Pantelimon",
      "pagina": 242,
      "pagini": 4,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local aprobă documentația tehnică pentru autorizarea executării lucrărilor (D.T.A.C.) pentru extinderea rețelei de colectare a apelor pluviale și modifică indicatorii tehnico-economici ai obiectivului. Valoarea totală a lucrărilor este stabilită la 34.003.363,95 lei cu TVA, durata estimată de execuție fiind de 12 luni. Finanțarea se face din bugetul local și alte surse legal constituite.",
+     "stare": "rezumat",
+     "sume": [
+      "34.003.363,95 lei",
+      "28.161.174,87 lei",
+      "18.332.096,30 lei",
+      "15.150.492,81 lei"
+     ]
     },
     {
      "data": "2026-03-31",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 54,
      "obiect": "",
      "pagina": 246,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "O persoană fizică din orașul Pantelimon aflată într-o situație deosebită din cauza stării de sănătate",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 55,
-     "obiect": "",
+     "obiect": "Acordarea unui ajutor de urgență de 15.000 lei unui locuitor al orașului, din bugetul local",
      "pagina": 248,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat acordarea unui ajutor de urgență în sumă de 15.000 lei din bugetul local unui locuitor aflat într-o situație deosebită din cauza stării de sănătate. Direcția de Asistență Socială va aduce la îndeplinire hotărârea, care a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": [
+      "15.000 lei"
+     ]
     }
    ],
    "lungime": 103673829,
@@ -1975,11 +2057,15 @@
    "hotarari": [
     {
      "data": "2026-03-04",
+     "motive": [
+      "date de identificare"
+     ],
      "nr": 26,
      "obiect": "privind acordarea scutirilor pentru clădirile folosite pentru desfăşurarea de activităţi sportive, şi a persoanelor cu handicap respectiv ai reprezentanților acestora începând cu anul 2026",
      "pagina": 1,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     }
    ],
    "lungime": 1244356,
@@ -2238,12 +2324,18 @@
    "etag": "\"4ad53e-6472a0bf3f5c0\"",
    "hotarari": [
     {
+     "cine_e_afectat": "Proprietarii de clădiri din orașul Pantelimon, persoane fizice și juridice, care plătesc impozite și taxe locale",
      "data": "2025-12-22",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 214,
-     "obiect": "pentru modificarea art.1 al Hotărârii Consiliului Local nr. 205 din data de 17.12.2025 privind nivelurile impozitelor şi taxelor locale pe anul 2026 în orașul Pantelimon",
+     "obiect": "Modificarea art. 1 al Hotărârii nr. 205/2025 privind nivelurile impozitelor și taxelor locale pe anul 2026 în orașul Pantelimon",
      "pagina": 1,
      "pagini": 12,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat modificarea anexei la Hotărârea nr. 205 din 17.12.2025, cu privire la nivelurile impozitelor și taxelor locale pentru 2026, prin anexa care face parte din hotărâre. Celelalte prevederi ale hotărârii nr. 205 rămân valabile, iar hotărârea se afișează pe site-ul primăriei.",
+     "stare": "rezumat",
+     "sume": []
     }
    ],
    "lungime": 4904254,
@@ -2283,235 +2375,437 @@
    "hotarari": [
     {
      "data": "2025-12-17",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 185,
      "obiect": "",
      "pagina": 1,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Un proprietar, persoană fizică, care deține în prezent terenul în concesiune de la Orașul Pantelimon.",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 186,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului către o persoană fizică, pe care există o construcție.",
      "pagina": 4,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 563 mp din acte (536 mp din măsurători), ocupat de o locuință, către persoana care îl avea în concesiune. Prețul este de 19.403 euro, plătibil în lei, și poate fi achitat integral sau în rate lunare, pe maximum 36 de luni, cu avans de minim 20%. Contractul de concesiune anterior se consideră reziliat după semnarea contractului de vânzare-cumpărare la notar.",
+     "stare": "rezumat",
+     "sume": [
+      "19.403 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Un cumpărător persoană fizică, care deține în concesiune terenul, și locuitorii orașului Pantelimon prin veniturile la bugetul local",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 187,
-     "obiect": "",
+     "obiect": "Vânzarea unui teren concesionat din domeniul privat al orașului, cu construcție de locuit, către un cumpărător persoană fizică",
      "pagina": 7,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat vânzarea unui teren intravilan de 660 mp (693 mp din măsurători), ocupat de o locuință, către persoana care îl avea în concesiune, la prețul de 25.087 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 de luni, cu avans de minim 20%. A fost aprobat și raportul de evaluare, iar primarul a fost împuternicit să semneze contractul de vânzare-cumpărare la notar.",
+     "stare": "rezumat",
+     "sume": [
+      "25.087 euro"
+     ]
     },
     {
      "data": "2025-12-17",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 188,
      "obiect": "privind aprobarea unui P.U.D. — amenajare parcare şi sistematizare circulație intersecţie str.Tractorului-str.George Călinescu-str.Călăraşi-crearea unei benzi de circulație spre str. Călărași pentru obiectivul Construire grădiniță cu grupe de antepreșcolari str. George Călinescu, oraș Pantelimon, ju",
      "pagina": 10,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Patru proprietari privați care au solicitat documentația, pentru un teren din oraș",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 189,
-     "obiect": "",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru două anexe tip container, împrejmuire, branșamente și organizare de șantier",
      "pagina": 12,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea a două anexe gospodărești tip container, împrejmuire, branșamente la utilități și organizare de șantier, pe un teren de 416 mp din oraș. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Un proprietar de teren din orașul Pantelimon",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 190,
-     "obiect": "",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire locuință, împrejmuire, branșamente și organizare de șantier pe o parcelă din str. Poet George Tarnea",
      "pagina": 14,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construire locuință, împrejmuire, branșamente la utilități și organizare de șantier, solicitat de o persoană fizică, pentru un teren de 619 mp. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința ordinară din 17.12.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Elevii și părinții din orașul Pantelimon, unitățile de învățământ preuniversitar de stat și particular din oraș, precum Școala Gimnazială nr.1 Pantelimon, Grădinița nr.1 Pantelimon și Grădinița PN și PP „O Generație”",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 191,
-     "obiect": "privind aprobarea rețelei şcolare a învățământului preuniversitar de stat și particular la nivelul orașului Pantelimon, pentru anul şcolar 2026-2027",
+     "obiect": "Aprobarea rețelei școlare de învățământ preuniversitar de stat și particular din orașul Pantelimon pentru anul școlar 2026-2027",
      "pagina": 16,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat rețeaua școlară a unităților de învățământ de stat și particular din oraș pentru anul școlar 2026-2027, conform anexei la hotărâre. Hotărârea a fost adoptată cu unanimitate de voturi în ședința ordinară din 17.12.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "locuitorii orașului Pantelimon care pot beneficia de locuințe sociale",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 192,
-     "obiect": "pentru modificarea H.C.L. nr. 79 din 04.04.2019 privind aprobarea indicatorilor tehnico- economici si finanțarea de la bugetul local a obiectivului de investiţii „Construire locuinţe sociale, utilități Oraş Pantelimon, județ Ilfov”",
+     "obiect": "Modificarea hotărârii privind indicatorii tehnico-economici și finanțarea obiectivului „Construire locuințe sociale, utilități Oraș Pantelimon”",
      "pagina": 19,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a modificat H.C.L. nr. 79/2019: valoarea totală a lucrărilor este de 49.169.391,01 lei cu TVA, valoarea C+M de 46.862.374,65 lei cu TVA, durata estimată de execuție de 49 luni, suprafața de 8.363,85 mp. Finanțarea din bugetul local pentru cheltuieli este de 1.746.768,62 lei, iar suma de 47.422.622,39 lei va fi solicitată MDLPA prin Programul multianual pentru locuințe sociale. Hotărârea a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": [
+      "49.169.391,01 lei",
+      "46.862.374,65 lei",
+      "1.746.768,62 lei",
+      "47.422.622,39 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Locuitorii orașului Pantelimon și elevii școlii care va fi construită",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 193,
-     "obiect": "pentru actualizarea H.C.L. nr. 147 din 27.06.2023 privind aprobarea depunerii proiectului “SCOALA GIMNAZIALA St+P+2E, Școală Verde în orașul Pantelimon, județul Ilfov” în cadrul Programului de finanţare Planul National de Redresare și Reziliență, Pilonul VI. Politici pentru noua generaţie Componenta",
+     "obiect": "Actualizarea bugetului proiectului unei școli verzi în Pantelimon, finanțat prin PNRR",
      "pagina": 21,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a modificat hotărârea din 2023 privind depunerea proiectului „Școala Gimnazială St+P+2E, Școala Verde în orașul Pantelimon”. Bugetul proiectului a fost stabilit la 42.840.207,19 lei, inclusiv TVA, iar cheltuielile neeligibile de 8.590.865,00 lei vor fi susținute din bugetul local și alte surse legale. Celelalte prevederi ale hotărârii din 2023 rămân valabile.",
+     "stare": "rezumat",
+     "sume": [
+      "42.840.207,19 lei",
+      "8.590.865,00 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Asociația Club Sportiv Orășenesc Viitorul Pantelimon și copiii care practică sport în cadrul programului",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 194,
-     "obiect": "pentru modificarea art. 2 din H.C.L. nr. 14 din 29.01.2025 privind aprobarea Programului de activitate sportivă „Promovarea sportului pentru copii” si încheierea unui contract de finanțare nerambursabilă, cu Asociaţia Club Sportiv Orășenesc Viitorul Pantelimon, pentru activitate sportivă pe anul 202",
+     "obiect": "Modificarea unei hotărâri privind finanțarea Programului „Promovarea sportului pentru copii” pe 2025, pentru Asociația Club Sportiv Orășenesc Viitorul Pantelimon",
      "pagina": 23,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat modificarea articolului 2 din H.C.L. nr. 14/29.01.2025, prin act adițional la contractul de finanțare nerambursabilă cu Asociația Club Sportiv Orășenesc Viitorul Pantelimon. Suma rămasă necheltuită la sfârșitul programului va fi evidențiată în raportul financiar final și va rămâne la dispoziția asociației pentru renovarea și reabilitarea Sălii de sport. Celelalte prevederi ale hotărârii anterioare rămân valabile.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "O persoană fizică din lista de priorități pentru locuințe sociale",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 195,
-     "obiect": "",
+     "obiect": "Repartizarea unei locuințe sociale din orașul Pantelimon unei persoane fizice",
      "pagina": 26,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat repartizarea unei locuințe sociale cu 2 camere, situată în oraș, unei persoane fizice aflate pe poziția nr. 9 în lista de priorități. Locuința se închiriază pe 5 ani, cu posibilitate de prelungire, cu chiria nominală lunară de 87 lei. Hotărârea a fost adoptată cu majoritate de voturi în ședința din 17.12.2025.",
+     "stare": "rezumat",
+     "sume": [
+      "87 lei"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică solicitantă de locuință socială din oraș",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 196,
-     "obiect": "",
+     "obiect": "Repartizarea unei locuințe sociale unei persoane fizice din Pantelimon, din lista de priorități",
      "pagina": 28,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat repartizarea unei locuințe sociale cu 2 camere și dependințe unei persoane fizice aflate pe poziția 1 în lista de priorități. Locuința se închiriază pe 5 ani, cu posibilitate de prelungire, cu chirie nominală lunară de 66,62 lei. Direcția de Asistență Socială va duce la îndeplinire hotărârea.",
+     "stare": "rezumat",
+     "sume": [
+      "66,62 lei"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică aflată pe lista de priorități pentru locuințe sociale, Direcția de Asistență Socială",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 197,
-     "obiect": "",
+     "obiect": "Repartizarea unei locuințe sociale unui cetățean din oraș, din lista de priorități",
      "pagina": 30,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat repartizarea unei locuințe sociale cu 2 camere și dependințe către o persoană fizică aflată pe poziția 3 în lista de priorități. Contractul de închiriere se încheie pe 5 ani, cu posibilitate de prelungire, iar chiria lunară nominală este de 71 lei. Direcția de Asistență Socială va duce la îndeplinire hotărârea.",
+     "stare": "rezumat",
+     "sume": [
+      "71 lei"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică solicitantă de locuință socială din orașul Pantelimon, de pe lista de priorități aprobată prin HCL nr. 175/19.11.2025",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 198,
-     "obiect": "",
+     "obiect": "Repartizarea unei locuințe sociale unei persoane fizice din oraș",
      "pagina": 32,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat repartizarea unei locuințe sociale din oraș, compusă din 2 camere, unei persoane fizice aflate pe poziția 7 în lista de priorități. Locuința are 41 mp, dependințe de 12,82 mp și o boxă de 20,91 mp. Închirierea se face pe bază de contract pe 5 ani, cu posibilitate de prelungire, iar chiria lunară nominală este de 86 lei.",
+     "stare": "rezumat",
+     "sume": [
+      "86 lei"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică din oraș, beneficiară a unei locuințe sociale",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 199,
-     "obiect": "",
+     "obiect": "Repartizarea unei locuințe sociale unei persoane fizice din oraș, str. Islazului",
      "pagina": 34,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat repartizarea unei locuințe sociale (2 camere și dependințe) unei persoane fizice aflate pe poziția 2 în lista de priorități. Contractul de închiriere se încheie pe 5 ani, cu posibilitate de prelungire, iar chiria lunară nominală este de 78 lei. Direcția de Asistență Socială duce la îndeplinire hotărârea.",
+     "stare": "rezumat",
+     "sume": [
+      "78 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Un solicitant de locuință socială din orașul Pantelimon, aflat pe lista de priorități aprobată în 2025",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 200,
-     "obiect": "",
+     "obiect": "Repartizarea unei locuințe sociale unei persoane fizice din Pantelimon, cu chirie lunară de 77 lei",
      "pagina": 36,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat repartizarea unei locuințe sociale cu 2 camere și dependințe către o persoană fizică aflată pe poziția 6 din lista de priorități. Contractul de închiriere va fi pe 5 ani, cu posibilitate de prelungire, iar chiria nominală lunară este de 77 lei. Direcția de Asistență Socială va duce la îndeplinire hotărârea.",
+     "stare": "rezumat",
+     "sume": [
+      "77 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Un locuitor din orașul Pantelimon aflat pe lista de priorități pentru locuințe sociale, Direcția de Asistență Socială",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 201,
-     "obiect": "",
+     "obiect": "Repartizarea unei locuințe sociale unui locuitor din oraș, cu chirie lunară stabilită",
      "pagina": 38,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat repartizarea unei locuințe sociale cu 2 camere și dependințe unei persoane fizice, care ocupă poziția nr. 4 în lista de priorități aprobată prin HCL nr. 175/19.11.2025. Contractul de închiriere se încheie pe 5 ani, cu posibilitate de prelungire, iar chiria lunară nominală este de 77 lei.",
+     "stare": "rezumat",
+     "sume": [
+      "77 lei"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică din oraș care primește o locuință socială",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 202,
-     "obiect": "",
+     "obiect": "Repartizarea unei locuințe sociale unei persoane fizice din oraș",
      "pagina": 40,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat repartizarea unei locuințe sociale cu 2 camere și dependințe către o persoană fizică, care ocupă poziția nr. 8 pe lista de priorități. Contractul de închiriere se încheie pe 5 ani, cu posibilitate de prelungire, iar chiria lunară nominală este de 78 lei. Direcția de Asistență Socială duce la îndeplinire hotărârea.",
+     "stare": "rezumat",
+     "sume": [
+      "78 lei"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică din orașul Pantelimon aflată pe lista de priorități pentru locuințe sociale",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 203,
-     "obiect": "",
+     "obiect": "Repartizarea unei locuințe sociale unei persoane fizice din oraș, cu chirie lunară de 69 lei",
      "pagina": 42,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat repartizarea unei locuințe sociale cu 2 camere și dependințe, unei persoane fizice care ocupă poziția nr. 5 în lista de priorități aprobată prin HCL nr. 175/19.11.2025. Contractul de închiriere se încheie pe 5 ani, cu posibilitate de prelungire, iar chiria lunară nominală este de 69 lei.",
+     "stare": "rezumat",
+     "sume": [
+      "69 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Un solicitant de locuință socială din orașul Pantelimon, aflat pe lista de priorități",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 204,
-     "obiect": "",
+     "obiect": "Repartizarea unei locuințe sociale unui locuitor din Pantelimon, cu chirie lunară de 76 lei",
      "pagina": 44,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat repartizarea unei locuințe sociale cu 2 camere și dependințe către o persoană fizică, aflată pe poziția 10 în lista de priorități aprobată prin HCL nr. 175/19.11.2025. Contractul de închiriere se încheie pe 5 ani, cu posibilitate de prelungire, iar chiria nominală lunară este de 76 lei. Direcția de Asistență Socială duce la îndeplinire hotărârea.",
+     "stare": "rezumat",
+     "sume": [
+      "76 lei"
+     ]
     },
     {
      "data": "2025-12-17",
+     "motive": [
+      "număr sau sumă care nu apare în sursă"
+     ],
      "nr": 205,
      "obiect": "privind nivelurile impozitelor si taxelor locale pe anul 2026 în orașul Pantelimon",
      "pagina": 46,
      "pagini": 13,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Persoane fizice și firme care cumpără de la Orașul Pantelimon imobile (clădiri și terenuri) cu plata în rate",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 206,
-     "obiect": "pentru modificarea Hotărârii Consiliului Local nr. 37/28.02.2023 privind aprobarea Regulamentului privind vânzarea imobilelor - clădiri și terenuri aflate în proprietatea privată a Orașului Pantelimon, Judeţ Ilfov",
+     "obiect": "Modificarea regulamentului de vânzare a imobilelor (clădiri și terenuri) aflate în proprietatea privată a orașului, privind plata în rate",
      "pagina": 59,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat modificarea articolului 50 din regulamentul de vânzare a imobilelor, pentru cazurile în care legea nu prevede condiții de plată în rate. Prețul de vânzare se majorează cu 5% față de prețul din raportul de evaluare, avansul minim este de 20%, iar neplata a trei rate succesive duce la rezoluțiunea contractului, cu ipotecă tabulară în favoarea orașului pentru diferența de preț. Celelalte prevederi ale hotărârii din 28.02.2023 rămân valabile.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "O persoană fizică, titulara concesiunii terenului, și bugetul local al orașului Pantelimon",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 207,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție de locuință, către o persoană fizică",
      "pagina": 61,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 200 mp (208 mp conform măsurătorilor) către o persoană fizică, care îl deține în concesiune, prin dreptul de preemțiune, la prețul de 7.530 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, cu un avans de minim 20%, iar contractul de concesiune anterior se consideră reziliat la semnarea contractului de vânzare-cumpărare. Primarul a fost împuternicit să semneze actul la notar.",
+     "stare": "rezumat",
+     "sume": [
+      "7.530 euro"
+     ]
     },
     {
      "data": "2025-12-17",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 208,
      "obiect": "",
      "pagina": 64,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "societatea ILFOVEANA SA",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 209,
-     "obiect": "privind vânzarea, cu drept de preemptiune, a unui teren aparținând domeniului privat al Orașului Pantelimon, județul Ilfov către societatea ILFOVEANA SA",
+     "obiect": "Vânzarea, prin drept de preemptiune, a unui teren din domeniul privat al orașului către societatea ILFOVEANA SA",
      "pagina": 66,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat vânzarea prin negociere directă, cu drept de preemptiune, a unui teren intravilan de 3659 mp din tarla 8, parcela 55, către societatea ILFOVEANA SA. Prețul de vânzare este de 83.974 euro, plătibil în lei, iar cumpărătorul suportă taxele notariale, publicitatea imobiliară și costul raportului de evaluare. Sumele obținute merg integral la bugetul local.",
+     "stare": "rezumat",
+     "sume": [
+      "83.974 euro"
+     ]
     },
     {
      "data": "2025-12-17",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 210,
      "obiect": "",
      "pagina": 68,
      "pagini": 4,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
      "data": "2025-12-17",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 211,
      "obiect": "privind aprobarea Programului de acțiune comunitară la nivelul U.A.T. Pantelimon, aferent anului 2026",
      "pagina": 72,
      "pagini": 6,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Un proprietar persoană fizică care deține în concesiune terenul din oraș și Consiliul Local al orașului Pantelimon",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 212,
-     "obiect": "",
+     "obiect": "Vânzarea unui teren concesionat din domeniul privat al orașului către un cetățean, pe care există o locuință",
      "pagina": 78,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către o persoană fizică a unui teren intravilan de 167 mp, proprietatea privată a orașului, ocupat de o locuință, la prețul de 5.096 euro, plătibil în lei. Contractul de concesiune existent se consideră reziliat de la data semnării contractului de vânzare-cumpărare la notar, iar Primarul a fost împuternicit să semneze actul.",
+     "stare": "rezumat",
+     "sume": [
+      "5.096 euro"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică care deține în concesiune un teren din oraș cu o locuință",
      "data": "2025-12-17",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 213,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului către o persoană fizică, cu construcție de locuință",
      "pagina": 80,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 133 mp, proprietate privată a orașului, ocupat de o locuință, către cumpărătorul care îl deținea în concesiune. Prețul stabilit este de 4.089 euro, plătibil în lei, iar cumpărătorul suportă taxele notariale și costul raportului de evaluare. Contractul de concesiune se consideră reziliat la data semnării contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "4.089 euro"
+     ]
     }
    ],
    "lungime": 36485708,
@@ -2528,20 +2822,40 @@
    "etag": "\"27dc77-646485e6c2800\"",
    "hotarari": [
     {
+     "cine_e_afectat": "Elevii și locuitorii orașului Pantelimon",
      "data": "2025-11-26",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 183,
-     "obiect": "pentru actualizarea H.C.L. nr. 111 din 18.08.2025 privind aprobarea documentat",
+     "obiect": "Actualizarea documentației tehnico-economice și a indicatorilor pentru școala gimnazială Școala Verde din Pantelimon",
      "pagina": 1,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat actualizarea hotărârii nr. 111 din 18.08.2025 privind documentația tehnico-economică (faza PT și DDE) pentru Școala Gimnazială St+P+2E, Școala Verde. Valoarea totală a investiției este de 35.479.544,56 lei fără TVA și 42.840.207,19 lei cu TVA, iar durata estimată de execuție este de 12 luni, finanțată din bugetul local și alte surse legal constituite. Hotărârea a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": [
+      "35.479.544,56 lei",
+      "42.840.207,19 lei",
+      "28.155.672,89 lei",
+      "34.060.130,08 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Locuitorii orașului Pantelimon și elevii școlii gimnaziale care va fi construită în cadrul proiectului",
      "data": "2025-11-26",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 184,
-     "obiect": "pentru actualizarea H.C.L. nr. 147 din 27.06.2023 privind aprobarea depunerii proiectului “ȘCOALĂ GIMNAZIALA St+P+2E, Școală Verde în orașul Pantelimon, județul Ilfov” în cadrul Programului de finanţare Planul National de Redresare și Reziliență, Pilonul VI. Politici pentru noua generație Componenta",
+     "obiect": "Actualizarea bugetului proiectului „Școală Verde” din Pantelimon, finanțat prin PNRR",
      "pagina": 4,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a modificat hotărârea din 2023 și a aprobat un buget actualizat al proiectului școlii verzi, în valoare totală de 42.840.207,19 lei inclusiv TVA. De asemenea, a aprobat susținerea cheltuielilor neeligibile de 8.590.865,00 lei din bugetul local și din alte surse legal constituite. Hotărârea a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": [
+      "42.840.207,19 lei",
+      "8.590.865,00 lei"
+     ]
     }
    ],
    "lungime": 2612343,
@@ -2611,11 +2925,15 @@
    "hotarari": [
     {
      "data": "2025-11-21",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": null,
      "obiect": "",
      "pagina": 1,
      "pagini": 4,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     }
    ],
    "lungime": 2135432,
@@ -2676,68 +2994,117 @@
    "etag": "\"8c2bb1-64468460febc0\"",
    "hotarari": [
     {
+     "cine_e_afectat": "Consiliul Local al orașului Pantelimon și consilierii locali",
      "data": "2025-11-19",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 173,
-     "obiect": "privind alegerea preşedintelui de şedinţă",
+     "obiect": "Alegerea unui consilier local ca președinte de ședință al Consiliului Local Pantelimon",
      "pagina": 1,
      "pagini": 1,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a ales un consilier local ca președinte de ședință, pentru cel mult 3 luni, începând cu 19.11.2025. Acesta va conduce ședințele și va semna hotărârile adoptate. Hotărârea a fost adoptată cu unanimitate de voturi, cu 19 consilieri prezenți.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-11-19",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 174,
      "obiect": "",
      "pagina": 2,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Solicitanții de locuințe sociale din orașul Pantelimon înscriși pe lista de priorități pentru anul 2026",
      "data": "2025-11-19",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 175,
-     "obiect": "privind aprobarea listei de priorități întocmită în baza criteriilor care se au în vedere la stabilirea ordinii de prioritate a solicitantilor indreptatiti să primească o locuință socială în anul 2026",
+     "obiect": "Aprobarea listei de priorități pentru acordarea locuințelor sociale în anul 2026",
      "pagina": 4,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat lista de priorități pentru anul 2026, care cuprinde solicitanții îndreptățiți să primească o locuință socială, ordonați după punctajul obținut conform criteriilor din regulament. Lista este anexată hotărârii, iar contestațiile se depun conform legii. Hotărârea a fost adoptată cu majoritate de voturi, în ședința din 19.11.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-11-19",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 176,
      "obiect": "",
      "pagina": 7,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Un proprietar de teren din oraș, care solicită aprobarea documentației de urbanism",
      "data": "2025-11-19",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 177,
-     "obiect": "",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construirea de locuințe P+2E duplex și individuale, împrejmuire, organizare de șantier și branșamente la utilități",
      "pagina": 9,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea de locuințe duplex și individuale, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 1.869 mp din oraș. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate, cu 19 consilieri prezenți.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "locuitorii orașului Pantelimon, în special persoanele care așteaptă locuințe sociale",
      "data": "2025-11-19",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 178,
-     "obiect": "pentru modificarea H.C.L. nr. 79 din 04.04.2019 privind aprobarea indicatorilor tehnico- economici si finanţarea de la bugetul local a obiectivului de investiţii „Construire locuințe sociale, utilități Oraş Pantelimon, județ Ilfov”",
+     "obiect": "Modificarea hotărârii nr. 79/2019 privind indicatorii tehnico-economici și finanțarea obiectivului „Construire locuințe sociale, utilități Oraș Pantelimon”",
      "pagina": 11,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a modificat valorile indicatorilor tehnico-economici ai obiectivului: valoarea totală a lucrărilor este de 49.554.688,98 lei cu TVA, durata estimată de execuție 36 luni, suprafața 8.370 mp. Finanțarea de la bugetul local este de 1.531.554,28 lei, iar suma de 48.023.134,69 lei se va solicita MDLPA prin Programul multianual pentru locuințe sociale. Hotărârea a fost adoptată cu unanimitate de voturi în ședința din 19.11.2025.",
+     "stare": "rezumat",
+     "sume": [
+      "49.554.688,98 lei",
+      "46.947.455,61 lei",
+      "1.531.554,28 lei",
+      "48.023.134,69 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Proprietarii și alți titulari de drepturi reale ai imobilelor situate în coridorul de expropriere",
      "data": "2025-11-19",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 179,
-     "obiect": "privind aprobarea declanșării procedurilor de expropriere pentru imobilul proprietate privată situat în orașul Pantelimon care constituie coridorul de expropriere aferent lucrării de utilitate publică de interes local la obiectivul de investiţii „Amenajare spaţiu verde, loc de joaca şi parcări”",
+     "obiect": "Aprobarea declanșării procedurii de expropriere pentru un imobil privat din Pantelimon, necesar obiectivului „Amenajare spațiu verde, loc de joacă și parcări”",
      "pagina": 13,
      "pagini": 8,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat amplasamentul lucrării de interes local și sursa de finanțare din bugetul local. A aprobat declanșarea procedurii de expropriere pentru imobilul proprietate privată care constituie coridorul de expropriere, precum și lista proprietarilor afectați și sumele individuale ale despăgubirilor, prin anexele 2-4. Hotărârea a fost adoptată cu unanimitate de voturi în ședința ordinară din 19.11.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Locuitorii orașului Pantelimon și Apă-Canal Ilfov SA",
      "data": "2025-11-19",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 181,
-     "obiect": "privind accesul pe terenurile/drumurile ce aparțin U.A.T. Pantelimon pentru executarea lucrărilor de construire aferente „Proiectului Regional de Dezvoltare a Infrastructurii de Apă şi Apă Uzată din județul Ilfov” Contract CL-G02 — „Gospodării de apă și aductiuni in Ciorogârla, Domnești, Clinceni, C",
+     "obiect": "Acces pe terenurile și drumurile orașului pentru lucrările Proiectului Regional de Dezvoltare a Infrastructurii de Apă și Apă Uzată din Ilfov",
      "pagina": 21,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat accesul pe 15 terenuri și drumuri ale orașului pentru construirea lucrărilor proiectului regional de apă și apă uzată. Apă-Canal Ilfov SA trebuie să repare, din fonduri proprii, avariile produse în timpul lucrărilor și să aducă terenurile la starea inițială înainte de recepție. Primarul este mandatat să semneze documentele necesare.",
+     "stare": "rezumat",
+     "sume": []
     }
    ],
    "lungime": 9186225,
@@ -2854,180 +3221,333 @@
    "etag": "\"265a12a-642c1589bf0c0\"",
    "hotarari": [
     {
+     "cine_e_afectat": "Școala Gimnazială nr. 1 Pantelimon și consilierii locali",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 150,
-     "obiect": "privind desemnarea unui reprezentant al Consiliului Local Pantelimon în Comisia de asigurare a calității din cadrul Școlii Gimnaziale nr. 1 Pantelimon pentru anul școlar 2025-2026",
+     "obiect": "Desemnarea unui consilier local în Comisia de asigurare a calității de la Școala Gimnazială nr. 1 Pantelimon, anul școlar 2025-2026",
      "pagina": 1,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a desemnat un consilier local care să facă parte din Comisia de asigurare a calității de la Școala Gimnazială nr. 1 Pantelimon pentru anul școlar 2025-2026. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința ordinară din 30.10.2025, și se comunică instituțiilor implicate și se afișează pe site-ul primăriei.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Locuitorii orașului Pantelimon și Serviciul Cadastru, Patrimoniu și Arhivă al primăriei",
      "data": "2025-10-30",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 151,
-     "obiect": "privind dezmembrarea cadastrală si notariala a terenului ce aparține domeniului privat al U.A.T. Pantelimon, situat în T30, P284 cu numărul cadastral 124312 din Orașul Pantelimon, judeţul Ilfov, în 22 loturi",
+     "obiect": "Dezmembrarea cadastrală și notarială a unui teren de 5.949 mp al UAT Pantelimon în 22 de loturi",
      "pagina": 3,
      "pagini": 10,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat dezmembrarea terenului de 5.949 mp, situat în T30, P284, cu numărul cadastral 124312, în 22 de loturi distincte, cu suprafețe între 76 mp și 749 mp. Hotărârea a fost adoptată cu unanimitate de voturi în ședința ordinară din 30.10.2025 și se comunică Prefectului și Primarului.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Firma Best Home Residence S.R.L., beneficiara investiției, și locuitorii din zona terenului",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 153,
-     "obiect": "privind aprobarea unui P.U.D. — construire spațiu comercial, imprejmuire, bransamente la utilități organizare de șantier. Beneficiar Best Home Residence S.R.L",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construire spațiu comercial, împrejmuire și branșamente la utilități pe o strada din oraș",
      "pagina": 13,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unui spațiu comercial, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de firma Best Home Residence S.R.L. pentru un teren de 696 mp din oraș. Documentația are valabilitate de doi ani de la aprobare.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Firma Nos Sistem Auto Service S.R.L. și locuitorii din zona terenului de pe strada Băile Felix",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 154,
-     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilităţi organizare de șantier. Beneficiar Nos Sistem Auto Service S.R.L",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire locuință, împrejmuire, organizare de șantier și branșamente la utilități, str. Băile Felix",
      "pagina": 15,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de firma Nos Sistem Auto Service S.R.L. pentru un teren de 429 mp. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința din 30.10.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Două persoane fizice care au solicitat planul urbanistic pentru un teren din oraș",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 155,
-     "obiect": "",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire două locuințe, împrejmuire, organizare de șantier și branșamente la utilități",
      "pagina": 17,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea a două locuințe, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 604 mp din oraș. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința ordinară din 30.10.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "S.C. Nimirode Impex S.R.L., care este beneficiara proiectului, și locuitorii din zona terenului",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 156,
-     "obiect": "privind aprobarea unui P.U.D. — construire hală depozitare, imprejmuire, bransamente la utilități organizare de șantier. Beneficiar S.C.Nimirode Impex S.R.L",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construirea unei hale de depozitare, împrejmuire, organizare de șantier și branșamente la utilități",
      "pagina": 19,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei hale de depozitare, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren din B-dul Biruintei în suprafață de 4.415 mp, solicitat de S.C. Nimirode Impex S.R.L. Documentația are valabilitate de doi ani de la aprobare.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-10-30",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 157,
      "obiect": "",
      "pagina": 21,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Locuitorii orașului Pantelimon",
      "data": "2025-10-30",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 158,
-     "obiect": "privind rectificarea bugetului local și virarea creditelor pe anul 2025",
+     "obiect": "Rectificarea bugetului local al orașului Pantelimon pe anul 2025 și virarea creditelor",
      "pagina": 23,
      "pagini": 27,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat majorarea bugetului local pe 2025 cu suma totală de 10.205.000 lei și virarea creditelor bugetare de la un capitol la altul în sumă totală de 330.000 lei. A fost aprobată și actualizarea listei de investiții a bugetului rectificat, conform anexei. Hotărârea a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": [
+      "10.205.000 lei",
+      "330.000 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Locuitorii orașului Pantelimon",
      "data": "2025-10-30",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 159,
-     "obiect": "privind aprobarea bugetului creditelor interne pe anul 2025",
+     "obiect": "Aprobarea bugetului creditelor interne al orașului Pantelimon pe anul 2025",
      "pagina": 50,
      "pagini": 4,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat bugetul creditelor interne pe anul 2025, în sumă de 5.000.000 lei atât la cheltuieli, cât și la venituri. A aprobat și lista de investiții aferentă, iar hotărârea a fost adoptată cu unanimitate de voturi în ședința din 30.10.2025.",
+     "stare": "rezumat",
+     "sume": [
+      "5.000.000 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Proprietarii și alți titulari de drepturi reale ai imobilelor din coridorul de expropriere de pe strada Sibiu",
      "data": "2025-10-30",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 160,
-     "obiect": "privind aprobarea declanșării procedurilor de expropriere pentru imobilele proprietate privată situate în orașul Pantelimon care constituie coridorul de expropriere aferent lucrării de utilitate publică de interes local la obiectivul de investiţii „Modernizare strada Sibiu, oraş Pantelimon”",
+     "obiect": "Declanșarea procedurilor de expropriere pentru imobile private din coridorul lucrării „Modernizare strada Sibiu”",
      "pagina": 54,
      "pagini": 6,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat amplasamentul lucrării de interes local „Modernizare strada Sibiu” și declanșarea procedurii de expropriere a imobilelor private din coridorul de expropriere. Au fost aprobate, de asemenea, lista proprietarilor afectați, sumele individuale ale despăgubirilor și bugetul local ca sursă de finanțare.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "o persoană fizică din orașul Pantelimon aflată într-o situație deosebită din cauza stării de sănătate",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 161,
-     "obiect": "",
+     "obiect": "Acordarea unui ajutor de urgență de 40.000 lei unei persoane fizice aflate într-o situație deosebită din cauza stării de sănătate",
      "pagina": 60,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat acordarea unui ajutor de urgență în sumă de 40.000 lei din bugetul local unui locuitor al orașului, aflat într-o situație deosebită din cauza stării de sănătate. Direcția de Asistență Socială va duce la îndeplinire hotărârea, care poate fi contestată potrivit legii.",
+     "stare": "rezumat",
+     "sume": [
+      "40.000 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Un cumpărător persoană fizică, care deținea terenul în concesiune, și locuitorii orașului Pantelimon prin veniturile la bugetul local",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 162,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren din domeniul privat al orașului, cu construcție, către un cumpărător care îl avea în concesiune",
      "pagina": 62,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către un cumpărător persoană fizică a unui teren intravilan al orașului, de 443 mp din acte, ocupat de o locuință, la prețul de 16.147 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 de luni, cu avans de minim 20%. Contractul de concesiune anterior se consideră reziliat la semnarea contractului de vânzare-cumpărare, iar primarul este împuternicit să semneze actul.",
+     "stare": "rezumat",
+     "sume": [
+      "16.147 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Un cetățean care deține în concesiune terenul din oraș, precum și Primăria Orașului Pantelimon",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 163,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție de locuință, către un cetățean",
      "pagina": 65,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către un cetățean a terenului intravilan de 420,80 mp (455 mp conform măsurătorilor), ocupat de o locuință, la prețul de 16.584 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, cu avans de minim 20%, iar contractul de concesiune existent se consideră reziliat la semnarea contractului de vânzare.",
+     "stare": "rezumat",
+     "sume": [
+      "16.584 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Un cumpărător persoană fizică, fostul concesionar al unui teren din oraș",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 164,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului către o persoană fizică, pe care există o construcție",
      "pagina": 68,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 440 mp, ocupat de o locuință, către un cumpărător persoană fizică, prin valorificarea dreptului de preemțiune. Prețul stabilit este de 16.037 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 de luni, cu un avans de minim 20%. Contractul de concesiune existent se consideră reziliat la semnarea contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "16.037 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Un proprietar persoană fizică care deține în concesiune un teren din oraș, pe care se află o locuință",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 165,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului către o persoană fizică, pe care există o construcție de locuință",
      "pagina": 71,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 455 mp (454 mp conform măsurătorilor) aflat în proprietatea privată a orașului, ocupat de o locuință, către un cumpărător persoană fizică, care îl avea în concesiune. Prețul este de 16.584 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 de luni, cu avans de minim 20%, garantat cu ipotecă în favoarea orașului. Contractul de concesiune anterior se consideră reziliat la semnarea contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "16.584 euro"
+     ]
     },
     {
      "data": "2025-10-30",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 166,
      "obiect": "",
      "pagina": 74,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Un locuitor al orașului Pantelimon care deține în concesiune terenul respectiv, și bugetul local al orașului",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 167,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al Orașului Pantelimon, cu construcție, către o persoană fizică",
      "pagina": 77,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către o persoană fizică a unui teren intravilan de 893 mp (909 mp conform măsurătorilor), ocupat de o locuință, la prețul de 33.132 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, cu avans de minim 20%, garantate printr-o ipotecă în favoarea orașului. Contractul de concesiune anterior se consideră reziliat de drept.",
+     "stare": "rezumat",
+     "sume": [
+      "33.132 euro"
+     ]
     },
     {
+     "cine_e_afectat": "o persoană fizică, concesionarul unui teren din oraș, și bugetul local al Orașului Pantelimon",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 168,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren din oraș, concesionat și ocupat de o locuință, către persoana care îl deține în concesiune",
      "pagina": 80,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către o persoană fizică, cumpărătorul fiind concesionarul actual, a unui teren intravilan de 439 mp al orașului, ocupat de o locuință, la prețul de 16.001 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, cu avans de minim 20%, iar contractul de concesiune existent se consideră reziliat la încheierea vânzării.",
+     "stare": "rezumat",
+     "sume": [
+      "16.001 euro"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică care deține în concesiune un teren din oraș, pe care se află o locuință",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 169,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului către o persoană fizică, pe care există o construcție",
      "pagina": 83,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 220 mp (196 mp conform măsurătorilor), ocupat de o locuință, către o persoană fizică care îl avea în concesiune, la prețul de 7.144 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, cu avans de minim 20%, iar contractul de concesiune existent se consideră reziliat la semnarea contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "7.144 euro"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică, concesionara terenului din oraș, și locuitorii orașului Pantelimon prin veniturile la bugetul local",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 170,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție de locuință, către o persoană fizică",
      "pagina": 86,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către o persoană fizică a unui teren intravilan de 198,72 mp (305 mp conform măsurătorilor), ocupat de o locuință, la prețul de 11.117 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, cu avans de minim 20%, iar contractul de concesiune existent se consideră reziliat.",
+     "stare": "rezumat",
+     "sume": [
+      "11.117 euro"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică care deține în folosință un teren din oraș, precum și locuitorii orașului Pantelimon prin veniturile la bugetul local",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 171,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren din domeniul privat al orașului, cu construcție, către o persoană fizică",
      "pagina": 89,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 300 mp, proprietate privată a orașului, ocupat de o construcție cu destinația de locuință, către o persoană fizică care îl deține în folosință. Prețul stabilit este de 10.752 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 luni, cu avans de minim 20%, iar pentru diferența de preț se înscrie ipotecă în favoarea orașului. Taxele notariale și cele de evaluare sunt suportate de cumpărător, iar sumele obținute constituie venit la bugetul local.",
+     "stare": "rezumat",
+     "sume": [
+      "10.752 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Unitatea administrativ-teritorială Pantelimon și locuitorii orașului",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 172,
-     "obiect": "privind dezmembrarea cadastrală și notarială a terenului ce aparține domeniului public al U.A.T. Pantelimon, situat în T96, parcela Hb 971 cu numărul cadastral 121728 din Orașul Pantelimon, județul Ilfov, în 2 loturi",
+     "obiect": "Dezmembrarea terenului din domeniul public al orașului Pantelimon, parcela Hb 971, în două loturi",
      "pagina": 92,
      "pagini": 1,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat dezmembrarea terenului de 217,0015 ha, aflat în domeniul public al U.A.T. Pantelimon, în două loturi distincte: lotul 1 de 214,0015 ha și lotul 2 de 3,00 ha. Primarul, prin aparatul de specialitate, va duce la îndeplinire hotărârea, care se comunică prefectului și se publică pe site-ul primăriei.",
+     "stare": "rezumat",
+     "sume": []
     }
    ],
    "lungime": 40214826,
@@ -3044,84 +3564,164 @@
    "etag": "\"dd0108-6425c353eda80\"",
    "hotarari": [
     {
+     "cine_e_afectat": "O persoană fizică care deține în concesiune terenul din oraș cu locuință",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 162,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcții, către o persoană fizică",
      "pagina": 1,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 443 mp (441 mp din măsurători), ocupat de o locuință, către o persoană fizică care îl avea în concesiune, la prețul de 16.147 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 de luni cu avans de minim 20%. Contractul de concesiune existent se consideră reziliat de drept la semnarea contractului de vânzare-cumpărare, iar primarul a fost împuternicit să semneze actul la notar.",
+     "stare": "rezumat",
+     "sume": [
+      "16.147 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Un cetățean care deține în concesiune terenul respectiv și locuiește pe el",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 163,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție de locuință, către un cetățean",
      "pagina": 4,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 420,80 mp (455 mp din măsurători), ocupat de o locuință, către un cetățean care îl avea în concesiune, cu prețul de 16.584 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 de luni, cu avans de minim 20%. Contractul de concesiune anterior se consideră reziliat, iar primarul este împuternicit să semneze contractul de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "16.584 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Un cumpărător persoană fizică care deține în concesiune un teren din oraș, precum și bugetul local al Orașului Pantelimon",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 164,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție, către un cumpărător persoană fizică",
      "pagina": 7,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 440 mp, ocupat de o locuință, către persoana care îl avea în concesiune, la prețul de 16.037 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, după un avans de minim 20%, iar contractul de concesiune se consideră reziliat la semnarea contractului de vânzare.",
+     "stare": "rezumat",
+     "sume": [
+      "16.037 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Un cumpărător persoană fizică care deține în concesiune un teren din oraș cu locuință",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 165,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție de locuință, către o persoană fizică",
      "pagina": 10,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către un cumpărător persoană fizică a terenului intravilan de 455 mp (454 mp din măsurători), ocupat de o locuință, la prețul de 16.584 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, cu avans de minim 20%, iar contractul de concesiune existent se consideră reziliat.",
+     "stare": "rezumat",
+     "sume": [
+      "16.584 euro"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică care deține în concesiune terenul și locuința de pe el, precum și bugetul local al orașului",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 166,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului către o persoană fizică, pe care există o construcție",
      "pagina": 13,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către un cumpărător persoană fizică a unui teren intravilan de 620,40 mp, ocupat de o locuință, la prețul de 21.505 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 de luni, cu avans de minim 20%. Contractul de concesiune existent se consideră reziliat de drept la semnarea contractului de vânzare-cumpărare, iar venitul din vânzare merge la bugetul local.",
+     "stare": "rezumat",
+     "sume": [
+      "21.505 euro"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică care deține în concesiune un teren din oraș cu locuință, și bugetul local al Orașului Pantelimon",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 167,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție, către o persoană fizică",
      "pagina": 16,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat vânzarea unui teren intravilan de 893 mp (909 mp conform măsurătorilor), ocupat de o locuință, către persoana care îl deține în concesiune, la un preț de 33.132 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, după un avans de minim 20%, iar pentru diferență se instituie ipotecă în favoarea orașului. Contractul de concesiune anterior se consideră reziliat de drept la semnarea contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "33.132 euro"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică, cumpărătorul terenului, și bugetul local al orașului",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 168,
-     "obiect": "",
+     "obiect": "Vânzarea unui teren concesionat din domeniul privat al orașului către o persoană fizică, cu construcție de locuință",
      "pagina": 19,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 439 mp, ocupat de o locuință, către un cumpărător persoană fizică, la prețul de 16.001 euro, plătibil în lei. Plata se poate face integral sau în rate lunare de maximum 36 luni, cu avans de minim 20%, iar contractul de concesiune anterior se consideră reziliat.",
+     "stare": "rezumat",
+     "sume": [
+      "16.001 euro"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică, concesionara terenului din oraș, și locuitorii orașului Pantelimon prin veniturile la bugetul local",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 169,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție de locuință, către o persoană fizică",
      "pagina": 22,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către o persoană fizică a unui teren intravilan de 220 mp din acte (196 mp din măsurători), ocupat de o locuință, prin valorificarea dreptului de preempțiune. Prețul este de 7.144 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 de luni, cu avans de minim 20%. Contractul de concesiune anterior se consideră reziliat de drept la semnarea contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "7.144 euro"
+     ]
     },
     {
+     "cine_e_afectat": "O persoană fizică care deține în concesiune terenul și locuința de pe el, precum și bugetul local al orașului",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 170,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție, către o persoană fizică",
      "pagina": 25,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 198,72 mp (305 mp din măsurători), ocupat de o locuință, către o persoană fizică care îl avea în concesiune. Prețul este de 11.117 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 de luni, cu un avans de minim 20%. Contractul de concesiune se consideră reziliat la semnarea contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "11.117 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Un cetățean care deține în folosință terenul și locuința de pe acesta, precum și locuitorii orașului Pantelimon, ale căror venituri din vânzare intră la bugetul local",
      "data": "2025-10-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 171,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren intravilan cu construcție de locuință, proprietatea Orașului Pantelimon, către un cetățean",
      "pagina": 28,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către un cumpărător persoană fizică a unui teren intravilan de 300 mp (295 mp din măsurători), ocupat de o locuință, prin valorificarea dreptului de preempțiune, la prețul de 10.752 euro. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, cu un avans de minimum 20%, iar diferența de preț este garantată prin ipotecă în favoarea orașului.",
+     "stare": "rezumat",
+     "sume": [
+      "10.752 euro"
+     ]
     }
    ],
    "lungime": 14483720,
@@ -3358,172 +3958,317 @@
    "etag": "\"403abb6-6409181a87380\"",
    "hotarari": [
     {
+     "cine_e_afectat": "Locuitorii orașului Pantelimon și persoanele care circulă pe DN3 prin localitate",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 127,
-     "obiect": "privind aprobarea indicatorilor tehnico-economici ai obiectivului de investiţii „Amplasare totemuri, seminaristică intrare în localitatea Pantelimon DN3 — ieşire din localitatea Pantelimon, județul Ilfov”",
+     "obiect": "Aprobarea indicatorilor tehnico-economici pentru amplasarea totemuri și semnalistică la intrarea în Pantelimon pe DN3",
      "pagina": 1,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat indicatorii tehnico-economici ai investiției de amplasare a două totemuri și a semnalisticii la intrarea și ieșirea din localitate pe DN3, în județul Ilfov. Valoarea totală a investiției este de 121.537,11 lei fără TVA (146.947,59 lei cu TVA), iar execuția durează o lună, finanțată din bugetul local și alte surse legal constituite.",
+     "stare": "rezumat",
+     "sume": [
+      "121.537,11 lei",
+      "146.947,59 lei",
+      "89.142,32 lei",
+      "107.862,21 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Locuitorii blocurilor de locuințe din orașul Pantelimon incluse în proiectul de creștere a performanței energetice",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 128,
-     "obiect": "pentru modificarea art. 1 din H.C.L. nr. 105 din 31.05.2019 privind aprobarea indicatorilor tehnico-economici pentru obiectivul de inve: rivind cresterea performantei energetice a 14 blocuri de locuinţe de pe raza administrativa a orașului Pantelimon, județul Ilfov",
+     "obiect": "Modificarea art. 1 din H.C.L. nr. 105/2019 privind indicatorii tehnico-economici pentru creșterea performanței energetice a 14 blocuri de locuințe din Pantelimon",
      "pagina": 3,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat modificarea articolului 1 din H.C.L. nr. 105/2019, care stabilește valoarea investiției pentru reabilitarea energetică a 14 blocuri de locuințe. Noul tabel prezintă valorile pe fiecare bloc, durata de execuție de 12 luni și sursa de finanțare din bugetul local și alte surse. Hotărârea a fost adoptată cu unanimitate de voturi, cu 19 consilieri prezenți.",
+     "stare": "rezumat",
+     "sume": [
+      "40.907.705,21 lei",
+      "38.896.570,54 lei",
+      "23.337.942,29 lei",
+      "11.668.971,20 lei",
+      "3.889.657,05 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Locatarii celor 14 blocuri de locuințe din orașul Pantelimon și asociațiile de proprietari ale acestora",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 129,
-     "obiect": "pentru modificarea art.1 din H.C.L. nr. 106 din 31.05.2019 privind aprobarea de la bugetul local a cheltuielilor aferente obiectivului de investiţii privind creşterea performanței energetice a 14 blocuri de locuinţe de pe raza administrativă a orașului Pantelimon, județul Ilfov",
+     "obiect": "Modificarea H.C.L. nr. 106/2019 privind bugetul pentru creșterea performanței energetice a 14 blocuri de locuințe",
      "pagina": 5,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a adoptat hotărârea nr. 129 din 30.09.2025, prin care se modifică articolul 1 din hotărârea nr. 106/2019 și se aprobă anexa cu cheltuielile pentru cele 14 blocuri. Suma necesară de la bugetul local pentru investiție este de 11.668.971,20 lei. Hotărârea a fost adoptată cu unanimitate de voturi, cu 19 consilieri prezenți.",
+     "stare": "rezumat",
+     "sume": [
+      "11.668.971,20 lei",
+      "40.907.705,21 lei",
+      "38.896.570,54 lei",
+      "23.337.942,29 lei",
+      "3.889.657,05 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Locuitorii celor 14 blocuri de locuințe din orașul Pantelimon și asociațiile de proprietari ale acestor blocuri",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 130,
-     "obiect": "pentru modificarea art.1 din H.C.L. nr. 137 din 03.07.2019 privind suportarea din fondurile bugetului local al orașului Pantelimon a sumelor reprezentând contribuţia asociaţiilor de proprietari a cheltuielilor aferente obiectivului de investiții privind creşterea performantei energetice a 14 blocuri",
+     "obiect": "Modificarea HCL nr. 137/2019 privind suportarea din bugetul local a contribuției asociațiilor de proprietari pentru creșterea performanței energetice a 14 blocuri",
      "pagina": 7,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat modificarea articolului 1 din Hotărârea nr. 137/2019, prin anexa nr. 1 la hotărâre. Suma necesară de la bugetul local pentru această investiție este de 3.889.657,05 lei. Primarul și aparatul de specialitate vor aduce la îndeplinire hotărârea, care a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": [
+      "3.889.657,05 lei"
+     ]
     },
     {
+     "cine_e_afectat": "locuitorii orașului Pantelimon",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 131,
-     "obiect": "pentru modificarea H.C.L. nr. 62 din 08.05.2025 privind aprobarea contractării unei finanţări rambursabile interne/externe in valoare de 39.913.827,33 lei pentru asigurarea finanțării proiectelor de investiţii de interes local",
+     "obiect": "Modificarea H.C.L. nr. 62/2025 privind contractarea unei finanțări rambursabile pentru proiecte de investiții de interes local",
      "pagina": 10,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat modificarea anexei privind lista obiectivelor de investiții finanțate prin împrumutul de 39.913.827,33 lei, stabilind valoarea finanțării pentru fiecare obiectiv, inclusiv modernizări de străzi, drumuri și rețele de colectare pluvială. Celelalte prevederi ale hotărârii nr. 62/2025 rămân valabile, iar hotărârea se comunică prefecturii și se afișează pe site-ul primăriei.",
+     "stare": "rezumat",
+     "sume": [
+      "39.913.827,33 lei",
+      "100.000,00 lei",
+      "19.272.184,03 lei",
+      "157.736.81 lei",
+      "7.873.243,90 lei",
+      "2.025.996,49 lei",
+      "1.057.910,00 lei",
+      "9.426.756,10 lei"
+     ]
     },
     {
      "data": "2025-09-30",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 132,
      "obiect": "privind aprobarea Regulamentului privind repartizarea și închirierea locuinţelor sociale aparținând orașului Pantelimon si constituirea comisiei de analiza și soluționare a cererilor pentru locuințele sociale",
      "pagina": 12,
      "pagini": 29,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
      "data": "2025-09-30",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 133,
      "obiect": "",
      "pagina": 41,
      "pagini": 68,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Unitatea administrativ-teritorială Pantelimon și Serviciul Cadastru, Patrimoniu și Arhivă al primăriei",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 135,
-     "obiect": "privind dezmembrarea cadastrală și notarială a terenului ce aparține domeniului privat al U.A.T. Pantelimon, situat in T29, P255, 256, 257 cu numărul cadastral 123194 din Orașul Pantelimon, județul Ilfov, în 2 loturi",
+     "obiect": "Dezmembrarea cadastrală și notarială a unui teren al U.A.T. Pantelimon în două loturi",
      "pagina": 109,
      "pagini": 1,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat împărțirea terenului de 18.230 mp, cu numărul cadastral 123194, aflat în domeniul privat al orașului, în două loturi: lotul 1 de 17.614 mp și lotul 2 de 616 mp. Primarul și aparatul de specialitate vor duce la îndeplinire hotărârea, care se afișează public pe site-ul primăriei.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-09-30",
+     "motive": [
+      "adresă exactă sau număr cadastral"
+     ],
      "nr": 136,
      "obiect": "privind rectificarea și completarea Anexei prevăzute la H.C.L. 70/29.05.2025 pentru rectificarea şi completarea Anexei prevăzute la H.C.L. 45/26.03.2025, privind completarea Anexei prevăzute la Hotărârea Consiliului Local al orașului Pantelimon nr. 51/14 mai 2013",
      "pagina": 110,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
      "data": "2025-09-30",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 137,
      "obiect": "",
      "pagina": 112,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Un proprietar de teren din orașul Pantelimon (persoană fizică solicitantă) și vecinii zonei",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 138,
-     "obiect": "",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire locuință, împrejmuire, organizare de șantier și branșamente la utilități",
      "pagina": 114,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 300 mp de pe strada Călimănești din oraș, solicitat de o persoană fizică. Documentația este valabilă doi ani de la aprobare, iar hotărârea a fost adoptată cu unanimitate, în ședința din 30.09.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Un proprietar de teren din orașul Pantelimon (persoană fizică solicitantă) și aparatul de specialitate al primăriei",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 139,
-     "obiect": "",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construire locuință, împrejmuire, branșamente la utilități și organizare de șantier",
      "pagina": 116,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de o persoană fizică, pentru un teren din oraș de 403 mp. Documentația este valabilă doi ani de la aprobare, iar hotărârea a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Șase persoane fizice care solicită autorizarea construirii unor locuințe pe un teren din oraș",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 140,
-     "obiect": "",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire patru locuințe P+1E, împrejmuire, organizare de șantier și branșamente la utilități",
      "pagina": 118,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea a patru locuințe, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 1.200 mp din strada Pădurii, solicitat de șase persoane fizice. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi, cu 19 consilieri prezenți.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Un proprietar de teren din orașul Pantelimon, care a solicitat documentația de urbanism",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 141,
-     "obiect": "",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construire locuință, împrejmuire și branșamente la utilități",
      "pagina": 120,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 460 mp din strada Vrabiei. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința din 30.09.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Proprietarii unui teren din orașul Pantelimon, pe strada Fanetei, și locuitorii din zonă",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 142,
-     "obiect": "",
+     "obiect": "Aprobarea Planului Urbanistic Zonal pentru un ansamblu de locuințe individuale și semicolective mici, maxim P+2E, în Pantelimon",
      "pagina": 122,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic Zonal pentru construirea unui ansamblu de locuințe pe un teren din strada Fanetei, solicitat de mai multe persoane fizice. Suprafața de 1.989,30 mp va trece în domeniul public al orașului, gratuit, doar după realizarea infrastructurii rutiere, a spațiului verde și a utilităților, sau va rămâne în domeniul privat al proprietarilor. Documentația este valabilă zece ani de la aprobare.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-09-30",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 143,
      "obiect": "",
      "pagina": 124,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "locuitorii orașului Pantelimon",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 144,
-     "obiect": "privind aprobarea indicatorilor tehnico-economici ai obiectivului de investiţii “ Amenajare spațiu verde, loc de joacă şi parcări”",
+     "obiect": "Aprobarea indicatorilor tehnico-economici pentru investiția „Amenajare spațiu verde, loc de joacă și parcări”",
      "pagina": 127,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat indicatorii tehnico-economici ai investiției de amenajare a unui spațiu verde, a unui loc de joacă și a parcărilor, cu valoarea totală fără TVA de 1.140.952,05 lei și cu TVA de 1.378.545,22 lei. Durata estimată de execuție este de 3 luni, iar finanțarea provine din bugetul local și alte surse legal constituite. Hotărârea a fost adoptată cu unanimitate de voturi, cu 19 consilieri prezenți.",
+     "stare": "rezumat",
+     "sume": [
+      "1.140.952,05 lei",
+      "1.378.545,22 lei",
+      "686.910,43 lei",
+      "831.161,62 lei"
+     ]
     },
     {
+     "cine_e_afectat": "Elevii transportați cu microbuzul școlar la școlile din orașul Pantelimon și Școala Gimnazială nr. 1 Pantelimon",
      "data": "2025-09-30",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 145,
-     "obiect": "",
+     "obiect": "Aprobarea regulamentului de circulație, traseelor, stațiilor și grupelor de beneficiari pentru microbuzele școlare din Pantelimon, anul școlar 2025-2026",
      "pagina": 129,
      "pagini": 22,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat regulamentul privind circulația elevilor cu microbuzul școlar, tabelul cu grupele de beneficiari și orarul, locația parcării și stațiile de îmbarcare și debarcare pentru elevii transportați la școlile din oraș, în anul școlar 2025-2026. Hotărârea a fost adoptată cu unanimitate de voturi, cu 19 consilieri prezenți, și se încredințează conducerea Școlii Gimnaziale nr. 1 Pantelimon.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Școala Gimnazială nr. 1 Pantelimon și consilierii locali desemnați",
      "data": "2025-09-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 146,
-     "obiect": "privind desemnarea a doi reprezentanți ai Consiliului Local Pantelimon în Consiliul de Administraţie al Şcolii Gimnaziale nr. 1 Pantelimon pentru anul şcolar 2025-2026",
+     "obiect": "Desemnarea a doi consilieri locali în Consiliul de Administrație al Școlii Gimnaziale nr. 1 Pantelimon, pentru anul școlar 2025-2026",
      "pagina": 151,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a desemnat doi consilieri locali care vor face parte din Consiliul de Administrație al Școlii Gimnaziale nr. 1 Pantelimon pentru anul școlar 2025-2026. Hotărârea nr. 254/2024 privind reprezentanții pentru anul școlar 2024-2025 nu mai se aplică de la data adoptării. Hotărârea a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-09-30",
+     "motive": [
+      "date de identificare"
+     ],
      "nr": 147,
      "obiect": "privind organizarea evenimentului „Nunta de aur” pentru cuplurile care au împlinit 50 ani de căsnicie neîntreruptă",
      "pagina": 153,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
      "data": "2025-09-30",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 148,
      "obiect": "",
      "pagina": 155,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     }
    ],
    "lungime": 67349430,
@@ -3540,12 +4285,23 @@
    "etag": "\"13ef21-6409181b7b5c0\"",
    "hotarari": [
     {
+     "cine_e_afectat": "Copiii și personalul unității de învățământ preșcolar care urmează să funcționeze în noua grădiniță din oraș",
      "data": "2025-09-24",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 126,
-     "obiect": "privind actualizarea H.C.L. nr. 48 din 15.02.2024 privind aprobarea documentatiei tehnice pentru obținerea autorizaţiei de construire (D.T.A.C.), precum și a principalilor indicatori tehnico-economici pentru obiectivul de investiții „CONSTRUIRE GRĂDINIȚĂ”",
+     "obiect": "Actualizarea documentației tehnice (D.T.A.C.) și a indicatorilor tehnico-economici pentru grădinița „Construire grădiniță” din Pantelimon",
      "pagina": 1,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat documentația tehnică pentru obținerea autorizației de construire pentru grădinița „Construire grădiniță” și a actualizat indicatorii tehnico-economici ai investiției, inclusiv valoarea totală a investiției și durata estimată de execuție. Finanțarea se face din bugetul local și din alte surse legal constituite.",
+     "stare": "rezumat",
+     "sume": [
+      "52.915.605,03 lei fără TVA",
+      "62.905.729,99 lei cu TVA",
+      "32.204.965,41 lei fără TVA",
+      "38.323.908,84 lei cu TVA"
+     ]
     }
    ],
    "lungime": 1306401,
@@ -3606,28 +4362,47 @@
    "etag": "\"3a370e-64091814ce600\"",
    "hotarari": [
     {
+     "cine_e_afectat": "locuitorii orașului Pantelimon",
      "data": "2025-09-12",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 123,
-     "obiect": "pentru actualizarea H.C.L. nr. 309 din 18.12.2024 privind aprobarea documentației tehnico- economice faza Proiect Tehnic de execuție şi Detalii de execuţie (P.T si D.D.E) precum și a principalilor indicatorilor tehnico-economici(Deviz general) pentru obiectivul de investiţii „AMENAJARE SPAȚIU VERDE",
+     "obiect": "Actualizarea documentației tehnico-economice și a indicatorilor pentru obiectivul „Amenajare spațiu verde Parc Pantelimon”",
      "pagina": 1,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat documentația tehnico-economică (faza Proiect Tehnic și Detalii de execuție) pentru amenajarea parcului și a actualizat indicatorii tehnico-economici, inclusiv valoarea totală a investiției. Durata de realizare a lucrării este de 9 luni, iar finanțarea provine din bugetul local și alte surse legal constituite.",
+     "stare": "rezumat",
+     "sume": [
+      "17.922.730,68 lei",
+      "12.810.935,92 lei",
+      "21.299.374,65 lei",
+      "15.245.013,74 lei"
+     ]
     },
     {
      "data": "2025-09-12",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 124,
      "obiect": "privind aprobarea proiectului “AMENAJARE SPATIU VERDE PARC PANTELIMON” în vederea finanțării acestuia prin PR BI, in cadrul Apelului de Proiecte PRBI/563/PRBI P3/OP2/RSO2.7/PRBI A19 - PR BI P3/3.5/1/2024 Apel dedicat Creării, îmbunătățirii, extinderii spațiilor si infrastructurilor verzi",
      "pagina": 4,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
      "data": "2025-09-12",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 125,
      "obiect": "",
      "pagina": 6,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     }
    ],
    "lungime": 3815182,
@@ -3704,92 +4479,157 @@
    "etag": "\"85ffc3-63db9d7db9500\"",
    "hotarari": [
     {
+     "cine_e_afectat": "Locuitorii blocurilor de locuințe din orașul Pantelimon incluse în program și asociațiile de proprietari",
      "data": "2025-08-27",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 112,
-     "obiect": "pentru modificarea art. 1 din H.C.L. nr. 105 din 31.05.2019 privind aprobarea indicatorilor tehnico-economici pentru obiectivul de investiţii privind creșterea performantei energetice a 14 blocuri de locuinţe de pe raza administrativa a orașului Pantelimon, judeţul Ilfov",
+     "obiect": "Modificarea indicatorilor tehnico-economici pentru creșterea performanței energetice a 14 blocuri de locuințe din Pantelimon",
      "pagina": 1,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat, în unanimitate, modificarea articolului 1 din HCL nr. 105/2019, prin actualizarea valorii investiției pentru reabilitarea termică a 14 blocuri de locuințe. Lucrările au o durată de execuție de 12 luni și sunt finanțate din bugetul local și alte surse.",
+     "stare": "rezumat",
+     "sume": [
+      "40.875.148,29 lei",
+      "38.864.013,62 lei",
+      "23.318.408,17 lei",
+      "11.659.204,09 lei",
+      "3.886.401,36 lei"
+     ]
     },
     {
      "data": "2025-08-27",
+     "motive": [
+      "lungime în afara limitelor"
+     ],
      "nr": 113,
      "obiect": "pentru modificarea art.1 din H.C.L. nr. 106 din 31.05.2019 privind aprobarea de la bugetul local a cheltuielilor aferente obiectivului de investiţii privind creşterea performanței energetice a 14 blocuri de locuinţe de pe raza administrativă a oraşului Pantelimon, județul Ilfov",
      "pagina": 3,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Locuitorii celor 14 blocuri de locuințe din orașul Pantelimon și asociațiile de proprietari ale acestor blocuri",
      "data": "2025-08-27",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 114,
-     "obiect": "pentru modificarea art.1 din H.C.L. nr. 137 din 03.07.2019 privind suportarea din fondurile bugetului local al orașului Pantelimon a sumelor reprezentând contribuția asociaţiilor de proprietari a cheltuielilor aferente obiectivului de investiții privind creșterea performantei energetice a 14 blocuri",
+     "obiect": "Modificarea art. 1 din HCL nr. 137/2019 privind suportarea din bugetul local a contribuției asociațiilor de proprietari pentru creșterea performanței energetice a 14 blocuri",
      "pagina": 6,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat modificarea art. 1 din HCL nr. 137/2019, prin anexa care face parte integrantă din hotărâre. Suma necesară de la bugetul local pentru contribuția asociațiilor de proprietari la lucrările de performanță energetică a celor 14 blocuri este de 3.886.401,36 lei. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința ordinară din 27.08.2025.",
+     "stare": "rezumat",
+     "sume": [
+      "3.886.401,36 lei"
+     ]
     },
     {
      "data": "2025-08-27",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 115,
      "obiect": "privind îndreptarea unei erori materiale strecurată in H.C.L. nr. 287 din 20 decembrie 2023 privind aprobarea unui P.U.D. — construire clădire cu trei unități de locuinţe unifamiliale P+1E+M, împrejmuire, organizare de șantier, bransamente la utilități. Beneficiar S.C.Urban Staff Design S.R.L. și S",
      "pagina": 9,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Un proprietar privat care a solicitat documentația (persoane fizice) și locuitorii din zona terenului",
      "data": "2025-08-27",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 116,
-     "obiect": "",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construire patru locuințe, împrejmuire și branșamente la utilități",
      "pagina": 11,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea a patru locuințe, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 1.670 mp din oraș. Documentația este valabilă doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința ordinară din 27.08.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "un proprietar de teren din orașul Pantelimon (persoană fizică beneficiară) și locuitorii din zona terenului",
      "data": "2025-08-27",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 117,
-     "obiect": "",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construirea unei locuințe P+1E, împrejmuire și branșamente la utilități",
      "pagina": 13,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe P+1E, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 200 mp din oraș, solicitat de o persoană fizică. Documentația are valabilitate de doi ani de la aprobare, iar hotărârea a fost adoptată cu unanimitate de voturi, cu 19 consilieri prezenți.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Grădinița nr. 1 Pantelimon, consilierii locali desemnați și copiii și personalul grădiniței",
      "data": "2025-08-27",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 118,
-     "obiect": "privind desemnarea a doi reprezentanți ai Consiliului Local Pantelimon în Consiliul de Administraţie al Gradinitei nr. 1 Pantelimon pentru anul scolar 2025-2026",
+     "obiect": "Desemnarea a doi consilieri locali în Consiliul de Administrație al Grădiniței nr. 1 Pantelimon pentru anul școlar 2025-2026",
      "pagina": 15,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a desemnat doi consilieri locali care să facă parte din Consiliul de Administrație al Grădiniței nr. 1 Pantelimon pentru anul școlar 2025-2026. Hotărârea a abrogat desemnarea anterioară pentru anul școlar 2024-2025. Hotărârea a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-08-27",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 119,
      "obiect": "",
      "pagina": 17,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
      "data": "2025-08-27",
+     "motive": [
+      "dată care nu apare în sursă",
+      "posibil nume de persoană privată"
+     ],
      "nr": 120,
      "obiect": "",
      "pagina": 19,
      "pagini": 1,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
      "data": "2025-08-27",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 121,
      "obiect": "",
      "pagina": 20,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Persoanele fizice și juridice, asociațiile de locatari sau proprietari, agenții economici și locuitorii Orașului Pantelimon",
      "data": "2025-08-27",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 122,
-     "obiect": "privind completarea H.C.L.nr. 54 din 09.04.2020 pentru aprobarea normelor de igienă, salubrizare şi sănătate publică, privind mediul de viata al populației din Orașul Pantelimon",
+     "obiect": "Completarea H.C.L. nr. 54/2020 privind normele de igienă, salubrizare și sănătate publică în Orașul Pantelimon",
      "pagina": 22,
      "pagini": 7,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat completarea anexei nr. 3 la H.C.L. nr. 54/2020, cu normele privind buna gospodărire, întreținere și curățenia orașului, care revin instituțiilor, agenților economici și cetățenilor. Celelalte prevederi ale hotărârii anterioare rămân valabile. Hotărârea a fost adoptată cu unanimitate de voturi în ședința din 27.08.2025.",
+     "stare": "rezumat",
+     "sume": []
     }
    ],
    "lungime": 8781763,
@@ -3938,20 +4778,37 @@
    "etag": "\"ed5e0-63cb35483cbc0\"",
    "hotarari": [
     {
+     "cine_e_afectat": "Consilierii locali și locuitorii orașului Pantelimon",
      "data": "2025-08-18",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 110,
-     "obiect": "privind alegerea preşedintelui de ședință",
+     "obiect": "Alegerea unui consilier local ca președinte de ședință al Consiliului Local Pantelimon",
      "pagina": 1,
      "pagini": 1,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a ales, pentru o perioadă de cel mult 3 luni, un consilier local ca președinte de ședință, care va conduce ședințele și va semna hotărârile adoptate. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința extraordinară din 18.08.2025, cu 19 consilieri prezenți.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Elevii și comunitatea din orașul Pantelimon, prin obiectivul de investiții Școala Gimnazială ST+P+2E din Intr. Marginei",
      "data": "2025-08-18",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 111,
-     "obiect": "pentru modificarea H.C.L. nr. 37 din 03.04.2013 privind aprobarea indicatorilor tehnico-economici pentru obiectivul de investiţii „Școala Gimnazială ST+P+2E, Intr. Marginei, oraș Pantelimon, județ Ilfov”",
+     "obiect": "Modificarea indicatorilor tehnico-economici pentru obiectivul de investiții Școala Gimnazială ST+P+2E, Intr. Marginei, oraș Pantelimon",
      "pagina": 2,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat modificarea indicatorilor tehnico-economici ai obiectivului de investiții Școala Gimnazială ST+P+2E din Intr. Marginei, prin modificarea H.C.L. nr. 37 din 03.04.2013. Valoarea totală a obiectivului este de 35.201.973,86 lei fără TVA și 42.509.232,39 lei cu TVA, din care construcții-montaj 28.205.134,26 lei fără TVA și 34.119.978,34 lei cu TVA. Hotărârea a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": [
+      "35.201.973,86 lei",
+      "42.509.232,39 lei",
+      "28.205.134,26 lei",
+      "34.119.978,34 lei"
+     ]
     }
    ],
    "lungime": 972256,
@@ -4026,180 +4883,302 @@
    "etag": "\"e5b9a6-63c3f36f695c0\"",
    "hotarari": [
     {
+     "cine_e_afectat": "O persoană fizică din orașul Pantelimon și fiul acesteia, aflat într-o situație deosebită din cauza stării de sănătate",
      "data": "2025-07-30",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 87,
-     "obiect": "",
+     "obiect": "Acordarea unui ajutor de urgență de 10.000 lei unei persoane fizice din oraș, pentru fiul său",
      "pagina": 1,
      "pagini": 7,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat acordarea unui ajutor de urgență în sumă de 10.000 lei din bugetul local unei persoane fizice, pentru fiul său, aflat într-o situație deosebită din cauza stării de sănătate. Direcția de Asistență Socială va duce la îndeplinire hotărârea, adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": [
+      "10.000 lei"
+     ]
     },
     {
      "data": "2025-07-30",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 89,
      "obiect": "",
      "pagina": 8,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Două persoane fizice care solicită autorizarea construirii unei locuințe pe un teren din oraș și vecinii acestuia",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 90,
-     "obiect": "",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construire locuință, anexă, împrejmuire și branșamente pe un teren din oraș",
      "pagina": 10,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe și a unei anexe, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de doi cetățeni, pentru un teren de 324 mp din oraș. Documentația are valabilitate de doi ani de la aprobare, iar hotărârea a fost adoptată cu unanimitate, cu 19 consilieri prezenți.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Un proprietar privat care a solicitat documentația pentru un teren din oraș și vecinii zonei",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 91,
-     "obiect": "",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construirea a două locuințe, împrejmuire, organizare de șantier și branșamente la utilități",
      "pagina": 12,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea a două locuințe, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 548 mp din oraș. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Un proprietar privat care solicită autorizarea lucrărilor pe un teren din oraș",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 92,
-     "obiect": "",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construire locuință, împrejmuire, organizare de șantier și branșamente la utilități",
      "pagina": 14,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de un proprietar privat pentru un teren din oraș de 765 mp. Documentația este valabilă doi ani de la aprobare, iar hotărârea a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Firma Best Home Residence S.R.L., beneficiara planului, și locuitorii din zona terenului vizat.",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 93,
-     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilităţi organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construire locuință, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de o firmă.",
      "pagina": 16,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 351 mp din oraș, solicitat de firma Best Home Residence S.R.L. Documentația este valabilă doi ani de la aprobare. Hotărârea a fost adoptată cu majoritate de voturi, în ședința ordinară din 30.07.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-07-30",
+     "motive": [
+      "persoană numită"
+     ],
      "nr": 94,
      "obiect": "privind aprobarea unui P.U.D. - construire locuință, împrejmuire, branşamente la utilități organizare de șantier. Beneficiar Best Home Residence S.R.L",
      "pagina": 18,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
      "data": "2025-07-30",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 95,
      "obiect": "privind aprobarea unui P.U.D. — construire locuință, imprejmuire, bransamente la utilități organizare de şantier. Beneficiar Best Home Residence S.R.L",
      "pagina": 20,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Firma Best Home Residence S.R.L., ca solicitant, și locuitorii din zona terenului vizat",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 96,
-     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilităţi organizare de șantier. Beneficiar Best Home Residence S.R.L",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construire locuință, împrejmuire și branșamente la utilități pe un teren din oraș",
      "pagina": 22,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de firma Best Home Residence S.R.L. pentru un teren de 358 mp. Documentația este valabilă doi ani de la aprobare, iar hotărârea se comunică prefecturii și solicitanților și se publică pe site-ul primăriei.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Firma Best Home Residence S.R.L., beneficiara proiectului, și locuitorii din zona terenului vizat.",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 97,
-     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilități organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire locuință, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de Best Home Residence S.R.L.",
      "pagina": 24,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat Planul Urbanistic de Detaliu pentru un teren de 358 mp din oraș, solicitat de firma Best Home Residence S.R.L. Documentația este valabilă doi ani de la aprobare. Primarul și aparatul de specialitate au sarcina să pună în aplicare hotărârea.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-07-30",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 98,
      "obiect": "privind aprobarea unui P.U.D. — construire locuință, imprejmuire, branșamente la utilităţi organizare de șantier. Beneficiar Best Home Residence S.R.L",
      "pagina": 26,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Firma Best Home Residence S.R.L., ca beneficiar, și locuitorii din zona terenului vizat",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 99,
-     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilități organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități",
      "pagina": 28,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de firma Best Home Residence S.R.L. pentru un teren de 358 mp din oraș. Documentația are valabilitate de doi ani de la aprobare.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-07-30",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 100,
      "obiect": "privind aprobarea unui P.U.D. — construire locuință, imprejmuire, branșamente la utilităţi organizare de şantier. Beneficiar Best Home Residence S.R.L",
      "pagina": 30,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Societatea Best Home Residence S.R.L. (beneficiar) și locuitorii din zona terenului vizat",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 101,
-     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilităţi organizare de șantier. Beneficiar Best Home Residence S.R.L",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire locuință, împrejmuire și branșamente la utilități, solicitat de Best Home Residence S.R.L.",
      "pagina": 32,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 480 mp din strada Calea Bucureștilor. Documentația are valabilitate de doi ani de la aprobare.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Firma Best Home Residence S.R.L. (beneficiara) și locuitorii din zona terenului vizat",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 102,
-     "obiect": "privind aprobarea unui P.U.D. — construire locuință, imprejmuire, branșamente la utilități organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construire locuință, împrejmuire, organizare de șantier și branșamente la utilități",
      "pagina": 34,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de firma Best Home Residence S.R.L., pentru un teren de 481 mp din oraș. Documentația are valabilitate de doi ani de la aprobare, iar hotărârea a fost adoptată cu majoritate de voturi în ședința din 30.07.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-07-30",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 103,
      "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branşamente la utilități organizare de șantier. Beneficiar Best Home Residence S.R.L",
      "pagina": 36,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Societatea Best Home Residence S.R.L., solicitantul investiției, și locuitorii din zona terenului vizat",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 104,
-     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilităţi organizare de șantier. Beneficiar Best Home Residence S.R.L",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire locuință, împrejmuire și branșamente la utilități, solicitat de Best Home Residence S.R.L.",
      "pagina": 38,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 459 mp din oraș. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu majoritate de voturi în ședința ordinară din 30.07.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Firma Best Home Residence S.R.L., solicitantul planului urbanistic, și locuitorii din zona terenului vizat",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 105,
-     "obiect": "privind aprobarea unui P.U.D. — construire locuință, imprejmuire, branșamente la utilităţi organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire și branșamente la utilități pe un teren din oraș",
      "pagina": 40,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuirea terenului, organizarea de șantier și branșamente la utilități, solicitat de firma Best Home Residence S.R.L. pentru un teren de 370 mp din oraș. Documentația are valabilitate de doi ani de la aprobare, iar hotărârea se comunică Prefecturii și se afișează pe site-ul primăriei.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Firma Best Home Residence S.R.L., beneficiară a planului, și locuitorii din zona terenului respectiv",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 106,
-     "obiect": "privind aprobarea unui P.U.D. — construire locuință, împrejmuire, branșamente la utilități organizare de şantier. Beneficiar Best Home Residence S.R.L",
+     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construire locuință, împrejmuire, organizare de șantier și branșamente la utilități",
      "pagina": 42,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de firma Best Home Residence S.R.L. pentru un teren de 394 mp din oraș. Documentația are valabilitate de doi ani de la aprobare, iar hotărârea se comunică instituțiilor competente și se publică pe site-ul primăriei.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Doi beneficiari persoane fizice care solicită autorizarea lucrărilor pe un teren din oraș",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 107,
-     "obiect": "",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire garaj, împrejmuire, organizare de șantier și branșamente la utilități pe un teren din oraș",
      "pagina": 44,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru un teren de 351 mp din oraș, solicitat de doi beneficiari persoane fizice, pentru construire garaj, împrejmuire, organizare de șantier și branșamente la utilități. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi, cu 19 consilieri prezenți.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Medicul stomatolog concesionar, o persoană fizică, și pacienții cabinetului",
      "data": "2025-07-30",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 108,
-     "obiect": "",
+     "obiect": "Concesionarea directă a unui cabinet medical stomatologic din Policlinica Pantelimon către o medic stomatolog, pe un an",
      "pagina": 46,
      "pagini": 7,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat concesionarea directă a unui spațiu de 36,04 mp, cu destinația de cabinet medical stomatologic, din incinta Policlinicii Pantelimon, pentru un an începând cu 01.08.2025. A aprobat și modelul contractului de concesiune, iar redeventa este de 2 euro/mp/lună, venit la bugetul local.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Locuitorii orașului Pantelimon care folosesc drumul de acces, precum și instituțiile locale care gestionează adresele și cadastrul",
      "data": "2025-07-30",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 109,
-     "obiect": "privind atribuirea denumirii de strada Hortensiei, drumului de acces situat în T26, P 593 cu numărul cadastral 124396 Orașul Pantelimon, Judeţul Ilfov",
+     "obiect": "Atribuirea denumirii de strada Hortensiei unui drum de acces din Orașul Pantelimon",
      "pagina": 53,
      "pagini": 1,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a atribuit denumirea de strada Hortensiei drumului de acces situat în T26, P 593, cu numărul cadastral 124396, care aparține domeniului public al orașului. Primarul și compartimentele de specialitate vor duce la îndeplinire hotărârea, care se comunică instituțiilor competente și se afișează pe site-ul primăriei.",
+     "stare": "rezumat",
+     "sume": []
     }
    ],
    "lungime": 15055270,
@@ -4420,28 +5399,44 @@
    "etag": "\"177eff9-63875733d7300\"",
    "hotarari": [
     {
+     "cine_e_afectat": "Angajații aparatului de specialitate al Primarului Orașului Pantelimon și serviciile publice din subordinea Consiliului Local",
      "data": "2025-06-25",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 84,
-     "obiect": "privind aprobarea structurii organizatorice- organigrama şi statul de funcții pentru aparatului de specialitate al Primarului Orașului Pantelimon, județul Ilfov şi pentru serviciile publice fără personalitate juridică aflate în subordinea Consiliului Local al oraşului Pantelimon",
+     "obiect": "Aprobarea organigramei și a statului de funcții pentru aparatul de specialitate al Primarului Pantelimon",
      "pagina": 1,
      "pagini": 15,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat structura organizatorică (organigrama) și statul de funcții pentru aparatul de specialitate al Primarului și pentru serviciile publice fără personalitate juridică din subordinea Consiliului Local. Primarul este împuternicit să facă modificări prin dispoziție scrisă, cu respectarea numărului total de posturi aprobate. Hotărârea a fost adoptată cu unanimitate în ședința ordinară din 25.06.2025.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-06-25",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 85,
      "obiect": "",
      "pagina": 16,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Angajații Direcției de Asistență Socială Pantelimon și persoanele care beneficiază de serviciile acesteia",
      "data": "2025-06-25",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 86,
-     "obiect": "privind aprobarea Organigramei , Statului de functii si Regulamentului de Organizare si Functionare pentru Direcţia de Asistenţă Socială Pantelimon",
+     "obiect": "Aprobarea Organigramei, Statului de funcții și Regulamentului de Organizare și Funcționare pentru Direcția de Asistență Socială Pantelimon",
      "pagina": 18,
      "pagini": 52,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a adoptat hotărârea nr. 86 din 25.06.2025, prin care aprobă organigrama, statul de funcții și regulamentul de organizare și funcționare ale Direcției de Asistență Socială Pantelimon, conform anexelor 1-3. Modificările rezultate se fac prin dispoziția directorului executiv, în 10 zile de la adoptare. Hotărârea a fost adoptată cu majoritate de voturi, cu 19 consilieri prezenți.",
+     "stare": "rezumat",
+     "sume": []
     }
    ],
    "lungime": 24637433,
@@ -4511,27 +5506,41 @@
    "hotarari": [
     {
      "data": "2025-05-29",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 65,
      "obiect": "",
      "pagina": 1,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "S.C. Parcuri, Servicii&Prod Pantelimon S.R.L.",
      "data": "2025-05-29",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 66,
-     "obiect": "privind completarea obiectului secundar de activitate al S.C. Parcuri, Servicii&Prod Pantelimon S.R.L. pe anul 2025",
+     "obiect": "Completarea obiectului secundar de activitate al S.C. Parcuri, Servicii&Prod Pantelimon S.R.L. pe anul 2025 cu activități de transport de călători",
      "pagina": 3,
      "pagini": 1,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat completarea obiectului secundar de activitate al societății S.C. Parcuri, Servicii&Prod Pantelimon S.R.L. pe anul 2025 cu trei coduri CAEN de transport terestru de călători: 4932 (transporturi terestre de pasageri, ocazionale), 4933 (transporturi de pasageri cu vehicule cu șofer) și 4939 (alte transporturi terestre de călători). Primarul și reprezentanții societății vor duce la îndeplinire hotărârea, care se comunică și se afișează public.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
      "data": "2025-05-29",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": 67,
      "obiect": "",
      "pagina": 4,
      "pagini": 24,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
      "data": "2025-05-29",
@@ -6051,8 +7060,8 @@
   "furnizor": "anthropic",
   "ocr": true,
   "surse_fara_raspuns": 0,
-  "tokeni_iesire": 3125,
-  "tokeni_intrare": 41808
+  "tokeni_iesire": 48684,
+  "tokeni_intrare": 576061
  },
  "versiune": 1
 }
