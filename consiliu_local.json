@@ -2444,18 +2444,12 @@
      "sume": []
     },
     {
-     "cine_e_afectat": "Un proprietar de teren din orașul Pantelimon",
      "data": "2025-12-17",
-     "fara_anexe": false,
-     "generat_la": "2026-11-04",
-     "model": "claude-haiku-5-5",
      "nr": 190,
-     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire locuință, împrejmuire, branșamente și organizare de șantier pe o parcelă din str. Poet George Tarnea",
+     "obiect": "",
      "pagina": 14,
      "pagini": 2,
-     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construire locuință, împrejmuire, branșamente la utilități și organizare de șantier, solicitat de o persoană fizică, pentru un teren de 619 mp. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința ordinară din 17.12.2025.",
-     "stare": "rezumat",
-     "sume": []
+     "stare": "fara_rezumat"
     },
     {
      "cine_e_afectat": "Elevii și părinții din orașul Pantelimon, unitățile de învățământ preuniversitar de stat și particular din oraș, precum Școala Gimnazială nr.1 Pantelimon, Grădinița nr.1 Pantelimon și Grădinița PN și PP „O Generație”",
@@ -2586,20 +2580,12 @@
      ]
     },
     {
-     "cine_e_afectat": "O persoană fizică din oraș, beneficiară a unei locuințe sociale",
      "data": "2025-12-17",
-     "fara_anexe": false,
-     "generat_la": "2026-11-04",
-     "model": "claude-haiku-5-5",
      "nr": 199,
-     "obiect": "Repartizarea unei locuințe sociale unei persoane fizice din oraș, str. Islazului",
+     "obiect": "",
      "pagina": 34,
      "pagini": 2,
-     "rezumat": "Consiliul Local Pantelimon a aprobat repartizarea unei locuințe sociale (2 camere și dependințe) unei persoane fizice aflate pe poziția 2 în lista de priorități. Contractul de închiriere se încheie pe 5 ani, cu posibilitate de prelungire, iar chiria lunară nominală este de 78 lei. Direcția de Asistență Socială duce la îndeplinire hotărârea.",
-     "stare": "rezumat",
-     "sume": [
-      "78 lei"
-     ]
+     "stare": "fara_rezumat"
     },
     {
      "cine_e_afectat": "Un solicitant de locuință socială din orașul Pantelimon, aflat pe lista de priorități aprobată în 2025",
@@ -3269,7 +3255,7 @@
      "generat_la": "2026-11-04",
      "model": "claude-haiku-5-5",
      "nr": 154,
-     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire locuință, împrejmuire, organizare de șantier și branșamente la utilități, str. Băile Felix",
+     "obiect": "",
      "pagina": 15,
      "pagini": 2,
      "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de firma Nos Sistem Auto Service S.R.L. pentru un teren de 429 mp. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința din 30.10.2025.",
@@ -4118,18 +4104,12 @@
      "verificat_la": "2026-11-04"
     },
     {
-     "cine_e_afectat": "Un proprietar de teren din orașul Pantelimon (persoană fizică solicitantă) și vecinii zonei",
      "data": "2025-09-30",
-     "fara_anexe": false,
-     "generat_la": "2026-11-04",
-     "model": "claude-haiku-5-5",
      "nr": 138,
-     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire locuință, împrejmuire, organizare de șantier și branșamente la utilități",
+     "obiect": "",
      "pagina": 114,
      "pagini": 2,
-     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 300 mp de pe strada Călimănești din oraș, solicitat de o persoană fizică. Documentația este valabilă doi ani de la aprobare, iar hotărârea a fost adoptată cu unanimitate, în ședința din 30.09.2025.",
-     "stare": "rezumat",
-     "sume": []
+     "stare": "fara_rezumat"
     },
     {
      "cine_e_afectat": "Un proprietar de teren din orașul Pantelimon (persoană fizică solicitantă) și aparatul de specialitate al primăriei",
@@ -4146,46 +4126,28 @@
      "sume": []
     },
     {
-     "cine_e_afectat": "Șase persoane fizice care solicită autorizarea construirii unor locuințe pe un teren din oraș",
      "data": "2025-09-30",
-     "fara_anexe": false,
-     "generat_la": "2026-11-04",
-     "model": "claude-haiku-5-5",
      "nr": 140,
-     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construire patru locuințe P+1E, împrejmuire, organizare de șantier și branșamente la utilități",
+     "obiect": "",
      "pagina": 118,
      "pagini": 2,
-     "rezumat": "Consiliul Local Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea a patru locuințe, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 1.200 mp din strada Pădurii, solicitat de șase persoane fizice. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi, cu 19 consilieri prezenți.",
-     "stare": "rezumat",
-     "sume": []
+     "stare": "fara_rezumat"
     },
     {
-     "cine_e_afectat": "Un proprietar de teren din orașul Pantelimon, care a solicitat documentația de urbanism",
      "data": "2025-09-30",
-     "fara_anexe": false,
-     "generat_la": "2026-11-04",
-     "model": "claude-haiku-5-5",
      "nr": 141,
-     "obiect": "Aprobarea unui Plan Urbanistic de Detaliu pentru construire locuință, împrejmuire și branșamente la utilități",
+     "obiect": "",
      "pagina": 120,
      "pagini": 2,
-     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea unei locuințe, împrejmuire, organizare de șantier și branșamente la utilități, pe un teren de 460 mp din strada Vrabiei. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința din 30.09.2025.",
-     "stare": "rezumat",
-     "sume": []
+     "stare": "fara_rezumat"
     },
     {
-     "cine_e_afectat": "Proprietarii unui teren din orașul Pantelimon, pe strada Fanetei, și locuitorii din zonă",
      "data": "2025-09-30",
-     "fara_anexe": false,
-     "generat_la": "2026-11-04",
-     "model": "claude-haiku-5-5",
      "nr": 142,
-     "obiect": "Aprobarea Planului Urbanistic Zonal pentru un ansamblu de locuințe individuale și semicolective mici, maxim P+2E, în Pantelimon",
+     "obiect": "",
      "pagina": 122,
      "pagini": 2,
-     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic Zonal pentru construirea unui ansamblu de locuințe pe un teren din strada Fanetei, solicitat de mai multe persoane fizice. Suprafața de 1.989,30 mp va trece în domeniul public al orașului, gratuit, doar după realizarea infrastructurii rutiere, a spațiului verde și a utilităților, sau va rămâne în domeniul privat al proprietarilor. Documentația este valabilă zece ani de la aprobare.",
-     "stare": "rezumat",
-     "sume": []
+     "stare": "fara_rezumat"
     },
     {
      "data": "2025-09-30",

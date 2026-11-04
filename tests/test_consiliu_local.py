@@ -228,6 +228,9 @@ def test_sumele_si_datele_trebuie_sa_fie_in_sursa(text, trece):
     "privind acordarea unui ajutor de urgență doamnei POPESCU MARIA, persoană aflată în nevoie",
     "acordarea unui ajutor domnului Neagu pentru tratament",
     "în favoarea numitului Popescu",
+    "Repartizarea unei locuințe sociale unei persoane fizice din oraș, str. Islazului",
+    "Plan Urbanistic de Detaliu pentru construire locuință pe un teren de 460 mp din strada Vrabiei.",
+    "Un teren de 300 mp de pe strada Călimănești, solicitat de o persoană fizică.",
     "Vânzarea terenului de pe strada Nicolae Grigorescu nr. 34, către persoana care îl deținea în concesiune.",
     "Un proprietar din strada Livezilor I, nr. 9, din Pantelimon.",
     "Teren din str. Livezilor IV nr. 3, cu locuință.",
@@ -260,6 +263,10 @@ def test_datele_personale_sunt_respinse(text):
     "Rețele de APĂ POTABILĂ și CANALIZARE MENAJERĂ.",
     "Bălți în suprafață de 257 ha pe Lacul Cernica.",
     "Beneficiar Consiliul Local Pantelimon.",
+    "Extinderea rețelei de ape pluviale din Bd. Biruinței și str. Binelui, pentru locuitorii din zonă.",
+    "Exproprierea imobilelor proprietarilor din coridorul lucrării Modernizare strada Sibiu.",
+    "Plan Urbanistic de Detaliu pentru o locuință de pe strada Băile Felix, cerut de Auto Service S.R.L.",
+    "Atribuirea denumirii de strada Hortensiei unui drum de acces.",
     "Apartamentarea imobilului din strada Târnava Mare, nr. 8, care aparține domeniului public al U.A.T. Pantelimon.",
     "Dezmembrarea terenului cu numărul cadastral 123194 în 2 loturi.",
     "construire locuință. Beneficiar Best Home Residence S.R.L",
@@ -312,6 +319,14 @@ def test_textul_din_pdf_e_delimitat_si_nu_poate_inchide_delimitatorul():
 
 def test_cererea_precizeaza_ca_un_proiect_nu_e_hotarare():
     assert "neadoptat" in cl.construieste_cerere(_doc(tip="proiecte"), "x")
+
+
+def test_reaplica_vede_strada_si_persoana_in_campuri_diferite():
+    h = {"stare": "rezumat", "obiect": "Plan pentru un teren din strada Vrabiei",
+         "rezumat": "Consiliul Local a aprobat planul pentru o locuință.", "cine_e_afectat": "O persoană fizică", "sume": []}
+    stare = {"documente": [{"hotarari": [h]}]}
+    assert cl.reaplica_filtre(stare) == 1
+    assert h["stare"] == "doar_titlu" and "rezumat" not in h
 
 
 def test_la_sume_raman_doar_sumele_de_bani():

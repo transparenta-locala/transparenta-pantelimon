@@ -558,10 +558,30 @@ def _adresa_identificabila(text: str) -> bool:
     return bool(_RX_ADRESA.search(text)) or bool(_RX_CADASTRAL.search(text) and _RX_TRANZACTIE.search(text))
 
 
+# Și fără număr, „locuință socială pe str. Islazului” sau „teren din strada Vrabiei, cerut de o persoană
+# fizică” arată cam unde stă cineva. Rămân lucrările publice, exproprierile și proiectele firmelor.
+_RX_STRADA_NUMITA = re.compile(r"\b(?i:str\.|strad[aă]|intr\.|intrarea|aleea|bd\.|bulevardul|[sș]os\.|[sș]oseaua|calea)"
+                               r"\s*[A-ZĂÂÎȘŞȚŢ]")
+_RX_PERSOANA_FIZICA = re.compile(r"persoan\w*\s+fizic\w*|\bun\s+cet[aă][tț]ean|proprietar|concesionar"
+                                 r"|repartiz\w*[^.]{0,40}locuin", re.I)
+_RX_PLAN_URBANISTIC = re.compile(r"urbanistic|\bP\.?\s?U\.?\s?[DZ]\b", re.I)
+
+
+def _strada_langa_persoana(text: str) -> bool:
+    if not _RX_STRADA_NUMITA.search(text) or re.search(r"expropri|coridor|domeniului public", text, re.I):
+        return False
+    if _RX_PERSOANA_FIZICA.search(text):
+        return True
+    return bool(_RX_PLAN_URBANISTIC.search(text) and re.search(r"locuin", text, re.I)
+                and not re.search(r"\bS\.?\s?R\.?\s?L\b", text))
+
+
 def motive_date_personale(text: str) -> list:
     motive = [eticheta for rx, eticheta in _RX_DATE_PRIVATE if rx.search(text)]
     if _adresa_identificabila(text):
         motive.append("adresă exactă sau număr cadastral")
+    if _strada_langa_persoana(text):
+        motive.append("stradă lângă o persoană fizică")
     if (nume_private_posibile(text) or _adresare_catre_persoana(text) or _RX_DESTINATAR.search(text)
             or _beneficiar_persoana(text)):
         motive.append("posibil nume de persoană privată")
@@ -609,11 +629,13 @@ def reaplica_filtre(stare: dict) -> int:
     schimbate = 0
     for doc in stare["documente"]:
         for h in doc.get("hotarari", []):
-            if h.get("obiect") and motive_date_personale(h["obiect"]):
+            # Obiectul intră în verificare înainte să fie golit: persoana poate apărea într-un câmp și strada în altul
+            obiect = h.get("obiect") or ""
+            if obiect and motive_date_personale(obiect):
                 h["obiect"] = ""
                 schimbate += 1
             if h.get("stare") == "rezumat":
-                tot = "\n".join([h.get("rezumat") or "", h.get("cine_e_afectat") or "", *(h.get("sume") or [])])
+                tot = "\n".join([obiect, h.get("rezumat") or "", h.get("cine_e_afectat") or "", *(h.get("sume") or [])])
                 motive = motive_date_personale(tot) + motive_ton(tot)
                 if motive:
                     for camp in ("rezumat", "sume", "cine_e_afectat", "model", "generat_la", "fara_anexe"):
@@ -649,7 +671,7 @@ Completează câmpurile astfel, în română, în limbaj simplu, fără termeni 
 
 Reguli obligatorii:
 - Folosește doar ce scrie în document. Datele și cifrele se copiază exact; nu calcula și nu adăuga nimic.
-- Nu scrie numele persoanelor private (beneficiari, petenți, proprietari, moștenitori), adrese de domiciliu sau CNP; spune „o persoană fizică” sau „un proprietar”. Când un teren sau o locuință ajunge la o persoană fizică, nu scrie strada, numărul sau numărul cadastral; spune „un teren din oraș”. Poți numi firmele, instituțiile și, doar dacă e necesar, persoanele cu funcții publice, împreună cu funcția.
+- Nu scrie numele persoanelor private (beneficiari, petenți, proprietari, moștenitori), adrese de domiciliu sau CNP; spune „o persoană fizică” sau „un proprietar”. Când un teren sau o locuință ajunge la o persoană fizică, nu scrie strada, numărul sau numărul cadastral; spune „un teren din oraș”. La fel la locuințele sociale și la planurile urbanistice (PUD, PUZ) cerute de persoane fizice: nu scrie nici strada. Poți numi firmele, instituțiile și, doar dacă e necesar, persoanele cu funcții publice, împreună cu funcția.
 - Fără acuzații, fără opinii, fără aprecieri despre legalitate sau despre oportunitatea deciziei."""
 
 SCHEMA = {
