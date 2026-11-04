@@ -4961,7 +4961,6 @@ def genereaza_raport_html(budget: dict, contracte: list, flags: list,
 <script>
 {_SCRIPT_RAPORT}
 </script>
-<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>"""
     config["_raport_json_obj"] = raport_json_obj
@@ -6365,7 +6364,6 @@ def genereaza_pagina_furnizor(
   <p class="tp-sources">Date: SEAP (e-licitatie.ro), contracte publicate de Primăria Pantelimon. Fiecare contract e numărat o dată.
     Semnalele sunt indicatori automați, nu constatări juridice.</p>
 </main>
-<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>"""
 
@@ -6431,7 +6429,6 @@ def genereaza_index_furnizori(index: list) -> str:
   </div>
 </main>
 <script>{script}</script>
-<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>"""
 

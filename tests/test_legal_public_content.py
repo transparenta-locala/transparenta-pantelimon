@@ -72,18 +72,17 @@ def test_paginile_publice_nu_pastreaza_praguri_sau_afirmatii_vechi():
         assert fragment not in texte
 
 
-def test_politica_declara_statistica_folosita():
+def test_politica_spune_ca_nu_exista_statistica_si_ce_a_fost():
     gdpr = (ROOT / "gdpr.html").read_text(encoding="utf-8")
-    assert 'id="statistici"' in gdpr and "GoatCounter.com" in gdpr and "Cloudflare" in gdpr
-    assert "instrument propriu de analytics" not in gdpr
-    assert "analytics terți" not in (ROOT / "despre.html").read_text(encoding="utf-8")
+    assert 'id="statistici"' in gdpr and "Site-ul nu încarcă scripturi de statistică" in gdpr
+    assert "Între 21 septembrie și 4 noiembrie 2026" in gdpr and "GoatCounter.com" in gdpr and "Cloudflare" in gdpr
+    assert "scripturi de statistică" in (ROOT / "despre.html").read_text(encoding="utf-8")
 
 
-def test_scriptul_de_statistica_ruleaza_unde_spune_politica():
-    """gdpr.html#statistici: pe paginile principale, pe fișe și pe semnale, nu pe 404."""
-    cu_script = [p for p in ROOT.glob("*.html") if p.name != "404.html"]
-    for folder in ("furnizori", "semnale"):
-        cu_script += list((ROOT / folder).glob("*.html"))
-    for path in cu_script:
-        assert "gc.zgo.at/count.js" in path.read_text(encoding="utf-8"), f"Lipsește scriptul în {path}"
-    assert "gc.zgo.at/count.js" not in (ROOT / "404.html").read_text(encoding="utf-8")
+def test_nicio_pagina_nu_incarca_statistica():
+    """gdpr.html#statistici spune că site-ul nu încarcă scripturi de statistică."""
+    for path in ROOT.rglob("*.html"):
+        continut = path.read_text(encoding="utf-8")
+        assert "data-goatcounter" not in continut and "gc.zgo.at/count.js" not in continut, f"Script în {path}"
+    csp = (ROOT / "index.html").read_text(encoding="utf-8").split('http-equiv="Content-Security-Policy"')[1].split(">")[0]
+    assert "zgo.at" not in csp and "goatcounter" not in csp

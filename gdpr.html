@@ -58,13 +58,12 @@
   <a href="index.html" class="back-link">← Acasă</a>
 
   <h1>🔒 Confidențialitate &amp; GDPR</h1>
-  <p style="color:#666;font-size:.9rem">Ultima actualizare: 3 noiembrie 2026</p>
+  <p style="color:#666;font-size:.9rem">Ultima actualizare: 4 noiembrie 2026</p>
 
   <div class="callout">
     <strong>Rezumat:</strong> Acest site afișează exclusiv <em>date publice</em> din surse oficiale
-    (SEAP, ANAF, ONRC). Formularul petiției este dezactivat și nu transmite date. Proiectul
-    numără vizitele cu <a href="#statistici">GoatCounter</a>, un serviciu extern de statistici, fără cookie-uri,
-    și nu folosește cookie-uri de marketing. Furnizorul de hosting, Cloudflare și CDN-urile pot primi
+    (SEAP, ANAF, ONRC). Formularul petiției este dezactivat și nu transmite date. Site-ul nu
+    încarcă <a href="#statistici">scripturi de statistică</a> și nu folosește cookie-uri de marketing. Furnizorul de hosting, Cloudflare și CDN-urile pot primi
     date tehnice (de exemplu adresa IP) când browserul solicită pagina sau resursele externe.
   </div>
 
@@ -165,36 +164,30 @@
 
   <h2>4. Date despre vizitatori și petiție</h2>
   <ul>
-    <li>Numărăm vizitele cu GoatCounter (detalii <a href="#statistici">mai jos</a>); nu folosim Google Analytics</li>
+    <li>Nu încărcăm scripturi de statistică, precum Google Analytics (detalii <a href="#statistici">mai jos</a>)</li>
     <li>Nu folosim cookie-uri de marketing sau advertising</li>
     <li>Proiectul nu operează un server propriu și nu consultă loguri cu adrese IP; GitHub Pages, Cloudflare și furnizorii CDN pot prelucra date tehnice conform politicilor proprii</li>
     <li>Nu vindem date; în afara furnizorilor tehnici numiți în această pagină, nu transmitem date către terți</li>
   </ul>
-  <h3 id="statistici">Statistici de vizite (GoatCounter)</h3>
+  <h3 id="statistici">Statistici de vizite</h3>
   <p>
-    Măsurăm câte vizite primește site-ul, ca să știm ce pagini sunt citite și de unde vin vizitatorii.
-    Scriptul GoatCounter rulează pe paginile principale, inclusiv pe cea a Consiliului Local, pe fișele
-    furnizorilor și pe paginile individuale de semnal. Nu rulează pe pagina de eroare 404.
+    Site-ul nu încarcă scripturi de statistică. Panoul Cloudflare arată proiectului totaluri de trafic: cereri,
+    vizitatori unici și țări.
+  </p>
+  <p>
+    Între 21 septembrie și 4 noiembrie 2026, site-ul a numărat vizitele cu GoatCounter.com, operat de Martin Tournoij
+    (Irlanda), pe servere Hetzner din Finlanda și Germania
+    (<a href="https://www.goatcounter.com/help/privacy" target="_blank" rel="noopener noreferrer">politica GoatCounter</a>).
+    Scriptul se încărca de la <code>gc.zgo.at</code>, prin BunnyCDN, care primea datele tehnice necesare livrării.
   </p>
   <ul>
-    <li><strong>Ce se transmite la fiecare vizită:</strong> adresa paginii și parametrii din ea, titlul paginii, pagina de
-      pe care ai venit, lățimea ecranului și, odată cu cererea, adresa IP, datele browserului (User-Agent) și limba acestuia;</li>
-    <li><strong>Ce se păstrează:</strong> doar totaluri pe oră sau pe zi: pagini, surse, browser, sistem de operare, țară
-      (și regiunea, pentru România, SUA, Rusia și China) și lățime de ecran. Limba nu se păstrează. Potrivit documentației GoatCounter, aceste totaluri sunt ținute separat și nu pot fi legate între ele;</li>
-    <li><strong>Adresa IP și User-Agent:</strong> stau doar în memorie, cel mult 8 ore, ca să nu numărăm de două ori aceeași
-      vizită, și nu se scriu pe disc. Serviciul nu pune cookie-uri și nu păstrează în browser nimic pentru numărare;</li>
-    <li><strong>Cine prelucrează:</strong> operatorul este inițiatorul proiectului (secțiunea 1). Serviciul este
-      GoatCounter.com, operat de Martin Tournoij (Irlanda), pe servere Hetzner din Finlanda și Germania
-      (<a href="https://www.goatcounter.com/help/privacy" target="_blank" rel="noopener noreferrer">politica GoatCounter</a>).
-      Scriptul se încarcă de la <code>gc.zgo.at</code>, prin BunnyCDN, care primește datele tehnice necesare livrării;</li>
-    <li><strong>Temei:</strong> interesul legitim (art. 6 alin. (1) lit. f) GDPR), adică să știm dacă informațiile de interes
-      public ajung la cetățeni. Nu cerem consimțământ;</li>
-    <li><strong>Cât se păstrează:</strong> totalurile rămân cât timp există contul GoatCounter al proiectului. La ștergerea
-      contului, datele se șterg, iar unele pot rămâne în copiile de siguranță până la 30 de zile;</li>
-    <li><strong>Cum oprești numărarea:</strong> deschide <a href="index.html#toggle-goatcounter">acest link</a>. Apare un
-      mesaj în engleză, iar opțiunea se salvează în browserul tău. Scriptul se încarcă în continuare de la
-      <code>gc.zgo.at</code>, dar vizitele nu mai sunt trimise. Același link repornește numărarea. Ca scriptul să nu se
-      mai încarce deloc, blochează-l în browser.</li>
+    <li><strong>Ce se transmitea la fiecare vizită:</strong> adresa paginii și parametrii din ea, titlul paginii, pagina de
+      pe care veneai, lățimea ecranului și, odată cu cererea, adresa IP, datele browserului (User-Agent) și limba acestuia;</li>
+    <li><strong>Ce s-a păstrat:</strong> totaluri pe oră sau pe zi: pagini, surse, browser, sistem de operare, țară (pentru
+      unele țări și regiunea) și lățime de ecran. Adresa IP și User-Agent stăteau doar în memorie, cel mult 8 ore, și nu se
+      scriau pe disc. Serviciul nu punea cookie-uri;</li>
+    <li><strong>Cât se păstrează:</strong> totalurile rămân în contul GoatCounter al proiectului până la ștergerea acestuia,
+      iar unele date pot rămâne apoi în copiile de siguranță până la 30 de zile.</li>
   </ul>
   <p>
     Formularul de pe pagina Petiție este <strong>dezactivat</strong>: nu are un endpoint de procesare,
@@ -204,7 +197,7 @@
   </p>
   <p>
     Site-ul folosește <code>localStorage</code> în browser exclusiv pentru preferințe locale
-    (temă dark/light, stare banner „ce e nou", oprirea numărării vizitelor). Aceste date rămân în
+    (temă dark/light, stare banner „ce e nou"). Aceste date rămân în
     browserul tău și nu sunt transmise nicăieri.
   </p>
 
@@ -257,7 +250,6 @@
     <a href="presa.html">Kit presă</a>
   </footer>
 </div>
-<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!--tp:footer-->
 <footer class="tp-site-footer"><div class="tp-site-footer-in"><div><strong>Transparența Pantelimon</strong><p>Inițiativă civică. Inițiatorul este membru USR Pantelimon; proiectul nu este un proiect oficial al partidului. Monitorizare bazată exclusiv pe date publice oficiale (SEAP, ANAF/MF, Consiliul Local). Semnalele sunt indicatori automați, nu concluzii juridice.</p></div><nav aria-label="Paginile site-ului"><ul><li><a href="raport_transparenta.html">Semnale</a></li><li><a href="furnizori/index.html">Firme</a></li><li><a href="transparenta_pantelimon.html">Buget</a></li><li><a href="consiliu.html">Consiliul Local</a></li><li><a href="harta.html">Harta firmelor</a></li><li><a href="retele.html">Rețele de firme</a></li><li><a href="modele.html">Modele de cereri</a></li><li><a href="petitie.html">Petiție</a></li><li><a href="presa.html">Pentru presă</a></li><li><a href="despre.html">Despre și metodologie</a></li><li><a href="gdpr.html">Date personale</a></li></ul></nav><nav aria-label="Date deschise"><ul><li><a href="raport.json">raport.json</a></li><li><a href="contracte.csv">contracte.csv</a></li><li><a href="contracte.json">contracte.json</a></li><li><a href="feed.xml">Flux RSS</a></li><li><a href="https://github.com/transparenta-locala/transparenta-pantelimon" target="_blank" rel="noopener">Cod sursă</a></li></ul></nav></div></footer>
 <!--/tp:footer-->

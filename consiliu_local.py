@@ -976,7 +976,6 @@ def genereaza_pagina(stare: dict) -> str:
   <p>{ancore}</p>
   {sectiuni}
 </main>
-<script data-goatcounter="https://transparenta-pantelimon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
 """
