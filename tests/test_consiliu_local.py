@@ -10,7 +10,7 @@ import pytest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import consiliu_local as cl
-from site_shell import NAV_MAI_MULT, footer_html
+from site_shell import NAV_MAI_MULT, NAV_PRINCIPAL, footer_html
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 URL = "https://www.primariapantelimon.ro/assets/media0405/H.C.L.-sedinta-ordinara-din-31.03.2026.pdf"
@@ -615,7 +615,7 @@ def test_pagina_generata_primeste_cadrul_site_ului(tmp_path):
     cl.scrie_pagina(_stare_pagina(), str(cale), str(tmp_path))
     h = cale.read_text(encoding="utf-8")
     assert "<!--tp:head-->" in h and "<!--tp:header-->" in h and "<!--tp:footer-->" in h
-    nav = h.split('class="tp-more-list"')[1].split("</details>")[0]
+    nav = h.split('id="tp-nav-links"')[1].split('<details class="tp-more"')[0]
     assert 'href="consiliu.html" class="active" aria-current="page"' in nav
 
 
@@ -624,7 +624,8 @@ def test_pagina_generata_nu_incarca_statistica():
 
 
 def test_consiliu_e_in_meniu_si_in_subsol():
-    assert ("consiliu.html", "Ce a hotărât Consiliul") in NAV_MAI_MULT
+    assert ("consiliu.html", "Consiliul Local") in NAV_PRINCIPAL
+    assert not any(h == "consiliu.html" for h, _ in NAV_MAI_MULT)
     assert 'href="consiliu.html"' in footer_html("index.html")
 
 

@@ -304,8 +304,8 @@
       { href: 'raport_transparenta.html',      text: 'Semnale' },
       { href: 'furnizori/index.html',          text: 'Firme' },
       { href: 'transparenta_pantelimon.html',  text: 'Buget' },
-      { href: 'modele.html',                   text: 'Modele de cereri' },
       { href: 'consiliu.html',                 text: 'Consiliul Local' },
+      { href: 'modele.html',                   text: 'Modele de cereri' },
       { href: 'despre.html',                   text: 'Despre' },
     ];
     const more = [

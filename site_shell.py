@@ -39,11 +39,11 @@ NAV_PRINCIPAL = [
     ("raport_transparenta.html", "Semnale"),
     ("furnizori/index.html", "Firme"),
     ("transparenta_pantelimon.html", "Buget"),
+    ("consiliu.html", "Consiliul Local"),
     ("modele.html", "Modele de cereri"),
     ("despre.html", "Despre"),
 ]
 NAV_MAI_MULT = [
-    ("consiliu.html", "Ce a hotărât Consiliul"),
     ("petitie.html", "Petiție"),
     ("harta.html", "Harta firmelor"),
     ("retele.html", "Rețele de firme"),
