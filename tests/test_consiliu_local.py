@@ -687,10 +687,10 @@ def test_refuzul_si_eroarea_de_cheie_de_la_anthropic(monkeypatch):
     assert "cheie-de-test" not in str(e.value)
 
 
-def test_workflow_foloseste_anthropic_si_porneste_cu_pilot():
+def test_workflow_foloseste_anthropic_si_are_plafon():
     yml = open(os.path.join(ROOT, ".github", "workflows", "consiliu-local.yml"), encoding="utf-8").read()
     assert "vars.REZUMAT_FURNIZOR || 'anthropic'" in yml
-    assert "inputs.max_rezumate || '10'" in yml and '--max-rezumate "$MAX_REZUMATE"' in yml
+    assert "inputs.max_rezumate || '150'" in yml and '--max-rezumate "$MAX_REZUMATE"' in yml
 
 
 def test_workflow_reia_push_ul_la_eroare():

@@ -18,7 +18,7 @@ name: 🏛️ Consiliul Local (rezumate și pagină)
       max_rezumate:
         description: 'Câte rezumate noi se fac la această rulare'
         required: false
-        default: '10'
+        default: '150'
   push:
     branches: [main]
     paths:
@@ -62,8 +62,8 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           # Câte un fir pe proces Tesseract: paralelismul îl face scriptul, pe pagini
           OMP_THREAD_LIMIT: '1'
-          # Pilot: primele rezumate se verifică înainte de restul arhivei. Plafonul crește după verificare.
-          MAX_REZUMATE: ${{ inputs.max_rezumate || '10' }}
+          # Pilotul cu 17 hotărâri a fost verificat față de PDF pe 04.11.2026. Arhiva se completează în câteva rulări.
+          MAX_REZUMATE: ${{ inputs.max_rezumate || '150' }}
         run: python consiliu_local.py --max-minute 75 --max-rezumate "$MAX_REZUMATE" || echo "::warning::consiliu_local.py a eșuat — pagina rămâne cea anterioară"
 
       - name: 💾 Commit (doar dacă s-a schimbat ceva)

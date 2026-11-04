@@ -332,8 +332,8 @@ rulat de `.github/workflows/consiliu-local.yml` (lunea + manual + la push cu scr
 - Furnizorul ales (03.11.2026): Anthropic, `claude-haiku-5-5`. Workflow-ul setează `REZUMAT_FURNIZOR` implicit pe `anthropic`,
   deci rezumatele pornesc când există secretul `ANTHROPIC_API_KEY`. Fără el: `::warning::`, rămân titlurile OCR și linkurile.
   Dacă schimbi furnizorul, actualizează `gdpr.html#rezumate-ai`. `--dry-run` nu cere cheie și nu scrie nimic.
-- Pilot: workflow-ul face cel mult 10 rezumate pe rulare (`inputs.max_rezumate`) până la verificarea primelor rezultate; apoi
-  plafonul din workflow crește. Consumul real apare în `consiliu_local.json` → `ultima_rulare`.
+- Plafon: workflow-ul face cel mult 150 de rezumate pe rulare (`inputs.max_rezumate`), după pilotul verificat pe 04.11.2026.
+  Consumul real apare în `consiliu_local.json` → `ultima_rulare`.
 - Validare (`valideaza_rezumat`): sumele și datele trebuie să fie în textul sursă; fără nume private, CNP, adrese, acuzații, linkuri.
   Respins = `stare: doar_titlu`, doar titlul și linkul; textul respins NU se salvează. Textul OCR nu ajunge niciodată în repo.
 - Proiectele sunt afișate separat de hotărâri: un proiect nu e o hotărâre adoptată.
