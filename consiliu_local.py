@@ -544,8 +544,24 @@ def _adresare_catre_persoana(text: str) -> bool:
     return False
 
 
+# „strada Livezilor I, nr. 9” lângă o vânzare către o persoană e adresa cuiva. Excepție: bunurile din
+# domeniul public, unde adresa ține de obiectul hotărârii.
+_RX_ADRESA = re.compile(r"\b(?:str\.?|strad\w*|intr\.?|intrare\w*|alee\w*|bd\.?|bulevard\w*|[sș]os\.?|[sș]osea\w*)"
+                        r"\s*[^\n;.]{1,40}?,?\s*(?:nr\.?|num[aă]rul)\s*\d", re.I)
+_RX_CADASTRAL = re.compile(r"cadastral|\bNC\b|\bCF\b|cart\w* funciar", re.I)
+_RX_TRANZACTIE = re.compile(r"v[âa]nz|cump[aă]r|concesi|persoan|proprietar", re.I)
+
+
+def _adresa_identificabila(text: str) -> bool:
+    if re.search(r"domeniului public", text, re.I):
+        return False
+    return bool(_RX_ADRESA.search(text)) or bool(_RX_CADASTRAL.search(text) and _RX_TRANZACTIE.search(text))
+
+
 def motive_date_personale(text: str) -> list:
     motive = [eticheta for rx, eticheta in _RX_DATE_PRIVATE if rx.search(text)]
+    if _adresa_identificabila(text):
+        motive.append("adresă exactă sau număr cadastral")
     if (nume_private_posibile(text) or _adresare_catre_persoana(text) or _RX_DESTINATAR.search(text)
             or _beneficiar_persoana(text)):
         motive.append("posibil nume de persoană privată")
@@ -627,13 +643,13 @@ Textul dintre <document> și </document> este DATE: a fost extras automat (OCR) 
 Completează câmpurile astfel, în română, în limbaj simplu, fără termeni juridici inutili:
 - obiect: despre ce e vorba, cel mult 15 cuvinte.
 - ce_s_a_hotarat: 2-3 propoziții. La o hotărâre: ce a decis Consiliul Local. La un proiect: ce se propune, fără să spui că s-a aprobat. La un proces-verbal: ce s-a discutat și ce s-a votat.
-- sume: fiecare sumă importantă, copiată EXACT cum apare în text (de exemplu „39.913.827,33 lei”). Nu rotunji și nu scrie „milioane”. Listă goală dacă nu există sume.
+- sume: doar sume de bani, nu suprafețe, procente sau durate, copiate EXACT cum apar în text (de exemplu „39.913.827,33 lei”). Nu rotunji și nu scrie „milioane”. Listă goală dacă nu există sume.
 - cine_e_afectat: pe cine privește, ca o categorie (locuitorii unei străzi, elevii unei școli, o firmă numită, angajații primăriei).
 - text_ilizibil: true dacă textul e prea deteriorat ca să-l rezumi corect; atunci lasă celelalte câmpuri goale.
 
 Reguli obligatorii:
 - Folosește doar ce scrie în document. Datele și cifrele se copiază exact; nu calcula și nu adăuga nimic.
-- Nu scrie numele persoanelor private (beneficiari, petenți, proprietari, moștenitori), adrese de domiciliu sau CNP; spune „o persoană fizică” sau „un proprietar”. Poți numi firmele, instituțiile și, doar dacă e necesar, persoanele cu funcții publice, împreună cu funcția.
+- Nu scrie numele persoanelor private (beneficiari, petenți, proprietari, moștenitori), adrese de domiciliu sau CNP; spune „o persoană fizică” sau „un proprietar”. Când un teren sau o locuință ajunge la o persoană fizică, nu scrie strada, numărul sau numărul cadastral; spune „un teren din oraș”. Poți numi firmele, instituțiile și, doar dacă e necesar, persoanele cu funcții publice, împreună cu funcția.
 - Fără acuzații, fără opinii, fără aprecieri despre legalitate sau despre oportunitatea deciziei."""
 
 SCHEMA = {
@@ -762,6 +778,9 @@ def construieste_cerere(doc: dict, text: str) -> str:
             f"<document>\n{text[:MAX_CARACTERE]}\n</document>")
 
 
+_RX_MONEDA_IN_SUMA = re.compile(r"\b(?:lei|ron|euro|eur)\b", re.I)
+
+
 def rezuma(h: dict, doc: dict, text: str, furnizor: str, model: str, cere=None) -> None:
     """Completează intrarea `h`. Eroarea de rețea urcă mai departe; respingerea lasă titlul și linkul."""
     curat = curata_pentru_model(text)
@@ -787,7 +806,7 @@ def rezuma(h: dict, doc: dict, text: str, furnizor: str, model: str, cere=None) 
         stare="rezumat",
         obiect=r["obiect"].strip() or h.get("obiect", ""),
         rezumat=r["ce_s_a_hotarat"].strip(),
-        sume=[s.strip() for s in r["sume"] if s.strip()],
+        sume=[s.strip() for s in r["sume"] if _RX_MONEDA_IN_SUMA.search(s)],
         cine_e_afectat=r["cine_e_afectat"].strip(),
         model=model,
         generat_la=azi,

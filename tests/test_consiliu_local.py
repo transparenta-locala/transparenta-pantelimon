@@ -228,6 +228,10 @@ def test_sumele_si_datele_trebuie_sa_fie_in_sursa(text, trece):
     "privind acordarea unui ajutor de urgență doamnei POPESCU MARIA, persoană aflată în nevoie",
     "acordarea unui ajutor domnului Neagu pentru tratament",
     "în favoarea numitului Popescu",
+    "Vânzarea terenului de pe strada Nicolae Grigorescu nr. 34, către persoana care îl deținea în concesiune.",
+    "Un proprietar din strada Livezilor I, nr. 9, din Pantelimon.",
+    "Teren din str. Livezilor IV nr. 3, cu locuință.",
+    "Vânzarea terenului cu număr cadastral 121048 către cumpărător.",
     "construire locuință P+1E. Beneficiar loan Adrian și loan Petruta-Elena",
     "construire locuință. Beneficiar S.C. Alfa S.R.L. și loan Adrian",
     "privind aprobarea vânzării unui teren concesionat pe care sunt edificate construcții către lagăru Ilie",
@@ -256,6 +260,8 @@ def test_datele_personale_sunt_respinse(text):
     "Rețele de APĂ POTABILĂ și CANALIZARE MENAJERĂ.",
     "Bălți în suprafață de 257 ha pe Lacul Cernica.",
     "Beneficiar Consiliul Local Pantelimon.",
+    "Apartamentarea imobilului din strada Târnava Mare, nr. 8, care aparține domeniului public al U.A.T. Pantelimon.",
+    "Dezmembrarea terenului cu numărul cadastral 123194 în 2 loturi.",
     "construire locuință. Beneficiar Best Home Residence S.R.L",
     "Beneficiar S.C.Urban Staff Design S.R.L. și S.",
     "tabelul cu grupele de beneficiari pentru elevii transportați",
@@ -306,6 +312,14 @@ def test_textul_din_pdf_e_delimitat_si_nu_poate_inchide_delimitatorul():
 
 def test_cererea_precizeaza_ca_un_proiect_nu_e_hotarare():
     assert "neadoptat" in cl.construieste_cerere(_doc(tip="proiecte"), "x")
+
+
+def test_la_sume_raman_doar_sumele_de_bani():
+    r = _rezumat(sume=["39.913.827,33 lei", "450 mp", "20 %", "36 luni", "11.656 euro"])
+    sursa = SURSA + " 450 mp, 20 %, 36 luni, 11.656 euro"
+    h = {"pagina": 1, "pagini": 1, "stare": "fara_rezumat", "data": "2026-03-31"}
+    cl.rezuma(h, _doc(), sursa, "gemini", "m", cere=lambda *a: json.dumps(r))
+    assert h["sume"] == ["39.913.827,33 lei", "11.656 euro"]
 
 
 def test_rezumat_valid_se_salveaza():

@@ -692,7 +692,7 @@
     {
      "data": "2026-06-19",
      "nr": 113,
-     "obiect": "pentru revocarea Hotărârii Consiliului Local Pantelimon nr. 53 din 15.03.2023 privind darea în administrare a imobilului situat în str. Tractorului, nr.1, tarla 115, P 3646-3651, cu numărul cadastral 121501, în suprafață de 858 mp, în favoarea Direcţiei de Asistenţă Socială Pantelimon",
+     "obiect": "",
      "pagina": 115,
      "pagini": 2,
      "stare": "fara_rezumat"
@@ -1484,56 +1484,28 @@
      "verificat_la": "2026-11-04"
     },
     {
-     "cine_e_afectat": "Un locuitor al orașului Pantelimon, deținătorul terenului în concesiune, și bugetul local al orașului",
      "data": "2026-03-31",
-     "fara_anexe": false,
-     "generat_la": "2026-11-04",
-     "model": "claude-haiku-5-5",
      "nr": 33,
-     "obiect": "Aprobarea vânzării unui teren intravilan concesionat, aparținând domeniului privat al orașului, cu construcție de locuință",
+     "obiect": "",
      "pagina": 183,
      "pagini": 3,
-     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat vânzarea terenului de 314,26 mp (322 mp din măsurători), situat pe strada Nicolae Grigorescu nr. 34, către persoana care îl deținea în concesiune. Prețul este de 11.656 euro, plătibil în lei, în cel mult 36 de luni cu avans de minim 20%, cu ipotecă tabulară în favoarea orașului pentru diferența de preț. Contractul de concesiune se consideră reziliat la semnarea contractului de vânzare-cumpărare la notar.",
-     "stare": "rezumat",
-     "sume": [
-      "11.656 euro",
-      "314,26 mp",
-      "322 mp",
-      "20 %",
-      "36 luni"
-     ]
+     "stare": "fara_rezumat"
     },
     {
-     "cine_e_afectat": "Un proprietar persoană fizică care deține în concesiune terenul și construcția de locuință din strada Livezilor I, nr. 9, din Pantelimon",
      "data": "2026-03-31",
-     "fara_anexe": false,
-     "generat_la": "2026-11-04",
-     "model": "claude-haiku-5-5",
      "nr": 34,
-     "obiect": "Aprobarea vânzării unui teren intravilan concesionat, aflat în proprietatea privată a Orașului Pantelimon, pe care există o construcție de locuință",
+     "obiect": "",
      "pagina": 186,
      "pagini": 3,
-     "rezumat": "Consiliul Local Pantelimon a aprobat vânzarea terenului de 455,70 mp din acte (463 mp din măsurători), cu număr cadastral 121048, situat pe strada Livezilor I, nr. 9, către cumpărătorul care îl deținea în concesiune, la prețul de 16.761 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, cu un avans de minim 20%, iar contractul de concesiune existent se consideră reziliat la semnarea contractului de vânzare-cumpărare.",
-     "stare": "rezumat",
-     "sume": [
-      "16.761 euro"
-     ]
+     "stare": "fara_rezumat"
     },
     {
-     "cine_e_afectat": "Un proprietar al unei locuințe din Pantelimon, care deținea terenul în concesiune",
      "data": "2026-03-31",
-     "fara_anexe": false,
-     "generat_la": "2026-11-04",
-     "model": "claude-haiku-5-5",
      "nr": 35,
-     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului către un proprietar de construcție",
+     "obiect": "",
      "pagina": 189,
      "pagini": 3,
-     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 514,50 mp (512 mp din măsurători) din str. Livezilor IV nr. 3, pe care există o locuință, către persoana care îl deținea în concesiune. Prețul stabilit este de 18.534 euro, care se poate plăti integral sau în rate lunare pe maximum 36 de luni, cu avans de minim 20%. Contractul de concesiune anterior se consideră reziliat de drept la semnarea contractului de vânzare-cumpărare.",
-     "stare": "rezumat",
-     "sume": [
-      "18.534 euro"
-     ]
+     "stare": "fara_rezumat"
     },
     {
      "data": "2026-03-31",
@@ -1550,7 +1522,7 @@
     {
      "data": "2026-03-31",
      "nr": 38,
-     "obiect": "privind dezmembrarea cadastrală si notarială a terenului ce aparține domeniului privat al U.A.T. Pantelimon, situat în str. Târnava Mare, nr.8, T27, P173/2 cu numărul cadastral 116833 din Oraşul Pantelimon, județul Ilfov, în 9 loturi",
+     "obiect": "",
      "pagina": 199,
      "pagini": 2,
      "stare": "fara_rezumat"
@@ -1780,7 +1752,7 @@
     {
      "data": "2026-03-18",
      "nr": 37,
-     "obiect": "privind dezmembrarea cadastrală si notarială a terenului ce aparține domeniului privat al U.A.T. Pantelimon, situat în str. Târnava Mare, nr.8, T27, P173/2 cu numărul cadastral 116833 din Orașul Pantelimon, județul Ilfov, în 9 loturi",
+     "obiect": "",
      "pagina": 183,
      "pagini": 1,
      "stare": "fara_rezumat"
