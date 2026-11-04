@@ -1,5 +1,5 @@
 {
- "actualizat_la": "2026-11-04T13:20",
+ "actualizat_la": "2026-11-04T13:25",
  "documente": [
   {
    "data": "2026-10-28",
@@ -1146,12 +1146,20 @@
      ]
     },
     {
+     "cine_e_afectat": "O persoană fizică din orașul Pantelimon aflată într-o situație de necesitate",
      "data": "2026-07-07",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 137,
-     "obiect": "",
+     "obiect": "Proiect de hotărâre privind acordarea unui ajutor de urgență de 15.000 lei unei persoane aflate în necesitate",
      "pagina": 3,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Se propune acordarea unui ajutor de urgență în sumă de 15.000 lei din bugetul local unei persoane fizice aflate într-o situație de necesitate. Textul indică cauza situației ca fiind inundații, în timp ce titlul proiectului menționează incendiul; Direcția de Asistență Socială ar urma să ducă la îndeplinire hotărârea.",
+     "stare": "rezumat",
+     "sume": [
+      "15.000 lei"
+     ]
     }
    ],
    "lungime": 1790550,
@@ -8849,12 +8857,18 @@
    "etag": "\"12b01c-633f9ac214a00\"",
    "hotarari": [
     {
+     "cine_e_afectat": "Locuitorii orașului Pantelimon, Direcția de Asistență Socială, S.C. Parcuri, Servicii & Prod Pantelimon S.R.L. și consilierii locali",
      "data": "2025-03-26",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": null,
-     "obiect": "",
+     "obiect": "Proces-verbal al ședinței ordinare a Consiliului Local Pantelimon din 26.03.2025 și hotărârile adoptate",
      "pagina": 1,
      "pagini": 4,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat cu unanimitate ordinea de zi și mai multe proiecte de hotărâre: raportul privind starea economică, socială și de mediu pe 2024, bugetul local pe 2025, bugetul S.C. Parcuri, Servicii & Prod Pantelimon S.R.L. pe 2025, un protocol de cooperare pentru proiectul „Ilfov fara țânțari”, Agenda de evenimente culturale, sportive și educative pe 2025, modificarea unei hotărâri privind indicatorii unui obiectiv de canalizare și apă, Regulamentul pentru câinii cu stăpân, Planul anual al Direcției de Asistență Socială, completarea unei anexe cu 8 poziții, două planuri urbanistice de detaliu și un ajutor de urgență pentru o persoană fizică. Procesul-verbal din 26.02.2025 a fost aprobat, iar ședința s-a încheiat la 08:45.",
+     "stare": "rezumat",
+     "sume": []
     }
    ],
    "lungime": 1224732,
@@ -9446,12 +9460,21 @@
    "etag": "\"1a838b-631b13aef5600\"",
    "hotarari": [
     {
+     "cine_e_afectat": "Locuitorii orașului Pantelimon, beneficiarii ajutoarelor sociale, copiii beneficiari ai Legii nr.321/2001, consumatorii de apă și canal și elevii din oraș",
      "data": "2025-02-26",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": null,
-     "obiect": "",
+     "obiect": "Proces-verbal al ședinței ordinare a Consiliului Local Pantelimon din 26.02.2025 cu 11 proiecte de hotărâre și 9 pe ordinea suplimentară",
      "pagina": 1,
      "pagini": 6,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a discutat și votat proiecte privind protocoale de cooperare pentru colectarea deșeurilor textile și transferul unui microbuz școlar electric, indicatori tehnico-economici pentru investiții de canalizare și școală, raportul de activitate al Direcției de Asistență Socială pe 2024, PUD-uri pentru construcții în oraș, ajutoare de urgență și de lapte praf, un act adițional la contractul de apă și canal și cotizația pentru o asociație intercomunitară pe 2025. Majoritatea proiectelor au fost aprobate cu unanimitate; unele au fost aprobate cu majoritate, cu abțineri sau voturi împotrivă.",
+     "stare": "rezumat",
+     "sume": [
+      "15.000 lei",
+      "10.000 lei"
+     ]
     }
    ],
    "lungime": 1737611,
@@ -9881,11 +9904,15 @@
    "hotarari": [
     {
      "data": "2025-01-29",
+     "motive": [
+      "posibil nume de persoană privată"
+     ],
      "nr": null,
      "obiect": "",
      "pagina": 1,
      "pagini": 5,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     }
    ],
    "lungime": 1605243,
@@ -9903,8 +9930,8 @@
   "furnizor": "anthropic",
   "ocr": true,
   "surse_fara_raspuns": 0,
-  "tokeni_iesire": 45538,
-  "tokeni_intrare": 539352
+  "tokeni_iesire": 1622,
+  "tokeni_intrare": 24979
  },
  "versiune": 1
 }
