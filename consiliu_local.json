@@ -1,5 +1,5 @@
 {
- "actualizat_la": "2026-11-04T09:50",
+ "actualizat_la": "2026-11-04T11:54",
  "documente": [
   {
    "data": "2026-10-28",
@@ -1484,28 +1484,48 @@
      "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "O persoană fizică, fost concesionar al terenului, și orașul Pantelimon (venituri la bugetul local)",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 33,
-     "obiect": "",
+     "obiect": "Vânzarea unui teren concesionat din domeniul privat al orașului către un cetățean, pe care există o locuință",
      "pagina": 183,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea terenului intravilan de 314,26 mp (322 mp din măsurători), ocupat de o locuință, către persoana care îl deținea în concesiune, prin valorificarea dreptului de preempțiune, la prețul de 11.656 euro, plătibil în lei. Plata se poate face integral sau în rate lunare, pe cel mult 36 de luni, cu un avans de minim 20%, iar contractul de concesiune existent se consideră reziliat de drept la data semnării contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "11.656 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Un cumpărător persoană fizică care deține în concesiune un teren din oraș cu o locuință, și locuitorii orașului Pantelimon prin veniturile la bugetul local",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 34,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului către o persoană fizică, pe care există o construcție",
      "pagina": 186,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea unui teren intravilan de 455,70 mp (463 mp din măsurători), ocupat de o locuință, către o persoană fizică, prin valorificarea dreptului de preemptiune, cu prețul de 16.761 euro plătibil în lei. Plata se poate face integral sau în rate lunare, pe maximum 36 de luni, cu avans de minim 20%, iar contractul de concesiune anterior se consideră reziliat.",
+     "stare": "rezumat",
+     "sume": [
+      "16.761 euro"
+     ]
     },
     {
      "data": "2026-03-31",
+     "motive": [
+      "număr sau sumă care nu apare în sursă"
+     ],
      "nr": 35,
      "obiect": "",
      "pagina": 189,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
      "data": "2026-03-31",
@@ -1521,59 +1541,105 @@
     },
     {
      "data": "2026-03-31",
+     "motive": [
+      "adresă exactă sau număr cadastral"
+     ],
      "nr": 38,
      "obiect": "",
      "pagina": 199,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "stare": "doar_titlu",
+     "verificat_la": "2026-11-04"
     },
     {
+     "cine_e_afectat": "Locuitorii orașului Pantelimon și Serviciul Cadastru, Patrimoniu și Arhivă al primăriei",
      "data": "2026-03-31",
+     "fara_anexe": true,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 39,
-     "obiect": "privind dezmembrarea cadastrală și notarială a terenului ce aparține domeniului privat al U.A.T. Pantelimon, situat în T30, P284 cu numărul cadastral 125039 din Oraşul Pantelimon, judeţul Ilfov, în 53 loturi",
+     "obiect": "Dezmembrarea cadastrală și notarială a unui teren al orașului Pantelimon în 53 de loturi",
      "pagina": 201,
      "pagini": 8,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local Pantelimon a aprobat dezmembrarea terenului de 12.209 mp, aflat în domeniul privat al orașului, în 53 de loturi distincte, cu suprafețe între 99 mp și 601 mp. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința ordinară din 31.03.2026. Primarul, prin aparatul de specialitate, va duce la îndeplinire hotărârea, care se afișează și pe pagina de internet a primăriei.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "O persoană fizică care solicită construirea de locuințe pe un teren din oraș, precum și locuitorii din zona respectivă",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 41,
-     "obiect": "",
+     "obiect": "Aprobarea Planului Urbanistic de Detaliu pentru construirea a două locuințe cuplate pe un teren din oraș",
      "pagina": 209,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat Planul Urbanistic de Detaliu pentru construirea a două locuințe cuplate, împrejmuire, organizare de șantier și branșamente la utilități, solicitat de o persoană fizică pentru un teren de 320 mp. Documentația are valabilitate de doi ani de la aprobare. Hotărârea a fost adoptată cu unanimitate de voturi, în ședința din 31.03.2026.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "Operatorii economici care organizează jocuri de noroc în oraș",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 42,
-     "obiect": "privind interzicerea organizării si exploatării jocurilor de noroc pe raza unității administrativ-teritoriale a Oraşului Pantelimon",
+     "obiect": "Interzicerea organizării și exploatării jocurilor de noroc pe raza orașului Pantelimon",
      "pagina": 211,
      "pagini": 2,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a decis interzicerea activităților de jocuri de noroc pe raza orașului Pantelimon, începând cu data adoptării hotărârii. Operatorii care au deja autorizație de la Comitetul de Supraveghere al Oficiului Național al Jocurilor de Noroc își pot continua activitatea doar până la expirarea autorizației. Hotărârea a fost adoptată cu unanimitate de voturi.",
+     "stare": "rezumat",
+     "sume": []
     },
     {
+     "cine_e_afectat": "O persoană fizică, deținătoarea terenului în concesiune, și bugetul local al orașului Pantelimon",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 43,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului către o persoană fizică, pe care există o locuință",
      "pagina": 213,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local al orașului Pantelimon a aprobat vânzarea către o persoană fizică a terenului intravilan de 438,90 mp din acte (440 mp din măsurători), care aparține domeniului privat al orașului și pe care există o locuință, precum și raportul de evaluare întocmit de un evaluator autorizat. Prețul este de 16.453 euro, plătibil în lei, integral sau în rate lunare pe maximum 36 de luni, cu avans de minimum 20%, iar contractul de concesiune existent se consideră reziliat la semnarea contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "16.453 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Un cumpărător persoană fizică care deține în concesiune terenul și locuința de pe el",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 44,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren concesionat din domeniul privat al orașului, cu construcție, către un cetățean",
      "pagina": 216,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către o persoană fizică a unui teren intravilan de 451 mp (461 mp conform măsurătorilor) pe care există o locuință, prin valorificarea dreptului de preempțiune, la prețul de 17.238 euro, plătibil în lei. Plata se poate face integral sau în rate lunare de maximum 36 de luni, cu avans de minimum 20%, iar contractul de concesiune existent se consideră reziliat la semnarea contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "17.238 euro"
+     ]
     },
     {
+     "cine_e_afectat": "Un proprietar persoană fizică care deține în concesiune un teren din oraș cu o locuință, și Orașul Pantelimon",
      "data": "2026-03-31",
+     "fara_anexe": false,
+     "generat_la": "2026-11-04",
+     "model": "claude-haiku-5-5",
      "nr": 45,
-     "obiect": "",
+     "obiect": "Aprobarea vânzării unui teren intravilan al orașului, concesionat și cu o casă construită pe el, către persoana care îl deține în concesiune",
      "pagina": 219,
      "pagini": 3,
-     "stare": "fara_rezumat"
+     "rezumat": "Consiliul Local a aprobat vânzarea către cumpărătorul care deține terenul în concesiune, la prețul de 10.919 euro, plătibil în lei, integral sau în rate lunare de maximum 36 de luni, cu avans de minimum 20%. Pentru diferența de preț se înscrie ipotecă în favoarea orașului, iar contractul de concesiune se consideră reziliat la semnarea contractului de vânzare-cumpărare.",
+     "stare": "rezumat",
+     "sume": [
+      "10.919 euro"
+     ]
     },
     {
      "data": "2026-03-31",
@@ -5985,8 +6051,8 @@
   "furnizor": "anthropic",
   "ocr": true,
   "surse_fara_raspuns": 0,
-  "tokeni_iesire": 3242,
-  "tokeni_intrare": 43954
+  "tokeni_iesire": 3125,
+  "tokeni_intrare": 41808
  },
  "versiune": 1
 }
