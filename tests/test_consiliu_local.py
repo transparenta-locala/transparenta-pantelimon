@@ -679,6 +679,11 @@ def test_workflow_foloseste_anthropic_si_porneste_cu_pilot():
     assert "inputs.max_rezumate || '10'" in yml and '--max-rezumate "$MAX_REZUMATE"' in yml
 
 
+def test_workflow_reia_push_ul_la_eroare():
+    yml = open(os.path.join(ROOT, ".github", "workflows", "consiliu-local.yml"), encoding="utf-8").read()
+    assert "for incercare in 1 2 3 4" in yml and 'git push origin "HEAD:${GITHUB_REF_NAME}"; then' in yml
+
+
 def test_gdpr_numeste_furnizorul_ales():
     gdpr = open(os.path.join(ROOT, "gdpr.html"), encoding="utf-8").read()
     assert "Anthropic" in gdpr and "Claude Haiku 5.5" in gdpr and "30 de zile" in gdpr

@@ -79,5 +79,13 @@ jobs:
           git commit -m "🏛️ Consiliul Local actualizat $(date +'%d.%m.%Y')"
           git checkout -- . 2>/dev/null || true
           git clean -fd 2>/dev/null || true
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          # Rezumatele costă bani: o eroare trecătoare GitHub la push nu trebuie să le piardă
+          for incercare in 1 2 3 4; do
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              exit 0
+            fi
+            echo "::warning::Push eșuat (încercarea ${incercare}), reiau"
+            sleep $((incercare * 30))
+          done
+          exit 1
