@@ -594,8 +594,14 @@ _RX_ACUZATII = re.compile(
     r"vinovat\w*|neconstitu\w*|nul[aă] de drept)", re.I)
 
 
+_RX_COMENTARIU = re.compile(r"neconcordan|contradic|discrepan", re.I)
+
+
 def motive_ton(text: str) -> list:
-    return ["cuvânt de acuzație sau concluzie juridică"] if _RX_ACUZATII.search(text) else []
+    motive = ["cuvânt de acuzație sau concluzie juridică"] if _RX_ACUZATII.search(text) else []
+    if _RX_COMENTARIU.search(text):
+        motive.append("comentariu despre document")
+    return motive
 
 
 def valideaza_rezumat(r, sursa: str) -> list:
@@ -671,6 +677,7 @@ Completează câmpurile astfel, în română, în limbaj simplu, fără termeni 
 
 Reguli obligatorii:
 - Folosește doar ce scrie în document. Datele și cifrele se copiază exact; nu calcula și nu adăuga nimic.
+- Nu comenta documentul: fără observații despre greșeli sau neconcordanțe din text.
 - Nu scrie numele persoanelor private (beneficiari, petenți, proprietari, moștenitori), adrese de domiciliu sau CNP; spune „o persoană fizică” sau „un proprietar”. Când un teren sau o locuință ajunge la o persoană fizică, nu scrie strada, numărul sau numărul cadastral; spune „un teren din oraș”. La fel la locuințele sociale și la planurile urbanistice (PUD, PUZ) cerute de persoane fizice: nu scrie nici strada. Poți numi firmele, instituțiile și, doar dacă e necesar, persoanele cu funcții publice, împreună cu funcția.
 - Fără acuzații, fără opinii, fără aprecieri despre legalitate sau despre oportunitatea deciziei."""
 

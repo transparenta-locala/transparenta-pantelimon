@@ -1146,20 +1146,12 @@
      ]
     },
     {
-     "cine_e_afectat": "o persoană fizică din orașul Pantelimon aflată într-o situație de necesitate",
      "data": "2026-07-07",
-     "fara_anexe": false,
-     "generat_la": "2026-11-04",
-     "model": "claude-haiku-5-5",
      "nr": 137,
-     "obiect": "Proiect de hotărâre privind acordarea unui ajutor de urgență de 15.000 lei unei persoane aflate în necesitate",
+     "obiect": "",
      "pagina": 3,
      "pagini": 2,
-     "rezumat": "Se propune acordarea unui ajutor de urgență de 15.000 lei din bugetul local unui cetățean din oraș, aflat într-o situație de necesitate. Documentul nu a fost adoptat încă, iar textul conține neconcordanțe: motivul este indicat ca incendiu în titlu și ca inundații în articolul 1.",
-     "stare": "rezumat",
-     "sume": [
-      "15.000 lei"
-     ]
+     "stare": "fara_rezumat"
     }
    ],
    "lungime": 1790550,
@@ -9683,7 +9675,7 @@
      "obiect": "Atestarea apartenenței la domeniul privat al orașului Pantelimon a unui imobil (teren intravilan)",
      "pagina": 245,
      "pagini": 3,
-     "rezumat": "Consiliul Local al orașului Pantelimon a hotărât să atestе apartenența la domeniul privat al orașului a unui teren intravilan din oraș, prevăzut în anexa la hotărâre. Hotărârea a fost adoptată în ședința ordinară din 29.01.2025, cu unanimitate de voturi, și se comunică Instituției Prefectului Ilfov și primăriei.",
+     "rezumat": "Consiliul Local al orașului Pantelimon a hotărât să ateste apartenența la domeniul privat al orașului a unui teren intravilan din oraș, prevăzut în anexa la hotărâre. Hotărârea a fost adoptată în ședința ordinară din 29.01.2025, cu unanimitate de voturi, și se comunică Instituției Prefectului Ilfov și primăriei.",
      "stare": "rezumat",
      "sume": []
     }

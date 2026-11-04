@@ -329,6 +329,11 @@ def test_reaplica_vede_strada_si_persoana_in_campuri_diferite():
     assert h["stare"] == "doar_titlu" and "rezumat" not in h
 
 
+def test_rezumatul_nu_comenteaza_documentul():
+    assert cl.motive_ton("Textul conține neconcordanțe: incendiu în titlu și inundații la articolul 1.")
+    assert not cl.motive_ton("Consiliul Local a aprobat acordarea unui ajutor de urgență.")
+
+
 def test_la_sume_raman_doar_sumele_de_bani():
     r = _rezumat(sume=["39.913.827,33 lei", "450 mp", "20 %", "36 luni", "11.656 euro"])
     sursa = SURSA + " 450 mp, 20 %, 36 luni, 11.656 euro"
